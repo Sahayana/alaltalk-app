@@ -56,7 +56,7 @@ body::-webkit-scrollbar-track{
     position: relative;
     width: 100%;
     height: 90vh;
-    background-image: url("/static/img/landing/banner1.jpg");
+    background-image: url("/static/images/landing/banner1.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -252,7 +252,7 @@ body::-webkit-scrollbar-track{
     left: min(42vw, 950px);
     width: min(5vw, 100px);
     height: min(5vw, 100px);
-    background-image: url("/static/img/landing/landing_next_slide_button.png");
+    background-image: url("/static/images/landing/landing_next_slide_button.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -437,7 +437,7 @@ body::-webkit-scrollbar-track{
     left:33vw;
     top: calc(10vw - 2vw);
     z-index: 4;
-    background-image:url("/static/img/landing/landing_next_slide_button_2.png");
+    background-image:url("/static/images/landing/landing_next_slide_button_2.png");
 }
 
 
