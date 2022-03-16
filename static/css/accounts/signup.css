@@ -1,0 +1,230 @@
+* {
+  font-family: 'Noto Sans CJK KR', 'Roboto';
+  font-size: 16px;
+  letter-spacing: -0.5px;
+}
+
+body {
+  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container {
+  margin: 5% auto 0;
+  display: flex;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  max-width: 100vw;
+  position: relative;
+  width: 1028px;
+  height: 720px;
+}
+
+.signup-container .signup-left-wrapper {
+  width: 50%;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background-color: #a185f2;
+  box-shadow: 4px 0px 10px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-container
+  .signup-left-wrapper
+  .signup-form-container
+  .signup-profile-img {
+  width: 150px;
+  height: 140px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10%;
+  cursor: pointer;
+}
+
+.signup-container
+  .signup-left-wrapper
+  .signup-form-container
+  .signup-profile-img
+  .profile-img-default {
+  width: 30px;
+  height: 30px;
+}
+
+.signup-container
+  .signup-left-wrapper
+  .signup-form-container
+  .signup-profile-img
+  p {
+  font-size: 70%;
+  color: #5e5e5e;
+}
+
+.signup-container .signup-left-wrapper .signup-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding-top: 0;
+  position: relative;
+  top: 55px;
+}
+
+.signup-container .signup-left-wrapper .signup-form-container div {
+  margin-bottom: 2%;
+  width: 70%;
+  height: 2%;
+  background: white;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  color: #4d4d4d;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-container .signup-left-wrapper .signup-form-container .profile-bio {
+  height: 10%;
+}
+
+.signup-container
+  .signup-left-wrapper
+  .signup-form-container
+  .profile-bio
+  #bio {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.signup-container .signup-left-wrapper .signup-form-container div > input {
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 0;
+  border-width: 0;
+  box-sizing: border-box;
+}
+
+.signup-container .signup-left-wrapper .signup-form-container .btn-signup {
+  margin-top: 3%;
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.signup-container
+  .signup-left-wrapper
+  .signup-form-container
+  .btn-signup
+  .signBtn {
+  width: 100%;
+  background: transparent;
+  border: 1px solid white;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 80%;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px 12px 10px 10px;
+  vertical-align: middle;
+}
+
+.signup-container
+  .signup-left-wrapper
+  .signup-form-container
+  div
+  input::placeholder {
+  font-size: 60%;
+  font-weight: 500;
+}
+
+.signup-container .signup-left-wrapper .move-to-signin {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+
+.signup-container .signup-left-wrapper .move-to-signin .loginBtn {
+  font-size: 80%;
+  border: none;
+  color: #7657ce;
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15%;
+}
+
+.signup-container .signup-left-wrapper .signup-form-container > small {
+  font-size: 75%;
+  visibility: hidden;
+  color: red;
+  margin-top: -1%;
+}
+
+/* right wrapper 작업 */
+
+.signup-container .signup-right-wrapper {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-container .signup-right-wrapper .logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-container .signup-right-wrapper .logo > img {
+  width: 90%;
+  height: 40%;
+}
+
+.signup-container .signup-right-wrapper .logo .agree-info {
+  font-size: 90%;
+  color: #7657ce;
+  font-weight: 600;
+  margin-left: -10%;
+}
+
+.signup-container .signup-right-wrapper .agree-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-container .signup-right-wrapper .agree-container .agree-clause > p {
+  font-size: 80%;
+  margin-bottom: -3%;
+  color: #7657ce;
+}
+
+.signup-container .signup-right-wrapper .agree-container .agree-checkbox {
+  margin-top: 15%;
+}
+
+.signup-container
+  .signup-right-wrapper
+  .agree-container
+  .agree-checkbox
+  > label {
+  font-size: 90%;
+  font-weight: 600;
+  color: #7657ce;
+}

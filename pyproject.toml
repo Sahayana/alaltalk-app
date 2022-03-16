@@ -12,6 +12,7 @@ black = "^22.1.0"
 isort = "^5.10.1"
 mypy = "^0.931"
 django-stubs = "^1.9.0"
+Pillow = "^9.0.1"
 
 [tool.poetry.dev-dependencies]
 
