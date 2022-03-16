@@ -6,11 +6,8 @@ from accounts.models import CustomUser
 
 # Register your models here.
 
-class CustomUserAdmin(UserAdmin):
-    form = CustomUserChangeForm
-    add_form = CustomUserCreationForm
-    model = CustomUser
-    list_display = ['email', 'nickname']
+# class CustomUserAdmin(UserAdmin):    
+#     model = CustomUser
+#     list_display = ['email', 'nickname']
 
-admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.unregister(Group)
+# admin.site.register(CustomUser, CustomUserAdmin)
