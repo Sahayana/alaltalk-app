@@ -1,6 +1,7 @@
 from tkinter import E
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 
 # User 생성용 헬퍼 클래스
 # User 생성에 필요한 행위 지정
@@ -26,12 +27,16 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, nickname, password, **extra_fields)
 
-    # 
+     
     def create_superuser(self, email, nickname, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_admin', True)
-        return self._create_user(email, nickname, password, **extra_fields)
+        user = self.create_user(email=email, password=password, nickname=nickname)
+        user.is_admin = True
+        user.is_staff = True
+        user.is_superuser = True
+        user.save(using=self._db)
+        return user
+		
+        
         
 
 
@@ -39,7 +44,7 @@ class CustomUserManager(BaseUserManager):
 def profile_img_upload_to(self):
         return f"profile_images/{self.id}/"
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     nickname = models.CharField(max_length=30, unique=True)
@@ -56,7 +61,7 @@ class CustomUser(AbstractBaseUser):
 
     # https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#django.contrib.auth.models.CustomUser
     USERNAME_FIELD = 'email'    # 이메일 로그인
-    REQUIRED_FIELD = ['nickname']   # REQUIRED_FIELD: 필수적으로 받고 싶은 값
+    REQUIRED_FIELDS = ['nickname']   # REQUIRED_FIELDS: 필수적으로 받고 싶은 값
 
     # 위에서 정의한 Manager 지정
     objects = CustomUserManager()
