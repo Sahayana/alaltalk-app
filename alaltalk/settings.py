@@ -129,3 +129,10 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+#local_setting을 위한 설정
+try:
+    from alaltalk.local_settings import *
+except ImportError:
+    pass
