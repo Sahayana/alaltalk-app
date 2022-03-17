@@ -271,6 +271,7 @@ body {
 .recommend_youtube_container .recommend_nav {
     font-weight: 700;
     color: #d2d2d2;
+    cursor: pointer;
 }
 
 .recommend_youtube_container .recommend_nav span {

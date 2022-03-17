@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 
+
 # User 생성용 헬퍼 클래스
 # User 생성에 필요한 행위 지정
 # 장고 모든 모델은 Manager를 거쳐서 Queryset을 받음
@@ -79,3 +80,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
 
     
+

@@ -5,7 +5,6 @@ from accounts.forms import CustomUserCreationForm, CustomUserChangeForm
 from accounts.models import CustomUser
 
 # Register your models here.
-
 # https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#a-full-example
 
 class CustomUserAdmin(UserAdmin):   
