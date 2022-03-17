@@ -5,6 +5,7 @@ from django.contrib import auth
 import json
 from django.contrib.auth import get_user_model
 from accounts.services.accounts_service import create_user
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -60,3 +61,7 @@ def login(request):
         return render(request, 'accounts/login.html')
 
         
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('/')
