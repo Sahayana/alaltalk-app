@@ -1,0 +1,74 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- reset css cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <!-- jQuery cdn -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js%22%3E"></script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/accounts/signup.css' %}">
+</head>
+<body>
+<div class="signup-container">
+    <div class="signup-left-wrapper">        
+        <form class="signup-form-container" enctype="multipart/form-data" method='POST'>
+            {% csrf_token %}
+            <div class="signup-profile-img">
+                <input type="file" id="profile-img" value="{{ form.img.value }}" hidden >
+                <img class="profile-img-default" src="/static/images/picture_gray.png" alt="">
+                <p class="profile-img-p">프로필 이미지</p>
+            </div>
+            <div class="email">
+                <input type="email" id="email" name="email" placeholder="이메일" value="{{ form.email.value|default_if_none:'' }}">                
+            </div>
+            <small id="e_error">Error Message</small>
+            <div class="nickname">
+                <input type="text" id="nickname" name="nickname" placeholder="닉네임" value="{{ form.nickname.value|default_if_none:'' }}">                
+            </div> 
+            <small id="name_error">Error Message</small>
+            <div class="password">
+                <input class="pas" id="current-password" type="password" name="password1" placeholder="패스워드" value="{{ form.password1.value|default_if_none:'' }}">   
+            </div>
+            <small id="pwd_error">Error Message</small> 
+            <div class="password2">
+                <input class="pas" id="check-password" type="password" name="password2" placeholder="패스워드 확인" value="{{ form.password2.value|default_if_none:'' }}">                
+            </div>
+            <small id="pwd_check_error">Error Message</small>   
+            <div class="profile-bio">
+                <input type="text" id="bio" name="bio" placeholder="한줄소개" value="{{ form.bio.value|default_if_none:'' }}">
+            </div>
+            <div class="btn-signup">
+                <button class="signBtn" id="signBtn" type="submit">회원가입</button>
+            </div>                   
+        </form>
+        <div class="move-to-signin">            
+            <button class="loginBtn">로그인 페이지로 돌아가기</button>
+        </div>    
+    </div>
+    <div class="signup-right-wrapper">
+        <div class="logo">
+            <img src="/static/images/logo_horizon.png" alt="logo_horizon">
+            <p class="agree-info">개인정보활용동의</p>
+        </div>
+        <div class="agree-container">
+            <div class="agree-clause">
+                <p>알알톡은 채팅을 기반으로 추천컨텐츠를 제공합니다.</p>
+                <p>추천컨텐츠는 알알톡에 별도로 저장되지 않으며,</p>
+                <p>일회성 정보제공 목적으로 이용됩니다.</p>                
+            </div>
+            <div class="agree-checkbox">
+                <input type="checkbox" id="agree-cb" name="agree-cb">
+                <label for="agree-cb">동의합니다.</label>
+            </div>  
+        </div>
+        
+    </div>
+</div>
+<script src="{% static 'js/accounts/signup.js' %}"></script>
+<script src="{% static 'js/accounts/signup-api.js' %}"></script>
+</body>
+</html>
