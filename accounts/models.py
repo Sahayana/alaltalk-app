@@ -35,23 +35,16 @@ class CustomUserManager(BaseUserManager):
         user.is_superuser = True
         user.save(using=self._db)
         return user
-		
-        
-        
-
-
-# Profile image 저장 경로
-def profile_img_upload_to(self):
-        return f"profile_images/{self.id}/"
+   
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
-    nickname = models.CharField(max_length=30, unique=True)
+    nickname = models.CharField(max_length=30)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)    
     bio = models.CharField(max_length=150, blank=True)
-    img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", null=True, blank=True, upload_to = profile_img_upload_to)
+    img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", null=True, blank=True, upload_to = "profile_images/")
     
     # Boolean field
     is_admin = models.BooleanField(default=False)

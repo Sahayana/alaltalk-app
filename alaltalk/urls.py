@@ -19,7 +19,8 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.landing_home, name='landing_page')
+    path('', views.landing_home, name='landing_page'),
+    path('accounts/', include("accounts.urls")),
 ]
 
 
