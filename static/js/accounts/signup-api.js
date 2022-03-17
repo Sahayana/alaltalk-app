@@ -28,7 +28,8 @@ function signUp(){
         mimeType: "multipart/form-data",
         data: formData, 
         success: function (response) {
-            alert(response['result'])
+            console.log(response)
+            alert("회원가입이 완료되었습니다.")
             window.location.replace('/')            
         }
     })
