@@ -52,12 +52,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)    
     bio = models.CharField(max_length=150, blank=True)
-<<<<<<< HEAD
-    img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", null=True, blank=True)
-
-    def __str__(self):
-        return self.email
-=======
     img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", null=True, blank=True, upload_to = profile_img_upload_to)
     
     # Boolean field
@@ -86,4 +80,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     
 
     
->>>>>>> e485dc83050fc5fd603f237ed3f60569e65730fa
+
