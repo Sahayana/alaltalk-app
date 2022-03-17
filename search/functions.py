@@ -1,51 +1,53 @@
-from typing import List
-import requests
 import time
+from typing import List
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
 def crawling_youtube(search_word: str,  content_count: int) -> List[str]:
+    # 검색 단어 분리
+    search_word = search_word.replace(' ', '+')
+
+    # 클로링을 담을 배열
     crawling_data = []
+
+    # chrome webdriver 실행
     options = webdriver.ChromeOptions()
+
+    # webdriver option 설정 - 창 안 보이기, 시크릿 모드
     options.add_argument("headless")
     options.add_argument('--incognito')
-    options.add_argument('window-size=1280,720')
+
+    # driver 위치
     driver = webdriver.Chrome(executable_path="D:/projects/alaltalk-app/search/chromedriver.exe", options=options)
+
+    # driver 쿠키 제거
     driver.delete_all_cookies()
+
+    # 유튜브 링크 들어 가기 ( 검색결과한 결과 )
     url = 'https://www.youtube.com/results?search_query=' + search_word
-    print('url :', url)
     driver.get(url)
     crawling_temp_data =[]
+
+    # 목표 량이 10개를 넘을 때까지 반복
     while len(crawling_temp_data) < content_count:
 
+        # 스크롤 내리기
         driver.execute_script('window.scrollTo(0, document.body.scrollHeight);')
         html = driver.page_source
         soup = BeautifulSoup(html, 'html.parser')
 
-        # 검색결과에 따른 비디오
+        # 검색 결과에 따른 비디오만 추출 ( 관련동영상 X )
         crawling_temp_data = soup.select('#contents > ytd-video-renderer')
-        cnt = 0
-        print('craling_temp_data length: ', len(crawling_temp_data))
 
+    # 각 검색 결과에서 URL 얻기
     for data in crawling_temp_data:
         video_url = data.select('a')[0].attrs['href']
         youtube_base_url = 'https://www.youtube.com'
         crawling_url = youtube_base_url + video_url
         crawling_data.append(crawling_url)
 
-    return crawling_data[0:11]
-
-
-    # for index, i in enumerate(crawling_temp_data):
-    #     cnt +=1
-    #     print(i.select('a')[1].attrs['aria-label'])
-    #     print(cnt, '번째 게시글 입니다아아아아')
-    #     print('.............................')
-    #     print('###################')
-
-
-
+    return crawling_data[0:content_count+1]
 
     # 최신 동영상, 관련 비디오
     # crawling_temp_data_latest_video = soup.select('#contents > ytd-shelf-renderer')
@@ -65,8 +67,3 @@ def crawling_youtube(search_word: str,  content_count: int) -> List[str]:
     #
     # for i in range(1000):
     #     time.sleep(1)
-
-
-    return 0
-
-print('function result : ', crawling_youtube('디퓨저', 10))
