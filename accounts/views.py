@@ -1,5 +1,7 @@
+from email.policy import EmailPolicy
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.contrib import auth
 import json
 from django.contrib.auth import get_user_model
 from accounts.services.accounts_service import create_user
@@ -38,3 +40,23 @@ def duplicated_check(request):
 
 
 
+def login(request):
+    if request.method == 'POST':        
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        me = auth.authenticate(email=email, password=password)
+        print(me, email, password)
+        if not me:
+            return JsonResponse({"msg":"error"})
+        
+        auth.login(request, me)
+        return JsonResponse({"msg":"ok"})
+        
+    else:
+        signed_user = request.user.is_authenticated
+        if signed_user:
+            return redirect('/')    # 채팅템플릿으로 redirect하도록 추후 변경
+
+        return render(request, 'accounts/login.html')
+
+        
