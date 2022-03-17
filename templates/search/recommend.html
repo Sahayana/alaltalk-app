@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- reset css cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+    <!-- jQuery cdn -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/search/recommend.css">
+</head>
+<body>
+    <div class="outline">
+        <div class="nav">
+            <div class="logo">
+                <div class="logo_img"></div>
+            </div>
+            <div class="icon_group">
+                <div class="icon user_icon"></div>
+                <div class="icon chat_icon"></div>
+                <div class="icon mypage_icon"></div>
+            </div>
+        </div>
+        <div class="left_wrap">
+            <div class="chat_container">
+                <div class="top_bar">
+                    <div class="partner_info">
+                        <div class="partner_img"></div>
+                        <div class="info_group">
+                            <div class="partner_name">김코딩</div>
+                            <div class="partner_id">coding@example.com</div>
+                        </div>
+
+                    </div>
+                    <div class="toggle_icon"></div>
+                    <div class="toggle_content">
+                        <p>추천컨텐츠</p>
+                        <div class="line"></div>
+                        <p>친구 찜 목록 보기</p>
+                    </div>
+                </div>
+
+                <div class="chat_box">
+                    <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
+                        52려 조하
+                        오늘은 더 회의가 없지요..?ㅠㅠ잠깐 나가볼 일이 생겨서 혹시라도 모일 일이 생기면
+                        저는...........
+                        음......................
+                        뒤를 믿고 갔다올게영!!</p></div>
+                    <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
+                        밥4조 여러분…ㅠ
+                        금요일 새벽부터 아이가 열이나고 아파서 토요일 아침에 키트 검사해봤더니 세균맨이 되었더라구요..(양성) 오늘 pcr 양성 확인문자 받았고, 남편도 어제는 키트 음성이었는데
+                        오늘아침엔 양성이 떠서 pcr 받고 왔는데 세균맨이 되버린것 같습니다…저만 음성이에요ㅋㅋㅋㅋㅋ</p></div>
+                    <div class="partner_to_user"><p>편히 다녀오세요~</p></div>
+                    <div class="partner_to_user"><p>어떡해요ㅠㅠㅠ 고생하시네요😢 진주님도 조심하시구 가족분들 쾌차하시기를...</p></div>
+                    <div class="partner_to_user"><p>아이고 그런일이...있으셨군요
+                        건강이 우선입니다! 무리하지 마시고
+                        빨리 가족분들 모두 쾌차했으면 좋겠습니다!!</p></div>
+                    <div class="partner_to_user"><p>진주님 컨디션은 어때요?
+                        혼자 음성이 뜰 수 가 있나..?</p></div>
+                    <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
+                        어린이집에서 애기가 걸렸었는데 몰랐나봐요 ㅠㅠ 확진자가 남일이 아니네요
+                        다들 조심하셔요 ㅠㅠ</p></div>
+                    <div class="partner_to_user"><p>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+                        무리는 하지 마시고
+                        진행사항 보면서
+                        제가 컨트롤 가능한 부분은 컨트롤 하겠습니다</p></div>
+                    <div class="user_to_partner"><p>일단 템플릿 작업은 제가 맡은데까지 끝낼수 있을것 같아요ㅎㅎ
+                        상황보고 말씀드릴께요!!</p></div>
+                    <div class="user_to_partner"><p>일단 템플릿 작업은 제가 맡은데까지 끝낼수 있을것 같아요ㅎㅎ
+                        상황보고 말씀드릴께요!!</p></div>
+
+                </div>
+                <div class="input_bar">
+                    <div class="attach_icon"></div>
+                    <input type="text" placeholder="입력하세요.">
+                </div>
+            </div>
+        </div>
+
+        <div class="right_wrap">
+            <div class="recommend_youtube_container">
+                <div class="recommend_nav">
+                    <span>YOUTUBE</span>
+                    <span>NEWS</span>
+                    <span>BOOK</span>
+                    <span>SHOPPING</span>
+                </div>
+                <div class="search_bar">
+                    <div class="search_icon"></div>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="content_wrap">
+                    <div class="recommend_content">
+                        <p>추천 컨텐츠</p>
+                        <div class="video"></div>
+                        <div class="content_section">
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">
+                                    코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours lofi type beat • 3 hours lofi type beat • 3
+                                    hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_content">
+                        <p>검색</p>
+                        <div class="content_section">
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">
+                                    코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                    • lofi type beat • 3 hours • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                            <div class="content_box">
+                                <div class="video_img"></div>
+                                <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
+                                </div>
+                                <div class="video_count">조회수 1889만회</div>
+                                <div class="play_icon"></div>
+                                <div class="more_icon"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="recommend_news_container">
+                <div class="recommend_nav">
+                    <span>YOUTUBE</span>
+                    <span>NEWS</span>
+                    <span>BOOK</span>
+                    <span>SHOPPING</span>
+                </div>
+                <div class="search_bar">
+                    <div class="search_icon"></div>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="content_news_wrap">
+                    <div class="recommend_news_content">
+                        <p>추천 컨텐츠</p>
+                        <div class="content_news_section">
+                            <div class="profile_like_news">
+                                <li>
+                                    <div class="profile_like_news_image"></div>
+                                    <div class="profile_like_news_info">
+                                        <div class="profile_like_news_title">“포켓몬빵 보신 분~”… 이상 품귀현상, 웃돈에 끼워 팔기도</div>
+                                        <div class="profile_like_news_content">1990년대 출시돼 인기를 끌다 단종됐던 포켓몬빵이 지난달부터
+                                            다시 판매를 시작하면서 2주 만에 350만 개가 팔리는 등 품귀현상을 빚고 있다. 부산에서 …
+                                        </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                    </div>
+                                    <div class="profile_like_news_toggle">
+                                        <p>공유하기</p>
+                                    </div>
+                                    <div class="profile_like_news_button">
+                                        <div class="profile_like_news_setting"></div>
+                                        <div class="profile_like_news_heart"></div>
+                                    </div>
+
+                            </div>
+                            <div class="profile_like_news">
+                                <li>
+                                    <div class="profile_like_news_image"></div>
+                                    <div class="profile_like_news_info">
+                                        <div class="profile_like_news_title">“포켓몬빵 보신 분~”… 이상 품귀현상, 웃돈에 끼워 팔기도</div>
+                                        <div class="profile_like_news_content">1990년대 출시돼 인기를 끌다 단종됐던 포켓몬빵이 지난달부터
+                                            다시 판매를 시작하면서 2주 만에 350만 개가 팔리는 등 품귀현상을 빚고 있다. 부산에서 …
+                                        </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                    </div>
+                                    <div class="profile_like_news_toggle">
+                                        <p>공유하기</p>
+                                    </div>
+                                    <div class="profile_like_news_button">
+                                        <div class="profile_like_news_setting"></div>
+                                        <div class="profile_like_news_heart"></div>
+                                    </div>
+
+                            </div>
+                            <div class="profile_like_news">
+                                <li>
+                                    <div class="profile_like_news_image"></div>
+                                    <div class="profile_like_news_info">
+                                        <div class="profile_like_news_title">“포켓몬빵 보신 분~”… 이상 품귀현상, 웃돈에 끼워 팔기도</div>
+                                        <div class="profile_like_news_content">1990년대 출시돼 인기를 끌다 단종됐던 포켓몬빵이 지난달부터
+                                            다시 판매를 시작하면서 2주 만에 350만 개가 팔리는 등 품귀현상을 빚고 있다. 부산에서 …
+                                        </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                    </div>
+                                    <div class="profile_like_news_toggle">
+                                        <p>공유하기</p>
+                                    </div>
+                                    <div class="profile_like_news_button">
+                                        <div class="profile_like_news_setting"></div>
+                                        <div class="profile_like_news_heart"></div>
+                                    </div>
+
+                            </div>
+                            <div class="profile_like_news">
+                                <li>
+                                    <div class="profile_like_news_image"></div>
+                                    <div class="profile_like_news_info">
+                                        <div class="profile_like_news_title">“포켓몬빵 보신 분~”… 이상 품귀현상, 웃돈에 끼워 팔기도</div>
+                                        <div class="profile_like_news_content">1990년대 출시돼 인기를 끌다 단종됐던 포켓몬빵이 지난달부터
+                                            다시 판매를 시작하면서 2주 만에 350만 개가 팔리는 등 품귀현상을 빚고 있다. 부산에서 …
+                                        </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                    </div>
+                                    <div class="profile_like_news_toggle">
+                                        <p>공유하기</p>
+                                    </div>
+                                    <div class="profile_like_news_button">
+                                        <div class="profile_like_news_setting"></div>
+                                        <div class="profile_like_news_heart"></div>
+                                    </div>
+
+                            </div>
+                            <div class="profile_like_news">
+                                <li>
+                                    <div class="profile_like_news_image"></div>
+                                    <div class="profile_like_news_info">
+                                        <div class="profile_like_news_title">“포켓몬빵 보신 분~”… 이상 품귀현상, 웃돈에 끼워 팔기도</div>
+                                        <div class="profile_like_news_content">1990년대 출시돼 인기를 끌다 단종됐던 포켓몬빵이 지난달부터
+                                            다시 판매를 시작하면서 2주 만에 350만 개가 팔리는 등 품귀현상을 빚고 있다. 부산에서 …
+                                        </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                    </div>
+                                    <div class="profile_like_news_toggle">
+                                        <p>공유하기</p>
+                                    </div>
+                                    <div class="profile_like_news_button">
+                                        <div class="profile_like_news_setting"></div>
+                                        <div class="profile_like_news_heart"></div>
+                                    </div>
+
+                            </div>
+                        </div>
+                        <div class="search_news_content">
+                            <p>검색</p>
+                            <div class="search_section">
+                                <div class="profile_like_news">
+                                    <li>
+                                        <div class="profile_like_news_image"></div>
+                                        <div class="profile_like_news_info">
+                                            <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
+                                            <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의
+                                                초미세먼지
+                                                농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...
+                                            </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                        </div>
+                                        <div class="profile_like_news_toggle">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="profile_like_news_button">
+                                            <div class="profile_like_news_setting"></div>
+                                            <div class="profile_like_news_heart"></div>
+                                        </div>
+
+                                    </li>
+                                </div>
+                                <div class="profile_like_news">
+                                    <li>
+                                        <div class="profile_like_news_image"></div>
+                                        <div class="profile_like_news_info">
+                                            <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
+                                            <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의
+                                                초미세먼지
+                                                농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...
+                                            </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                        </div>
+                                        <div class="profile_like_news_toggle">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="profile_like_news_button">
+                                            <div class="profile_like_news_setting"></div>
+                                            <div class="profile_like_news_heart"></div>
+                                        </div>
+
+                                    </li>
+                                </div>
+                                <div class="profile_like_news">
+                                    <li>
+                                        <div class="profile_like_news_image"></div>
+                                        <div class="profile_like_news_info">
+                                            <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
+                                            <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의
+                                                초미세먼지
+                                                농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...
+                                            </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                        </div>
+                                        <div class="profile_like_news_toggle">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="profile_like_news_button">
+                                            <div class="profile_like_news_setting"></div>
+                                            <div class="profile_like_news_heart"></div>
+                                        </div>
+
+                                    </li>
+                                </div>
+                                <div class="profile_like_news">
+                                    <li>
+                                        <div class="profile_like_news_image"></div>
+                                        <div class="profile_like_news_info">
+                                            <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
+                                            <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의
+                                                초미세먼지
+                                                농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...
+                                            </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                        </div>
+                                        <div class="profile_like_news_toggle">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="profile_like_news_button">
+                                            <div class="profile_like_news_setting"></div>
+                                            <div class="profile_like_news_heart"></div>
+                                        </div>
+
+                                    </li>
+                                </div>
+                                <div class="profile_like_news">
+                                    <li>
+                                        <div class="profile_like_news_image"></div>
+                                        <div class="profile_like_news_info">
+                                            <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
+                                            <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의
+                                                초미세먼지
+                                                농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...
+                                            </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                        </div>
+                                        <div class="profile_like_news_toggle">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="profile_like_news_button">
+                                            <div class="profile_like_news_setting"></div>
+                                            <div class="profile_like_news_heart"></div>
+                                        </div>
+
+                                    </li>
+                                </div>
+                                <div class="profile_like_news">
+                                    <li>
+                                        <div class="profile_like_news_image"></div>
+                                        <div class="profile_like_news_info">
+                                            <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
+                                            <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의
+                                                초미세먼지
+                                                농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...
+                                            </div>
+                                            <div class="profile_like_news_company">KBS</div>
+                                        </div>
+                                        <div class="profile_like_news_toggle">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="profile_like_news_button">
+                                            <div class="profile_like_news_setting"></div>
+                                            <div class="profile_like_news_heart"></div>
+                                        </div>
+
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recommend_book_container">
+                <div class="recommend_nav">
+                    <span>YOUTUBE</span>
+                    <span>NEWS</span>
+                    <span>BOOK</span>
+                    <span>SHOPPING</span>
+                </div>
+                <div class="search_bar">
+                    <div class="search_icon"></div>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="content_book_wrap">
+                    <div class="recommend_book_content">
+                        <p>추천 컨텐츠</p>
+                        <div class="content_book_section">
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_book_content">
+                        <p>검색</p>
+                        <div class="content_book_section">
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="book_title">책제목</div>
+                                    <div class="book_write">저자</div>
+                                    <div class="book_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="book_title">책제목</div>
+                                    <div class="book_write">저자</div>
+                                    <div class="book_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="book_title">책제목</div>
+                                    <div class="book_write">저자</div>
+                                    <div class="book_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="book_title">책제목</div>
+                                    <div class="book_write">저자</div>
+                                    <div class="book_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="book_title">책제목</div>
+                                    <div class="book_write">저자</div>
+                                    <div class="book_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="book_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="book_title">책제목</div>
+                                    <div class="book_write">저자</div>
+                                    <div class="book_price">가격</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="recommend_shopping_container">
+                <div class="recommend_nav">
+                    <span>YOUTUBE</span>
+                    <span>NEWS</span>
+                    <span>BOOK</span>
+                    <span>SHOPPING</span>
+                </div>
+                <div class="search_bar">
+                    <div class="search_icon"></div>
+                    <input type="text" placeholder="Search">
+                </div>
+                <div class="content_wrap">
+                    <div class="recommend_content">
+                        <p>추천 컨텐츠</p>
+                        <div class="content_section">
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="recommend_content_part">
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="recommend_content_part">
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="recommend_content_part">
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="recommend_content_part">
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="recommend_content_part">
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                                <div class="more_icon"></div>
+                                <div class="toggle">
+                                    <p>공유하기</p>
+                                    <div class="line"></div>
+                                    <p>찜하기</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search_content">
+                        <p>검색</p>
+                        <div class="content_section">
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                            </div>
+                            <div class="content_box">
+                                <div class="shopping_img"></div>
+                                <div class="more_icon"></div>
+                                <div class="search_content_part">
+                                    <div class="toggle">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="shopping_title">물건이름</div>
+                                    <div class="shopping_write">브랜드</div>
+                                    <div class="shopping_price">가격</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
