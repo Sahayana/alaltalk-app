@@ -11,6 +11,8 @@ db.sqlite3
 db.sqlite3-journal
 migrations/
 
+*.exe
+
 .idea
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -57,7 +59,7 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit tests / coverage reports
 htmlcov/
 .tox/
 .nox/
@@ -180,7 +182,7 @@ cython_debug/
 
 # Installer logs
 
-# Unit test / coverage reports
+# Unit tests / coverage reports
 
 # Translations
 
