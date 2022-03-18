@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from ninja import NinjaAPI
+
+from chat.apis.v1 import chat_room_router
 from . import views
+
+# api = NinjaAPI()
+# api.add_router("/chat/", chat_room_router)
+# api.add_router("/chat/message/", )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
