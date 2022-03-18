@@ -1,11 +1,15 @@
+
+from dataclasses import dataclass
 import json
-from email.policy import EmailPolicy
+from datetime import datetime
+
 
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+
 
 from accounts.services.accounts_service import create_user
 
@@ -63,3 +67,34 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+
+@login_required
+def friend_list(request):
+    return render(request, "accounts/user_list.html")
+
+
+@login_required
+def mypage(request):
+    user = get_user_model().objects.get(id=request.user.id)
+    context = {"user" : user}
+    return render(request, "accounts/mypage.html", context)
+
+@login_required
+def profile_change(request):
+
+    user = request.user
+
+    if request.method == 'POST':
+        nickname = request.POST.get("nickname")
+        bio = request.POST.get("bio")        
+        if request.FILES.get("img") != None:
+            img = request.FILES.get("img")
+            img_extension = img.name.split('.')[-1]
+            img.name = user.email.split('@')[0]+ '-' + datetime.now().strftime('%Y-%m-%d') + '.' + img_extension
+            user.img = str(img)
+
+        user.nickname = nickname
+        user.bio = bio        
+        user.save()
+        return JsonResponse({"msg":"ok"})
