@@ -31,7 +31,7 @@ def signup(request):
     elif request.method == "GET":
         signed_user = request.user.is_authenticated
         if signed_user:
-            return redirect("/")  # 채팅템플릿으로 redirect하도록 추후 변경
+            return redirect("accounts:mypage")  # 채팅템플릿으로 redirect하도록 추후 변경
 
         return render(request, "accounts/signup.html")
 
@@ -58,7 +58,7 @@ def login(request):
     else:
         signed_user = request.user.is_authenticated
         if signed_user:
-            return redirect("/")  # 채팅템플릿으로 redirect하도록 추후 변경
+            return redirect("accounts:mypage")  # 채팅템플릿으로 redirect하도록 추후 변경
 
         return render(request, "accounts/login.html")
 

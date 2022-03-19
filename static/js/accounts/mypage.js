@@ -188,7 +188,7 @@ function  profileChange(){
 
     $.ajax({
         type: 'POST',
-        url: '/accounts/mypage/modify',  
+        url: '/accounts/mypage/modify/',  
         cache: false,
         contentType: false,
         processData: false,
