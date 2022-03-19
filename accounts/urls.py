@@ -11,5 +11,5 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("friends/", views.friend_list, name='friend_list'),
     path("mypage/", views.mypage, name="mypage"),
-    path("mypage/modify", views.profile_change, name="profile_change"),
+    path("mypage/modify/", views.profile_change, name="profile_change"),
 ]
