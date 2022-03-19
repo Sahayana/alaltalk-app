@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import json
 from datetime import datetime
 
-
+from django.db.models import Q
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -98,3 +98,18 @@ def profile_change(request):
         user.bio = bio        
         user.save()
         return JsonResponse({"msg":"ok"})
+
+
+@login_required
+def search_friend(request):
+    user = request.user
+    
+    if request.method == 'GET':
+        query = request.GET.get("q")
+        result = get_user_model().objects.filter(
+            Q(email__icontains=query) |
+            Q(nickname__icontains=query)
+        ).distinct()    # 중복 제거를 위한 distinct()
+        result = result.values() # serialized        
+
+        return JsonResponse({"result":list(result)})
