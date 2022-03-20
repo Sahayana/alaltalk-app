@@ -10,7 +10,7 @@
     <!-- jQuery cdn -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/accounts/mypage.css' %}">
-    <script defer src="{% static 'js/accounts/mypage.js' %}"></script>
+    
 </head>
 <body>
 <div class="outline">
@@ -26,7 +26,7 @@
         <div class="user_profile">
             <div class="profile_upper">
                 <div class="profile_image">
-                    <img class="profile-img" src="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png" alt="profile-img" srcset="">
+                    <img class="profile-img" src="{{user.img.url}}" alt="profile-img" srcset="">
                 </div>
                 <div class="profile_user_name">{{user.nickname}}</div>
                 <div class="profile_user_id">{{user.email}}</div>
@@ -55,7 +55,7 @@
                 {% csrf_token %}
                 <div class="profile_image_change">
                     <input type="file" id="profile-img" hidden >
-                    <img id="profile-img-modified" src="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png" alt="profile-img" srcset="">
+                    <img id="profile-img-modified" src={{user.img.url}} alt="profile-img" srcset="">
                 </div>
                 <input type="text" id="profile-nickname" value="{{user.nickname}}">
                 <input type="text" id="profile-bio" value="{{user.bio}}">
@@ -76,7 +76,7 @@
                             <div class="profile_follow_user">{{sender.nickname}}</div>
                             <div class="profile_follow_user_bio">{{sender.bio}}</div>
                         </div>
-                        <div class="profile_follow_add"></div>
+                        <div class="profile_follow_add" id="{{request.id}}" onclick=acceptRequest(this.id)></div>
                     </div>
                 </li>    
             </div>
@@ -407,5 +407,6 @@
         </div>
     </div>
 </div>
+<script defer src="{% static 'js/accounts/mypage.js' %}"></script>
 </body>
 </html>

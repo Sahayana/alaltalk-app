@@ -204,22 +204,54 @@ function  profileChange(){
 }
 
 
+// 친구 요청 수락
+function acceptRequest(requestId){    
+    // let requestId = $(this).data("id");
+    // console.log(this);
+    console.log(requestId);
+
+    $.ajax({
+        type: 'GET',
+        url: `/accounts/friends/accept/${requestId}`,         
+        success: function (response) {
+            console.log(response);
+            if (response["msg"] === "accepted"){
+                alert("친구 요청을 수락하였습니다..");
+                window.location.reload();
+            }else{
+                alert("문제가 발생하였습니다.");
+                return;
+            }
+                             
+        }
+    });    
+}
+
+
 
 
 
 $(document).ready(function(){
     
-    // Profile Image upload
+    // 프로필 이미지 업로드
     let profileImgDiv = document.querySelector('.profile_image_change');
 
     profileImgDiv.addEventListener('click', function(){
         document.getElementById('profile-img').click();
     })
 
-    // Profile Image Preview
+    // 프로필 이미지 프리뷰
     let profileImgInput = document.querySelector('#profile-img');
     profileImgInput.addEventListener('change', function(){
         previewImg(this);        
     })
+
+    // 친구 리스트 이동
+    let friendListIcon = $(".user_icon");
+    friendListIcon.on('click', function(){
+        window.location.href = `/accounts/friends/`;
+    })
+
+
 
 });

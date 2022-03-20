@@ -73,7 +73,14 @@ def logout(request):
 
 @login_required
 def friend_list(request):
-    return render(request, "accounts/user_list.html")
+    user = get_user_model().objects.get(id=request.user.id)
+    friends = user.friends.all()
+    print(friends)
+    context = {
+        'user':user,
+        'friends': friends,
+        }
+    return render(request, "accounts/user_list.html", context)
 
 
 @login_required
@@ -108,7 +115,7 @@ def profile_change(request):
 
 @login_required
 def search_friend(request):
-    user = request.user
+    user = request.user # 자기 자신을 검색한 경우 예외처리 남음
     
     if request.method == 'GET':
         query = request.GET.get("q")
@@ -131,3 +138,14 @@ def send_request(request, receiver_id):
         return JsonResponse({"msg":"sent"})
     return JsonResponse({"msg":"already"})
 
+
+@login_required
+def accept_request(request, request_id):
+    friend_request = FriendRequest.objects.get(id=request_id)
+    if friend_request.receiver == request.user:
+        friend_request.receiver.friends.add(friend_request.sender)
+        friend_request.sender.friends.add(friend_request.receiver)
+        friend_request.delete()
+        return JsonResponse({"msg":"accepted"})
+    else:
+        return JsonResponse({"msg":"error"})    # 거절, 회수 등의 예외처리 남음

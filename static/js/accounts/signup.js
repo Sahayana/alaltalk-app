@@ -17,6 +17,8 @@ function isImg(file) {
 
 
 function previewImg(img) {
+    let profileImgDiv = document.querySelector('.signup-profile-img');
+
     if(!isImg(img.value)){
         alert('이미지 파일만 업로드 가능합니다.')
         return;
