@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.dispatch import receiver
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
@@ -78,7 +79,11 @@ def friend_list(request):
 @login_required
 def mypage(request):
     user = get_user_model().objects.get(id=request.user.id)
-    context = {"user" : user}
+    friend_requests = FriendRequest.objects.filter(receiver=user)
+    context = {
+        "user" : user,
+        "friend_requests": friend_requests,
+    }
     return render(request, "accounts/mypage.html", context)
 
 @login_required
