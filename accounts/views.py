@@ -12,6 +12,7 @@ from django.shortcuts import redirect, render
 
 
 from accounts.services.accounts_service import create_user
+from accounts.models import FriendRequest
 
 # Create your views here.
 
@@ -113,3 +114,15 @@ def search_friend(request):
         result = result.values() # serialized        
 
         return JsonResponse({"result":list(result)})
+
+
+
+@login_required
+def send_request(request, receiver_id):
+    sender = request.user
+    receiver = get_user_model().objects.get(id=receiver_id)
+    friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver)
+    if created:
+        return JsonResponse({"msg":"sent"})
+    return JsonResponse({"msg":"already"})
+

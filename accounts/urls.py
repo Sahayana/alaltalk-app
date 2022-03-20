@@ -13,4 +13,6 @@ urlpatterns = [
     path("mypage/", views.mypage, name="mypage"),
     path("mypage/modify/", views.profile_change, name="profile_change"),
     path("friends/search/", views.search_friend, name='search_friend'),
+    path("friends/request/<int:receiver_id>/", views.send_request, name="send_request"),
+    
 ]

@@ -32,9 +32,32 @@ function appendResult(friend){
                     <div class="user_name">${friend['nickname']}</div>
                     <div class="user_id">${friend['email']}</div>
                 </div>
-                <div class="btn apply_follow">친구신청</div>
+                <div class="btn apply_follow" onclick=sendRequest(${friend['id']})>친구신청</div>
             </div>
     `
 
     $(".modal-body").append(tempHtml);
+}
+
+
+// 친구신청
+function sendRequest(receiver_id){
+
+    $.ajax({
+        type: 'GET',
+        url: `/accounts/friends/request/${receiver_id}`,         
+        success: function (response) {
+            console.log(response);
+            if (response["msg"] === "already"){
+                alert("이미 친구 요청한 회원입니다.");
+                return;
+            }else{
+                alert("친구요청을 보냈습니다.");
+                window.location.reload();
+            }
+                             
+        }
+    });    
+    
+
 }
