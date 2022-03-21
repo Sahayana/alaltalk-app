@@ -11,9 +11,10 @@
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="/static/css/base.css">
     <link rel="stylesheet" href="/static/css/search/recommend.css">
-
+    <link rel="stylesheet" href="/static/css/chat/chat_room.css">
 </head>
 <body>
+<button onclick="switch_chat()"> hi!</button>
 <div class="outline">
     <div class="nav">
         <div class="logo"><div class="logo_img"></div></div>
@@ -23,14 +24,14 @@
             <div class="icon mypage_icon"></div>
         </div>
     </div>
-    <div class="left_wrap">
-        
+    <div class="left_wrap" id="left_wrap">
     </div>
 
-    <div class="right_wrap">
-        {% include 'search/recommend_include.html' %}
+    <div class="right_wrap" id="right_wrap">
+
     </div>
 </div>
+<script src="/static/js/base.js"></script>
 <script src="/static/js/search/recommend.js"></script>
 </body>
 </html>
