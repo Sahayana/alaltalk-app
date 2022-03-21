@@ -59,3 +59,9 @@ function tempPw(){
     });    
     
 }
+
+// 회원가입 페이지로 이동
+
+function moveToSignUp(){
+    window.location.href = '/accounts/signup/';
+}
