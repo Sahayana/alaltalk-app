@@ -68,3 +68,6 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 #
 # for i in range(1000):
 #     time.sleep(1)
+
+def crawling_shopping():
+    return 0
