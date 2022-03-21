@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import json
 import os
 from pathlib import Path
 
@@ -152,3 +153,21 @@ try:
     from alaltalk.local_settings import *
 except ImportError:
     pass
+
+
+# Email 전송을 위한 설정
+
+try:
+    with open(os.path.join(BASE_DIR, 'alaltalk/config/email.json')) as f:
+        email = json.loads(f.read())
+
+    EMAIL_BACKEND = email['BACKEND']
+    EMAIL_HOST = email['HOST'] 
+    EMAIL_PORT = int(email['PORT']) 
+    EMAIL_HOST_USER = email['HOST_USER'] 
+    EMAIL_HOST_PASSWORD = email['HOST_PASSWORD'] 
+    EMAIL_USE_TLS = True 
+    EMAIL_USE_SSL = False
+    
+except FileNotFoundError:
+    pass 
