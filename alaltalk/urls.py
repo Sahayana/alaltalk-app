@@ -16,14 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from ninja import NinjaAPI
-from . import views
+
 from search.apis.v1.search_router import router as search_router
+
+from . import views
+
 api = NinjaAPI()
-api.add_router('/search/', search_router)
+api.add_router("/search/", search_router)
 
 urlpatterns = [
-    path('api/', api.urls),
     path("admin/", admin.site.urls),
-    path("", views.landing_home, name="landing_page")
+    path("", views.landing_home, name="landing_page"),
+    path("accounts/", include("accounts.urls")),
+    path('api/', api.urls)
 ]
-

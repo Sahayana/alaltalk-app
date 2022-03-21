@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -5,11 +6,11 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- reset css cdn -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css%22%3E">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"> 
     <!-- jQuery cdn -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js%22%3E"></script>
-    <link rel="stylesheet" href="../../static/css/accounts/mypage.css">
-    <script defer src="../../static/js/accounts/mypage.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/accounts/mypage.css' %}">
+    
 </head>
 <body>
 <div class="outline">
@@ -24,17 +25,21 @@
     <div class="left_wrap">
         <div class="user_profile">
             <div class="profile_upper">
-                <div class="profile_image"></div>
-                <div class="profile_user_name">양금성</div>
-                <div class="profile_user_id">hajin@example.com</div>
-                <div class="profile_user_bio">나는 행복합니다....</div>
+                <div class="profile_image">
+                    <img class="profile-img" src="{{user.img.url}}" alt="profile-img" srcset="">
+                </div>
+                <div class="profile_user_name">{{user.nickname}}</div>
+                <div class="profile_user_id">{{user.email}}</div>
+                <div class="profile_user_bio">{{user.bio}}</div>
             </div>
             <div class="profile_buttons">
                 <button class="profile_change" id="profile_change" onclick="profile_change()">프로필 변경</button>
                 <button class="profile_follow" id="profile_follow" onclick="profile_follow()">팔로우 관리</button>
                 <button class="profile_like" id="profile_like" onclick="profile_like()">찜 목록</button>
             </div>
-            <div class="profile_logout">로그아웃</div>
+            <div class="profile_logout">
+                <a href="{% url 'accounts:logout' %}"><button>로그아웃</button></a>
+            </div>
 
         </div>
     </div>
@@ -46,68 +51,38 @@
         </div>
         <div class="profile_change_container" id="profile_change_container">
             <div class="profile_change_title">프로필 변경</div>
-            <div class="profile_change_part">
-                <div class="profile_image_change"></div>
-                <input type="text" placeholder="양금성">
-                <textarea placeholder="나는 행복합니다...." rows="5"></textarea>
-                <button class="profile_change_button">적용하기</button>
-            </div>
+            <form class="profile_change_part">
+                {% csrf_token %}
+                <div class="profile_image_change">
+                    <input type="file" id="profile-img" hidden >
+                    <img id="profile-img-modified" src={{user.img.url}} alt="profile-img" srcset="">
+                </div>
+                <input type="text" id="profile-nickname" value="{{user.nickname}}">
+                <input type="text" id="profile-bio" value="{{user.bio}}">
+                <button type="button" class="profile_change_button" id="profile_change_button" onclick=profileChange()>적용하기</button>
+            </form>
         </div>
         <div class="profile_follow_container" id="profile_follow_container">
             <div class="profile_follow_title">팔로우 관리</div>
+            {% if friend_requests %}
+            {% for request in friend_requests %}
+            {% with sender=request.sender %}
+
             <div class="profile_follow_list">
                 <li>
                     <div class="profile_chat_avatar"></div>
                     <div class="profile_follow_list_body">
                         <div class="profile_follow_list_info">
-                            <div class="profile_follow_user">양금성</div>
-                            <div class="profile_follow_user_bio">S.A 공지사항에 올렸습니다.</div>
+                            <div class="profile_follow_user">{{sender.nickname}}</div>
+                            <div class="profile_follow_user_bio">{{sender.bio}}</div>
                         </div>
-                        <div class="profile_follow_add"></div>
+                        <div class="profile_follow_add" id="{{request.id}}" onclick=acceptRequest(this.id)></div>
                     </div>
-                </li>
-                <li>
-                    <div class="profile_chat_avatar"></div>
-                    <div class="profile_follow_list_body">
-                        <div class="profile_follow_list_info">
-                            <div class="profile_follow_user">김진주</div>
-                            <div class="profile_follow_user_bio">ㅋㅋㅋㅋㅋㅋㅋㅋㅋ</div>
-                        </div>
-                        <div class="profile_follow_add"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="profile_chat_avatar"></div>
-                    <div class="profile_follow_list_body">
-                        <div class="profile_follow_list_info">
-                            <div class="profile_follow_user">선하진</div>
-                            <div class="profile_follow_user_bio">잡담방이 어디에요?</div>
-                        </div>
-                        <div class="profile_follow_add"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="profile_chat_avatar"></div>
-                    <div class="profile_follow_list_body">
-                        <div class="profile_follow_list_info">
-                            <div class="profile_follow_user">YSH</div>
-                            <div class="profile_follow_user_bio">오히려 좋아요~</div>
-                        </div>
-                        <div class="profile_follow_add"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="profile_chat_avatar"></div>
-                    <div class="profile_follow_list_body">
-                        <div class="profile_follow_list_info">
-                            <div class="profile_follow_user">jaesung</div>
-                            <div class="profile_follow_user_bio">이번 기회에 공부합시다!</div>
-                        </div>
-                        <div class="profile_follow_add"></div>
-                    </div>
-                </li>
-
+                </li>    
             </div>
+            {% endwith %}
+            {% endfor %}
+            {% endif %}
         </div>
         <div class="profile_like_container" id="profile_like_container">
             <div class="profile_like_title">찜 목록</div>
@@ -432,5 +407,6 @@
         </div>
     </div>
 </div>
+<script defer src="{% static 'js/accounts/mypage.js' %}"></script>
 </body>
 </html>

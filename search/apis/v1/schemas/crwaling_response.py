@@ -1,5 +1,6 @@
-from ninja import Schema
 from typing import Dict
+
+from ninja import Schema
 
 
 class CrawlingResponse(Schema):

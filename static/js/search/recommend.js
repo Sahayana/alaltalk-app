@@ -1,10 +1,8 @@
-let test = ''
 
-window.onload = function () {
+
+function click_recommend_function() {
     console.log('page is onload!')
-
-
-
+    // document.getElementById('recommend_spinner').style.display='none'
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
@@ -29,7 +27,6 @@ window.onload = function () {
                 $('#youtube_recommend_content').append(temp_html)
             }
 
-            test = response['all_response']['youtube'][1]
         }
     })
 }
@@ -45,14 +42,30 @@ function move_category(target_id) {
     document.getElementById(target_id).style.display = 'block'
 }
 
-// 각 nav_bar에 click event 주기
-let navs = document.getElementsByClassName('recommend_nav')
-let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-for (let i = 0; i < navs.length; i++) {
-    let nav_row = navs[i].children
-    for (let j = 0; j < nav_row.length; j++) {
-        nav_row[j].addEventListener('click', function () {
-            move_category(navs_list_id[j])
-        })
-    }
+// // 각 nav_bar에 click event 주기
+// let navs = document.getElementsByClassName('recommend_nav')
+// let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
+// for (let i = 0; i < navs.length; i++) {
+//     let nav_row = navs[i].children
+//     for (let j = 0; j < nav_row.length; j++) {
+//         nav_row[j].addEventListener('click', function () {
+//             move_category(navs_list_id[j])
+//         })
+//     }
+// }
+
+function give_event(){
+    console.log('give event!')
+    let navs = document.getElementsByClassName('recommend_nav')
+    let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
+    for (let i = 0; i < navs.length; i++) {
+        console.log('hi')
+        let nav_row = navs[i].children
+        for (let j = 0; j < nav_row.length; j++) {
+            console.log(j)
+            nav_row[j].addEventListener('click', function () {
+                move_category(navs_list_id[j])
+            })
+        }
+}
 }

@@ -134,6 +134,7 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 12px;
+    cursor: pointer;
 }
 
 .left_wrap .chat_container .top_bar .toggle_content {
@@ -881,7 +882,7 @@ body {
 }
 
 .profile_like_news_title {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -1531,4 +1532,22 @@ body {
 
 .shopping_price {
     margin-top: 30px;
+}
+
+/******      spinner        ******/
+
+.recommend_spinner{
+    width: 70vw;
+    height: 300px;
+    background-color: #de0404;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.recommend_spinner_lorder{
+    width: 100px;
+    height: 100px;
+    background-color: #0d55d9;
 }
