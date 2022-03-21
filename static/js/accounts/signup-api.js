@@ -1,7 +1,32 @@
 // 회원가입
-function signUp(){
+function checkValidation(){
     let email = $("#email").val();
     let password = $("#check-password").val();
+    let password2 = $("#current-password").val();    
+    let nickName = $("#nickname").val();    
+    let profileImg = $("#profile-img")[0].files[0];
+    
+    if(email == '' || password == '' || password2 == '' || nickName == '' ){
+        alert("가입에 필요한 정보를 입력해주세요.");
+        return;
+    }
+
+    if(password !== password2){
+        alert("비밀번호를 확인해주세요.");
+        return;
+    }
+
+    signUp();    
+    
+}
+
+
+
+
+
+function signUp(){
+    let email = $("#email").val();
+    let password = $("#check-password").val();    
     let nickName = $("#nickname").val();
     let bio = $("#bio").val();
     let profileImg = $("#profile-img")[0].files[0];
@@ -52,7 +77,7 @@ function checkDuplicated() {
                 alert("이미 존재하는 이메일 주소입니다.")
                 return;
             } else {
-                signUp();
+                checkValidation();
             } 
 
         }

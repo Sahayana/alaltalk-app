@@ -13,7 +13,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.core.mail import send_mail
 
-from accounts.services.accounts_service import create_user
+
 from accounts.models import FriendRequest
 
 # Create your views here.
@@ -25,9 +25,11 @@ def signup(request):
         nickname = request.POST.get("nickname")
         password = request.POST.get("password2")
         bio = request.POST.get("bio")
-        img = request.FILES.get("img")
-
-        create_user(email=email, nickname=nickname, password=password, bio=bio, img=img)
+        if request.FILES.get("img"):
+            img = request.FILES.get("img")
+            get_user_model().objects.create_user(email=email,nickname=nickname,password=password,bio=bio,img=img)
+        else:
+            get_user_model().objects.create_user(email=email,nickname=nickname,password=password,bio=bio)
         context = {"result": "회원가입이 완료되었습니다."}
         return JsonResponse(context)
 
