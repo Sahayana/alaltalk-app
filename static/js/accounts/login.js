@@ -34,3 +34,28 @@ function login(){
     });    
 
 };
+
+
+// 임시 비밀번호 전송
+
+function tempPw(){
+    let userEmail = ""; 
+    userEmail = $("#email-find").val();
+    console.log(userEmail);
+    
+    $.ajax({
+        type: 'GET',
+        url: `/accounts/login/temp?q=${userEmail}`,         
+        success: function (response) {
+            if (response["msg"] == "none-user"){
+                alert("존재하지 않는 이메일 주소입니다.");
+                return;
+            }else{
+                alert("임시 비밀번호가 전송되었습니다.");
+                window.location.reload();
+            }
+                             
+        }
+    });    
+    
+}

@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 import json
 from datetime import datetime
+import random
 
 from django.db.models import Q
 from django.contrib import auth
@@ -10,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.dispatch import receiver
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-
+from django.core.mail import send_mail
 
 from accounts.services.accounts_service import create_user
 from accounts.models import FriendRequest
@@ -149,3 +150,36 @@ def accept_request(request, request_id):
         return JsonResponse({"msg":"accepted"})
     else:
         return JsonResponse({"msg":"error"})    # 거절, 회수 등의 예외처리 남음
+
+
+def temporary_password(request):
+    
+    query = request.GET.get("q")
+    print(query)
+    user = get_user_model().objects.filter(email__iexact=query).get()
+    if user is None:
+        return JsonResponse({"msg":"none-user"})
+    
+    alp_str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alp_str_lower = alp_str.lower()
+    num = '1234567890'
+    temp_pw = ''.join(random.sample(alp_str+alp_str_lower+num, k=12))
+
+    user.set_password(temp_pw)
+    user.save()
+    
+    send_mail(
+        "[alaltalk] 임시 비밀번호 메일입니다.",
+        f"회원님의 임시 비밀번호는 {temp_pw} 입니다.\n로그인 후 비밀번호를 꼭 변경해주세요.",
+        'alaltalklove@gmail.com',
+        [user.email],
+        fail_silently=False
+    )
+
+    return JsonResponse({"msg":"ok"})
+    
+    
+    
+    
+
+    
