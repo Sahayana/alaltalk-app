@@ -69,5 +69,10 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 # for i in range(1000):
 #     time.sleep(1)
 
-def crawling_shopping():
+
+def crawling_shopping(search_word: str, count: str) -> List[List[str]]:
+    url = 'https://www.coupang.com/np/search?component=&&channel=user' + '&q=' + search_word
+    header = ''
     return 0
+
+crawling_shopping('운동', 10)
