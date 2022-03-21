@@ -543,6 +543,7 @@ body {
 
 .recommend_news_container {
     display: none;
+
 }
 
 .right_wrap {
@@ -876,11 +877,11 @@ body {
 }
 
 .profile_like_news_info {
-    width: 33vw;
+    width: 40vw;
 }
 
 .profile_like_news_title {
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -915,7 +916,7 @@ body {
 .profile_like_news_toggle {
     position: absolute;
     top: -25px;
-    left: 47vw;
+    left: 45vw;
     width: 80px;
     height: 40px;
     border-radius: 10px;
