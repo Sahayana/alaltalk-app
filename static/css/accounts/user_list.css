@@ -262,10 +262,16 @@ body {
   position: absolute;
   right: 24px;
 }
-.search_result .user_box .btn.apply_follow {
+.search_result .user_box .apply_follow {
   background-color: #7657ce;
   color: #fff;
   border: none;
+  cursor: pointer;
+}
+.search_result .user_box .already_friend {
+  background-color: #fff;
+  color: #7657ce;
+  border: 1px solid #7657ce;
 }
 
 /* 모달 안의 검색한 유저 목록 css */
