@@ -65,3 +65,19 @@ function sendRequest(receiver_id){
     
 
 }
+
+
+$(document).ready(function(){       
+
+    // 친구 리스트 이동
+    let friendListIcon = $(".user_icon");
+    friendListIcon.on('click', function(){
+        window.location.href = `/accounts/friends/`;
+    });
+
+    // 마이페이지 이동
+    let myPageIcon = $(".mypage_icon");
+    myPageIcon.on('click', function(){
+        window.location.href = `/accounts/mypage/`;
+    });
+});
