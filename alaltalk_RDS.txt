@@ -1,0 +1,7 @@
+alaltak DATABASE INFO
+
+사용자 이름 : admin
+
+마스터 암호 : 3zGGNStrf2fCxlCCN6n3
+
+엔드포인트 : alaltalk.chsfxpt2fyr9.ap-northeast-2.rds.amazonaws.com

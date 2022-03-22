@@ -80,7 +80,7 @@ body {
 }
 
 .signup-container .signup-left-wrapper .signup-form-container div {
-  margin-bottom: 2%;
+  margin-bottom: 16px;
   width: 70%;
   height: 2%;
   background: white;
@@ -93,11 +93,7 @@ body {
   align-items: center;
 }
 
-.signup-container .signup-left-wrapper .signup-form-container .profile-bio {
-  height: 10%;
-}
-
-.signup-container
+/* .signup-container
   .signup-left-wrapper
   .signup-form-container
   .profile-bio
@@ -105,7 +101,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-}
+} */
 
 .signup-container .signup-left-wrapper .signup-form-container div > input {
   outline: none;
@@ -164,7 +160,7 @@ body {
   background: transparent;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 15%;
+  margin-top: 10%;
 }
 
 .signup-container .signup-left-wrapper .signup-form-container > small {

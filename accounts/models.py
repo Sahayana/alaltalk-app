@@ -4,6 +4,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from django.conf import settings
 
 
 # User 생성용 헬퍼 클래스
@@ -38,6 +39,10 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
+def profile_img_save_path(instance):
+    return f"profile_img/{instance.id}/"
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
@@ -45,7 +50,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     bio = models.CharField(max_length=150, blank=True)
-    img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", upload_to="profile_images/")
+    img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", upload_to="profile_img/")
+    friends = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     # Boolean field
     is_admin = models.BooleanField(default=False)
@@ -69,3 +75,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
+
+
+class FriendRequest(models.Model):
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver")
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender")

@@ -17,6 +17,8 @@ function isImg(file) {
 
 
 function previewImg(img) {
+    let profileImgDiv = document.querySelector('.signup-profile-img');
+
     if(!isImg(img.value)){
         alert('이미지 파일만 업로드 가능합니다.')
         return;
@@ -38,6 +40,9 @@ function previewImg(img) {
 
 
 $(document).ready(function(){
+
+    let signBtn = document.getElementById("signBtn");
+    signBtn.disabled = true;
     
     // Profile Image upload
     let profileImgDiv = document.querySelector('.signup-profile-img');
@@ -65,11 +70,12 @@ $(document).ready(function(){
         if (!isEmail(email.value)){
             emailDiv.style.border = '2px solid red';        
             e_error.innerText = "올바른 이메일 형식이 아닙니다."
-            e_error.style.visibility ='visible';
+            e_error.style.visibility ='visible';            
             return false
         }else {
             emailDiv.style.border = '2px solid green';        
             e_error.style.visibility ='hidden';
+            signBtn.disabled = false;
         }
     })
 
@@ -85,11 +91,12 @@ $(document).ready(function(){
         if (!isPw(password.value)){
             passwordDiv.style.border = '2px solid red';        
             pwd_error.innerText = "영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.";
-            pwd_error.style.visibility ='visible';
+            pwd_error.style.visibility ='visible';            
             return false
         }else {
             passwordDiv.style.border = '2px solid green';        
             pwd_error.style.visibility ='hidden';
+            signBtn.disabled = false;
 
         }
 
@@ -100,11 +107,12 @@ $(document).ready(function(){
         if (password.value !== passwordCheck.value){
             passwordCheckDiv.style.border = '2px solid red';        
             pwd_check_error.innerText = "패스워드를 확인해주세요.";
-            pwd_check_error.style.visibility ='visible';
+            pwd_check_error.style.visibility ='visible';            
             return false
         }else {
             passwordCheckDiv.style.border = '2px solid green';        
             pwd_check_error.style.visibility ='hidden';
+            signBtn.disabled = false;
         }
 
     })
@@ -122,31 +130,30 @@ $(document).ready(function(){
         if (nickName.value.length < 3){
             nickNameDiv.style.border = '2px solid red';        
             name_error.innerText = "닉네임은 3자리 이상이여야 합니다.";
-            name_error.style.visibility ='visible';
+            name_error.style.visibility ='visible';            
             return false
         }else {
             nickNameDiv.style.border = '2px solid green';        
             name_error.style.visibility ='hidden';
-        }
-    })
-
-    // signBtn activation
-    let agreeChecked = document.querySelector(".agree-checkbox");
-    let signBtn = document.getElementById("signBtn");
-
-
-    $("#agree-cb").addEventListener('click', function(){
-        $("#agree-cb").prop('checked',true);
-    })
-
-    let checked = $("#agree-cb").is(":checked");
-
-    if (checked){
             signBtn.disabled = false;
-        }else{
-            signBtn.disabled = true;
         }
+    })
 
+    // signBtn activation    
+    let agreeBox = $('input[name=agree-cb]');
+    agreeBox.click(function(){
+        if(!!agreeBox.attr('checked')) {
+            agreeBox.attr('checked',false);
+            signBtn.disabled = true;
+            console.log(signBtn.disabled);
+        } else {
+            agreeBox.attr('checked',true);
+            signBtn.disabled = false;
+            console.log(signBtn.disabled);
+        }        
+    })
+    
+    
 
     // Returning to login
 

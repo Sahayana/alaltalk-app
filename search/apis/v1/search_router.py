@@ -24,3 +24,27 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
     content_count = 10
     all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
     return 201, {"all_response": all_response}
+
+
+@csrf_exempt
+@router.get("/chat")
+def open_chat_room(request):
+    return render(request, "search/recommend_include_chatroom.html")
+
+
+@csrf_exempt
+@router.get("/recommend")
+def open_chat_room(request):
+    return render(request, "search/recommend_include_recommend.html")
+
+
+@csrf_exempt
+@router.get("/chat_list")
+def open_chat_room(request):
+    return render(request, "search/recommend_include_chat_list.html")
+
+
+@csrf_exempt
+@router.get("/spinner")
+def open_chat_room(request):
+    return render(request, "search/recommend_spinner.html")

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import json
 import os
 from pathlib import Path
 
@@ -88,6 +89,8 @@ WSGI_APPLICATION = "alaltalk.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
+#기존 연결된 DATABASE - SQlite
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -136,6 +139,9 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -151,3 +157,21 @@ try:
     from alaltalk.local_settings import *
 except ImportError:
     pass
+
+
+# Email 전송을 위한 설정
+
+try:
+    with open(os.path.join(BASE_DIR, 'alaltalk/config/email.json')) as f:
+        email = json.loads(f.read())
+
+    EMAIL_BACKEND = email['BACKEND']
+    EMAIL_HOST = email['HOST'] 
+    EMAIL_PORT = int(email['PORT']) 
+    EMAIL_HOST_USER = email['HOST_USER'] 
+    EMAIL_HOST_PASSWORD = email['HOST_PASSWORD'] 
+    EMAIL_USE_TLS = True 
+    EMAIL_USE_SSL = False
+    
+except FileNotFoundError:
+    pass 
