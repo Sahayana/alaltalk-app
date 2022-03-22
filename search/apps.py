@@ -11,7 +11,7 @@ class SearchConfig(AppConfig):
     # webdriver option 설정 - 창 안 보이기, 시크릿 모드
     options.add_argument("headless")
     options.add_argument('--incognito')
-    webdriver = driver = webdriver.Chrome(executable_path="D:/projects/alaltalk-app/search/chromedriver.exe",options=options)
+    webdriver = driver = webdriver.Chrome(executable_path="./search/chromedriver.exe",options=options)
 
     # 쿠기 삭제
     driver.delete_all_cookies()
