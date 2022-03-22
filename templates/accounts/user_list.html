@@ -21,6 +21,7 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
+            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
@@ -30,110 +31,39 @@
             <input type="text" placeholder="유저를 검색하여 대화를 시작해보세요.">
         </div>
         <div class="user_list">
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
+            {% for ul in user_list %}
+                <div class="user_box">
+                    <div class="user_img"></div>
+                    <div class="info_group">
+                        <div class="user_name">{{ ul.nickname }}</div>
+                        <div class="user_id">{{ ul.bio }}</div>
+                    </div>
+                    <a href="/chat/{{ ul.id }}/" class="btn start_chat">채팅하기</a>
                 </div>
-                <div class="btn apply_follow">친구신청</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="id">1</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn start_chat">채팅하기</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn apply_follow">친구신청</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn apply_follow">친구신청</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn apply_follow">친구신청</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn apply_follow">친구신청</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn apply_follow">친구신청</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn start_chat">채팅하기</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn start_chat">채팅하기</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn start_chat">채팅하기</div>
-            </div>
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">양금성</div>
-                    <div class="user_id">geumsung@example.com</div>
-                </div>
-                <div class="btn start_chat">채팅하기</div>
-            </div>
+            {% endfor %}
+            {#            <div class="user_box">#}
+            {#                <div class="user_img"></div>#}
+            {#                <div class="info_group">#}
+            {#                    <div class="user_name">양금성</div>#}
+            {#                    <div class="id">1</div>#}
+            {#                    <div class="user_id">geumsung@example.com</div>#}
+            {#                </div>#}
+            {#                <div class="btn apply_follow">친구신청</div>#}
+
+
         </div>
 
-    </div>
-
-    <div class="right_wrap">
-        <div class="chat_start_msg">
-            <div class="chat_start_img"></div>
-            <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
+        <div class="right_wrap">
+            <div class="chat_start_msg">
+                <div class="chat_start_img"></div>
+                <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
+            </div>
         </div>
     </div>
-</div>
-<script>
-    {#$(".start_chat").onclick = function () {#}
-    {#    let roomId = $('')#}
-    {#}#}
-</script>
+    <script>
+        $(".logout").click(function () {
+            location.replace("/accounts/logout");
+        })
+    </script>
 </body>
 </html>

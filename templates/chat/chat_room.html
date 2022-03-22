@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/chat/chat_room.css">
+    <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}">
 </head>
 <body>
 <div class="outline">
@@ -21,83 +22,21 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
+            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
         <p class="title">채팅</p>
         <div class="chat_list">
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">그그 목이 아프신 분들 중에서 입으로 검사해서 양성 나오신 분들도 계신다고 하는데 혹시 입? 목? 쪽으로 검사 해보셨을 까요...??? 으아...........
-무리하지 마시구.........화이팅입니다........ㅠ</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">그그 목이 아프신 분들 중에서 입으로 검사해서 양성 나오신 분들도 계신다고 하는데 혹시 입? 목? 쪽으로 검사 해보셨을 까요...??? 으아...........
-무리하지 마시구.........화이팅입니다........ㅠ</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
-            <div class="chat_partner">
-                <div class="partner_img"></div>
-                <div class="info_group">
-                    <div class="partner_name">양금성</div>
-                    <div class="partner_last_msg">S.A 공지사항에 올렸습니다.</div>
-                </div>
-            </div>
+            {% for chat in chat_list %}
+                <a href="/chat/{{ chat.id }}/" class="chat_partner">
+                    <div class="partner_img"></div>
+                    <div class="info_group">
+                        <div class="partner_name">{{ chat.nickname }}</div>
+                        <div class="partner_last_msg">{{ last_message }}</div>
+                    </div>
+                </a>
+            {% endfor %}
         </div>
 
     </div>
@@ -125,49 +64,133 @@
                 </div>
             </div>
 
-            <div class="chat_box">
-                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
-                    52려 조하
-                    오늘은 더 회의가 없지요..?ㅠㅠ잠깐 나가볼 일이 생겨서 혹시라도 모일 일이 생기면
-                    저는...........
-                    음......................
-                    뒤를 믿고 갔다올게영!!</p></div>
-                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
-                    밥4조 여러분…ㅠ
-                    금요일 새벽부터 아이가 열이나고 아파서 토요일 아침에 키트 검사해봤더니 세균맨이 되었더라구요..(양성) 오늘 pcr 양성 확인문자 받았고, 남편도 어제는 키트 음성이었는데
-                    오늘아침엔 양성이 떠서 pcr 받고 왔는데 세균맨이 되버린것 같습니다…저만 음성이에요ㅋㅋㅋㅋㅋ</p></div>
-                <div class="partner_to_user"><p>편히 다녀오세요~</p></div>
-                <div class="partner_to_user"><p>어떡해요ㅠㅠㅠ 고생하시네요😢 진주님도 조심하시구 가족분들 쾌차하시기를...</p></div>
-                <div class="partner_to_user"><p>아이고 그런일이...있으셨군요
-                    건강이 우선입니다! 무리하지 마시고
-                    빨리 가족분들 모두 쾌차했으면 좋겠습니다!!</p></div>
-                <div class="partner_to_user"><p>진주님 컨디션은 어때요?
-                    혼자 음성이 뜰 수 가 있나..?</p></div>
-                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
-                    어린이집에서 애기가 걸렸었는데 몰랐나봐요 ㅠㅠ 확진자가 남일이 아니네요
-                    다들 조심하셔요 ㅠㅠ</p></div>
-                <div class="partner_to_user"><p>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-                    무리는 하지 마시고
-                    진행사항 보면서
-                    제가 컨트롤 가능한 부분은 컨트롤 하겠습니다</p></div>
-                <div class="user_to_partner"><p>일단 템플릿 작업은 제가 맡은데까지 끝낼수 있을것 같아요ㅎㅎ
-                    상황보고 말씀드릴께요!!</p></div>
-                <div class="user_to_partner"><p>일단 템플릿 작업은 제가 맡은데까지 끝낼수 있을것 같아요ㅎㅎ
-                    상황보고 말씀드릴께요!!</p></div>
-                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
-                    밥4조 여러분…ㅠ
-                    금요일 새벽부터 아이가 열이나고 아파서 토요일 아침에 키트 검사해봤더니 세균맨이 되었더라구요..(양성) 오늘 pcr 양성 확인문자 받았고, 남편도 어제는 키트 음성이었는데
-                    오늘아침엔 양성이 떠서 pcr 받고 왔는데 세균맨이 되버린것 같습니다…저만 음성이에요ㅋㅋㅋㅋㅋ</p></div>
-                <div class="partner_to_user"><p>아이고 그런일이...있으셨군요
-                    건강이 우선입니다! 무리하지 마시고
-                    빨리 가족분들 모두 쾌차했으면 좋겠습니다!!</p></div>
+            <div id="chat_box" class="chat_box">
+                <div class="user_to_partner">뭐니</div>
+                {#                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ#}
+                {#                    52려 조하#}
+                {#                    오늘은 더 회의가 없지요..?ㅠㅠ잠깐 나가볼 일이 생겨서 혹시라도 모일 일이 생기면#}
+                {#                    저는...........#}
+                {#                    음......................#}
+                {#                    뒤를 믿고 갔다올게영!!</p></div>#}
+                {#                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ#}
+                {#                    밥4조 여러분…ㅠ#}
+                {#                    금요일 새벽부터 아이가 열이나고 아파서 토요일 아침에 키트 검사해봤더니 세균맨이 되었더라구요..(양성) 오늘 pcr 양성 확인문자 받았고, 남편도 어제는 키트 음성이었는데#}
+                {#                    오늘아침엔 양성이 떠서 pcr 받고 왔는데 세균맨이 되버린것 같습니다…저만 음성이에요ㅋㅋㅋㅋㅋ</p></div>#}
+                {#                <div class="partner_to_user"><p>편히 다녀오세요~</p></div>#}
+                {#                <div class="partner_to_user"><p>어떡해요ㅠㅠㅠ 고생하시네요😢 진주님도 조심하시구 가족분들 쾌차하시기를...</p></div>#}
+                {#                <div class="partner_to_user"><p>아이고 그런일이...있으셨군요#}
+                {#                    건강이 우선입니다! 무리하지 마시고#}
+                {#                    빨리 가족분들 모두 쾌차했으면 좋겠습니다!!</p></div>#}
+                {#                <div class="partner_to_user"><p>진주님 컨디션은 어때요?#}
+                {#                    혼자 음성이 뜰 수 가 있나..?</p></div>#}
+                {#                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ#}
+                {#                    어린이집에서 애기가 걸렸었는데 몰랐나봐요 ㅠㅠ 확진자가 남일이 아니네요#}
+                {#                    다들 조심하셔요 ㅠㅠ</p></div>#}
+                {#                <div class="partner_to_user"><p>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ#}
+                {#                    무리는 하지 마시고#}
+                {#                    진행사항 보면서#}
+                {#                    제가 컨트롤 가능한 부분은 컨트롤 하겠습니다</p></div>#}
+                {#                <div class="user_to_partner"><p>일단 템플릿 작업은 제가 맡은데까지 끝낼수 있을것 같아요ㅎㅎ#}
+                {#                    상황보고 말씀드릴께요!!</p></div>#}
+                {#                <div class="user_to_partner"><p>일단 템플릿 작업은 제가 맡은데까지 끝낼수 있을것 같아요ㅎㅎ#}
+                {#                    상황보고 말씀드릴께요!!</p></div>#}
+                {#                <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ#}
+                {#                    밥4조 여러분…ㅠ#}
+                {#                    금요일 새벽부터 아이가 열이나고 아파서 토요일 아침에 키트 검사해봤더니 세균맨이 되었더라구요..(양성) 오늘 pcr 양성 확인문자 받았고, 남편도 어제는 키트 음성이었는데#}
+                {#                    오늘아침엔 양성이 떠서 pcr 받고 왔는데 세균맨이 되버린것 같습니다…저만 음성이에요ㅋㅋㅋㅋㅋ</p></div>#}
+                {#                <div class="partner_to_user"><p>아이고 그런일이...있으셨군요#}
+                {#                    건강이 우선입니다! 무리하지 마시고#}
+                {#                    빨리 가족분들 모두 쾌차했으면 좋겠습니다!!</p></div>#}
             </div>
             <div class="input_bar">
-                <div class="attach_icon"></div>
-                <input type="text" placeholder="입력하세요.">
+                {% csrf_token %}
+                <div id="chat_message_submit" class="attach_icon"></div>
+                <input id="chat_message_input" type="text" placeholder="입력하세요." name="message">
             </div>
         </div>
     </div>
 </div>
+<script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
+<script>
+    $(".logout").click(function () {
+        location.replace("/accounts/logout");
+    })
+
+    {#웹소켓 연결 JS#}
+    const room_id = {{ room_id }};
+    const user_id = {{ user_id }};
+    const chatSocket = new ReconnectingWebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat/room/'
+        + room_id
+        + '/'
+    );
+
+    {#최근메세지 가져오기#}
+    chatSocket.onopen = function (e) {
+        fetchMessages();
+    }
+
+    {#consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐#}
+    {#fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고#}
+    {#new_message를 통해 나온 현재 작성한 메세지는 그대로 돌려준다.#}
+    {#ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다#}
+    {#message를 created_at의 순서대로 보여준다.#}
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data['command'] === 'messages') {
+            for (let i=0; i<data['messages'].length; i++) {
+                createMessage(data['messages'][i]);
+            }
+        } else if (data['command'] === 'new_message') {
+            createMessage(data['message']);
+        }
+    };
+
+    {#consumer에게 fetch_messages가 실행되도록 명령#}
+    function fetchMessages() {
+        chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
+    }
+
+    {#해당 input에 메세지를 작성하고 버튼을 클릭하면#}
+    {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
+    document.querySelector('#chat_message_submit').onclick = function (e) {
+        const messageInputDom = document.querySelector('#chat_message_input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'command': 'new_messages',
+            'message': message,
+            'from': user_id,
+            'room_id': room_id,
+        }));
+        messageInputDom.value = '';
+    };
+
+    {#html에서 작성된 메세지를 보여주는 JS#}
+    function createMessage(data) {
+        const message = data['message'];
+        const author = data['author'];
+        const chatroom_id = data['chatroom_id']
+        if ( chatroom_id === room_id ) {
+            if ( author === user_id ) {
+                let temp_html1 = `<div class='user_to_partner'>${message}</div>`
+                $('#chat_box').append(temp_html1)
+            } else {
+                let temp_html2 = `<div class='partner_to_user'>${message}</div>`
+                $('#chat_box').append(temp_html2)
+            }
+        } else {
+            console.log('해당하는 메세지가 없습니다')
+        }
+
+    }
+
+    {#웹소켓 연결이 끊어졌을 때의 JS#}
+    chatSocket.onclose = function (e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+</script>
 </body>
 </html>
