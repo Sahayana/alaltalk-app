@@ -1,7 +1,8 @@
 
 // 친구 찾기
 function searchUser(){
-    $("#search-modal-btn").click();
+    $(".search_result").empty();
+
     let query = "";
     query = $("#search_input").val();
     
@@ -15,8 +16,7 @@ function searchUser(){
             let friends = response["result"];
             friends.forEach(friend => {
                 appendResult(friend);
-            });
-                             
+            });                             
         }
     });    
 
@@ -34,9 +34,13 @@ function appendResult(friend){
                 </div>
                 <div class="btn apply_follow" onclick=sendRequest(${friend['id']})>친구신청</div>
             </div>
-    `
+    `;
 
-    $(".modal-body").append(tempHtml);
+    
+    $(".user_list").css('display', 'none');
+    $(".search_result").css('display', 'block');
+
+    $(".search_result").append(tempHtml);
 }
 
 
