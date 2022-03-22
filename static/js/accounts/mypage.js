@@ -252,6 +252,12 @@ $(document).ready(function(){
         window.location.href = `/accounts/friends/`;
     })
 
+    // 마이페이지 이동
+    let myPageIcon = $(".mypage_icon");
+    myPageIcon.on('click', function(){
+        window.location.href = `/accounts/mypage/`;
+    })
+
 
 
 });

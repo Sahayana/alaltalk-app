@@ -5,6 +5,7 @@ from datetime import datetime
 import random
 
 from django.db.models import Q
+from django.forms.models import model_to_dict
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -119,6 +120,7 @@ def profile_change(request):
 @login_required
 def search_friend(request):
     user = request.user # 자기 자신을 검색한 경우 예외처리 남음
+    me = get_user_model().objects.filter(id=user.id)   
     
     if request.method == 'GET':
         query = request.GET.get("q")
@@ -126,9 +128,22 @@ def search_friend(request):
             Q(email__icontains=query) |
             Q(nickname__icontains=query)
         ).distinct()    # 중복 제거를 위한 distinct()
-        result = result.values() # serialized        
 
-        return JsonResponse({"result":list(result)})
+        # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
+        result_json = list(result.values())        
+        for i, friend in enumerate(result_json):           
+            
+            if friend in user.friends.all().values():
+                print('친구입니다')               
+                result_json[i] = (friend, 0)    # 0 인 경우 이미 친구
+            elif friend == me.values()[0]:
+                print('나입니다.')
+                result_json[i] = (friend, 1)    # 1 인 경우 자기 자신
+            else:
+                print('모르는사이입니다')
+                result_json[i] = (friend, 2)    # 2 인 경우 친구가 아닌 상태         
+        
+        return JsonResponse({"result":result_json})
 
 
 
