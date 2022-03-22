@@ -31,6 +31,7 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
+            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
@@ -56,14 +57,21 @@
             {% endfor %}
             {% endif %}                   
         </div>
-    </div>
 
-    <div class="right_wrap">
-        <div class="chat_start_msg">
-            <div class="chat_start_img"></div>
-            <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
+        <div class="right_wrap">
+            <div class="chat_start_msg">
+                <div class="chat_start_img"></div>
+                <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
+            </div>
         </div>
     </div>
+
+    <script>
+        $(".logout").click(function () {
+            location.replace("/accounts/logout");
+        })
+    </script>
+
 </div>
 
    <!-- 유저 검색 Modal -->
@@ -88,6 +96,7 @@
 
 
 <script src="{% static 'js/accounts/user_list.js' %}"></script>  
+
 </body>
 
 
