@@ -4,7 +4,7 @@ function click_recommend_function() {
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": "아이유"},
+        data: {"target": "코딩"},
         datatype: 'form',
         success: function (response) {
             console.log(response['all_response']['book'])
@@ -130,7 +130,7 @@ function shopping_content_add(shopping_crawling_data_list){
                                             <p>${shopping_row[1]}</p>
                                         </div>
                                         <div class="recommend_shopping_search_content_desc_price">
-                                            <p>${shopping_row[2]}</p>
+                                            <p>${shopping_row[2]} 원</p>
                                         </div>
                                     </div>
                                 </div>`

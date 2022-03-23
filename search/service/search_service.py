@@ -43,7 +43,6 @@ def crawling_book(search: str) -> List[List[str]]:
     url = 'https://search.kyobobook.co.kr/web/search?vPstrKeyWord='
     newUrl = url+parse.quote(search)
 
-
     html = urllib.request.urlopen(newUrl, context=context).read()
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -72,4 +71,3 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(image[i]['src'])
         answer.append(test_title)
     return answer
-
