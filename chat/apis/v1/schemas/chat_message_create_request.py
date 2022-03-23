@@ -5,5 +5,3 @@
 #     room_id: int
 #     user_id: int
 #     message: str
-
-

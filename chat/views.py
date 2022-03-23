@@ -1,13 +1,15 @@
+import json
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-import json
+
 from accounts.models import CustomUser
 
 # 유저리스트 불러오기
-from chat.models import ChatRoom, ChatMessage
+from chat.models import ChatMessage, ChatRoom
 
 
 @login_required
@@ -42,12 +44,12 @@ def create_chat_room(request, id):
             room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
             print(room.id)
             room_id = room.id
-            return redirect('/chat/room/' + str(room_id) + '/')
+            return redirect("/chat/room/" + str(room_id) + "/")
         elif exist_room2:
             room = ChatRoom.objects.get(participant1=partner.id, participant2=user.id)
             print(room.id)
             room_id = room.id
-            return redirect('/chat/room/' + str(room_id) + '/')
+            return redirect("/chat/room/" + str(room_id) + "/")
         else:
             chat_room = ChatRoom.objects.create(participant1=user.id, participant2=partner.id)
             chat_room.save()
@@ -56,7 +58,7 @@ def create_chat_room(request, id):
             room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
             print(room)
             room_id = room.id
-            return redirect('/chat/room/' + str(room_id) + '/')
+            return redirect("/chat/room/" + str(room_id) + "/")
     else:
         return render(request, "chat/chat_room.html")
 
@@ -68,9 +70,13 @@ def create_chat_message(request, room_id):
         chat_list = CustomUser.objects.all().exclude(is_superuser=True).exclude(id=request.user.id)
         # last_message = ChatMessage.objects.latest('author_id')
         print(request.user.id)
-        return render(request, "chat/chat_room.html", {
-            "room_id": mark_safe(json.dumps(room_id)),
-            "chat_list": chat_list,
-            "user_id": mark_safe(json.dumps(request.user.id)),
-            # 'last_message_author_id': last_message.author_id
-        })
+        return render(
+            request,
+            "chat/chat_room.html",
+            {
+                "room_id": mark_safe(json.dumps(room_id)),
+                "chat_list": chat_list,
+                "user_id": mark_safe(json.dumps(request.user.id)),
+                # 'last_message_author_id': last_message.author_id
+            },
+        )

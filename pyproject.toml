@@ -5,7 +5,7 @@ description = "A messenger with contents recommendation algorithm applied."
 authors = ["sahayana <saokhueyang@gmail.com:>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 Django = "4.0.2"
 django-ninja = "^0.17.0"
 black = "^22.1.0"
@@ -28,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
-python_version = 3.9
+python_version = 3.8
 strict = true
 
 [[tool.mypy.overrides]]
