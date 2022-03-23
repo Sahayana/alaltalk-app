@@ -50,6 +50,7 @@ body::-webkit-scrollbar-track{
     font-size: 1vw;
     font-weight: 600;
     margin-right: 40px;
+    cursor: pointer;
 }
 
 .landing_banner{
@@ -119,6 +120,9 @@ body::-webkit-scrollbar-track{
     text-align: center;
     font-size: min(1vw, 20px);
     color: white;
+}
+
+.landing_sign_up_container u {
     cursor: pointer;
 }
 
