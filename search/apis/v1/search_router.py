@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 
-from ...functions import crawling_youtube
+from ...functions import crawling_youtube, crawling_shopping_only_bs4
 from search.service.search_service import crawling_news
 from .schemas import CrawlingRequest, CrawlingResponse
 
@@ -25,6 +25,7 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
     content_count = 10
     all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
     all_response["news"] = crawling_news(crawling_request.target)
+    all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
     return 201, {"all_response": all_response}
 
 

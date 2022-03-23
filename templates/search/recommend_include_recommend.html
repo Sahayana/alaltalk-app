@@ -94,28 +94,9 @@
             <p>추천 컨텐츠</p>
             <div class="content_news_section" id="news_recommend_content">
                 <div class="recommend_spinner" style="display: flex;">
-                        <div class="recommend_spinner_lorder"></div>
-                    </div>
-                <!-- news 크롤링 결과-->
-                <div class="profile_like_news">
-                    <li>
-                        <div class="profile_like_news_image"></div>
-                        <div class="profile_like_news_info">
-                            <div class="profile_like_news_title">“포켓몬빵 보신 분~”… 이상 품귀현상, 웃돈에 끼워 팔기도</div>
-                            <div class="profile_like_news_content">1990년대 출시돼 인기를 끌다 단종됐던 포켓몬빵이 지난달부터
-                                다시 판매를 시작하면서 2주 만에 350만 개가 팔리는 등 품귀현상을 빚고 있다. 부산에서 …
-                            </div>
-                            <div class="profile_like_news_company">KBS</div>
-                        </div>
-                        <div class="profile_like_news_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_news_button">
-                            <div class="profile_like_news_setting"></div>
-                            <div class="profile_like_news_heart"></div>
-                        </div>
-                    </li>
+                    <div class="recommend_spinner_lorder"></div>
                 </div>
+                <!-- news 크롤링 결과-->
             </div>
             <div class="search_news_content">
                 <p>검색</p>
@@ -424,75 +405,24 @@
     <div class="content_wrap">
         <div class="recommend_content">
             <p>추천 컨텐츠</p>
-            <div class="content_section">
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="recommend_content_part">
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                    <div class="more_icon"></div>
-                    <div class="toggle">
-                        <p>공유하기</p>
-                        <div class="line"></div>
-                        <p>찜하기</p>
-                    </div>
+            <div class="content_section" id="shopping_recommend_content">
+                <div class="recommend_spinner" style="display: flex;">
+                    <div class="recommend_spinner_lorder"></div>
                 </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="recommend_content_part">
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
+                <!-- Shopping 크롤링 결과-->
+                <div class="recommend_shopping_search_content">
+                    <div class="recommend_shopping_search_content_img" onclick="">
+                        <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">
                     </div>
-                    <div class="more_icon"></div>
-                    <div class="toggle">
-                        <p>공유하기</p>
-                        <div class="line"></div>
-                        <p>찜하기</p>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="recommend_content_part">
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                    <div class="more_icon"></div>
-                    <div class="toggle">
-                        <p>공유하기</p>
-                        <div class="line"></div>
-                        <p>찜하기</p>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="recommend_content_part">
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                    <div class="more_icon"></div>
-                    <div class="toggle">
-                        <p>공유하기</p>
-                        <div class="line"></div>
-                        <p>찜하기</p>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="recommend_content_part">
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                    <div class="more_icon"></div>
-                    <div class="toggle">
-                        <p>공유하기</p>
-                        <div class="line"></div>
-                        <p>찜하기</p>
+
+                    <div class="recommend_shopping_search_content_desc">
+                        <div class="recommend_shopping_search_content_desc_bar"></div>
+                        <div class="recommend_shopping_search_content_desc_title">
+                            <p>타이니탄 다이너마이트 모니터 피규어</p>
+                        </div>
+                        <div class="recommend_shopping_search_content_desc_price">
+                            <p>15,380</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -500,89 +430,29 @@
         <div class="search_content">
             <p>검색</p>
             <div class="content_section">
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
+                <div class="recommend_shopping_search_row">
+                    <div class="recommend_shopping_search_content">
+                        <div class="more_icon"></div>
+                        <div class="toggle" style="display: none">
                             <p>공유하기</p>
                             <div class="line"></div>
                             <p>찜하기</p>
                         </div>
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
+                        <div class="recommend_shopping_search_content_img" onclick="">
+                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">
                         </div>
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
+
+                        <div class="recommend_shopping_search_content_desc">
+                            <div class="recommend_shopping_search_content_desc_bar"></div>
+                            <div class="recommend_shopping_search_content_desc_title">
+                                <p>타이니탄 다이너마이트 모니터 피규어</p>
+                            </div>
+                            <div class="recommend_shopping_search_content_desc_price">
+                                <p>15,380</p>
+                            </div>
                         </div>
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
                     </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
-                        </div>
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
-                        </div>
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
-                </div>
-                <div class="content_box">
-                    <div class="shopping_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
-                        </div>
-                        <div class="shopping_title">물건이름</div>
-                        <div class="shopping_write">브랜드</div>
-                        <div class="shopping_price">가격</div>
-                    </div>
+                    <div class="recommend_shopping_search_content"></div>
                 </div>
             </div>
         </div>

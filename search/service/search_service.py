@@ -35,7 +35,6 @@ def crawling_news(search: str) -> List[List[str]]:
     return answer
 
 
-
 def crawling_book(search: str) -> List[List[str]]:
 
     context = ssl._create_unverified_context()
@@ -72,6 +71,5 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(link[i]['href'])
         test_title.append(image[i]['src'])
         answer.append(test_title)
-
     return answer
 
