@@ -1,7 +1,8 @@
 
 // 친구 찾기
 function searchUser(){
-    $("#search-modal-btn").click();
+    $(".search_result").empty();
+
     let query = "";
     query = $("#search_input").val();
     
@@ -16,7 +17,9 @@ function searchUser(){
             friends.forEach(friend => {
                 appendResult(friend);
             });
-                             
+
+            $(".user_list").css('display', 'none');
+            $(".search_result").css('display', 'block');                             
         }
     });    
 
@@ -25,18 +28,46 @@ function searchUser(){
 
 // 검색한 친구 리스트 모달에 출력
 function appendResult(friend){
-    let tempHtml = `
-            <div class="user_box">
-                <div class="user_img"></div>
-                <div class="info_group">
-                    <div class="user_name">${friend['nickname']}</div>
-                    <div class="user_id">${friend['email']}</div>
-                </div>
-                <div class="btn apply_follow" onclick=sendRequest(${friend['id']})>친구신청</div>
+    let tempHtml =''
+    if (friend[1] === 0){
+        tempHtml = `
+        <div class="user_box">
+            <div class="user_img"></div>
+            <div class="info_group">
+                <div class="user_name">${friend[0]['nickname']}</div>
+                <div class="user_id">${friend[0]['email']}</div>
             </div>
-    `
+            <div class="btn already_friend"> 친구 </div>
+        </div>
+    `;
 
-    $(".modal-body").append(tempHtml);
+    }else if (friend[1] === 2){
+        tempHtml = `
+        <div class="user_box">
+            <div class="user_img"></div>
+            <div class="info_group">
+                <div class="user_name">${friend[0]['nickname']}</div>
+                <div class="user_id">${friend[0]['email']}</div>
+            </div>
+            <div class="btn apply_follow" onclick=sendRequest(${friend[0]['id']})>친구신청</div>
+        </div>
+    `;
+
+    }else{
+        tempHtml = `
+        <div class="user_box">
+            <div class="user_img"></div>
+            <div class="info_group">
+                <div class="user_name">${friend[0]['nickname']}</div>
+                <div class="user_id">${friend[0]['email']}</div>
+            </div>
+            <div class="btn already_friend"> 나 </div>
+        </div>
+    `;
+
+    }    
+    
+    $(".search_result").append(tempHtml);
 }
 
 
@@ -61,3 +92,19 @@ function sendRequest(receiver_id){
     
 
 }
+
+
+$(document).ready(function(){       
+
+    // 친구 리스트 이동
+    let friendListIcon = $(".user_icon");
+    friendListIcon.on('click', function(){
+        window.location.href = `/accounts/friends/`;
+    });
+
+    // 마이페이지 이동
+    let myPageIcon = $(".mypage_icon");
+    myPageIcon.on('click', function(){
+        window.location.href = `/accounts/mypage/`;
+    });
+});

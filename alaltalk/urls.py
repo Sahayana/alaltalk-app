@@ -28,5 +28,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.landing_home, name="landing_page"),
     path("accounts/", include("accounts.urls")),
-    path('api/', api.urls)
+    path("chat/", include("chat.urls")),
+    path("api/", api.urls),
 ]
