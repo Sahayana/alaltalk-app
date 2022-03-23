@@ -14,9 +14,3 @@
 # # def create_chat_room(request: , chatroom_create_request: ChatRoomCreateRequest) -> Tuple[int, ChatRoom]:
 # #     chatroom = create_an_chat_room(chatroom_create_request.user1_id, chatroom_create_request.user2_id)
 # #     return chatroom
-
-
-
-
-
-

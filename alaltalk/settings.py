@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
-    'chat',
+    "channels",
+    "chat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -75,10 +75,10 @@ TEMPLATES = [
 
 ASGI_APPLICATION = "alaltalk.asgi.application"
 CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
@@ -90,7 +90,7 @@ WSGI_APPLICATION = "alaltalk.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-#기존 연결된 DATABASE - SQlite
+# 기존 연결된 DATABASE - SQlite
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -138,13 +138,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 
 # Default primary key field type
@@ -166,16 +166,16 @@ except ImportError:
 # Email 전송을 위한 설정
 
 try:
-    with open(os.path.join(BASE_DIR, 'alaltalk/config/email.json')) as f:
+    with open(os.path.join(BASE_DIR, "alaltalk/config/email.json")) as f:
         email = json.loads(f.read())
 
-    EMAIL_BACKEND = email['BACKEND']
-    EMAIL_HOST = email['HOST'] 
-    EMAIL_PORT = int(email['PORT']) 
-    EMAIL_HOST_USER = email['HOST_USER'] 
-    EMAIL_HOST_PASSWORD = email['HOST_PASSWORD'] 
-    EMAIL_USE_TLS = True 
+    EMAIL_BACKEND = email["BACKEND"]
+    EMAIL_HOST = email["HOST"]
+    EMAIL_PORT = int(email["PORT"])
+    EMAIL_HOST_USER = email["HOST_USER"]
+    EMAIL_HOST_PASSWORD = email["HOST_PASSWORD"]
+    EMAIL_USE_TLS = True
     EMAIL_USE_SSL = False
-    
+
 except FileNotFoundError:
-    pass 
+    pass
