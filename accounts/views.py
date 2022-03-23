@@ -1,18 +1,17 @@
-
-from dataclasses import dataclass
 import json
-from datetime import datetime
 import random
+from dataclasses import dataclass
+from datetime import datetime
 
-from django.db.models import Q
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.db.models import Q
 from django.dispatch import receiver
+from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from django.core.mail import send_mail
-
 
 from accounts.models import FriendRequest
 
@@ -27,9 +26,9 @@ def signup(request):
         bio = request.POST.get("bio")
         if request.FILES.get("img"):
             img = request.FILES.get("img")
-            get_user_model().objects.create_user(email=email,nickname=nickname,password=password,bio=bio,img=img)
+            get_user_model().objects.create_user(email=email, nickname=nickname, password=password, bio=bio, img=img)
         else:
-            get_user_model().objects.create_user(email=email,nickname=nickname,password=password,bio=bio)
+            get_user_model().objects.create_user(email=email, nickname=nickname, password=password, bio=bio)
         context = {"result": "회원가입이 완료되었습니다."}
         return JsonResponse(context)
 
@@ -80,9 +79,9 @@ def friend_list(request):
     friends = user.friends.all()
     print(friends)
     context = {
-        'user':user,
-        'friends': friends,
-        }
+        "user": user,
+        "friends": friends,
+    }
     return render(request, "accounts/user_list.html", context)
 
 
@@ -91,45 +90,56 @@ def mypage(request):
     user = get_user_model().objects.get(id=request.user.id)
     friend_requests = FriendRequest.objects.filter(receiver=user)
     context = {
-        "user" : user,
+        "user": user,
         "friend_requests": friend_requests,
     }
     return render(request, "accounts/mypage.html", context)
+
 
 @login_required
 def profile_change(request):
 
     user = request.user
 
-    if request.method == 'POST':
+    if request.method == "POST":
         nickname = request.POST.get("nickname")
-        bio = request.POST.get("bio")        
+        bio = request.POST.get("bio")
         if request.FILES.get("img") != None:
             img = request.FILES.get("img")
-            img_extension = img.name.split('.')[-1]
-            img.name = user.email.split('@')[0]+ '-' + datetime.now().strftime('%Y-%m-%d') + '.' + img_extension
+            img_extension = img.name.split(".")[-1]
+            img.name = user.email.split("@")[0] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
             user.img = str(img)
 
         user.nickname = nickname
-        user.bio = bio        
+        user.bio = bio
         user.save()
-        return JsonResponse({"msg":"ok"})
+        return JsonResponse({"msg": "ok"})
 
 
 @login_required
 def search_friend(request):
-    user = request.user # 자기 자신을 검색한 경우 예외처리 남음
-    
-    if request.method == 'GET':
+    user = request.user  # 자기 자신을 검색한 경우 예외처리 남음
+    me = get_user_model().objects.filter(id=user.id)
+
+    if request.method == "GET":
         query = request.GET.get("q")
-        result = get_user_model().objects.filter(
-            Q(email__icontains=query) |
-            Q(nickname__icontains=query)
-        ).distinct()    # 중복 제거를 위한 distinct()
-        result = result.values() # serialized        
+        result = get_user_model().objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct()  # 중복 제거를 위한 distinct()
 
-        return JsonResponse({"result":list(result)})
+        # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
+        result_json = list(result.values())
+        for i, friend in enumerate(result_json):
 
+            if friend in user.friends.all().values():
+                print("친구입니다")
+                result_json[i] = (friend, 0)  # 0 인 경우 이미 친구
+            elif friend == me.values()[0]:
+                print("나입니다.")
+                result_json[i] = (friend, 1)  # 1 인 경우 자기 자신
+            else:
+                print("모르는사이입니다")
+                result_json[i] = (friend, 2)  # 2 인 경우 친구가 아닌 상태
+
+        return JsonResponse({"result": result_json})
 
 
 @login_required
@@ -138,8 +148,8 @@ def send_request(request, receiver_id):
     receiver = get_user_model().objects.get(id=receiver_id)
     friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver)
     if created:
-        return JsonResponse({"msg":"sent"})
-    return JsonResponse({"msg":"already"})
+        return JsonResponse({"msg": "sent"})
+    return JsonResponse({"msg": "already"})
 
 
 @login_required
@@ -149,39 +159,27 @@ def accept_request(request, request_id):
         friend_request.receiver.friends.add(friend_request.sender)
         friend_request.sender.friends.add(friend_request.receiver)
         friend_request.delete()
-        return JsonResponse({"msg":"accepted"})
+        return JsonResponse({"msg": "accepted"})
     else:
-        return JsonResponse({"msg":"error"})    # 거절, 회수 등의 예외처리 남음
+        return JsonResponse({"msg": "error"})  # 거절, 회수 등의 예외처리 남음
 
 
 def temporary_password(request):
-    
+
     query = request.GET.get("q")
     print(query)
     user = get_user_model().objects.filter(email__iexact=query).get()
     if user is None:
-        return JsonResponse({"msg":"none-user"})
-    
-    alp_str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        return JsonResponse({"msg": "none-user"})
+
+    alp_str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     alp_str_lower = alp_str.lower()
-    num = '1234567890'
-    temp_pw = ''.join(random.sample(alp_str+alp_str_lower+num, k=12))
+    num = "1234567890"
+    temp_pw = "".join(random.sample(alp_str + alp_str_lower + num, k=12))
 
     user.set_password(temp_pw)
     user.save()
-    
-    send_mail(
-        "[alaltalk] 임시 비밀번호 메일입니다.",
-        f"회원님의 임시 비밀번호는 {temp_pw} 입니다.\n로그인 후 비밀번호를 꼭 변경해주세요.",
-        'alaltalklove@gmail.com',
-        [user.email],
-        fail_silently=False
-    )
 
-    return JsonResponse({"msg":"ok"})
-    
-    
-    
-    
+    send_mail("[alaltalk] 임시 비밀번호 메일입니다.", f"회원님의 임시 비밀번호는 {temp_pw} 입니다.\n로그인 후 비밀번호를 꼭 변경해주세요.", "alaltalklove@gmail.com", [user.email], fail_silently=False)
 
-    
+    return JsonResponse({"msg": "ok"})
