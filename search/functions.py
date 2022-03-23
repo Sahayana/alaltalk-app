@@ -4,6 +4,7 @@ from typing import List
 from bs4 import BeautifulSoup
 
 from search.apps import SearchConfig
+import requests
 
 
 def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
@@ -72,5 +73,21 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 #     time.sleep(1)
 
 
-def crawling_shopping():
+def crawling_shopping(search_word: str, count: str) -> List[List[str]]:
+    url = 'https://www.coupang.com/np/search?component=&&channel=user' + '&q=' + search_word
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    data = requests.get(url, headers=headers)
+    soup = BeautifulSoup(data.text, 'html.parser')
+
+    product_list = soup.select('#productList > li')
+
+    for row in product_list:
+        print('#####################')
+        print(row)
+
+
     return 0
+
+crawling_shopping('커피', 10)
+

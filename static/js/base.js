@@ -8,8 +8,10 @@ function switch_chat() {
     $('#left_wrap').empty();
     $('#left_wrap').load("/api/search/chat");
     $('#right_wrap').load("/api/search/recommend");
-    click_recommend_function();
-    setTimeout(give_event, 10)
+    setTimeout(function(){
+        click_recommend_function();
+        give_event()
+    }, 100)
 }
 
 function toggle_recommend(){
