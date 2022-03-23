@@ -7,7 +7,7 @@ function click_recommend_function() {
         data: {"target": "아이유"},
         datatype: 'form',
         success: function (response) {
-            console.log(response['all_response'])
+            console.log(response['all_response']['book'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -112,18 +112,18 @@ function news_content_add(news_crawling_data_list){
 function shopping_content_add(shopping_crawling_data_list){
     for (let i = 0; i <shopping_crawling_data_list.length; i++) {
                 let shopping_row = shopping_crawling_data_list[i]
-                console.log(shopping_row)
                 let temp_html = `<div class="recommend_shopping_search_content">
-                                    <div class="more_icon"></div>
+                                    <div class="more_icon" id="shopping_recommend_${i}" onclick="more_open_or_off(this.id)"></div>
                                     <div class="toggle" style="display: none">
                                         <p>공유하기</p>
                                         <div class="line"></div>
                                         <p>찜하기</p>
                                     </div>
-                                    <div class="recommend_shopping_search_content_img" onclick="${shopping_row[3]}">
-                                        <img src="${shopping_row[0]}">
-                                    </div>
-            
+                                    <a href="${shopping_row[3]}" target="_blank">
+                                        <div class="recommend_shopping_search_content_img">
+                                            <img src="${shopping_row[0]}">
+                                        </div>
+                                    </a>
                                     <div class="recommend_shopping_search_content_desc">
                                         <div class="recommend_shopping_search_content_desc_bar"></div>
                                         <div class="recommend_shopping_search_content_desc_title">
@@ -134,7 +134,12 @@ function shopping_content_add(shopping_crawling_data_list){
                                         </div>
                                     </div>
                                 </div>`
-                console.log(temp_html)
                 $('#shopping_recommend_content').append(temp_html)
             }
+}
+
+// more function
+
+function more_open_or_off(id){
+
 }

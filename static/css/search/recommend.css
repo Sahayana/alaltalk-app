@@ -1558,7 +1558,7 @@ body {
     height: 3vw;
     left: 15vw;
     position: absolute;
-    background-image: url('/static/images/more_deep_purple.png');
+    background-image: url('/static/images/list_black.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -1577,7 +1577,7 @@ body {
     width: 15vw;
     height: 15vw;
     background-color: #ef1c1c;
-    margin: 0 auto;
+    margin: 1vw 1.5vw;
     object-fit: cover;
 }
 
