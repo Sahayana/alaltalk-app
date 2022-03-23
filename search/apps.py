@@ -7,8 +7,8 @@ class SearchConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
 
     # 현재 폴더 + chromedriver 경로 붙이기
-    webdriver_path = os.getcwd() + '\chromedriver.exe'
-
+    webdriver_path = os.getcwd() + '\search\chromedriver.exe'
+    print(webdriver_path)
     name = "search"
     # chrome webdriver 실행
     options = webdriver.ChromeOptions()
