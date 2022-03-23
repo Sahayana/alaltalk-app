@@ -14,45 +14,28 @@ def crawling_news(search: str) -> List[List[str]]:
 
     html = urllib.request.urlopen(newUrl, context=context).read()
     soup = BeautifulSoup(html, 'html.parser')
-    test_list = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > a')
-    test_list2 = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > div.news_dsc > div > a')
-    test_list3 = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > div.news_info > div.info_group > a.info.press')
-    test_list4 = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > div.news_info > div.info_group > span')
-    test_list5 = soup.select('#main_pack > section > div > div.group_news > ul > li > div > a > img')
+    name = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > a')
+    content = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > div.news_dsc > div > a')
+    news = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > div.news_info > div.info_group > a.info.press')
+    date = soup.select('#main_pack > section > div > div.group_news > ul > li > div > div > div.news_info > div.info_group > span')
+    image = soup.select('#main_pack > section > div > div.group_news > ul > li > div > a > img')
 
     answer = []
 
-    for i in range(len(test_list)):
+    for i in range(len(news)):
         test_title = []
-        test_title.append(test_list3[i].get_text())
-        test_title.append(test_list4[i].get_text())
-        test_title.append(test_list[i]['title'])
-        test_title.append(test_list[i]['href'])
-        test_title.append(test_list2[i].get_text())
-        test_title.append(test_list5[i]['src'])
+        test_title.append(news[i].get_text())
+        test_title.append(date[i].get_text())
+        test_title.append(name[i]['title'])
+        test_title.append(name[i]['href'])
+        test_title.append(content[i].get_text())
+        test_title.append(image[i]['src'])
         answer.append(test_title)
 
     return answer
 
-    # [
-    #     [내용, 내용],
-    #     [내용, 내용],
-    # ]
-
-    # title = soup.findall(class='news_tit')
-    # test_list = soup.select('#main_pack > section > div > div.group_news > ul>li ')
-    # test_list = soup.select('#sp_nws1 > div > div > div.news_info')
-
-    # print(test_list)
-
-    # for i in title:
-    #     print(i.attrs['title'])
-    #     print(i.attrs['href'])
-    #     print('\n')
-
 
 def crawling_book(search: str) -> List[List[str]]:
-    answer = []
 
     context = ssl._create_unverified_context()
 
@@ -65,14 +48,29 @@ def crawling_book(search: str) -> List[List[str]]:
     html = urllib.request.urlopen(newUrl, context=context).read()
     soup = BeautifulSoup(html, 'html.parser')
 
-    search_list = soup.select('#search_list tr')
+    title = soup.select('div.title > a > strong')
+    short_href = soup.select('div.title > a ')
+    price = soup.select('div.sell_price > strong')
+    link = soup.select('div.title > a')
+    image = soup.select('div.cover > a > img')
+    author = soup.select('td.detail > div.author > a:nth-child(1)')
+    company = soup.select('td.detail > div.author > a:last-of-type')
 
-    # for row in search_list:
-    #     print('#####################')
-    #     print(row)
-    #     print(row.select_one('detail'))
+    answer = []
 
+    for i in range(len(author)):
+        test_title.append(title[i].get_text())
+        test_title.append(author[i].get_text())
+        test_title.append(company[i].get_text())
+        short = short_href[i].get_text().split(':')
+        if len(short) == 1:
+            short.append('')
+        test_title.append(short[-1])
+
+        test_title.append(price[i].get_text())
+        test_title.append(link[i]['href'])
+        test_title.append(image[i]['src'])
+        answer.append(test_title)
     return answer
 
 
-crawling_book('코딩')
