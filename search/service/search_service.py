@@ -67,10 +67,10 @@ def crawling_book(search: str) -> List[List[str]]:
 
     search_list = soup.select('#search_list tr')
 
-    for row in search_list:
-        print('#####################')
-        print(row)
-        print(row.select_one('detail'))
+    # for row in search_list:
+    #     print('#####################')
+    #     print(row)
+    #     print(row.select_one('detail'))
 
     return answer
 

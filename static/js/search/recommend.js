@@ -1,5 +1,3 @@
-
-
 function click_recommend_function() {
     console.log('page is onload!')
 
@@ -9,15 +7,63 @@ function click_recommend_function() {
         data: {"target": "아이유"},
         datatype: 'form',
         success: function (response) {
+            console.log(response['all_response'])
+
+            // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
 
-            for(let k=0; k<spinners.length;k++){
-                spinners[k].style.display='none';
+            for (let k = 0; k < spinners.length; k++) {
+                spinners[k].style.display = 'none';
             }
+            // content 내용 붙이기
+            youtube_content_add(response['all_response']['youtube'])
+            news_content_add(response['all_response']['news'])
+            shopping_content_add(response['all_response']['shopping'])
+
+        }
+    })
+}
 
 
-            for (let i = 0; i < response['all_response']['youtube'].length; i++) {
-                let youtube_row = response['all_response']['youtube'][i]
+// 탭 이동 함수
+function move_category(target_id) {
+    document.getElementById('recommend_youtube_container').style.display = 'none'
+    document.getElementById('recommend_news_container').style.display = 'none'
+    document.getElementById('recommend_book_container').style.display = 'none'
+    document.getElementById('recommend_shopping_container').style.display = 'none'
+    document.getElementById(target_id).style.display = 'block'
+}
+
+// // 각 nav_bar에 click event 주기
+// let navs = document.getElementsByClassName('recommend_nav')
+// let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
+// for (let i = 0; i < navs.length; i++) {
+//     let nav_row = navs[i].children
+//     for (let j = 0; j < nav_row.length; j++) {
+//         nav_row[j].addEventListener('click', function () {
+//             move_category(navs_list_id[j])
+//         })
+//     }
+// }
+
+function give_event() {
+    let navs = document.getElementsByClassName('recommend_nav')
+    let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
+    for (let i = 0; i < navs.length; i++) {
+        let nav_row = navs[i].children
+        for (let j = 0; j < nav_row.length; j++) {
+            nav_row[j].addEventListener('click', function () {
+                move_category(navs_list_id[j])
+            })
+        }
+    }
+}
+
+// Crawling 붙여 넣기
+// youtube
+function youtube_content_add(youtube_crawling_data_list){
+    for (let i = 0; i < youtube_crawling_data_list.length; i++) {
+                let youtube_row = youtube_crawling_data_list[i]
                 let temp_html = `<div class="content_box" >
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
@@ -30,13 +76,14 @@ function click_recommend_function() {
                                         <p>찜하기</p>
                                     </div>
                                 </div>`
-
-                $('#news_recommend_content').append(temp_html)
+                $('#youtube_recommend_content').append(temp_html)
             }
+}
 
-            for (let i = 0; i < response['all_response']['news'].length; i++) {
-                let news_row = response['all_response']['news'][i]
-                console.log(news_row)
+// News
+function news_content_add(news_crawling_data_list){
+    for (let i = 0; i <news_crawling_data_list.length; i++) {
+                let news_row = news_crawling_data_list[i]
                 let temp_html = `<div class="profile_like_news">
                                         <li>
                                             <div class="profile_like_news_image"></div>
@@ -57,46 +104,37 @@ function click_recommend_function() {
                                         </li>
                                     </div>`
                 //
-                $('#recommend_news_container').append(temp_html)
+                $('#news_recommend_content').append(temp_html)
             }
-
-        }
-    })
 }
 
-
-// 탭 이동 함수
-function move_category(target_id) {
-    console.log('function is working')
-    document.getElementById('recommend_youtube_container').style.display = 'none'
-    document.getElementById('recommend_news_container').style.display = 'none'
-    document.getElementById('recommend_book_container').style.display = 'none'
-    document.getElementById('recommend_shopping_container').style.display = 'none'
-    document.getElementById(target_id).style.display = 'block'
-}
-
-// // 각 nav_bar에 click event 주기
-// let navs = document.getElementsByClassName('recommend_nav')
-// let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-// for (let i = 0; i < navs.length; i++) {
-//     let nav_row = navs[i].children
-//     for (let j = 0; j < nav_row.length; j++) {
-//         nav_row[j].addEventListener('click', function () {
-//             move_category(navs_list_id[j])
-//         })
-//     }
-// }
-
-function give_event(){
-    console.log('give event!')
-    let navs = document.getElementsByClassName('recommend_nav')
-    let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-    for (let i = 0; i < navs.length; i++) {
-        let nav_row = navs[i].children
-        for (let j = 0; j < nav_row.length; j++) {
-            nav_row[j].addEventListener('click', function () {
-                move_category(navs_list_id[j])
-            })
-        }
-}
+// shopping
+function shopping_content_add(shopping_crawling_data_list){
+    for (let i = 0; i <shopping_crawling_data_list.length; i++) {
+                let shopping_row = shopping_crawling_data_list[i]
+                console.log(shopping_row)
+                let temp_html = `<div class="recommend_shopping_search_content">
+                                    <div class="more_icon"></div>
+                                    <div class="toggle" style="display: none">
+                                        <p>공유하기</p>
+                                        <div class="line"></div>
+                                        <p>찜하기</p>
+                                    </div>
+                                    <div class="recommend_shopping_search_content_img" onclick="${shopping_row[3]}">
+                                        <img src="${shopping_row[0]}">
+                                    </div>
+            
+                                    <div class="recommend_shopping_search_content_desc">
+                                        <div class="recommend_shopping_search_content_desc_bar"></div>
+                                        <div class="recommend_shopping_search_content_desc_title">
+                                            <p>${shopping_row[1]}</p>
+                                        </div>
+                                        <div class="recommend_shopping_search_content_desc_price">
+                                            <p>${shopping_row[2]}</p>
+                                        </div>
+                                    </div>
+                                </div>`
+                console.log(temp_html)
+                $('#shopping_recommend_content').append(temp_html)
+            }
 }
