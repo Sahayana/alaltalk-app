@@ -4,10 +4,10 @@ function click_recommend_function() {
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": "코딩"},
+        data: {"target": "커피"},
         datatype: 'form',
         success: function (response) {
-            console.log(response['all_response']['book'])
+            console.log(response['all_response']['news'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -16,10 +16,10 @@ function click_recommend_function() {
                 spinners[k].style.display = 'none';
             }
             // content 내용 붙이기
-            youtube_content_add(response['all_response']['youtube'])
-            news_content_add(response['all_response']['news'])
-            shopping_content_add(response['all_response']['shopping'])
-
+            youtube_content_add(response['all_response']['youtube'], 'crawling')
+            news_content_add(response['all_response']['news'], 'crawling')
+            book_content_add(response['all_response']['book'], 'crawling')
+            shopping_content_add(response['all_response']['shopping'], 'crawling')
         }
     })
 }
@@ -61,58 +61,124 @@ function give_event() {
 
 // Crawling 붙여 넣기
 // youtube
-function youtube_content_add(youtube_crawling_data_list){
+function youtube_content_add(youtube_crawling_data_list, type) {
+    let content_type = ''
+    if (type ==='crawling'){
+        content_type = 'c';
+    }else if(type === 'search'){
+        content_type = 's';
+    }else{
+       return console.log('type is not define!!')
+    }
+
     for (let i = 0; i < youtube_crawling_data_list.length; i++) {
-                let youtube_row = youtube_crawling_data_list[i]
-                let temp_html = `<div class="content_box" >
+        let youtube_row = youtube_crawling_data_list[i]
+        let content_id = 'youtube_' + content_type + '_' + i
+        let temp_html = `<div class="content_box" id="${content_id}">
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
                                     <div class="video_count">${youtube_row[3]}</div>
                                     <div class="play_icon"></div>
                                     <div class="more_icon"></div>
-                                    <div class="toggle" style="display: none">
+                                    <div class="toggle" style="display: none" onclick="more_open_or_off(${content_id})">
                                         <p>공유하기</p>
                                         <div class="line"></div>
                                         <p>찜하기</p>
                                     </div>
                                 </div>`
-                $('#youtube_recommend_content').append(temp_html)
-            }
+        $('#youtube_recommend_content').append(temp_html)
+    }
 }
 
 // News
-function news_content_add(news_crawling_data_list){
-    for (let i = 0; i <news_crawling_data_list.length; i++) {
-                let news_row = news_crawling_data_list[i]
-                let temp_html = `<div class="profile_like_news">
-                                        <li>
-                                            <div class="profile_like_news_image"></div>
-                                            <div class="profile_like_news_info">
-                                                <div class="profile_like_news_title">${news_row[2]}</div>
-                                                <div class="profile_like_news_content">${news_row[4]}
-                                                </div>
-                                                <div class="profile_like_news_company">${news_row[1]}</div>
-                                            </div>
-                                            <div class="profile_like_news_toggle" style="display: none;">
-                                                <p>공유하기</p>
-                                            </div>
-                                            <div class="profile_like_news_button">
-                                                <div class="profile_like_news_setting"></div>
-                                                <div class="profile_like_news_heart"></div>
-                                            </div>
+function news_content_add(news_crawling_data_list, type) {
+    let content_type = ''
+    if (type ==='crawling'){
+        content_type = 'c';
+    }else if(type === 'search'){
+        content_type = 's';
+    }else{
+       return console.log('type is not define!!')
+    }
 
-                                        </li>
-                                    </div>`
-                //
-                $('#news_recommend_content').append(temp_html)
-            }
+    for (let i = 0; i < news_crawling_data_list.length; i++) {
+        let news_row = news_crawling_data_list[i]
+        let content_id = 'news_' + content_type + '_' + i
+        let temp_html = `<div class="recommend_news_search_content">
+                        <div class="recommend_news_search_content_image">
+                            <img src="${news_row[5]}">
+                        </div>
+                        <div class="recommend_news_search_content_desc">
+                            <div class="recommend_news_search_content_desc_title">
+                                <p>${news_row[2]}</p>
+                            </div>
+                            <div class="recommend_news_search_content_desc_detail">
+                                <p>${news_row[4]}</p>
+                            </div>
+                            <div class="recommend_news_search_content_desc_footer">
+                                <div class="recommend_news_search_content_desc_footer_newspaper">
+                                    <p>${news_row[0]}</p>
+                                </div>
+                                <div class="recommend_news_search_content_desc_footer_time">
+                                    <p>${news_row[1]}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recommend_news_search_content_more">
+                            <div class="profile_like_news_button">
+                                <div class="profile_like_news_setting"></div>
+                                <div class="profile_like_news_heart"></div>
+                            </div>
+                        </div>
+                    </div>`
+        //
+        $('#news_recommend_content').append(temp_html)
+    }
 }
 
+//book
+function book_content_add(book_crawling_data_list, type) {
+    let content_type = ''
+    if (type ==='crawling'){
+        content_type = 'c';
+    }else if(type === 'search'){
+        content_type = 's';
+    }else{
+       return console.log('type is not define!!')
+    }
+
+    for (let i = 0; i < book_crawling_data_list.length; i++) {
+        let book_row = book_crawling_data_list[i]
+        let content_id = 'book_' + content_type + '_' + i
+        let temp_html = `<div class="content_box" id="${content_id}"> 
+                    <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
+                    <div class="more_icon"></div>
+                    <div class="toggle" style="display: none;">
+                        <p>공유하기</p>
+                        <div class="line"></div>
+                        <p>찜하기</p>
+                    </div>
+                </div>`
+        $('#book_recommend_content').append(temp_html)
+    }
+}
+
+
 // shopping
-function shopping_content_add(shopping_crawling_data_list){
-    for (let i = 0; i <shopping_crawling_data_list.length; i++) {
-                let shopping_row = shopping_crawling_data_list[i]
-                let temp_html = `<div class="recommend_shopping_search_content">
+function shopping_content_add(shopping_crawling_data_list, type) {
+    let content_type = ''
+    if (type ==='crawling'){
+        content_type = 'c';
+    }else if(type === 'search'){
+        content_type = 's';
+    }else{
+       return console.log('type is not define!!')
+    }
+
+    for (let i = 0; i < shopping_crawling_data_list.length; i++) {
+        let shopping_row = shopping_crawling_data_list[i]
+        let content_id = 'shopping_' + content_type + '_' + i
+        let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
                                     <div class="more_icon" id="shopping_recommend_${i}" onclick="more_open_or_off(this.id)"></div>
                                     <div class="toggle" style="display: none">
                                         <p>공유하기</p>
@@ -134,12 +200,15 @@ function shopping_content_add(shopping_crawling_data_list){
                                         </div>
                                     </div>
                                 </div>`
-                $('#shopping_recommend_content').append(temp_html)
-            }
+        $('#shopping_recommend_content').append(temp_html)
+    }
 }
+
+
 
 // more function
 
-function more_open_or_off(id){
-
+function more_open_or_off(id) {
+    let content = document.getElementById(id)
+    console.log(content)
 }

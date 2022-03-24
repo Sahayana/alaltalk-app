@@ -1,6 +1,6 @@
 $(document).ready(function () {
-    // $('#left_wrap').load("/api/search/chat_list");
-    $('#left_wrap').load("/chat/room/7/");
+    $('#left_wrap').load("/api/search/chat_list");
+    // $('#left_wrap').load("/chat/room/7/");
     $('#right_wrap').load("/api/search/chat");
 })
 
