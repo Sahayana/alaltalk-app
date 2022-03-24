@@ -34,7 +34,7 @@
                 <div class="profile_user_bio">{{user.bio}}</div>
             </div>
             <div class="profile_buttons">
-                <button class="profile_change" id="profile_change" onclick="profile_change()">프로필 변경</button>
+                <button class="profile_change" id="profile_change" onclick="profile_change_check()">프로필 변경</button>
                 <button class="profile_follow" id="profile_follow" onclick="profile_follow()">팔로우 관리</button>
                 <button class="profile_like" id="profile_like" onclick="profile_like()">찜 목록</button>
             </div>
@@ -50,6 +50,16 @@
             <div class="profile_default_image"></div>
             <p>Please select a chat to start messaging.</p>
         </div>
+
+        <div class="profile_auth_container" id="profile_auth_container">
+            <form class="profile_auth_form">
+                {% csrf_token %}
+                <p id="password-again-helper">비밀번호를 입력해주세요:</p>
+                <input type="password" id="password-again-input">
+                <button type="button" id="password-again-btn" onclick=authCheck()>확인</button>
+            </form>
+        </div>
+
         <div class="profile_change_container" id="profile_change_container">
             <div class="profile_change_title">프로필 변경</div>
             <form class="profile_change_part">
@@ -58,9 +68,26 @@
                     <input type="file" id="profile-img" hidden >
                     <img id="profile-img-modified" src={{user.img.url}} alt="profile-img" srcset="">
                 </div>
-                <input type="text" id="profile-nickname" value="{{user.nickname}}">
-                <input type="text" id="profile-bio" value="{{user.bio}}">
-                <button type="button" class="profile_change_button" id="profile_change_button" onclick=profileChange()>적용하기</button>
+                <div class="profile_change_field">
+                    <label for="profile-nickname">닉네임:</label>
+                    <input type="text" id="profile-nickname" value="{{user.nickname}}">
+                    <small id="name_error">Error Message</small>
+                </div>
+                <div class="profile_change_field">
+                    <label for="profile-password-change">비밀번호:</label>
+                    <input class="pas" id="profile-password-change" type="password" name="password1">
+                    <small id="pwd_error">Error Message</small> 
+                </div>
+                <div class="profile_change_field">
+                    <label for="profile-password-check">비밀번호 확인:</label>
+                    <input class="pas" id="profile-password-check" type="password" name="password2">
+                    <small id="pwd_check_error">Error Message</small> 
+                </div>
+                <div class="profile_change_field">
+                    <label for="profile-bio">한줄소개:</label>
+                    <input type="text" id="profile-bio" value="{{user.bio}}">
+                </div> 
+                <button type="button" class="profile_change_button" id="profile_change_button"  onclick=profileChange()>적용하기</button>
             </form>
         </div>
         <div class="profile_follow_container" id="profile_follow_container">
@@ -77,7 +104,10 @@
                             <div class="profile_follow_user">{{sender.nickname}}</div>
                             <div class="profile_follow_user_bio">{{sender.bio}}</div>
                         </div>
+                        
                         <div class="profile_follow_add" id="{{request.id}}" onclick=acceptRequest(this.id)></div>
+                        <div class="profile_follow_decline" id="{{request.id}}" onclick=declineRequest(this.id)></div>
+                                              
                     </div>
                 </li>    
             </div>
@@ -110,60 +140,10 @@
                         </div>
                         <div class="profile_like_heart"></div>
                         <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>
-
-
+                    </div>   
                 </div>
-
             </div>
+            
             <div class="profile_like_news" id="profile_like_news">
                 <li>
                     <div class="profile_like_news_image"></div>
@@ -179,7 +159,6 @@
                         <div class="profile_like_news_setting"></div>
                         <div class="profile_like_news_heart"></div>
                     </div>
-
                 </li>
                 <li>
                     <div class="profile_like_news_image"></div>
@@ -195,57 +174,9 @@
                         <div class="profile_like_news_setting"></div>
                         <div class="profile_like_news_heart"></div>
                     </div>
-
-                </li>
-                <li>
-                    <div class="profile_like_news_image"></div>
-                    <div class="profile_like_news_info">
-                        <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
-                        <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의 초미세먼지 농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...</div>
-                        <div class="profile_like_news_company">KBS</div>
-                    </div>
-                    <div class="profile_like_news_toggle">
-                            <p>공유하기</p>
-                    </div>
-                    <div class="profile_like_news_button">
-                        <div class="profile_like_news_setting"></div>
-                        <div class="profile_like_news_heart"></div>
-                    </div>
-
-                </li>
-                <li>
-                    <div class="profile_like_news_image"></div>
-                    <div class="profile_like_news_info">
-                        <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
-                        <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의 초미세먼지 농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...</div>
-                        <div class="profile_like_news_company">KBS</div>
-                    </div>
-                    <div class="profile_like_news_toggle">
-                            <p>공유하기</p>
-                    </div>
-                    <div class="profile_like_news_button">
-                        <div class="profile_like_news_setting"></div>
-                        <div class="profile_like_news_heart"></div>
-                    </div>
-
-                </li>
-                <li>
-                    <div class="profile_like_news_image"></div>
-                    <div class="profile_like_news_info">
-                        <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
-                        <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의 초미세먼지 농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...</div>
-                        <div class="profile_like_news_company">KBS</div>
-                    </div>
-                    <div class="profile_like_news_toggle">
-                            <p>공유하기</p>
-                    </div>
-                    <div class="profile_like_news_button">
-                        <div class="profile_like_news_setting"></div>
-                        <div class="profile_like_news_heart"></div>
-                    </div>
-
-                </li>
+                </li>                
             </div>
+
             <div class="profile_like_book" id="profile_like_book">
                 <div class="profile_like_book_grid">
                     <div class="profile_like_book_container">
@@ -280,45 +211,10 @@
                             <div class="profile_like_book_setting"></div>
                             <div class="profile_like_book_heart"></div>
                         </div>
-
-                    </div>
-                    <div class="profile_like_book_container">
-                        <div class="profile_like_book_image"></div>
-                        <div class="profile_like_book_info">
-                            <div class="profile_like_book_title">Clean Code 클린코드</div>
-                            <div class="profile_like_book_writer">로버트 C. 마틴 저</div>
-                            <div class="profile_like_book_translator">/박제호, 이해영</div>
-                            <div class="profile_like_book_price">29,700원</div>
-                        </div>
-                        <div class="profile_like_book_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_book_button">
-                            <div class="profile_like_book_setting"></div>
-                            <div class="profile_like_book_heart"></div>
-                        </div>
-
-                    </div>
-                    <div class="profile_like_book_container">
-                        <div class="profile_like_book_image"></div>
-                        <div class="profile_like_book_info">
-                            <div class="profile_like_book_title">Clean Code 클린코드</div>
-                            <div class="profile_like_book_writer">로버트 C. 마틴 저</div>
-                            <div class="profile_like_book_translator">/박제호, 이해영</div>
-                            <div class="profile_like_book_price">29,700원</div>
-                        </div>
-                        <div class="profile_like_book_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_book_button">
-                            <div class="profile_like_book_setting"></div>
-                            <div class="profile_like_book_heart"></div>
-                        </div>
-
-                    </div>
-
+                    </div>     
                 </div>
             </div>
+
             <div class="profile_like_shopping" id="profile_like_shopping">
                 <div class="profile_like_shopping_grid">
                     <div class="profile_like_shopping_container">
@@ -351,60 +247,9 @@
                             <div class="profile_like_shopping_setting"></div>
                             <div class="profile_like_shopping_heart"></div>
                         </div>
-
-                    </div>
-                    <div class="profile_like_shopping_container">
-                        <div class="profile_like_shopping_image"></div>
-                        <div class="profile_like_shopping_info">
-                            <div class="profile_like_shopping_title">엄청난 노트북</div>
-                            <div class="profile_like_shopping_brand">쿠팡</div>
-                            <div class="profile_like_shopping_price">2,229,700원</div>
-                        </div>
-                        <div class="profile_like_shopping_toggle" >
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_shopping_button">
-                            <div class="profile_like_shopping_setting"></div>
-                            <div class="profile_like_shopping_heart"></div>
-                        </div>
-
-                    </div>
-                    <div class="profile_like_shopping_container">
-                        <div class="profile_like_shopping_image"></div>
-                        <div class="profile_like_shopping_info">
-                            <div class="profile_like_shopping_title">엄청난 노트북</div>
-                            <div class="profile_like_shopping_brand">쿠팡</div>
-                            <div class="profile_like_shopping_price">2,229,700원</div>
-                        </div>
-                        <div class="profile_like_shopping_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_shopping_button">
-                            <div class="profile_like_shopping_setting"></div>
-                            <div class="profile_like_shopping_heart"></div>
-                        </div>
-
-                    </div>
-                    <div class="profile_like_shopping_container">
-                        <div class="profile_like_shopping_image"></div>
-                        <div class="profile_like_shopping_info">
-                            <div class="profile_like_shopping_title">엄청난 노트북</div>
-                            <div class="profile_like_shopping_brand">쿠팡</div>
-                            <div class="profile_like_shopping_price">2,229,700원</div>
-                        </div>
-                        <div class="profile_like_shopping_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_shopping_button">
-                            <div class="profile_like_shopping_setting"></div>
-                            <div class="profile_like_shopping_heart"></div>
-                        </div>
-
-                    </div>
-
+                    </div>                    
                 </div>
             </div>
-
         </div>
     </div>
 </div>
