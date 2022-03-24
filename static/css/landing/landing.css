@@ -115,11 +115,16 @@ body::-webkit-scrollbar-track{
 }
 
 .landing_sign_up_container{
+
     margin : 50px auto;
     text-align: center;
     font-size: min(1vw, 20px);
     color: white;
     cursor: pointer;
+}
+
+.landing_sign_up_container p{
+    z-index: 10;
 }
 
 .landing_see_our_page{
