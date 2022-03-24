@@ -82,12 +82,12 @@ def crawling_shopping(search_word: str, count: str) -> List[List[str]]:
 
     product_list = soup.select('#productList > li')
 
-    for row in product_list:
-        print('#####################')
-        print(row)
-
+    # for row in product_list:
+    #     print('#####################')
+    #     print(row)
 
     return 0
+
 
 crawling_shopping('커피', 10)
 

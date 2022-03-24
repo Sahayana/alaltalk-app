@@ -90,7 +90,15 @@ WSGI_APPLICATION = "alaltalk.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-# 기존 연결된 DATABASE - SQlite
+# # 기존 연결된 DATABASE - SQlite
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# DATABASE - MYSQL (재성님 계정)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -100,6 +108,7 @@ DATABASES = {
         "HOST": "alaltalk.chsfxpt2fyr9.ap-northeast-2.rds.amazonaws.com",
         "PORT": "3306",
     }
+
 }
 
 

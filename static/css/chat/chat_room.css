@@ -96,6 +96,9 @@ body {
     border-radius: 2px;
 
 }
+.left_wrap .chat_list a {
+    text-decoration: none;
+}
 .left_wrap .chat_list .chat_partner {
     width: 100%;
     display: flex;
