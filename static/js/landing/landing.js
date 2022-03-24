@@ -30,46 +30,31 @@ document.addEventListener('scroll', function (){
 })
 
 function see_our_page(){
-    // $('#landing_row_1').animate({scrollTop:$(this.hash).offset().top}, 500);
-    let row = document.getElementById('landing_row_1')
+    var start_scroll = $('html');
+    let row = document.getElementById('landing_row_1');
     let scroll_position = row.offsetTop + row.offsetHeight
-    window.scrollTo({top: scroll_position, behavior: 'smooth'});
+    // window.scrollTo({top: scroll_position, behavior: 'smooth'});
+    var page = 2;
 
-    // $(".landing_content_row").each(function () {
-    //             // 개별적으로 Wheel 이벤트 적용 mousewheel(IE/chrome/opera) DOMMouseScroll(FF)
-    //             $(this).on("mousewheel DOMMouseScroll", function (e) {
-    //                 e.preventDefault();
-    //                 var delta = scroll_position;
-    //                 /* IE */
-    //                 if (!event) event = window.event;
-    //                 //휠에 대한 정보 얻기 파이어폭스 외 IE/Chrome/Opera = wheelDelta
-    //                 if (event.wheelDelta) {
-    //                     delta = event.wheelDelta / 50;
-    //                     //평균 50~120 사이로 요소의 인식높이에 따라 다름(한 화면(height100%)기준일떄는 120
-    //                     if (window.opera) delta = -delta;
-    //                 //휠에 대한 정보 얻기 Mozilla FF = detail
-    //                 } else if (event.detail) delta = -event.detail / 3;
-    //                 var moveTop = null;
-    //                 // 마우스휠을 위에서 아래로
-    //                 if (delta < 0) {
-    //                     if ($(this).next() != undefined) {
-    //                         moveTop = $(this).next().offset().top;
-    //                     }
-    //                 // 마우스휠을 아래에서 위로
-    //                 } else {
-    //                     if ($(this).prev() != undefined) {
-    //                         moveTop = $(this).prev().offset().top;
-    //                     }
-    //                 }
-    //                 // 화면 이동 0.8초(800)
-    //                 $("html,body").stop().animate({
-    //                     scrollTop: moveTop + 'px'
-    //                 }, {
-    //                     duration: 300, complete: function () {
-    //                     }
-    //                 });
-    //             });
-    //         });
+    // $('#landing_row_1').animate({scrollTop:$(this.hash).offset().top}, 500);
+    start_scroll.animate({scrollTop :scroll_position},500);
+    $(window).on("wheel", function(e) {
+    if(start_scroll.is(":animated")) return;
+    if(e.originalEvent.deltaY > 0) {
+        if(page == 7) return;
+        page++;
+    } else if(e.originalEvent.deltaY < 0) {
+        if(page == 1) return;
+        page--;
+    }
+    if(page > 4) {
+        var posTop =(page-1) * (scroll_position+30);
+    } else {
+        var posTop =(page-1) * scroll_position;
+    }
+
+    start_scroll.animate({scrollTop : posTop});
+})
 
 }
 
