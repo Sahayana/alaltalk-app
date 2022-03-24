@@ -184,6 +184,53 @@ body {
   margin-top: 2vw;
   color: #b7b7b7;
 }
+
+/* 비밀번호 재입력 폼 */
+
+.profile_auth_container {
+  margin: 0 auto;
+  width: 100%;
+  position: absolute;
+  top: 400px;
+  left: 350px;
+  display: none;
+}
+
+.profile_auth_container .profile_auth_form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile_auth_container .profile_auth_form #password-again-helper {
+  color: #a185f2;
+  font-size: 15px;
+  margin-bottom: 8px;
+  margin-left: -90px;
+}
+
+.profile_auth_container .profile_auth_form #password-again-input {
+  border: 2px solid #a185f2;
+  border-radius: 10px;
+  width: 250px;
+  height: 30px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.profile_auth_container .profile_auth_form #password-again-btn {
+  color: #fff;
+  background-color: #7657ce;
+  width: 260px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* 프로필 변경 폼 */
+
 .profile_change_container {
   width: 100%;
   height: 100%;
@@ -203,15 +250,17 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
 }
 
-.profile_image_change {
+.profile_change_part .profile_image_change {
   width: 12vw;
   height: 12vw;
+  border: 1px gray solid;
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
+  margin-bottom: 50px;
 }
 
 .profile_image_change > img {
@@ -219,36 +268,47 @@ body {
   height: 100%;
   object-fit: cover;
 }
-
-.profile_change_part input {
-  padding-left: 2vw;
-  margin-top: -10%;
-  width: 29vw;
-  height: 50px;
-  border: 1px solid #b7b7b7;
-  border-radius: 10px;
+.profile_change_part > .profile_change_field {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.profile_change_part > .profile_change_field > label {
+  font-size: 14px;
+  color: #7657ce;
+  font-weight: 600;
+  margin-bottom: 5px;
 }
 
-.profile_change_part textarea {
-  padding-left: 2vw;
-  width: 29vw;
-  height: 50px;
-  border: 1px solid #b7b7b7;
+.profile_change_part > .profile_change_field > input {
+  border: 2px solid #a185f2;
   border-radius: 10px;
-  resize: none;
-  margin-top: -10%;
+  width: 300px;
+  height: 40px;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+.profile_change_part > .profile_change_field > small {
+  font-size: 75%;
+  visibility: hidden;
+  color: red;
+  margin-top: -8px;
+  padding-left: 5px;
 }
 
 .profile_change_button {
-  background-color: #a185f2;
-  width: 31vw;
-  height: 62px;
+  background-color: #7657ce;
+  width: 310px;
+  height: 40px;
   color: white;
   border-radius: 10px;
   font-size: 20px;
   font-weight: bold;
   border: none;
-  margin-top: -10%;
+  cursor: pointer;
 }
 
 .profile_follow_container {

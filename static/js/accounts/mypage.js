@@ -1,6 +1,9 @@
+//프로필 변경 버튼 클릭
 
-//프로필 변경버튼 클릭
-function profile_change(){
+function profile_change_check(){    
+    
+    document.getElementById('password-again-input').value = "";
+
     let change = document.getElementById('profile_change');
     let follow = document.getElementById('profile_follow');
     let like = document.getElementById('profile_like');
@@ -22,7 +25,52 @@ function profile_change(){
     document.getElementById('profile_right_default').style.display='none'
     document.getElementById('profile_follow_container').style.display='none'
     document.getElementById('profile_like_container').style.display='none'
+    document.getElementById('profile_change_container').style.display='none'
 
+    document.getElementById('profile_auth_container').style.display='block'
+    
+}
+
+// 프로필 변경 접근을 위한 비밀번호 재확인
+function authCheck(){
+    let passwordAgain = $("#password-again-input").val();  
+    
+    if (passwordAgain == ''){
+        return;
+    }
+
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
+        }
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '/accounts/mypage/authcheck/',  
+        dataType: "json",
+        data: {"password":passwordAgain},        
+        success: function (response) {
+            if (response["msg"] === "ok"){                              
+                profile_change();                
+            }else{
+                $("#password-again-helper").text("비밀번호를 확인해주세요.");
+                $("#password-again-helper").css("color", "red");
+            }
+                    
+        }
+    })
+}
+
+
+
+//프로필 변경
+function profile_change(){    
+
+    document.getElementById('profile_right_default').style.display='none'
+    document.getElementById('profile_follow_container').style.display='none'
+    document.getElementById('profile_like_container').style.display='none'
+    document.getElementById('profile_auth_container').style.display='none'
     document.getElementById('profile_change_container').style.display='block'
 }
 
@@ -49,7 +97,7 @@ function profile_follow(){
     document.getElementById('profile_right_default').style.display='none'
     document.getElementById('profile_follow_container').style.display='block'
     document.getElementById('profile_like_container').style.display='none'
-
+    document.getElementById('profile_auth_container').style.display='none'
     document.getElementById('profile_change_container').style.display='none'
 }
 
@@ -76,7 +124,7 @@ function profile_like(){
     document.getElementById('profile_right_default').style.display='none'
     document.getElementById('profile_follow_container').style.display='none'
     document.getElementById('profile_like_container').style.display='block'
-
+    document.getElementById('profile_auth_container').style.display='none'
     document.getElementById('profile_change_container').style.display='none'
     youtube_like()
 }
@@ -138,6 +186,10 @@ function toggle_open(){
 
 }
 
+function isPw(pw) {
+    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+    return regExp.test(pw);
+}
 
 
 
@@ -173,12 +225,16 @@ function  profileChange(){
     let nickName = $("#profile-nickname").val();
     let bio = $("#profile-bio").val();
     let profileImg = $("#profile-img")[0].files[0];
+    let password = $("#profile-password-change").val();
 
 
     let formData = new FormData();
     formData.append("nickname", nickName);       
     formData.append("img", profileImg);
     formData.append("bio", bio);
+    if (password !== ''){
+        formData.append("password", password);
+    };
 
     $.ajaxSetup({
         headers: {
@@ -232,6 +288,8 @@ function acceptRequest(requestId){
 
 
 $(document).ready(function(){
+
+    
     
     // 프로필 이미지 업로드
     let profileImgDiv = document.querySelector('.profile_image_change');
@@ -258,6 +316,61 @@ $(document).ready(function(){
         window.location.href = `/accounts/mypage/`;
     })
 
+
+    let profileChangeBtn = document.querySelector('#profile_change_button');
+
+    // 닉네임 유효성 검사
+
+    let nickName = document.querySelector("#profile-nickname");
+    let nameError = document.querySelector("#name_error");
+
+    nickName.addEventListener('keyup', function (){ //키를 놓을 때 발생하는 이벤트       
+        
+        if (nickName.value.length < 3){                   
+            nameError.innerText = "닉네임은 3자리 이상이여야 합니다.";
+            nameError.style.visibility ='visible';
+            profileChangeBtn.disabled = true;           
+            return false;
+        }else {            
+            profileChangeBtn.disabled = false;
+            nameError.style.visibility ='hidden'; 
+        }
+    })
+
+    // 비밀번호 유효성 검사
+
+    let password = document.querySelector("#profile-password-change");
+    let passwordCheck = document.querySelector("#profile-password-check");
+    
+    let pwdError = document.querySelector("#pwd_error");
+    let pwdCheckError = document.querySelector("#pwd_check_error");
+
+    password.addEventListener('keyup', function(){        
+        if (!isPw(password.value)){             
+            pwdError.innerText = "영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.";
+            pwdError.style.visibility ='visible';
+            profileChangeBtn.disabled = true;               
+            return false;
+        }else{                 
+            pwdError.style.visibility ='hidden';
+            profileChangeBtn.disabled = false;
+        }
+
+    })
+
+    passwordCheck.addEventListener('keyup', function (){     
+        
+        if (password.value !== passwordCheck.value){                   
+            pwdCheckError.innerText = "패스워드를 확인해주세요.";
+            pwdCheckError.style.visibility ='visible';  
+            profileChangeBtn.disabled = true;             
+            return false
+        }else {                  
+            pwdCheckError.style.visibility ='hidden';
+            profileChangeBtn.disabled = false;
+        }
+
+    })
 
 
 });
