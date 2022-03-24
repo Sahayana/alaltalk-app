@@ -116,13 +116,17 @@ body::-webkit-scrollbar-track{
 }
 
 .landing_sign_up_container{
+    width: 100%;
+    /*display: flex;*/
+    /*justify-content: center;*/
     margin : 50px auto;
     text-align: center;
     font-size: min(1vw, 20px);
     color: white;
 }
 
-.landing_sign_up_container u {
+.landing_sign_up_container p {
+    z-index: 10;
     cursor: pointer;
 }
 
