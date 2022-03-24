@@ -51,7 +51,7 @@ body {
   background-repeat: no-repeat;
 }
 .nav .icon_group .icon.user_icon {
-  background-image: url('../../images/user_outline.png');
+  background-image: url('../../images/user.png');
 }
 .nav .icon_group .icon.chat_icon {
   background-image: url('../../images/chat_outline.png');
