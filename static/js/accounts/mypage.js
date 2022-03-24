@@ -272,8 +272,9 @@ function acceptRequest(requestId){
         success: function (response) {
             console.log(response);
             if (response["msg"] === "accepted"){
-                alert("친구 요청을 수락하였습니다..");
+                alert("친구 요청을 수락하였습니다.");
                 window.location.reload();
+                profile_follow();
             }else{
                 alert("문제가 발생하였습니다.");
                 return;
@@ -282,6 +283,32 @@ function acceptRequest(requestId){
         }
     });    
 }
+
+// 친구 요청 거절
+function declineRequest(requestId){
+
+    $.ajax({
+        type: 'GET',
+        url: `/accounts/friends/decline/${requestId}`,         
+        success: function (response) {
+            console.log(response);
+            if (response["msg"] === "declined"){
+                alert("친구 요청을 거절하였습니다.");
+                window.location.reload();
+                profile_follow();
+            }else{
+                alert("문제가 발생하였습니다.");
+                return;
+            }
+                             
+        }
+    });    
+    
+}
+
+
+
+
 
 
 

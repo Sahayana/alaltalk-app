@@ -104,7 +104,10 @@
                             <div class="profile_follow_user">{{sender.nickname}}</div>
                             <div class="profile_follow_user_bio">{{sender.bio}}</div>
                         </div>
+                        
                         <div class="profile_follow_add" id="{{request.id}}" onclick=acceptRequest(this.id)></div>
+                        <div class="profile_follow_decline" id="{{request.id}}" onclick=declineRequest(this.id)></div>
+                                              
                     </div>
                 </li>    
             </div>

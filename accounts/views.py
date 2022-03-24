@@ -167,6 +167,14 @@ def accept_request(request, request_id):
         return JsonResponse({"msg": "error"})  # 거절, 회수 등의 예외처리 남음
 
 
+@login_required
+def decline_request(request, request_id):
+    friend_request = FriendRequest.objects.get(id=request_id)
+    friend_request.delete()
+    return JsonResponse({"msg":"declined"})
+
+
+
 def temporary_password(request):
 
     query = request.GET.get("q")
