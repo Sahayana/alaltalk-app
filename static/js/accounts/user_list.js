@@ -107,4 +107,10 @@ $(document).ready(function(){
     myPageIcon.on('click', function(){
         window.location.href = `/accounts/mypage/`;
     });
+
+    // 채팅 이동
+    let ChatIcon = $(".chat_icon");
+    ChatIcon.on('click', function(){
+        window.location.href = `/api/search/`;
+    })
 });

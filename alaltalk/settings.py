@@ -93,8 +93,12 @@ WSGI_APPLICATION = "alaltalk.wsgi.application"
 # 기존 연결된 DATABASE - SQlite
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "alaltalk_aws",
+        "USER": "admin",
+        "PASSWORD": "3zGGNStrf2fCxlCCN6n3",
+        "HOST": "alaltalk.chsfxpt2fyr9.ap-northeast-2.rds.amazonaws.com",
+        "PORT": "3306",
     }
 }
 
@@ -139,8 +143,8 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_URL = "/media/"
 
 
 # Default primary key field type
