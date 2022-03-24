@@ -108,7 +108,7 @@ def profile_change(request):
             img = request.FILES.get("img")
             img_extension = img.name.split(".")[-1]
             img.name = user.email.split("@")[0] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
-            user.img = str(img)
+            user.img = img
         if request.POST.get("password"):
             password = request.POST.get("password")
             user.set_password(password)

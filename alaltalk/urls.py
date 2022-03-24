@@ -18,7 +18,8 @@ from django.urls import include, path
 from ninja import NinjaAPI
 
 from search.apis.v1.search_router import router as search_router
-
+from django.conf.urls.static import static
+from django.conf import settings
 from . import views
 
 api = NinjaAPI()
@@ -31,3 +32,6 @@ urlpatterns = [
     path("chat/", include("chat.urls")),
     path("api/", api.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

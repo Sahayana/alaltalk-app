@@ -141,6 +141,12 @@ body {
   background-color: #7657ce;
   border-radius: 50%;
   margin-left: 24px;
+  overflow: hidden;
+}
+.user_list .user_box .user_img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .user_list .user_box .info_group {
   margin-left: 12px;
@@ -236,6 +242,12 @@ body {
   background-color: #7657ce;
   border-radius: 50%;
   margin-left: 24px;
+  overflow: hidden;
+}
+.search_result .user_box .user_img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .search_result .user_box .info_group {
   margin-left: 12px;
