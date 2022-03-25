@@ -121,3 +121,8 @@ $(document).ready(function(){
         window.location.href = `/chat/`;
     })
 });
+
+
+function friend_chat(id){
+    window.location.href= `/chat/`+ id;
+}
