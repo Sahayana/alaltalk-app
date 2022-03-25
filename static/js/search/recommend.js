@@ -21,8 +21,13 @@ function click_recommend_function() {
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
 
+
             // hovering_like
             hovering_like_heart()
+
+
+            // clicked_like
+            like_news()
         }
     })
 
@@ -224,7 +229,7 @@ function hovering_like_heart() {
     for (let i = 0; i < empty_heart_classes.length; i++) {
 
         empty_heart_classes[i].addEventListener('mouseover', (event) => {
-            console.log('current target : ', event.target.style.backgroundImage.url)
+            console.log('current target : ', event.target.style.backgroundImage)
 
                 if (event.target.style.backgroundImage === background_empty_heart_path) {
                     console.log('target empty_heart >>> heart')
