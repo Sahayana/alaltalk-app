@@ -34,7 +34,6 @@ def create_chat_room(request, id):
     print(user.id)
     partner = CustomUser.objects.get(id=id)
     print(partner.id)
-
     if user == request.user:
         exist_room1 = ChatRoom.objects.filter(participant1=user.id, participant2=partner.id)
         exist_room2 = ChatRoom.objects.filter(participant1=partner.id, participant2=user.id)
@@ -86,7 +85,7 @@ def create_chat_message(request, room_id):
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
         print(chatroom.participant1, chatroom.participant2, user.id)
-        chat_list = CustomUser.objects.all().exclude(is_superuser=True).exclude(id=request.user.id)
+        chat_list = CustomUser.objects.get(id=request.user.id).friends.all()
         # last_message = ChatMessage.objects.filter(chatroom_id=room_id).latest('chatroom_id')
         # print(last_message.message)
         return render(
