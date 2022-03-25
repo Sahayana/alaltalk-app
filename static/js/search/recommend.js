@@ -20,8 +20,12 @@ function click_recommend_function() {
             news_content_add(response['all_response']['news'], 'crawling')
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
+
+            // hovering_like
+            hovering_like_heart()
         }
     })
+
 }
 
 
@@ -63,12 +67,12 @@ function give_event() {
 // youtube
 function youtube_content_add(youtube_crawling_data_list, type) {
     let content_type = ''
-    if (type ==='crawling'){
+    if (type === 'crawling') {
         content_type = 'c';
-    }else if(type === 'search'){
+    } else if (type === 'search') {
         content_type = 's';
-    }else{
-       return console.log('type is not define!!')
+    } else {
+        return console.log('type is not define!!')
     }
 
     for (let i = 0; i < youtube_crawling_data_list.length; i++) {
@@ -80,7 +84,7 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                     <div class="video_count">${youtube_row[3]}</div>
                                     <div class="play_icon"></div>
                                     <div class="more_icon"></div>
-                                    <div class="toggle" style="display: none" onclick="more_open_or_off(${content_id})">
+                                    <div class="toggle" style="display: none" >
                                         <p>공유하기</p>
                                         <div class="line"></div>
                                         <p>찜하기</p>
@@ -93,18 +97,18 @@ function youtube_content_add(youtube_crawling_data_list, type) {
 // News
 function news_content_add(news_crawling_data_list, type) {
     let content_type = ''
-    if (type ==='crawling'){
+    if (type === 'crawling') {
         content_type = 'c';
-    }else if(type === 'search'){
+    } else if (type === 'search') {
         content_type = 's';
-    }else{
-       return console.log('type is not define!!')
+    } else {
+        return console.log('type is not define!!')
     }
 
     for (let i = 0; i < news_crawling_data_list.length; i++) {
         let news_row = news_crawling_data_list[i]
         let content_id = 'news_' + content_type + '_' + i
-        let temp_html = `<div class="recommend_news_search_content">
+        let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
                         <div class="recommend_news_search_content_image">
                             <img src="${news_row[5]}">
                         </div>
@@ -125,10 +129,11 @@ function news_content_add(news_crawling_data_list, type) {
                             </div>
                         </div>
                         <div class="recommend_news_search_content_more">
-                            <div class="profile_like_news_button">
-                                <div class="profile_like_news_setting"></div>
-                                <div class="profile_like_news_heart"></div>
+                            <div class="profile_like_news_toggle">
+                                <img src="/static/images/share.png">
                             </div>
+                            <div class="profile_like_news_heart" style="display: none"></div>
+                            <div class="profile_like_news_heart_empty" style="display: block"></div>
                         </div>
                     </div>`
         //
@@ -139,12 +144,12 @@ function news_content_add(news_crawling_data_list, type) {
 //book
 function book_content_add(book_crawling_data_list, type) {
     let content_type = ''
-    if (type ==='crawling'){
+    if (type === 'crawling') {
         content_type = 'c';
-    }else if(type === 'search'){
+    } else if (type === 'search') {
         content_type = 's';
-    }else{
-       return console.log('type is not define!!')
+    } else {
+        return console.log('type is not define!!')
     }
 
     for (let i = 0; i < book_crawling_data_list.length; i++) {
@@ -152,7 +157,7 @@ function book_content_add(book_crawling_data_list, type) {
         let content_id = 'book_' + content_type + '_' + i
         let temp_html = `<div class="content_box" id="${content_id}"> 
                     <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
-                    <div class="more_icon"></div>
+                    <div class="more_icon" onclick="more_open_or_off(${content_id})"></div>
                     <div class="toggle" style="display: none;">
                         <p>공유하기</p>
                         <div class="line"></div>
@@ -167,12 +172,12 @@ function book_content_add(book_crawling_data_list, type) {
 // shopping
 function shopping_content_add(shopping_crawling_data_list, type) {
     let content_type = ''
-    if (type ==='crawling'){
+    if (type === 'crawling') {
         content_type = 'c';
-    }else if(type === 'search'){
+    } else if (type === 'search') {
         content_type = 's';
-    }else{
-       return console.log('type is not define!!')
+    } else {
+        return console.log('type is not define!!')
     }
 
     for (let i = 0; i < shopping_crawling_data_list.length; i++) {
@@ -205,10 +210,46 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 }
 
 
-
 // more function
 
 function more_open_or_off(id) {
-    let content = document.getElementById(id)
-    console.log(content)
+    console.log(id.id)
+}
+
+// like hovering
+function hovering_like_heart() {
+    let empty_heart_classes = document.getElementsByClassName('profile_like_news_heart_empty')
+    let background_heart_path = '/static/images/heart.png'
+    let background_empty_heart_path = '/static/images/empty_heart.png'
+    for (let i = 0; i < empty_heart_classes.length; i++) {
+
+        empty_heart_classes[i].addEventListener('mouseover', (event) => {
+            console.log('current target : ', event.target.style.backgroundImage.url)
+
+                if (event.target.style.backgroundImage === background_empty_heart_path) {
+                    console.log('target empty_heart >>> heart')
+                    event.target.style.backgroundImage ="url('" + background_heart_path + "')"
+                } else {
+                    event.target.style.backgroundImage = background_empty_heart_path
+                    console.log('target heart >>> empty_heart')
+                }
+            }
+        )
+        // empty_heart_classes[i].addEventListener('mouseout', (event) => {
+        //         if (event.target.style.backgroundImage === background_empty_heart) {
+        //             event.target.style.backgroundImage = background_empty_heart
+        //         }else{
+        //             event.target.style.backgroundImage = background_heart
+        //         }
+        //     }
+        // )
+        // empty_heart_classes[i].addEventListener('click', (event) => {
+        //         if (event.target.style.backgroundImage === background_empty_heart) {
+        //             event.target.style.backgroundImage = background_heart
+        //         }else{
+        //             event.target.style.backgroundImage = background_empty_heart
+        //         }
+        //     }
+        // )
+    }
 }

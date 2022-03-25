@@ -98,7 +98,7 @@
                 </div>
                 <!-- news 크롤링 결과-->
             </div>
-            <div class="search_news_content">
+            <div class="search_news_content" id="test">
                 <p>검색</p>
                 <div class="search_section">
                     <div class="recommend_news_search_content">
@@ -123,10 +123,11 @@
                             </div>
                         </div>
                         <div class="recommend_news_search_content_more">
-                            <div class="profile_like_news_button">
-                                <div class="profile_like_news_setting"></div>
-                                <div class="profile_like_news_heart"></div>
+                            <div class="profile_like_news_toggle">
+                                <img src="/static/images/share.png">
                             </div>
+                            <div class="profile_like_news_heart" style="display: none"></div>
+                            <div class="profile_like_news_heart_empty" style="display: block"></div>
                         </div>
                     </div>
                     <div class="recommend_news_search_content">
@@ -151,12 +152,14 @@
                             </div>
                         </div>
                         <div class="recommend_news_search_content_more">
-                            <div class="profile_like_news_button">
-                                <div class="profile_like_news_setting"></div>
-                                <div class="profile_like_news_heart"></div>
+                            <div class="profile_like_news_toggle">
+                                <img src="/static/images/share.png">
                             </div>
+                            <div class="profile_like_news_heart" style="display: none"></div>
+                            <div class="profile_like_news_heart_empty" style="display: block"></div>
                         </div>
                     </div>
+                    <!-- 기존 news Template -->
                     {#                    <div class="profile_like_news">#}
                     {#                        <li>#}
                     {#                            <div class="profile_like_news_image"></div>#}
