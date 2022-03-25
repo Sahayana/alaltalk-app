@@ -9,7 +9,9 @@ class SearchConfig(AppConfig):
 
     # 현재 폴더 + chromedriver 경로 붙이기
     webdriver_path = os.getcwd() + '\search\chromedriver.exe'
-    # print(webdriver_path)
+
+    print(webdriver_path)
+
     name = "search"
     # chrome webdriver 실행
     options = webdriver.ChromeOptions()
