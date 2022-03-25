@@ -1,6 +1,7 @@
+import os
+
 from django.apps import AppConfig
 from selenium import webdriver
-import os
 
 
 class SearchConfig(AppConfig):
@@ -15,8 +16,8 @@ class SearchConfig(AppConfig):
 
     # webdriver option 설정 - 창 안 보이기, 시크릿 모드
     options.add_argument("headless")
-    options.add_argument('--incognito')
-    driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
+    options.add_argument("--incognito")
+    driver = webdriver.Chrome(executable_path="/usr/local/bin/chromedriver", options=options)
 
     # 쿠기 삭제
     driver.delete_all_cookies()

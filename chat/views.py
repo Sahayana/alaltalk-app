@@ -5,9 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
+
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
-
 
 # # 유저리스트 불러오기
 # @login_required
