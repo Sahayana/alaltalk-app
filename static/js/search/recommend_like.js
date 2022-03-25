@@ -1,4 +1,4 @@
-function like(){
+function like_news(id){
 
 
 }
