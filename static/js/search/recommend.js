@@ -114,33 +114,36 @@ function news_content_add(news_crawling_data_list, type) {
         let news_row = news_crawling_data_list[i]
         let content_id = 'news_' + content_type + '_' + i
         let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
-                        <div class="recommend_news_search_content_image">
-                            <img src="${news_row[5]}">
-                        </div>
-                        <div class="recommend_news_search_content_desc">
-                            <div class="recommend_news_search_content_desc_title">
-                                <p>${news_row[2]}</p>
+                            <div class="recommend_news_search_content_image">
+                                <a href="${news_row[3]}" target="_blank">
+                                    <img src="${news_row[5]}">
+                                </a>
                             </div>
-                            <div class="recommend_news_search_content_desc_detail">
-                                <p>${news_row[4]}</p>
-                            </div>
-                            <div class="recommend_news_search_content_desc_footer">
-                                <div class="recommend_news_search_content_desc_footer_newspaper">
-                                    <p>${news_row[0]}</p>
+                            <div class="recommend_news_search_content_desc">
+                                <div class="recommend_news_search_content_desc_title">
+                                    <p>${news_row[2]}</p>
                                 </div>
-                                <div class="recommend_news_search_content_desc_footer_time">
-                                    <p>${news_row[1]}</p>
+                                <div class="recommend_news_search_content_desc_detail">
+                                    <p>${news_row[4]}</p>
+                                </div>
+                                <div class="recommend_news_search_content_desc_footer">
+                                    <div class="recommend_news_search_content_desc_footer_newspaper">
+                                        <p>${news_row[0]}</p>
+                                    </div>
+                                    <div class="recommend_news_search_content_desc_footer_time">
+                                        <p>${news_row[1]}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="recommend_news_search_content_more">
-                            <div class="profile_like_news_toggle">
-                                <img src="/static/images/share.png">
+                            <div class="recommend_news_search_content_more">
+                                <div class="profile_like_news_toggle" onclick="content_do_share(${content_id})">
+                                    <img src="/static/images/share.png">
+                                </div>
+                                <div class="profile_like_news_heart" style="background-image: url('/static/images/empty_heart.png')">
+                                    
+                                </div>
                             </div>
-                            <div class="profile_like_news_heart" style="display: none"></div>
-                            <div class="profile_like_news_heart_empty" style="display: block"></div>
-                        </div>
-                    </div>`
+                        </div>`
         //
         $('#news_recommend_content').append(temp_html)
     }
@@ -191,9 +194,12 @@ function shopping_content_add(shopping_crawling_data_list, type) {
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
                                     <div class="more_icon" id="shopping_recommend_${i}" onclick="more_open_or_off(this.id)"></div>
                                     <div class="toggle" style="display: none">
-                                        <p>공유하기</p>
-                                        <div class="line"></div>
-                                        <p>찜하기</p>
+                                        <div class="toggle_row">
+                                            <p>공유하기</p>
+                                        </div>
+                                        <div class="toggle_row">
+                                            <p>찜하기</p>
+                                        </div>
                                     </div>
                                     <a href="${shopping_row[3]}" target="_blank">
                                         <div class="recommend_shopping_search_content_img">
@@ -218,43 +224,39 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 // more function
 
 function more_open_or_off(id) {
-    console.log(id.id)
+    let toggle = document.getElementById(id).nextElementSibling
+    if (toggle.style.display === 'none') {
+        toggle.style.display = 'block'
+    } else {
+        toggle.style.display = 'none'
+    }
+
 }
 
-// like hovering
+// like clicked
 function hovering_like_heart() {
-    let empty_heart_classes = document.getElementsByClassName('profile_like_news_heart_empty')
-    let background_heart_path = '/static/images/heart.png'
-    let background_empty_heart_path = '/static/images/empty_heart.png'
+    let empty_heart_classes = document.getElementsByClassName('profile_like_news_heart')
+    let background_heart = 'url("/static/images/heart.png")'
+    let background_empty_heart = 'url("/static/images/empty_heart.png")'
     for (let i = 0; i < empty_heart_classes.length; i++) {
 
-        empty_heart_classes[i].addEventListener('mouseover', (event) => {
-            console.log('current target : ', event.target.style.backgroundImage)
-
-                if (event.target.style.backgroundImage === background_empty_heart_path) {
-                    console.log('target empty_heart >>> heart')
-                    event.target.style.backgroundImage ="url('" + background_heart_path + "')"
+        empty_heart_classes[i].addEventListener('click', (event) => {
+                let curr_backgroundImage = event.target.style.backgroundImage;
+                if (curr_backgroundImage === background_empty_heart) {
+                    event.target.style.backgroundImage = background_heart
+                    alert('like!')
                 } else {
-                    event.target.style.backgroundImage = background_empty_heart_path
-                    console.log('target heart >>> empty_heart')
+                    event.target.style.backgroundImage = background_empty_heart
+                    alert('like! 취소!')
                 }
+
             }
         )
-        // empty_heart_classes[i].addEventListener('mouseout', (event) => {
-        //         if (event.target.style.backgroundImage === background_empty_heart) {
-        //             event.target.style.backgroundImage = background_empty_heart
-        //         }else{
-        //             event.target.style.backgroundImage = background_heart
-        //         }
-        //     }
-        // )
-        // empty_heart_classes[i].addEventListener('click', (event) => {
-        //         if (event.target.style.backgroundImage === background_empty_heart) {
-        //             event.target.style.backgroundImage = background_heart
-        //         }else{
-        //             event.target.style.backgroundImage = background_empty_heart
-        //         }
-        //     }
-        // )
+
     }
+}
+
+// 공유하기!
+function content_do_share(id){
+    document.getElementById(id).children[]
 }

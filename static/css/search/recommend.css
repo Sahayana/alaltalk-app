@@ -917,17 +917,18 @@ body {
 }
 
 .profile_like_news_heart {
-    background-image: url("../../images/heart.png");
-    background-size: contain;
+    background-image: url("/static/images/empty_heart.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     width: 25px;
     height: 25px;
+    cursor: pointer;
+    object-fit: cover;
 }
 
-.profile_like_news_heart_empty {
-    background-image: url("../../images/empty_heart.png");
-    background-size: contain;
-    width: 25px;
-    height: 25px;
+.profile_like_news_heart:hover{
+    background-image: url("/static/images/heart.png");
 }
 
 .profile_like_news_toggle {
@@ -941,7 +942,6 @@ body {
 
 .profile_like_news_toggle:hover{
     filter: opacity(0.7) drop-shadow(0 0 0 #ffffff);
-    background-color: #7556CD;
 }
 
 .profile_like_news_toggle img{
@@ -1075,7 +1075,7 @@ body {
 }
 
 .recommend_book_container .search_bar {
-    width: 78%;
+    width: 95%;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -1375,7 +1375,7 @@ body {
 }
 
 .recommend_shopping_container .search_bar {
-    width: 78%;
+    width: 95%;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -1676,6 +1676,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    cursor: pointer;
 }
 
 .recommend_shopping_search_content .toggle{
@@ -1685,6 +1686,25 @@ body {
     width: 6vw;
     background-color: white;
     border: min(1vw, 2px) solid #7556CD;
+    text-align: center;
+}
+
+.recommend_shopping_search_content .toggle_row{
+    width: 100%;
+    height: 3vw;
+    background: white;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.recommend_shopping_search_content .toggle_row:hover{
+    background-color: #dad2fa;
+    color:white;
 }
 
 .recommend_shopping_search_content_img{
