@@ -1,8 +1,12 @@
 import time
 from typing import List
+<<<<<<< HEAD
+=======
+
+import requests
+>>>>>>> fffe2764c8d454de04d75e6c38bc7b8155d94559
 from bs4 import BeautifulSoup
 from search.apps import SearchConfig
-import requests
 
 
 def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
@@ -132,3 +136,4 @@ def crawling_shopping_only_bs4(search_word: str, count: int) -> List[List[str]]:
         answer.append(shopping_product)
     print("shopping crawling function time is ", time.time() - start, "seconds")
     return answer[:count]
+

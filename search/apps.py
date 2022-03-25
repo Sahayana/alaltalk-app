@@ -1,6 +1,7 @@
+import os
+
 from django.apps import AppConfig
 from selenium import webdriver
-import os
 
 
 class SearchConfig(AppConfig):
@@ -16,8 +17,8 @@ class SearchConfig(AppConfig):
     options.add_argument("headless")
     options.add_argument('--incognito')
     options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36")
-
     # chrome webdriver 실행
+
     driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
 
     # 쿠기 삭제
