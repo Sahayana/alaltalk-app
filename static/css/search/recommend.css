@@ -264,9 +264,10 @@ body {
 }
 
 .right_wrap .recommend_youtube_container {
+    width: 57vw;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 0 20px 32px;
+    padding: 30px 10px 20px 32px;
 }
 
 .recommend_youtube_container .recommend_nav {
@@ -284,7 +285,7 @@ body {
 }
 
 .recommend_youtube_container .search_bar {
-    width: 96%;
+    width: 95%;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -339,6 +340,9 @@ body {
 
 }
 
+.recommend_youtube_container .recommend_content{
+}
+
 .recommend_youtube_container .recommend_content p {
     font-weight: 700;
     color: #7657CE;
@@ -346,7 +350,7 @@ body {
 }
 
 .recommend_youtube_container .recommend_content .content_section {
-    width: 97%;
+    width: 96%;
     height: 260px;
     overflow-x: auto;
     /*overflow-y: hidden;*/
@@ -552,9 +556,10 @@ body {
 }
 
 .right_wrap .recommend_news_container {
+    width: 57vw;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 0 20px 32px;
+    padding: 30px 10px 20px 32px;
 }
 
 .recommend_news_container .recommend_nav {
@@ -571,7 +576,7 @@ body {
 }
 
 .recommend_news_container .search_bar {
-    width: 96%;
+    width: 95%;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -608,7 +613,7 @@ body {
     overflow-y: auto;
     max-height: 260px;
     height: 100%;
-    width: 97%;
+    width: 100%;
 }
 
 .recommend_news_container .search_news_content::-webkit-scrollbar {
@@ -634,7 +639,7 @@ body {
 }
 
 .recommend_news_container .recommend_news_content .content_news_section {
-    width: 97%;
+    width: 96%;
     height: 260px;
     overflow-x: auto;
     /*overflow-y: hidden;*/
@@ -642,6 +647,8 @@ body {
     margin-top: 24px;
     display: flex;
     /*background-color: gray;*/
+    border: 2px solid #a882f9;
+    border-radius: 11px;
 }
 
 .content_news_section {
@@ -763,6 +770,7 @@ body {
 }
 
 .recommend_news_container .search_news_content {
+    width: 95%;
     margin-top: 60px;
 }
 
@@ -855,7 +863,7 @@ body {
 
 .profile_like_news {
     margin-top: 40px;
-    width: 100%;
+    width: 53vw;
     height: 100% ;
     position: relative;
     /*display: none;*/
@@ -874,15 +882,16 @@ body {
 .profile_like_news_image {
     background-color: #B7B7B7;
     width: 11vw;
-    height: 6vw;
+    height:11vw;
 }
 
 .profile_like_news_info {
-    width: 40vw;
+    width: 30vw;
 }
 
 .profile_like_news_title {
     font-size: 20px;
+    width: 30vw;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -928,6 +937,88 @@ body {
 }
 
 
+.recommend_news_search_content{
+    width: 50vw;
+    height: 15vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.recommend_news_search_content p{
+    margin:0
+}
+
+.recommend_news_search_content_image{
+    width: 12vw;
+    height: 12vw;
+    background-color: #3D3D3D;
+    object-fit: contain;
+    object-position: center;
+    border: min(2vw, 2px) solid #7556CD;
+}
+
+.recommend_news_search_content_image img{
+    width: 100%;
+    height: 100%;
+}
+
+.recommend_news_search_content_desc{
+    width: 30vw;
+    height: 12vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.recommend_news_search_content_desc_title{
+    width: 30vw;
+    height: 3vw;
+    overflow: hidden;
+}
+
+.recommend_news_search_content_desc_title p{
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    font-size: 2vw;
+}
+
+.recommend_news_search_content_desc_detail{
+    width: 30vw;
+    height: 5vw;
+    overflow: hidden;
+}
+
+.recommend_news_search_content_desc_footer{
+    width: 30vw;
+    height: 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.recommend_news_search_content_desc_footer_newspaper{
+    width: 30%;
+    height: 100%;
+    text-align: left;
+}
+
+.recommend_news_search_content_desc_footer_time{
+    width: 30%;
+    height: 100%;
+    text-align: right;
+}
+
+.recommend_news_search_content_more{
+    width: 5vw;
+    height: 15vw;
+}
 
 
 
@@ -945,9 +1036,10 @@ body {
 }
 
 .right_wrap .recommend_book_container {
+    width: 57vw;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 0 20px 32px;
+    padding: 30px 10px 20px 32px;
 }
 
 .recommend_book_container .recommend_nav {
@@ -964,7 +1056,7 @@ body {
 }
 
 .recommend_book_container .search_bar {
-    width: 96%;
+    width: 78%;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -1026,7 +1118,7 @@ body {
 }
 
 .recommend_book_container .recommend_book_content .content_book_section {
-    width: 97%;
+    width: 95%;
     height: 260px;
     overflow-x: auto;
     /*overflow-y: hidden;*/
@@ -1073,6 +1165,7 @@ body {
     background-image: url("../../images/book_sample1.png");
     background-repeat: no-repeat;
     background-size: contain;
+    background-position: center;
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
@@ -1243,9 +1336,10 @@ body {
 }
 
 .right_wrap .recommend_shopping_container {
+    width: 57vw;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 0 20px 32px;
+    padding: 30px 10px 20px 32px;
 }
 
 .recommend_shopping_container .recommend_nav {
@@ -1262,7 +1356,7 @@ body {
 }
 
 .recommend_shopping_container .search_bar {
-    width: 96%;
+    width: 78%;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -1324,7 +1418,7 @@ body {
 }
 
 .recommend_shopping_container .recommend_content .content_section {
-    width: 97%;
+    width: 95%;
     height: 30vw;
     overflow-x: auto;
     /*overflow-y: hidden;*/
@@ -1443,6 +1537,7 @@ body {
 .recommend_shopping_container .search_content .content_section {
     display: flex;
     flex-direction: row;
+    width: 95%;
 }
 
 .recommend_shopping_container .search_content .content_box {
@@ -1632,8 +1727,8 @@ body {
 /******      spinner        ******/
 
 .recommend_spinner{
-    width: 70vw;
-    height: 300px;
+    width: 60vw;
+    height: 200px;
     background-color: white;
     display: flex;
     flex-direction: row;

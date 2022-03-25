@@ -35,7 +35,7 @@ def signup(request):
     elif request.method == "GET":
         signed_user = request.user.is_authenticated
         if signed_user:
-            return redirect("accounts:mypage")  # 채팅템플릿으로 redirect하도록 추후 변경
+            return redirect("accounts:mypage") 
 
         return render(request, "accounts/signup.html")
 
@@ -52,7 +52,7 @@ def login(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         me = auth.authenticate(email=email, password=password)
-        print(me, email, password)
+        # print(me, email, password)
         if not me:
             return JsonResponse({"msg": "error"})
 
@@ -62,7 +62,7 @@ def login(request):
     else:
         signed_user = request.user.is_authenticated
         if signed_user:
-            return redirect("accounts:mypage")  # 채팅템플릿으로 redirect하도록 추후 변경
+            return redirect("accounts:mypage")  
 
         return render(request, "accounts/login.html")
 
@@ -109,6 +109,9 @@ def profile_change(request):
             img_extension = img.name.split(".")[-1]
             img.name = user.email.split("@")[0] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
             user.img = str(img)
+        if request.POST.get("password"):
+            password = request.POST.get("password")
+            user.set_password(password)
 
         user.nickname = nickname
         user.bio = bio
@@ -118,7 +121,7 @@ def profile_change(request):
 
 @login_required
 def search_friend(request):
-    user = request.user  # 자기 자신을 검색한 경우 예외처리 남음
+    user = request.user  
     me = get_user_model().objects.filter(id=user.id)
 
     if request.method == "GET":
@@ -130,13 +133,13 @@ def search_friend(request):
         for i, friend in enumerate(result_json):
 
             if friend in user.friends.all().values():
-                print("친구입니다")
+                # print("친구입니다")
                 result_json[i] = (friend, 0)  # 0 인 경우 이미 친구
             elif friend == me.values()[0]:
-                print("나입니다.")
+                # print("나입니다.")
                 result_json[i] = (friend, 1)  # 1 인 경우 자기 자신
             else:
-                print("모르는사이입니다")
+                # print("모르는사이입니다")
                 result_json[i] = (friend, 2)  # 2 인 경우 친구가 아닌 상태
 
         return JsonResponse({"result": result_json})
@@ -164,6 +167,14 @@ def accept_request(request, request_id):
         return JsonResponse({"msg": "error"})  # 거절, 회수 등의 예외처리 남음
 
 
+@login_required
+def decline_request(request, request_id):
+    friend_request = FriendRequest.objects.get(id=request_id)
+    friend_request.delete()
+    return JsonResponse({"msg":"declined"})
+
+
+
 def temporary_password(request):
 
     query = request.GET.get("q")
@@ -183,3 +194,16 @@ def temporary_password(request):
     send_mail("[alaltalk] 임시 비밀번호 메일입니다.", f"회원님의 임시 비밀번호는 {temp_pw} 입니다.\n로그인 후 비밀번호를 꼭 변경해주세요.", "alaltalklove@gmail.com", [user.email], fail_silently=False)
 
     return JsonResponse({"msg": "ok"})
+
+
+@login_required
+def auth_check(request):
+    user = request.user
+    password = request.POST.get("password")
+
+    me = auth.authenticate(email=user.email, password=password)
+
+    if me:
+        return JsonResponse({"msg":"ok"})
+    else: return JsonResponse({"msg":"no"})
+    
