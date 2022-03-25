@@ -15,6 +15,7 @@ function searchUser(){
             // console.log(response["result"]);
             let friends = response["result"];
             friends.forEach(friend => {
+                console.log(friend);
                 appendResult(friend);
             });
 
@@ -32,7 +33,9 @@ function appendResult(friend){
     if (friend[1] === 0){
         tempHtml = `
         <div class="user_box">
-            <div class="user_img"></div>
+            <div class="user_img">
+                <img src="/media/${friend[0]['img']}" alt="friend_p_img" srcset="">
+            </div>
             <div class="info_group">
                 <div class="user_name">${friend[0]['nickname']}</div>
                 <div class="user_id">${friend[0]['email']}</div>
@@ -44,7 +47,9 @@ function appendResult(friend){
     }else if (friend[1] === 2){
         tempHtml = `
         <div class="user_box">
-            <div class="user_img"></div>
+            <div class="user_img">
+                <img src="/media/${friend[0]['img']}" alt="friend_p_img" srcset="">
+            </div>
             <div class="info_group">
                 <div class="user_name">${friend[0]['nickname']}</div>
                 <div class="user_id">${friend[0]['email']}</div>
@@ -56,7 +61,9 @@ function appendResult(friend){
     }else{
         tempHtml = `
         <div class="user_box">
-            <div class="user_img"></div>
+            <div class="user_img">
+                <img src="/media/${friend[0]['img']}" alt="friend_p_img" srcset="">
+            </div>
             <div class="info_group">
                 <div class="user_name">${friend[0]['nickname']}</div>
                 <div class="user_id">${friend[0]['email']}</div>
@@ -111,6 +118,11 @@ $(document).ready(function(){
     // 채팅 이동
     let ChatIcon = $(".chat_icon");
     ChatIcon.on('click', function(){
-        window.location.href = `/api/search/`;
+        window.location.href = `/chat/`;
     })
 });
+
+
+function friend_chat(id){
+    window.location.href= `/chat/`+ id;
+}

@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "search",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -90,7 +91,15 @@ WSGI_APPLICATION = "alaltalk.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-# 기존 연결된 DATABASE - SQlite
+# # 기존 연결된 DATABASE - SQlite
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# DATABASE - MYSQL (재성님 계정)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -143,8 +152,8 @@ STATICFILES_DIRS = [
     STATIC_DIR,
 ]
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-# MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 
 # Default primary key field type

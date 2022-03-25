@@ -35,7 +35,7 @@ def signup(request):
     elif request.method == "GET":
         signed_user = request.user.is_authenticated
         if signed_user:
-            return redirect("accounts:mypage") 
+            return redirect("accounts:mypage")
 
         return render(request, "accounts/signup.html")
 
@@ -62,7 +62,7 @@ def login(request):
     else:
         signed_user = request.user.is_authenticated
         if signed_user:
-            return redirect("accounts:mypage")  
+            return redirect("accounts:mypage")
 
         return render(request, "accounts/login.html")
 
@@ -108,7 +108,7 @@ def profile_change(request):
             img = request.FILES.get("img")
             img_extension = img.name.split(".")[-1]
             img.name = user.email.split("@")[0] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
-            user.img = str(img)
+            user.img = img
         if request.POST.get("password"):
             password = request.POST.get("password")
             user.set_password(password)
@@ -121,7 +121,7 @@ def profile_change(request):
 
 @login_required
 def search_friend(request):
-    user = request.user  
+    user = request.user
     me = get_user_model().objects.filter(id=user.id)
 
     if request.method == "GET":
@@ -171,8 +171,7 @@ def accept_request(request, request_id):
 def decline_request(request, request_id):
     friend_request = FriendRequest.objects.get(id=request_id)
     friend_request.delete()
-    return JsonResponse({"msg":"declined"})
-
+    return JsonResponse({"msg": "declined"})
 
 
 def temporary_password(request):
@@ -204,6 +203,6 @@ def auth_check(request):
     me = auth.authenticate(email=user.email, password=password)
 
     if me:
-        return JsonResponse({"msg":"ok"})
-    else: return JsonResponse({"msg":"no"})
-    
+        return JsonResponse({"msg": "ok"})
+    else:
+        return JsonResponse({"msg": "no"})

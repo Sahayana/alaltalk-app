@@ -4,7 +4,6 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
-
 from ...functions import crawling_youtube, crawling_shopping_only_bs4
 from search.service.search_service import crawling_news, crawling_book
 from .schemas import CrawlingRequest, CrawlingResponse

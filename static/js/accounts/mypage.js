@@ -347,7 +347,7 @@ $(document).ready(function(){
     // 채팅 이동
     let ChatIcon = $(".chat_icon");
     ChatIcon.on('click', function(){
-        window.location.href = `/api/search/`;
+        window.location.href = `/chat/`;
     })
 
     let profileChangeBtn = document.querySelector('#profile_change_button');
