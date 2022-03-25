@@ -118,6 +118,11 @@ $(document).ready(function(){
     // 채팅 이동
     let ChatIcon = $(".chat_icon");
     ChatIcon.on('click', function(){
-        window.location.href = `/api/search/`;
+        window.location.href = `/chat/`;
     })
 });
+
+
+function friend_chat(id){
+    window.location.href= `/chat/`+ id;
+}

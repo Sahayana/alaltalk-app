@@ -9,7 +9,9 @@ class SearchConfig(AppConfig):
 
     # 현재 폴더 + chromedriver 경로 붙이기
     webdriver_path = os.getcwd() + '\search\chromedriver.exe'
+
     print(webdriver_path)
+
     name = "search"
 
     # webdriver option 설정 - 창 안 보이기, 시크릿 모드

@@ -258,5 +258,6 @@ function hovering_like_heart() {
 
 // 공유하기!
 function content_do_share(id){
-    document.getElementById(id).children[]
+
 }
+
