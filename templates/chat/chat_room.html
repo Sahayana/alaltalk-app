@@ -26,7 +26,6 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
-            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
@@ -80,10 +79,6 @@
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
 <script>
-    $(".logout").click(function () {
-        location.replace("/accounts/logout");
-    })
-
 
     const room_id = {{ room_id }};
     const user_id = {{ user_id }};
