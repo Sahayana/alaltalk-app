@@ -48,7 +48,7 @@
                     <div class="user_name">{{friend.nickname}}</div>
                     <div class="user_id">{{friend.email}}</div>
                 </div>
-                <div class="btn apply_follow">대화하기</div>
+                <div class="btn apply_follow" onclick="friend_chat({{friend.id}})">대화하기</div>
             </div>
             {% endfor %}
             {% endif %}                   

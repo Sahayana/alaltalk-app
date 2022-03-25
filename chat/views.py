@@ -21,8 +21,9 @@ from chat.models import ChatMessage, ChatRoom
 # ChatMessage 모델에서 메세지 불러와서 가장 최근 메세지를 보여줌
 @login_required
 def show_chat_list(request):
-    chat_list = CustomUser.objects.all().exclude(is_superuser=True).exclude(id=request.user.id)
-    return render(request, "chat/chat_room.html", {"chat_list": chat_list})
+    chat_list = CustomUser.objects.get(id=request.user.id).friends.all()
+    # chat_list = CustomUser.objects.all().exclude(is_superuser=True).exclude(id=request.user.id)
+    return render(request, "chat/chat_list.html", {"chat_list": chat_list})
 
 
 # 채팅하기 버튼 클릭 시 채팅방 생성
