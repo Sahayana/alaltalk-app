@@ -34,11 +34,11 @@
             <p class="title">채팅</p>
             <div class="chat_list">
                 {% for chatroom in chatroom_list %}
-                    {% if chatroom.participant1_id == user.id %}
-                        <a href="/chat/{{ chatroom.participant2_id }}/" class="chat_partner">
+                    {% if chatroom.participant1.id == user.id %}
+                        <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
                             <div class="partner_img"></div>
                             <div class="info_group">
-                                <div class="partner_name">{{ chatroom.participant2_id }}</div>
+                                <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {% for message in all_message %}
                                     {% if chatroom.id == message.chatroom_id %}
                                         <div class="partner_last_msg">{{ message.message}}</div>

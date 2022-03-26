@@ -17,7 +17,7 @@ from chat.models import ChatMessage, ChatRoom
 def show_chat_list(request):
     # chat_list = CustomUser.objects.get(id=request.user.id).friends.all()
     # print(chat_list)
-    chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user.id) | Q(participant2=request.user.id)).all()
+    chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
     print(chatroom_list)
 
     all_message = ChatMessage.objects.all()
@@ -30,27 +30,27 @@ def show_chat_list(request):
 @login_required
 def create_chat_room(request, id):
     user = request.user
-    print(user.id)
+    print(user)
     partner = CustomUser.objects.get(id=id)
-    print(partner.id)
+    print(partner)
 
     if user == request.user:
-        exist_room1 = ChatRoom.objects.filter(participant1=user.id, participant2=partner.id)
-        exist_room2 = ChatRoom.objects.filter(participant1=partner.id, participant2=user.id)
+        exist_room1 = ChatRoom.objects.filter(participant1=user, participant2=partner)
+        exist_room2 = ChatRoom.objects.filter(participant1=partner, participant2=user)
         if exist_room1:
-            room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
+            room = ChatRoom.objects.get(participant1=user, participant2=partner)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
         elif exist_room2:
-            room = ChatRoom.objects.get(participant1=partner.id, participant2=user.id)
+            room = ChatRoom.objects.get(participant1=partner, participant2=user)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
         else:
-            chat_room = ChatRoom.objects.create(participant1=user.id, participant2=partner.id)
+            chat_room = ChatRoom.objects.create(participant1=user, participant2=partner)
             chat_room.save()
 
             # ChatRoom에 있는 room id 로 redirect
-            room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
+            room = ChatRoom.objects.get(participant1=user, participant2=partner)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
     else:
@@ -65,8 +65,8 @@ def create_chat_message(request, room_id):
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
-        print(chatroom.participant1.id, chatroom.participant2.id, user.id)
-        chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user.id) | Q(participant2=request.user.id)).all()
+        print(chatroom.participant1, chatroom.participant2, user)
+        chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
         print(chatroom_list)
         all_message = ChatMessage.objects.all()
         return render(
