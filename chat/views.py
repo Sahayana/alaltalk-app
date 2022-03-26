@@ -58,11 +58,12 @@ def create_chat_room(request, id):
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
         else:
-            chat_room = ChatRoom.objects.create(participant1=user.id, participant2=partner.id)
+            chat_room = ChatRoom.objects.create(participant1=user, participant2=partner)
             chat_room.save()
 
             # ChatRoom에 있는 room id 로 redirect
-            room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
+            # room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
+            room = ChatRoom.objects.get(participant1=user, participant2=partner)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
     else:
