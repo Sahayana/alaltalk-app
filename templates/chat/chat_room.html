@@ -99,7 +99,6 @@
         {#기존에 열려있던 웹소켓에서는 가져오지 않도록 설정#}
         {#불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정#}
         chatSocket.onopen = function (e) {
-
             fetchMessages();
         }
 
