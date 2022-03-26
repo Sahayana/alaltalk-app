@@ -35,21 +35,30 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
-            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
         <p class="title">채팅</p>
         <div class="chat_list">
-            {% for chat in chat_list %}
-                <a href="/chat/{{ chat.id }}/" class="chat_partner">
-                    <div class="partner_img"></div>
-                    <div class="info_group">
-                        <div class="partner_name">{{ chat.nickname }}</div>
-                        <div class="partner_last_msg">{{ last_message }}</div>
-                    </div>
-                </a>
-            {% endfor %}
+            {% for chatroom in chatroom_list %}
+                    {% if chatroom.participant1_id == user.id %}
+                        <a href="/chat/{{ chatroom.participant2_id }}/" class="chat_partner">
+                            <div class="partner_img"></div>
+                            <div class="info_group">
+                                <div class="partner_name">{{ chatroom.participant2_id }}</div>
+                                <div class="partner_last_msg">{{ last_message }}</div>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
+                            <div class="partner_img"></div>
+                            <div class="info_group">
+                                <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
+                                <div class="partner_last_msg">{{ last_message }}</div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
         </div>
 
     </div>

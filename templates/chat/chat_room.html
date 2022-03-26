@@ -27,21 +27,30 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
-            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
         <div class="chat_list_container">
             <p class="title">채팅</p>
             <div class="chat_list">
-                {% for chat in chat_list %}
-                    <a href="/chat/{{ chat.id }}/" class="chat_partner">
-                        <div class="partner_img"></div>
-                        <div class="info_group">
-                            <div class="partner_name">{{ chat.nickname }}</div>
-                            <div class="partner_last_msg">{{ last_message }}</div>
-                        </div>
-                    </a>
+                {% for chatroom in chatroom_list %}
+                    {% if chatroom.participant1_id == user.id %}
+                        <a href="/chat/{{ chatroom.participant2_id }}/" class="chat_partner">
+                            <div class="partner_img"></div>
+                            <div class="info_group">
+                                <div class="partner_name">{{ chatroom.participant2_id }}</div>
+                                <div class="partner_last_msg">{{ last_message }}</div>
+                            </div>
+                        </a>
+                    {% else %}
+                        <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
+                            <div class="partner_img"></div>
+                            <div class="info_group">
+                                <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
+                                <div class="partner_last_msg">{{ last_message }}</div>
+                            </div>
+                        </a>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -64,7 +73,7 @@
                     <div class="toggle_icon"></div>
                 </div>
                 <div class="toggle_content">
-                    <p id="recommend_btn"  onclick="show_recommend()">추천컨텐츠</p>
+                    <p id="recommend_btn" onclick="show_recommend()">추천컨텐츠</p>
                     <div class="line"></div>
                     <p>친구 찜 목록 보기</p>
                 </div>
@@ -84,7 +93,6 @@
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
 <script src="{% static 'js/search/recommend.js' %}"></script>
 <script>
-
     $(document).ready(function () {
 
         // 친구 리스트 이동
@@ -111,7 +119,7 @@
         let ToggleIcon = $(".toggle_icon");
         let ToggleContent = $(".toggle_content");
         ToggleIcon.on('click', function () {
-            if(btn_check == 0){
+            if (btn_check === 0) {
                 btn_check = 1;
                 ToggleContent.show();
             } else {
@@ -122,7 +130,7 @@
         });
     });
 
-    function show_recommend(){
+    function show_recommend() {
         $('.chat_list_container').hide();
         $('.close_btn').hide();
         $('.chat_container').appendTo('.left_wrap');
@@ -132,30 +140,23 @@
         $("#recommend_btn").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
-        setTimeout(function(){
-        click_recommend_function();
-        give_event()
-    }, 100)
+        setTimeout(function () {
+            click_recommend_function();
+            give_event()
+        }, 100)
     }
 
-    function close_recommend(){
-    $('.right_wrap').empty();
-    $('.chat_container').appendTo('.right_wrap');
-    $(".chat_list_container").show();
-    $('.close_btn').show();
-}
+    function close_recommend() {
+        $('.right_wrap').empty();
+        $('.chat_container').appendTo('.right_wrap');
+        $(".chat_list_container").show();
+        $('.close_btn').show();
+    }
 
-
-
-    $(".logout").click(function () {
-        location.replace("/accounts/logout");
-    })
-
-
-    var room_id = {{ room_id }};
-    var user_id = {{ user_id }};
-    var participant1 = {{ participant1 }};
-    var participant2 = {{ participant2 }};
+    const room_id = {{ room_id }};
+    const user_id = {{ user_id }};
+    const participant1 = {{ participant1 }};
+    const participant2 = {{ participant2 }};
 
     {#웹소켓 연결 JS#}
     if (participant1 === user_id || participant2 === user_id) {
@@ -171,7 +172,6 @@
         {#기존에 열려있던 웹소켓에서는 가져오지 않도록 설정#}
         {#불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정#}
         chatSocket.onopen = function (e) {
-
             fetchMessages();
         }
 
@@ -184,7 +184,7 @@
             const data = JSON.parse(e.data);
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
-                for (let i=n-1; i >=0; i--) {
+                for (let i = n - 1; i >= 0; i--) {
                     createMessage(data['messages'][i]);
                 }
             } else if (data['command'] === 'new_message') {
