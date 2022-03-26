@@ -11,7 +11,7 @@
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}">
-    <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}?after">
     <!--google font-->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
           rel="stylesheet">
@@ -39,7 +39,11 @@
                             <div class="partner_img"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2_id }}</div>
-                                <div class="partner_last_msg">{{ last_message }}</div>
+                                {% for message in all_message %}
+                                    {% if chatroom.id == message.chatroom_id %}
+                                        <div class="partner_last_msg">{{ message.message}}</div>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </a>
                     {% else %}
@@ -47,7 +51,11 @@
                             <div class="partner_img"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
-                                <div class="partner_last_msg">{{ last_message }}</div>
+                                {% for message in all_message %}
+                                    {% if chatroom.id == message.chatroom_id %}
+                                        <div class="partner_last_msg">{{ message.message}}</div>
+                                    {% endif %}
+                                {% endfor %}
                             </div>
                         </a>
                     {% endif %}

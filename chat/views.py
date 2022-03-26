@@ -19,22 +19,10 @@ def show_chat_list(request):
     # print(chat_list)
     chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user.id) | Q(participant2=request.user.id)).all()
     print(chatroom_list)
-    # all_chat_list = []
-    # for chatroom in chatroom_list:
-    #     print(chatroom)
-    #     if chatroom.participant1 == request.user.id:
-    #         chat_list = CustomUser.objects.get(id=chatroom.participant2.id)
-    #         print(chatroom.participant2.nickname)
-    #         all_chat_list.append(chat_list)
-    #         print(chat_list)
-    #     else:
-    #         chat_list = CustomUser.objects.get(id=chatroom.participant1.id)
-    #         all_chat_list.append(chat_list)
-    #         print(chatroom.participant1.nickname)
-    #         print(chat_list)
-    # print(all_chat_list)
-    # chat_list = CustomUser.objects.all().exclude(is_superuser=True).exclude(id=request.user.id)
-    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list})
+
+    all_message = ChatMessage.objects.all()
+
+    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list, 'all_message': all_message})
 
 
 # 채팅하기 버튼 클릭 시 채팅방 생성
@@ -80,8 +68,7 @@ def create_chat_message(request, room_id):
         print(chatroom.participant1.id, chatroom.participant2.id, user.id)
         chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user.id) | Q(participant2=request.user.id)).all()
         print(chatroom_list)
-        # last_message = ChatMessage.objects.filter(chatroom_id=room_id).latest('chatroom_id')
-        # print(last_message.message)
+        all_message = ChatMessage.objects.all()
         return render(
             request,
             "chat/chat_room.html",
@@ -91,6 +78,6 @@ def create_chat_message(request, room_id):
                 "user_id": mark_safe(json.dumps(request.user.id)),
                 "participant1": chatroom.participant1.id,
                 "participant2": chatroom.participant2.id,
-                # 'last_message': last_message.message,
+                "all_message": all_message,
             },
         )
