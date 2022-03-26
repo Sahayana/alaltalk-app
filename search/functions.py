@@ -1,9 +1,11 @@
 import time
 from typing import List
+<<<<<<< HEAD
+=======
 
 import requests
+>>>>>>> fffe2764c8d454de04d75e6c38bc7b8155d94559
 from bs4 import BeautifulSoup
-
 from search.apps import SearchConfig
 
 
@@ -24,7 +26,6 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 
     # 목표 량이 10개를 넘을 때까지 반복
     while len(crawling_temp_data) < content_count:
-        print("hi")
         # 스크롤 내리기
         driver.execute_script("window.scrollTo(0, window.scrollY + 10000);")
         html = driver.page_source
@@ -49,7 +50,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
         crawling_url = youtube_base_url + "/embed/" + crawling_url
         crawling_data.append([crawling_url, video_url, video_title, video_views])
 
-    print("function time is ", time.time() - start, "seconds")
+    print("youtube crawling function time is ", time.time() - start, "seconds")
     return crawling_data[0:content_count]
 
 
@@ -72,20 +73,67 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 # for i in range(1000):
 #     time.sleep(1)
 
+#
+# def crawling_shopping_selenium_use(search_word: str, count: int) -> List[List[str]]:
+#     start = time.time()
+#     answer = []
+#
+#     driver = SearchConfig.driver
+#
+#     url = 'https://www.coupang.com/np/search?component=&&channel=user' + '&q=' + search_word
+#
+#     driver.get(url)
+#
+#     driver.implicitly_wait(5)  # seconds
+#     driver.execute_script("window.scrollTo(0, window.scrollY + 10000);")
+#     driver.execute_script("window.scrollTo(0, window.scrollY + 10000);")
+#     html = driver.page_source
+#
+#     soup = BeautifulSoup(html, "html.parser")
+#
+#     product_list = soup.select('#productList > li')
+#     for row in product_list:
+#         shopping_product = []
+#         shopping_img_src = row.select_one('img').attrs['src']
+#
+#         shopping_name = row.select_one('.name').text
+#         shopping_price = row.select_one('.price-value').text
+#         # list 에 담기
+#         shopping_product.append(shopping_img_src)
+#         shopping_product.append(shopping_name)
+#         shopping_product.append(shopping_price)
+#         answer.append(shopping_product)
+#     print("shopping crawling function time is ", time.time() - start, "seconds")
+#     return answer[:count]
 
-def crawling_shopping(search_word: str, count: str) -> List[List[str]]:
-    url = "https://www.coupang.com/np/search?component=&&channel=user" + "&q=" + search_word
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"}
+
+def crawling_shopping_only_bs4(search_word: str, count: int) -> List[List[str]]:
+    start = time.time()
+    url = 'https://www.coupang.com/np/search?component=&&channel=user' + '&q=' + search_word +'&page=1'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
     data = requests.get(url, headers=headers)
-    soup = BeautifulSoup(data.text, "html.parser")
 
-    product_list = soup.select("#productList > li")
+    soup = BeautifulSoup(data.text, 'html.parser')
 
-    # for row in product_list:
-    #     print('#####################')
-    #     print(row)
+    answer = []
+    product_list = soup.select('#productList > li')
 
-    return 0
+    for row in product_list:
+        shopping_product = []
+        shopping_img_src = row.select_one('img').get('data-img-src')
+        if shopping_img_src is None:
+            shopping_img_src = row.select_one('img').attrs['src']
+        shopping_name = row.select_one('.name').text
+        shopping_price = row.select_one('.price-value').text
+        shopping_url = 'https://www.coupang.com' + row.select_one('a').attrs['href']
 
+        # list 에 담기
+        shopping_product.append(shopping_img_src)
+        shopping_product.append(shopping_name)
+        shopping_product.append(shopping_price)
+        shopping_product.append(shopping_url)
+        answer.append(shopping_product)
+    print("shopping crawling function time is ", time.time() - start, "seconds")
+    return answer[:count]
 
-crawling_shopping("커피", 10)

@@ -130,6 +130,10 @@ body::-webkit-scrollbar-track{
     cursor: pointer;
 }
 
+.landing_sign_up_container p{
+    z-index: 10;
+}
+
 .landing_see_our_page{
     position: relative;
     margin: -50px auto 0;
