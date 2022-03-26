@@ -11,12 +11,12 @@ class SearchConfig(AppConfig):
     # webdriver_path = os.getcwd() + '\search\chromedriver.exe'
     # print(webdriver_path)
     name = "search"
-    # chrome webdriver 실행
-    options = webdriver.ChromeOptions()
 
     # webdriver option 설정 - 창 안 보이기, 시크릿 모드
+    options = webdriver.ChromeOptions()
     options.add_argument("headless")
     options.add_argument("--incognito")
+
     driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
 
     # 쿠기 삭제

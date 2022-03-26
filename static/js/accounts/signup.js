@@ -68,12 +68,12 @@ $(document).ready(function(){
         
         let e_error = document.querySelector("#e_error");
         if (!isEmail(email.value)){
-            emailDiv.style.border = '2px solid red';        
+            email.style.border = '2px solid #ff3217';        
             e_error.innerText = "올바른 이메일 형식이 아닙니다."
             e_error.style.visibility ='visible';            
             return false
         }else {
-            emailDiv.style.border = '2px solid green';        
+            email.style.border = '2px solid green';        
             e_error.style.visibility ='hidden';
             signBtn.disabled = false;
         }
@@ -89,12 +89,12 @@ $(document).ready(function(){
     password.addEventListener('keyup', function(){
         let pwd_error = document.querySelector('#pwd_error');
         if (!isPw(password.value)){
-            passwordDiv.style.border = '2px solid red';        
+            password.style.border = '2px solid #ff3217';        
             pwd_error.innerText = "영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요.";
             pwd_error.style.visibility ='visible';            
             return false
         }else {
-            passwordDiv.style.border = '2px solid green';        
+            password.style.border = '2px solid green';        
             pwd_error.style.visibility ='hidden';
             signBtn.disabled = false;
 
@@ -105,18 +105,18 @@ $(document).ready(function(){
     passwordCheck.addEventListener('keyup', function (){     
         let pwd_check_error = document.querySelector('#pwd_check_error');
         if (password.value !== passwordCheck.value){
-            passwordCheckDiv.style.border = '2px solid red';        
+            passwordCheck.style.border = '2px solid #ff3217';        
             pwd_check_error.innerText = "패스워드를 확인해주세요.";
             pwd_check_error.style.visibility ='visible';            
             return false
         }else {
-            passwordCheckDiv.style.border = '2px solid green';        
+            passwordCheck.style.border = '2px solid green';        
             pwd_check_error.style.visibility ='hidden';
             signBtn.disabled = false;
         }
 
     })
-
+    
 
     // Nickname Validation
 
@@ -128,12 +128,12 @@ $(document).ready(function(){
         let name_error = document.querySelector('#name_error');
 
         if (nickName.value.length < 3){
-            nickNameDiv.style.border = '2px solid red';        
+            nickName.style.border = '2px solid #ff3217';        
             name_error.innerText = "닉네임은 3자리 이상이여야 합니다.";
             name_error.style.visibility ='visible';            
             return false
         }else {
-            nickNameDiv.style.border = '2px solid green';        
+            nickName.style.border = '2px solid #7657ce';        
             name_error.style.visibility ='hidden';
             signBtn.disabled = false;
         }

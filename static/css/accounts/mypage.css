@@ -294,7 +294,7 @@ body {
 .profile_change_part > .profile_change_field > small {
   font-size: 75%;
   visibility: hidden;
-  color: red;
+  color: #ff3217;
   margin-top: -8px;
   padding-left: 5px;
 }

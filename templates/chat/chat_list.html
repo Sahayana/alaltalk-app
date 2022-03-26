@@ -10,12 +10,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}">
     <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}">
     <!--google font-->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
           rel="stylesheet">
-
+    <style>
+        .right_wrap .chat_start_msg {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #5e5e5e;
+        }
+    </style>
 </head>
 <body>
 <div class="outline">
@@ -30,10 +38,9 @@
         </div>
     </div>
     <div class="left_wrap">
-        <div class="chat_list_container">
-            <p class="title">채팅</p>
-            <div class="chat_list">
-                {% for chatroom in chatroom_list %}
+        <p class="title">채팅</p>
+        <div class="chat_list">
+            {% for chatroom in chatroom_list %}
                     {% if chatroom.participant1_id == user.id %}
                         <a href="/chat/{{ chatroom.participant2_id }}/" class="chat_partner">
                             <div class="partner_img"></div>
@@ -52,47 +59,19 @@
                         </a>
                     {% endif %}
                 {% endfor %}
-            </div>
         </div>
-
 
     </div>
     <div class="right_wrap">
-        <div class="chat_container">
-            <div class="top_bar">
-                <div class="partner_info">
-                    <div class="partner_img"></div>
-                    <div class="info_group">
-                        <div class="partner_name">김코딩</div>
-                        <div class="partner_id">coding@example.com</div>
-                    </div>
-
-                </div>
-                <div class="right_icon">
-                    <div class="close_btn" onclick="location.href='/chat'"></div>
-                    <div class="toggle_icon"></div>
-                </div>
-                <div class="toggle_content">
-                    <p id="recommend_btn" onclick="show_recommend()">추천컨텐츠</p>
-                    <div class="line"></div>
-                    <p>친구 찜 목록 보기</p>
-                </div>
-            </div>
-
-            <div id="chat_box" class="chat_box">
-                {#                채팅내용 들어가는 곳#}
-            </div>
-            <div class="input_bar">
-                {% csrf_token %}
-                <div id="chat_message_submit" class="attach_icon"></div>
-                <input id="chat_message_input" type="text" placeholder="입력하세요." name="message">
-            </div>
+        <div class="chat_start_msg">
+            <div class="chat_start_img"></div>
+            <p>채팅방을 클릭하여 대화를 시작하세요.</p>
         </div>
     </div>
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
-<script src="{% static 'js/search/recommend.js' %}"></script>
 <script>
+
     $(document).ready(function () {
 
         // 친구 리스트 이동
@@ -111,54 +90,20 @@
         let ChatIcon = $(".chat_icon");
         ChatIcon.on('click', function () {
             window.location.href = `/chat/`;
-        });
-
-
-        // 추천시스템 토글
-        var btn_check = 0;
-        let ToggleIcon = $(".toggle_icon");
-        let ToggleContent = $(".toggle_content");
-        ToggleIcon.on('click', function () {
-            if (btn_check === 0) {
-                btn_check = 1;
-                ToggleContent.show();
-            } else {
-                btn_check = 0;
-                ToggleContent.hide();
-            }
-
-        });
+        })
     });
 
-    function show_recommend() {
-        $('.chat_list_container').hide();
-        $('.close_btn').hide();
-        $('.chat_container').appendTo('.left_wrap');
-        $('.right_wrap').empty();
-        $('.right_wrap').load("/api/search/recommend");
+    $(".logout").click(function () {
+        location.replace("/accounts/logout");
+    })
 
-        $("#recommend_btn").attr('onclick', '').unbind('click');
-        $(".toggle_content").hide();
-        $(".toggle_content").css('cursor', 'pointer');
-        setTimeout(function () {
-            click_recommend_function();
-            give_event()
-        }, 100)
-    }
+/*
+    var room_id = {{ room_id }};
+    var user_id = {{ user_id }};
+    var participant1 = {{ participant1 }};
+    var participant2 = {{ participant2 }};
 
-    function close_recommend() {
-        $('.right_wrap').empty();
-        $('.chat_container').appendTo('.right_wrap');
-        $(".chat_list_container").show();
-        $('.close_btn').show();
-    }
-
-    const room_id = {{ room_id }};
-    const user_id = {{ user_id }};
-    const participant1 = {{ participant1 }};
-    const participant2 = {{ participant2 }};
-
-    {#웹소켓 연결 JS#}
+    웹소켓 연결 JS
     if (participant1 === user_id || participant2 === user_id) {
         const chatSocket = new ReconnectingWebSocket(
             'ws://'
@@ -168,23 +113,24 @@
             + '/'
         );
 
-        {#최근메세지 가져오기#}
-        {#기존에 열려있던 웹소켓에서는 가져오지 않도록 설정#}
-        {#불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정#}
+        최근메세지 가져오기
+        기존에 열려있던 웹소켓에서는 가져오지 않도록 설정
+        불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정
         chatSocket.onopen = function (e) {
+
             fetchMessages();
         }
 
-        {#consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐#}
-        {#fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고#}
-        {#new_message를 통해 나온 현재 작성한 메세지는 그대로 돌려준다.#}
-        {#ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다#}
-        {#message를 created_at의 순서대로 보여준다.#}
+        consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐
+        fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고
+        new_message를 통해 나온 현재 작성한 메세지는 그대로 돌려준다.
+        ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다
+        message를 created_at의 순서대로 보여준다.
         chatSocket.onmessage = function (e) {
             const data = JSON.parse(e.data);
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
-                for (let i = n - 1; i >= 0; i--) {
+                for (let i=n-1; i >=0; i--) {
                     createMessage(data['messages'][i]);
                 }
             } else if (data['command'] === 'new_message') {
@@ -192,14 +138,14 @@
             }
         };
 
-        {#consumer에게 fetch_messages가 실행되도록 명령#}
+        consumer에게 fetch_messages가 실행되도록 명령
 
         function fetchMessages() {
             chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
         }
 
-        {#해당 input에 메세지를 작성하고 버튼을 클릭하면#}
-        {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
+        해당 input에 메세지를 작성하고 버튼을 클릭하면
+        consumer에게 key:value 형태로 메세지를 넘겨준다.
         document.querySelector('#chat_message_submit').onclick = function (e) {
             const messageInputDom = document.querySelector('#chat_message_input');
             const message = messageInputDom.value
@@ -213,10 +159,10 @@
                     'room_id': room_id,
                 }));
             }
-            {#messageInputDom.value = '';#}
+            messageInputDom.value = '';
         };
 
-        {#웹소켓 연결이 끊어졌을 때의 JS#}
+        웹소켓 연결이 끊어졌을 때의 JS
         chatSocket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
         };
@@ -226,7 +172,7 @@
     }
 
 
-    {#html에서 작성된 메세지를 보여주는 JS#}
+    html에서 작성된 메세지를 보여주는 JS
 
     function createMessage(data) {
         const message = data['message'];
@@ -245,7 +191,7 @@
         }
 
     }
-
+*/
 
 </script>
 </body>
