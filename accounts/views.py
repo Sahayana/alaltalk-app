@@ -14,7 +14,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from accounts.models import FriendRequest
-from accounts.services.accounts_service import create_single_user, check_email_duplication
+from accounts.services.accounts_service import create_single_user, check_email_duplication, get_friend_list
 
 # Create your views here.
 
@@ -76,9 +76,8 @@ def logout(request):
 
 @login_required
 def friend_list(request):
-    user = get_user_model().objects.get(id=request.user.id)
-    friends = user.friends.all()
-    print(friends)
+    user = request.user
+    friends = get_friend_list(user_id=user.id) 
     context = {
         "user": user,
         "friends": friends,
@@ -166,7 +165,7 @@ def accept_request(request, request_id):
         friend_request.delete()
         return JsonResponse({"msg": "accepted"})
     else:
-        return JsonResponse({"msg": "error"})  # 거절, 회수 등의 예외처리 남음
+        return JsonResponse({"msg": "error"})  
 
 
 @login_required

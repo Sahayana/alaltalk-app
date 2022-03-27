@@ -1,5 +1,6 @@
 from accounts.models import CustomUser
 from datetime import datetime
+from django.db.models import QuerySet
 
 
 
@@ -29,3 +30,9 @@ def check_email_duplication(email:str) -> CustomUser:
 #         pass
 #     user.save()
 #     return user
+
+
+def get_friend_list(user_id:int) -> QuerySet[CustomUser]:
+    user = CustomUser.objects.get(id=user_id)
+    friends = user.friends.all()
+    return friends
