@@ -1,10 +1,6 @@
 import time
 from typing import List
-<<<<<<< HEAD
-=======
-
 import requests
->>>>>>> fffe2764c8d454de04d75e6c38bc7b8155d94559
 from bs4 import BeautifulSoup
 from search.apps import SearchConfig
 
