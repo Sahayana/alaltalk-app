@@ -4,10 +4,12 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
-from ...functions import crawling_youtube, crawling_shopping_only_bs4
-from search.service.search_service import crawling_news, crawling_book
+
+from search.models import Book, News, Shopping, Youtube
+from search.service.search_service import crawling_book, crawling_news
+
+from ...functions import crawling_shopping_only_bs4, crawling_youtube
 from .schemas import CrawlingRequest, CrawlingResponse
-from search.models import Youtube, News, Book, Shopping
 
 router = Router(tags=["search"])
 
@@ -82,5 +84,3 @@ def do_like_news(request):
 @router.post("/cancel_like/news")
 def cancel_like_news(request):
     return 0
-
-

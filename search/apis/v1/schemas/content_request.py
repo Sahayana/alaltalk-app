@@ -11,6 +11,7 @@ class ShoppingLikeRequest(Schema):
     price: str
     thumbnail: str
 
+
 class NewsLikeRequest(Schema):
     title: str
     date: str
