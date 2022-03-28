@@ -23,6 +23,8 @@ channels = "^3.0.4"
 channels-redis = "^3.4.0"
 django-storages = "^1.12.3"
 boto3 = "^1.21.25"
+pytest = "^7.1.1"
+pytest-django = "^4.5.2"
 
 [tool.poetry.dev-dependencies]
 
