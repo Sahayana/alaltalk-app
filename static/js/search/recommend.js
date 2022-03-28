@@ -7,7 +7,7 @@ function click_recommend_function() {
         data: {"target": "커피"},
         datatype: 'form',
         success: function (response) {
-            console.log(response['all_response']['book'])
+            console.log(response['all_response']['shopping'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -87,22 +87,21 @@ function youtube_content_add(youtube_crawling_data_list, type) {
     for (let i = 0; i < youtube_crawling_data_list.length; i++) {
         let youtube_row = youtube_crawling_data_list[i]
         let content_id = 'youtube_' + content_type + '_' + i
+        let heart_image = '/static/images/empty_heart.png'
+        if(youtube_row[4]){
+            heart_image = '/static/images/heart.png'
+        }
         let temp_html = `<div class="content_box" id="${content_id}">
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
                                     <div class="video_count">${youtube_row[3]}</div>
-                                    <div class="play_icon"></div>
-                                    <div class="more_icon"></div>
-                                    <div class="toggle" style="display: none" >
-                                        <p>공유하기</p>
-                                        <div class="line"></div>
-                                        <p>찜하기</p>
+                                    <div class="recommend_youtube_heart_parent">
+                                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})">
                                     </div>
                                 </div>`
-        if (content_type === 'c'){
+        if (content_type === 'c') {
             $('#youtube_recommend_content').append(temp_html)
-        }
-        else if( content_type === 's'){
+        } else if (content_type === 's') {
             $('#youtube_search_content').append(temp_html)
         }
     }
@@ -148,16 +147,15 @@ function news_content_add(news_crawling_data_list, type) {
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
                                     <img src="/static/images/share.png">
                                 </div>
-                                <div class="profile_like_news_heart" style="background-image: url('/static/images/empty_heart.png')">
+                                <div class="recommend_like_heart" style="background-image: url('/static/images/empty_heart.png')">
                                     
                                 </div>
                             </div>
                         </div>`
         //
-        if (content_type === 'c'){
+        if (content_type === 'c') {
             $('#news_recommend_content').append(temp_html)
-        }
-        else if( content_type === 's'){
+        } else if (content_type === 's') {
             $('#news_search_content').append(temp_html)
         }
     }
@@ -178,30 +176,11 @@ function book_content_add(book_crawling_data_list, type) {
         let book_row = book_crawling_data_list[i]
         let content_id = 'book_' + content_type + '_' + i
         let temp_html = `<div class="content_box" id="${content_id}"> 
-                            <div class="recommend_book_desc">
-                                <div class="recommend_book_desc_row">
-                                    <p>title</p>
-                                    <p>${book_row[0]}</p>
-                                </div>
-                                <div class="recommend_book_desc_row">
-                                    <p>series</p>
-                                    <p>${book_row[3]}</p>
-                                </div>
-                                <div class="recommend_book_desc_row">
-                                    <p>Author</p>
-                                    <p>${book_row[1]}</p>
-                                    <p>${book_row[2]}</p>
-                                </div>
-                                <div class="recommend_book_desc_row">
-                                    <p>Price</p>
-                                    <p>${book_row[4]}</p>
-                                </div>
-                            </div>
                             <div class="recommend_toggle recommend_book_toggle">
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')">
                                     <img src="/static/images/share.png">
                                 </div>
-                                <div class="profile_like_news_heart"
+                                <div class="recommend_like_heart"
                                      style="background-image: url('/static/images/empty_heart.png')">
                                 </div>
                             </div>
@@ -209,10 +188,9 @@ function book_content_add(book_crawling_data_list, type) {
                                 <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
                             </a>
                         </div>`
-        if (content_type === 'c'){
+        if (content_type === 'c') {
             $('#book_recommend_content').append(temp_html)
-        }
-        else if( content_type === 's'){
+        } else if (content_type === 's') {
             $('#book_search_content').append(temp_html)
         }
     }
@@ -238,7 +216,7 @@ function shopping_content_add(shopping_crawling_data_list, type) {
                                         <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
                                             <img src="/static/images/share.png">
                                         </div>
-                                        <div class="profile_like_news_heart"
+                                        <div class="recommend_like_heart"
                                              style="background-image: url('/static/images/empty_heart.png')">
                                         </div>
                                     </div>
@@ -257,10 +235,9 @@ function shopping_content_add(shopping_crawling_data_list, type) {
                                         </div>
                                     </div>
                                 </div>`
-        if (content_type === 'c'){
+        if (content_type === 'c') {
             $('#shopping_recommend_content').append(temp_html)
-        }
-        else if( content_type === 's'){
+        } else if (content_type === 's') {
             $('#shopping_search_content').append(temp_html)
         }
 
@@ -305,19 +282,24 @@ function set_animation_more() {
 
 // like clicked
 function hovering_like_heart() {
-    let empty_heart_classes = document.getElementsByClassName('profile_like_news_heart')
+
+    $('recommend_like_heart').off('click')
+    let empty_heart_classes = document.getElementsByClassName('recommend_like_heart')
     let background_heart = 'url("/static/images/heart.png")'
     let background_empty_heart = 'url("/static/images/empty_heart.png")'
     for (let i = 0; i < empty_heart_classes.length; i++) {
-
         empty_heart_classes[i].addEventListener('click', (event) => {
                 let curr_backgroundImage = event.target.style.backgroundImage;
+                let id = event.target.parentElement.parentElement.id
+
                 if (curr_backgroundImage === background_empty_heart) {
                     event.target.style.backgroundImage = background_heart
-                    alert('like!')
+                    like_check_hub(id, 'like')
+
                 } else {
                     event.target.style.backgroundImage = background_empty_heart
-                    alert('like! 취소!')
+                    like_check_hub(id, 'like_cancel')
+
                 }
 
             }
@@ -326,9 +308,58 @@ function hovering_like_heart() {
     }
 }
 
+// like 분류 함수 (youtube? news? book? shopping?)
+function like_check_hub(id, type) {
+    let checker = id.split('_')[0]
+    if (checker === 'youtube') {
+        // url 가져 오기
+        let url = document.getElementById(id).firstElementChild.src
+        // youtube like function
+        like_youtube_ajax(url, type)
+    } else if (checker === 'news') {
+        console.log('news!')
+    } else if (checker === 'book') {
+        console.log('book!')
+    } else if (checker === 'shopping') {
+        console.log('shopping')
+    }
+}
 
 
+function like_youtube_ajax(data, type) {
 
+    // like 할 때
+    if (type === 'like') {
+        let result = 'Like result : '
+        $.ajax({
+            type: 'POST',
+            url: '/api/like/youtube',
+            data: {'url': data},
+            success: function (response) {
+                let ajax_result = response['result']
+                result += ajax_result
+                alert(result)
+            }
+        })
+    } // like 취소
+    else if(type === 'like_cancel'){
+        let result = 'Like cancel result : '
+        $.ajax({
+            type: 'POST',
+            url: '/api/like_cancel/youtube',
+            data: {'url': data},
+            success: function (response) {
+                let ajax_result = response['result']
+                result += ajax_result
+                alert(result)
+            }
+        })
+    }
+
+}
+
+
+// 공유하기 버튼
 function content_do_share(str) {
     var textarea = document.createElement('textarea');
     textarea.value = str;
@@ -347,9 +378,7 @@ function initialize_search_bar() {
         search_bars[i].children[1].addEventListener('keyup', (e) => {
             if (e.keyCode === 13) {
                 let search_word = search_bars[i].children[1].value
-                console.log('search word is ', search_word)
                 search_bars[i].children[1].value = ''
-
 
 
                 // 이전 데이터 지우기
@@ -365,23 +394,23 @@ function initialize_search_bar() {
 
                 // search_창 보이기
                 let search_contents = document.getElementsByClassName('search_content')
-                for(let k=0; k<search_contents.length; k++){
+                for (let k = 0; k < search_contents.length; k++) {
                     search_contents[k].style.display = 'block'
                 }
-                document.getElementsByClassName('search_news_content')[0].style.display='block'
-                document.getElementsByClassName('search_book_content')[0].style.display='block'
+                document.getElementsByClassName('search_news_content')[0].style.display = 'block'
+                document.getElementsByClassName('search_book_content')[0].style.display = 'block'
 
 
                 $.ajax({
                     type: 'POST',
                     url: '/api/search/crawling',
-                    data: {"target": search_word },
+                    data: {"target": search_word},
                     datatype: 'form',
                     success: function (response) {
                         console.log(response['all_response'])
                         // search_spinner 정지
-                        for(let i=0; i<search_spinner.length;i++){
-                            search_spinner[i].style.display ='none'
+                        for (let i = 0; i < search_spinner.length; i++) {
+                            search_spinner[i].style.display = 'none'
                         }
 
 
@@ -405,7 +434,7 @@ function initialize_search_bar() {
     }
 }
 
-function clear_content(){
+function clear_content() {
     let spinner_html = `<div class="recommend_spinner spinner_search" style="display: flex;">
                             <div class="recommend_spinner_lorder"></div>
                         </div>`
