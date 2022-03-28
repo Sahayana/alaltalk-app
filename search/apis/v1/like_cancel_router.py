@@ -1,10 +1,10 @@
 from typing import Dict, Tuple
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Router, Form
-from search.service.like_cancel_service import like_cancel_shopping, like_cancel_book
+from search.service.like_cancel_service import like_cancel_shopping, like_cancel_book, like_cancel_news
 from ninja.errors import HttpError
 from accounts.models import CustomUser
-from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse
+from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse, BookLikeResponse, BookLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest, NewsLikeRequest, NewsLikeResponse
 from search.models import Book, News, Shopping, Youtube
 from search.service.like_cancel_service import like_cancel_youtube
 
@@ -25,9 +25,9 @@ def cancel_like_youtube(request, youtube_request: YoutubeLikeRequest = Form(...)
 
 @csrf_exempt
 @router.post("/news", response={201: NewsLikeResponse})
-def cancel_like_shopping(request, news_request: NewsLikeRequest = Form(...)) -> Tuple[int, Dict]:):
+def cancel_like_news(request, news_request: NewsLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
-        like_cancel_news(request.user.id, news_request.url)
+        like_cancel_news(user_id=request.user.id, news_url=news_request.link)
     except CustomUser.DoesNotExist:
         raise HttpError(404, 'User does not Exist')
     except News.DoesNotExist:
@@ -39,7 +39,7 @@ def cancel_like_shopping(request, news_request: NewsLikeRequest = Form(...)) -> 
 @router.post("/book", response={201: BookLikeResponse})
 def cancel_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
-        like_cancel_book(user_id=2, book_link=book_request.link)
+        like_cancel_book(user_id=request.user.id, book_url=book_request.link)
     except CustomUser.DoesNotExist:
         raise HttpError(404, 'User does not exist')
     except Book.DoesNotExist:
@@ -53,7 +53,7 @@ def cancel_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(.
     try:
         like_cancel_shopping(
             user_id=request.user.id,
-            shopping_link=shopping_request.link
+            shopping_url=shopping_request.link
         )
     except CustomUser.DoesNotExist:
         raise HttpError(404, 'User does not Exist')

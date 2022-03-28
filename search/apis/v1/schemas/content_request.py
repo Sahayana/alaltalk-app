@@ -22,7 +22,7 @@ class NewsLikeRequest(Schema):
 
 class BookLikeRequest(Schema):
     title: str
-    date: str
+    price: str
     link: str
     company: str
     author: str
