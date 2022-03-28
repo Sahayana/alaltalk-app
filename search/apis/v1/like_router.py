@@ -3,8 +3,8 @@ from typing import Dict, Tuple
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from ninja.errors import HttpError
+from accounts.models import CustomUser
 
-<<<<<<< HEAD
 from search.apis.v1.schemas import (
     ShoppingLikeRequest,
     ShoppingLikeResponse,
@@ -16,12 +16,6 @@ from search.service.like_service import (
     do_like_youtube_service,
 )
 
-=======
-from accounts.models import CustomUser
-from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse
-from search.service.like_service import do_like_youtube_service
-
->>>>>>> accounts
 from ...models import Youtube
 
 router = Router(tags=["like"])
@@ -51,7 +45,6 @@ def do_like_book(request):
 
 
 @csrf_exempt
-<<<<<<< HEAD
 @router.post("/shopping", response={201: ShoppingLikeResponse})
 def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -66,8 +59,3 @@ def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...))
         raise HttpError(404, 'User does not exist!!!')
     return 201, {'result': result}
 
-=======
-@router.post("/shopping")
-def do_like_shopping(request):
-    return 0
->>>>>>> accounts

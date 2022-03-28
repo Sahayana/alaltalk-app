@@ -45,14 +45,9 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
         all_response["shopping"] = []
     try:
         all_response["book"] = crawling_book(crawling_request.target)
-<<<<<<< HEAD
     except Exception as e:
         print('book_crawling Error: ', e)
         all_response['book'] = []
-=======
-    except:
-        all_response["book"] = []
->>>>>>> accounts
     return 201, {"all_response": all_response}
 
 

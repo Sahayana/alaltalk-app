@@ -3,7 +3,6 @@ from ninja import Schema
 
 class YoutubeLikeRequest(Schema):
     url: str
-<<<<<<< HEAD
 
 
 class ShoppingLikeRequest(Schema):
@@ -11,5 +10,3 @@ class ShoppingLikeRequest(Schema):
     link: str
     price: str
     thumbnail: str
-=======
->>>>>>> accounts
