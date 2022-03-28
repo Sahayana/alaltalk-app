@@ -7,6 +7,7 @@ from ninja import Form, Router
 from ...functions import crawling_youtube, crawling_shopping_only_bs4
 from search.service.search_service import crawling_news, crawling_book
 from .schemas import CrawlingRequest, CrawlingResponse
+from search.models import Youtube, News, Book, Shopping
 
 router = Router(tags=["search"])
 
@@ -21,23 +22,29 @@ def open_test(request):
 @router.post("/crawling", response={201: CrawlingResponse})
 def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest = Form(...)) -> Tuple[int, Dict]:
     all_response = {}
-    print(crawling_request.target)
     content_count = 10
     try:
         all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
-    except:
+        for youtube_row in all_response['youtube']:
+            if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
+                youtube_row[4] = True
+    except Exception as e:
+        print('youtube_crawling Error: ', e)
         all_response["youtube"] = []
     try:
         all_response["news"] = crawling_news(crawling_request.target)
-    except:
+    except Exception as e:
+        print('news_crawling Error: ', e)
         all_response["news"] = []
     try:
         all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
-    except:
+    except Exception as e:
+        print('shopping_crawling Error: ', e)
         all_response["shopping"] = []
     try:
         all_response["book"] = crawling_book(crawling_request.target)
-    except:
+    except Exception as e:
+        print('book_crawling Error: ', e)
         all_response['book'] = []
     return 201, {"all_response": all_response}
 
