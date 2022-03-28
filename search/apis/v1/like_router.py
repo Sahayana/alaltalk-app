@@ -1,12 +1,28 @@
-from typing import Tuple, Dict
+from typing import Dict, Tuple
+
 from django.views.decorators.csrf import csrf_exempt
-from ninja import Router, Form
+from ninja import Form, Router
 from ninja.errors import HttpError
 
-from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest
-from search.service.like_service import do_like_youtube_service, do_like_shopping_service
-from ...models import Youtube
+<<<<<<< HEAD
+from search.apis.v1.schemas import (
+    ShoppingLikeRequest,
+    ShoppingLikeResponse,
+    YoutubeLikeRequest,
+    YoutubeLikeResponse,
+)
+from search.service.like_service import (
+    do_like_shopping_service,
+    do_like_youtube_service,
+)
+
+=======
 from accounts.models import CustomUser
+from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse
+from search.service.like_service import do_like_youtube_service
+
+>>>>>>> accounts
+from ...models import Youtube
 
 router = Router(tags=["like"])
 
@@ -19,7 +35,7 @@ def do_like_youtube(request, youtube_dict: YoutubeLikeRequest = Form(...)) -> Tu
         result = do_like_youtube_service(user_id, youtube_dict.url)
     except CustomUser.DoesNotExist:
         raise HttpError(404, f"User is not Exist")
-    return 201, {'result': result}
+    return 201, {"result": result}
 
 
 @csrf_exempt
@@ -35,6 +51,7 @@ def do_like_book(request):
 
 
 @csrf_exempt
+<<<<<<< HEAD
 @router.post("/shopping", response={201: ShoppingLikeResponse})
 def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -49,3 +66,8 @@ def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...))
         raise HttpError(404, 'User does not exist!!!')
     return 201, {'result': result}
 
+=======
+@router.post("/shopping")
+def do_like_shopping(request):
+    return 0
+>>>>>>> accounts

@@ -1,5 +1,5 @@
-from search.models import Youtube
 from accounts.models import CustomUser
+from search.models import Youtube
 
 
 def like_cancel_youtube(user_id: int, youtube_url: str) -> None:

@@ -1,6 +1,5 @@
 import json
 import random
-from dataclasses import dataclass
 from datetime import datetime
 
 from django.contrib import auth
@@ -8,13 +7,19 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.db.models import Q
-from django.dispatch import receiver
-from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from accounts.models import FriendRequest
-from accounts.services.accounts_service import create_single_user, check_email_duplication, get_friend_list
+from accounts.services.accounts_service import (
+    accept_friend_request,
+    check_authentication,
+    check_email_duplication,
+    create_single_user,
+    decline_friend_request,
+    get_friend_list,
+    send_friend_request,
+)
 
 # Create your views here.
 
@@ -77,7 +82,7 @@ def logout(request):
 @login_required
 def friend_list(request):
     user = request.user
-    friends = get_friend_list(user_id=user.id) 
+    friends = get_friend_list(user_id=user.id)
     context = {
         "user": user,
         "friends": friends,
@@ -112,7 +117,7 @@ def profile_change(request):
             user.img = img
         if request.POST.get("password"):
             password = request.POST.get("password")
-            user.set_password(password)        
+            user.set_password(password)
 
         user.nickname = nickname
         user.bio = bio
@@ -132,7 +137,7 @@ def search_friend(request):
         # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
         result_json = list(result.values())
         for i, friend in enumerate(result_json):
-
+            # print(friend["img"])
             if friend in user.friends.all().values():
                 # print("친구입니다")
                 result_json[i] = (friend, 0)  # 0 인 경우 이미 친구
@@ -150,7 +155,7 @@ def search_friend(request):
 def send_request(request, receiver_id):
     sender = request.user
     receiver = get_user_model().objects.get(id=receiver_id)
-    friend_request, created = FriendRequest.objects.get_or_create(sender=sender, receiver=receiver)
+    friend_request, created = send_friend_request(sender_id=sender.id, recevier_id=receiver.id)
     if created:
         return JsonResponse({"msg": "sent"})
     return JsonResponse({"msg": "already"})
@@ -158,20 +163,14 @@ def send_request(request, receiver_id):
 
 @login_required
 def accept_request(request, request_id):
-    friend_request = FriendRequest.objects.get(id=request_id)
-    if friend_request.receiver == request.user:
-        friend_request.receiver.friends.add(friend_request.sender)
-        friend_request.sender.friends.add(friend_request.receiver)
-        friend_request.delete()
-        return JsonResponse({"msg": "accepted"})
-    else:
-        return JsonResponse({"msg": "error"})  
+    user_id = request.user.id
+    accept_friend_request(user_id=user_id.id, request_id=request_id)
+    return JsonResponse({"msg": "accepted"})
 
 
 @login_required
 def decline_request(request, request_id):
-    friend_request = FriendRequest.objects.get(id=request_id)
-    friend_request.delete()
+    decline_friend_request(request_id=request_id)
     return JsonResponse({"msg": "declined"})
 
 
@@ -198,10 +197,10 @@ def temporary_password(request):
 
 @login_required
 def auth_check(request):
-    user = request.user
+    user_id = request.user.id
     password = request.POST.get("password")
 
-    me = auth.authenticate(email=user.email, password=password)
+    me = check_authentication(user_id=user_id, password=password)
 
     if me:
         return JsonResponse({"msg": "ok"})

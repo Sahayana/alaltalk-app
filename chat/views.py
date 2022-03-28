@@ -22,7 +22,7 @@ def show_chat_list(request):
 
     all_message = ChatMessage.objects.all()
 
-    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list, 'all_message': all_message})
+    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list, "all_message": all_message})
 
 
 # 채팅하기 버튼 클릭 시 채팅방 생성

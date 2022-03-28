@@ -3,6 +3,7 @@ from typing import List
 
 import requests
 from bs4 import BeautifulSoup
+
 from search.apps import SearchConfig
 
 
@@ -46,7 +47,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
         else:
             crawling_url = str(video_url).split("=")[1]
         crawling_url = youtube_base_url + "/embed/" + crawling_url
-        crawling_data.append([crawling_url, video_url, video_title, video_views,video_already ])
+        crawling_data.append([crawling_url, video_url, video_title, video_views, video_already])
 
     print("youtube crawling function time is ", time.time() - start, "seconds")
     return crawling_data[0:content_count]
@@ -107,24 +108,23 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 
 def crawling_shopping_only_bs4(search_word: str, count: int) -> List[List[str]]:
     start = time.time()
-    url = 'https://www.coupang.com/np/search?component=&&channel=user' + '&q=' + search_word +'&page=1'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+    url = "https://www.coupang.com/np/search?component=&&channel=user" + "&q=" + search_word + "&page=1"
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36"}
     data = requests.get(url, headers=headers)
 
-    soup = BeautifulSoup(data.text, 'html.parser')
+    soup = BeautifulSoup(data.text, "html.parser")
 
     answer = []
-    product_list = soup.select('#productList > li')
+    product_list = soup.select("#productList > li")
 
     for row in product_list:
         shopping_product = []
-        shopping_img_src = row.select_one('img').get('data-img-src')
+        shopping_img_src = row.select_one("img").get("data-img-src")
         if shopping_img_src is None:
-            shopping_img_src = row.select_one('img').attrs['src']
-        shopping_name = row.select_one('.name').text
-        shopping_price = row.select_one('.price-value').text
-        shopping_url = 'https://www.coupang.com' + row.select_one('a').attrs['href']
+            shopping_img_src = row.select_one("img").attrs["src"]
+        shopping_name = row.select_one(".name").text
+        shopping_price = row.select_one(".price-value").text
+        shopping_url = "https://www.coupang.com" + row.select_one("a").attrs["href"]
 
         # list 에 담기
         shopping_product.append(shopping_img_src)
@@ -135,4 +135,3 @@ def crawling_shopping_only_bs4(search_word: str, count: int) -> List[List[str]]:
         answer.append(shopping_product)
     print("shopping crawling function time is ", time.time() - start, "seconds")
     return answer[:count]
-
