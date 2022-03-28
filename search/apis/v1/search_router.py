@@ -61,13 +61,27 @@ def open_chat_room(request):
 
 
 # like API
-@csrf_exempt
-@router.post("/like/news")
-def do_like_news(request):
     # 1. Javascript로 id='test'인 기사 데이터를 ajax를 통해 보내기 ( 제목, 시간, 신문사, 내용, 썸네일 )
     # 2. 해당 함수에서 ajxax 연결 확인
     # 3. DB 데이터 유저 조회 - request.user
     # 4. News 모델 새로 만들기 > 유저 foreignkey 로 넣기
+@csrf_exempt
+@router.post("/like/news")
+def do_like_news(request):
+    $.ajax({
+        url: ''
+        type: ""
+        dataType: ""
+        data: {
+            'upload_data': uploaded_data,
+            csrfmiddlewaretoken: '{{csrf_token}}'
+        },
+        headers: { "X-CSRFToken": "{{ csrf_token }}" },
+
+        success : function(data) {
+
+        }
+    })
     return 0
 
 
