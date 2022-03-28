@@ -53,10 +53,16 @@ def crawling_book(search: str) -> List[List[str]]:
     image = soup.select('div.cover > a > img')
     author = soup.select('td.detail > div.author > a:nth-child(1)')
     company = soup.select('td.detail > div.author > a:last-of-type')
-
     search_list = soup.select("#search_list tr")
-
     answer = []
+
+
+    # for row in search_list:
+    #     print('#####################')
+    #     print(row)
+    #     print(row.select_one('detail'))
+
+
 
     for i in range(len(author)):
         test_title = []
@@ -73,7 +79,4 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(image[i]['src'])
         answer.append(test_title)
     return answer
-
-
-
 

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}?after">
     <!--google font-->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
           rel="stylesheet">
@@ -35,20 +35,40 @@
             <div class="icon user_icon"></div>
             <div class="icon chat_icon"></div>
             <div class="icon mypage_icon"></div>
-            <div class="logout">임시로그아웃</div>
         </div>
     </div>
     <div class="left_wrap">
         <p class="title">채팅</p>
         <div class="chat_list">
-            {% for chat in chat_list %}
-                <a href="/chat/{{ chat.id }}/" class="chat_partner">
-                    <div class="partner_img"></div>
-                    <div class="info_group">
-                        <div class="partner_name">{{ chat.nickname }}</div>
-                        <div class="partner_last_msg">{{ last_message }}</div>
-                    </div>
-                </a>
+            {% for chatroom in chatroom_list %}
+{#                {% for message in all_message %}#}
+                    {% if chatroom.participant1.id == user.id %}
+                        <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
+                            <div class="partner_img"></div>
+                            <div class="info_group">
+                                <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
+                                {#chatroom.id로 필터링 된 메세지의 맨 마지막 메세지 가져오기#}
+                                {% for message in all_message %}
+                                    {% if chatroom.id == message.chatroom_id %}
+                                        <div class="partner_last_msg">{{ message.message}}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </a>
+                    {% else %}
+                        <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
+                            <div class="partner_img"></div>
+                            <div class="info_group">
+                                <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
+                                {% for message in all_message %}
+                                    {% if chatroom.id == message.chatroom_id %}
+                                        <div class="partner_last_msg">{{ message.message }}</div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </a>
+                    {% endif %}
+{#                {% endfor %}#}
             {% endfor %}
         </div>
 
@@ -88,8 +108,8 @@
         location.replace("/accounts/logout");
     })
 
-/*
-    var room_id = {{ room_id }};
+    /*
+        var room_id = {{ room_id }};
     var user_id = {{ user_id }};
     var participant1 = {{ participant1 }};
     var participant2 = {{ participant2 }};

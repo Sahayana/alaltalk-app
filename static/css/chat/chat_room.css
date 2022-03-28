@@ -133,6 +133,10 @@ body {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    display: none;
+}
+.chat_list .chat_partner .info_group .partner_last_msg:last-child {
+    display: block;
 }
 .right_wrap {
     width: 60%;

@@ -8,8 +8,8 @@ class ChatRoom(models.Model):
         db_table = "chat"
 
     created_at = models.DateTimeField(auto_now_add=True)
-    participant1 = models.CharField(max_length=256)
-    participant2 = models.CharField(max_length=256)
+    participant1 = models.ForeignKey(CustomUser, related_name="participant1_chatroom", on_delete=models.CASCADE)
+    participant2 = models.ForeignKey(CustomUser, related_name="participant2_chatroom", on_delete=models.CASCADE)
 
 
 class ChatMessage(models.Model):
