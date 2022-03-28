@@ -4,7 +4,8 @@ from ninja import Router, Form
 from ninja.errors import HttpError
 
 from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest
-from search.service.like_service import do_like_youtube_service, do_like_shopping_service
+from search.apis.v1.schemas import BookLikeResponse, BookLikeRequest
+from search.service.like_service import do_like_youtube_service, do_like_shopping_service, do_like_book_service
 from ...models import Youtube
 from accounts.models import CustomUser
 
@@ -29,9 +30,21 @@ def do_like_book(request):
 
 
 @csrf_exempt
-@router.post("/book")
-def do_like_book(request):
-    return 0
+@router.post("/book", response={201: BookLikeResponse})
+def do_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[int, Dict]:
+    try:
+        result = do_like_book_service(
+            user_id=request.user.id,
+            title=book_request.title,
+            price=book_request.price,
+            author=book_request.author,
+            company=book_request.company,
+            thumbnail=book_request.thumbnail,
+            link=book_request.link
+        )
+    except CustomUser.DoesNotExist:
+        raise HttpError(404, 'User does not exist!')
+    return 201, {'result': result}
 
 
 @csrf_exempt
@@ -39,7 +52,7 @@ def do_like_book(request):
 def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
         result = do_like_shopping_service(
-            request.user.id,
+            user_id=request.user.id,
             title=shopping_request.title,
             price=shopping_request.price,
             thumbnail_url=shopping_request.thumbnail,

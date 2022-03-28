@@ -21,3 +21,20 @@ def do_like_shopping_service(user_id: int, title: str, price: str, thumbnail_url
     else:
         return 'AlreadyExist'
 
+
+def do_like_book_service(user_id: int, title: str, price: str, author: str, company: str, thumbnail: str, link: str) -> str:
+    user = CustomUser.objects.get(pk=user_id)
+    book_check = Book.objects.filter(user=user, link=link).exists()
+    if not book_check:
+        Book.objects.create(
+            user=user,
+            link=link,
+            title=title,
+            price=price,
+            author=author,
+            company=company,
+            thumbnail=thumbnail
+        )
+        return 'success'
+    else:
+        return 'AlreadyExist'
