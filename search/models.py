@@ -22,6 +22,7 @@ class News(models.Model):
 class Book(models.Model):
     user = models.ForeignKey(CustomUser, related_name="book", on_delete=models.CASCADE)
     title = models.CharField(max_length=1000)
+    price = models.CharField(max_length=1000)
     author = models.CharField(max_length=1000)
     company = models.CharField(max_length=1000)
     thumbnail = models.ImageField()
