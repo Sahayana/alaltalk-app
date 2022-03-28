@@ -21,11 +21,24 @@ def open_test(request):
 @router.post("/crawling", response={201: CrawlingResponse})
 def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest = Form(...)) -> Tuple[int, Dict]:
     all_response = {}
+    print(crawling_request.target)
     content_count = 10
-    all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
-    all_response["news"] = crawling_news(crawling_request.target)
-    all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
-    all_response["book"] = crawling_book(crawling_request.target)
+    try:
+        all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
+    except:
+        all_response["youtube"] = []
+    try:
+        all_response["news"] = crawling_news(crawling_request.target)
+    except:
+        all_response["news"] = []
+    try:
+        all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
+    except:
+        all_response["shopping"] = []
+    try:
+        all_response["book"] = crawling_book(crawling_request.target)
+    except:
+        all_response['book'] = []
     return 201, {"all_response": all_response}
 
 
@@ -64,36 +77,3 @@ def cancel_like_news(request):
     return 0
 
 
-@csrf_exempt
-@router.post("/like/youtube")
-def do_like_youtube(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/cancel_like/youtube")
-def cancel_like_youtube(request):
-    return 0
-
-@csrf_exempt
-@router.post("/like/book")
-def do_like_book(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/cancel_like/book")
-def cancel_like_book(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/like/shopping")
-def do_like_shopping(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/cancel_like/shopping")
-def cancel_like_shopping(request):
-    return 0

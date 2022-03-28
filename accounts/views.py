@@ -14,6 +14,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from accounts.models import FriendRequest
+from accounts.services.accounts_service import create_single_user, check_email_duplication, get_friend_list
 
 # Create your views here.
 
@@ -26,9 +27,9 @@ def signup(request):
         bio = request.POST.get("bio")
         if request.FILES.get("img"):
             img = request.FILES.get("img")
-            get_user_model().objects.create_user(email=email, nickname=nickname, password=password, bio=bio, img=img)
+            create_single_user(email=email, nickname=nickname, password=password, bio=bio, img=img)
         else:
-            get_user_model().objects.create_user(email=email, nickname=nickname, password=password, bio=bio)
+            create_single_user(email=email, nickname=nickname, password=password, bio=bio)
         context = {"result": "회원가입이 완료되었습니다."}
         return JsonResponse(context)
 
@@ -43,7 +44,7 @@ def signup(request):
 def duplicated_check(request):
     if request.method == "GET":
         email = request.GET.get("email")
-        context = {"duplicated": get_user_model().objects.filter(email__iexact=email).exists()}
+        context = {"duplicated": check_email_duplication(email=email)}
         return JsonResponse(context)
 
 
@@ -75,9 +76,8 @@ def logout(request):
 
 @login_required
 def friend_list(request):
-    user = get_user_model().objects.get(id=request.user.id)
-    friends = user.friends.all()
-    print(friends)
+    user = request.user
+    friends = get_friend_list(user_id=user.id) 
     context = {
         "user": user,
         "friends": friends,
@@ -104,6 +104,7 @@ def profile_change(request):
     if request.method == "POST":
         nickname = request.POST.get("nickname")
         bio = request.POST.get("bio")
+        print(request.FILES.get("img"))
         if request.FILES.get("img") != None:
             img = request.FILES.get("img")
             img_extension = img.name.split(".")[-1]
@@ -111,7 +112,7 @@ def profile_change(request):
             user.img = img
         if request.POST.get("password"):
             password = request.POST.get("password")
-            user.set_password(password)
+            user.set_password(password)        
 
         user.nickname = nickname
         user.bio = bio
@@ -164,7 +165,7 @@ def accept_request(request, request_id):
         friend_request.delete()
         return JsonResponse({"msg": "accepted"})
     else:
-        return JsonResponse({"msg": "error"})  # 거절, 회수 등의 예외처리 남음
+        return JsonResponse({"msg": "error"})  
 
 
 @login_required

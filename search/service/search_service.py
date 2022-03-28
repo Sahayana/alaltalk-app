@@ -46,7 +46,6 @@ def crawling_book(search: str) -> List[List[str]]:
     html = urllib.request.urlopen(newUrl, context=context).read()
     soup = BeautifulSoup(html, "html.parser")
 
-<<<<<<< HEAD
     title = soup.select('div.title > a > strong')
     short_href = soup.select('div.title > a ')
     price = soup.select('div.sell_price > strong')
@@ -54,20 +53,17 @@ def crawling_book(search: str) -> List[List[str]]:
     image = soup.select('div.cover > a > img')
     author = soup.select('td.detail > div.author > a:nth-child(1)')
     company = soup.select('td.detail > div.author > a:last-of-type')
-=======
     search_list = soup.select("#search_list tr")
+    answer = []
+
 
     # for row in search_list:
     #     print('#####################')
     #     print(row)
     #     print(row.select_one('detail'))
 
-    return answer
->>>>>>> fffe2764c8d454de04d75e6c38bc7b8155d94559
 
-    answer = []
 
-<<<<<<< HEAD
     for i in range(len(author)):
         test_title = []
         test_title.append(title[i].get_text())
@@ -83,6 +79,4 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(image[i]['src'])
         answer.append(test_title)
     return answer
-=======
-crawling_book("코딩")
->>>>>>> fffe2764c8d454de04d75e6c38bc7b8155d94559
+
