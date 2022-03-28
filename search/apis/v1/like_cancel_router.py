@@ -1,4 +1,4 @@
-from typing import Tuple, Dict
+from typing import Dict, Tuple
 
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Router, Form
@@ -7,8 +7,13 @@ from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse, Shop
 from search.apis.v1.schemas import BookLikeResponse, BookLikeRequest
 from search.models import Youtube, Book, News, Shopping
 from accounts.models import CustomUser
+
 from ninja.errors import HttpError
 
+from accounts.models import CustomUser
+from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse
+from search.models import Book, News, Shopping, Youtube
+from search.service.like_cancel_service import like_cancel_youtube
 
 router = Router(tags=["like_cancel"])
 
@@ -19,10 +24,10 @@ def cancel_like_youtube(request, youtube_request: YoutubeLikeRequest = Form(...)
     try:
         like_cancel_youtube(request.user.id, youtube_request.url)
     except CustomUser.DoesNotExist:
-        raise HttpError(404, 'User does not Exist')
+        raise HttpError(404, "User does not Exist")
     except Youtube.DoesNotExist:
-        raise HttpError(404, 'Youtube does not Exist')
-    return 201, {'result': 'success'}
+        raise HttpError(404, "Youtube does not Exist")
+    return 201, {"result": "success"}
 
 
 @csrf_exempt
@@ -44,6 +49,7 @@ def cancel_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tupl
 
 
 @csrf_exempt
+
 @router.post("/shopping", response={201: ShoppingLikeResponse})
 def cancel_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)):
     try:
@@ -56,5 +62,4 @@ def cancel_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(.
     except Shopping.DoesNotExist:
         raise HttpError(404, 'Shopping does not Exist')
     return 201, {'result': 'success'}
-
 

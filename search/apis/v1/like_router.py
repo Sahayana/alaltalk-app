@@ -1,13 +1,26 @@
-from typing import Tuple, Dict
+from typing import Dict, Tuple
+
 from django.views.decorators.csrf import csrf_exempt
-from ninja import Router, Form
+from ninja import Form, Router
 from ninja.errors import HttpError
+from accounts.models import CustomUser
+
+from search.apis.v1.schemas import (
+    ShoppingLikeRequest,
+    ShoppingLikeResponse,
+    YoutubeLikeRequest,
+    YoutubeLikeResponse,
+)
+from search.service.like_service import (
+    do_like_shopping_service,
+    do_like_youtube_service,
+)
 
 from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest
 from search.apis.v1.schemas import BookLikeResponse, BookLikeRequest
 from search.service.like_service import do_like_youtube_service, do_like_shopping_service, do_like_book_service
+
 from ...models import Youtube
-from accounts.models import CustomUser
 
 router = Router(tags=["like"])
 
@@ -20,7 +33,7 @@ def do_like_youtube(request, youtube_dict: YoutubeLikeRequest = Form(...)) -> Tu
         result = do_like_youtube_service(user_id, youtube_dict.url)
     except CustomUser.DoesNotExist:
         raise HttpError(404, f"User is not Exist")
-    return 201, {'result': result}
+    return 201, {"result": result}
 
 
 @csrf_exempt

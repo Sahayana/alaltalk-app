@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -191,15 +191,15 @@ except FileNotFoundError:
 
 
 # AWS S3 connet
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-with open(os.path.join(BASE_DIR, 'alaltalk/config/aws.json')) as f:
+with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
     secret = json.loads(f.read())
 
-AWS_ACCESS_KEY_ID = secret['AWS']['ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = secret['AWS']['SECRET_ACCESS_KEY']
-AWS_STORAGE_BUCKET_NAME = secret['AWS']['STORAGE_BUCKET_NAME']
-AWS_REGION = 'ap-northeast-2'
-AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_REGION )
+AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
+AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
+AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
+AWS_REGION = "ap-northeast-2"
+AWS_DEFAULT_ACL = "public-read"
+AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
