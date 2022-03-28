@@ -23,58 +23,11 @@
                 <!-- youtube 클롤링 결과 -->
             </div>
         </div>
-        <div class="search_content">
+        <div class="search_content" style="display: none">
             <p>검색</p>
-            <div class="content_section" id="youtube_content_section">
-                <div class="content_box">
-                    <div class="video_img"></div>
-                    <div class="video_title">
-                        코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
-                        • lofi type beat • 3 hours • lofi type beat • 3 hours
-                    </div>
-                    <div class="video_count">조회수 1889만회</div>
-                    <div class="play_icon"></div>
-                    <div class="more_icon"></div>
-                </div>
-                <div class="content_box">
-                    <div class="video_img"></div>
-                    <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
-                    </div>
-                    <div class="video_count">조회수 1889만회</div>
-                    <div class="play_icon"></div>
-                    <div class="more_icon"></div>
-                </div>
-                <div class="content_box">
-                    <div class="video_img"></div>
-                    <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
-                    </div>
-                    <div class="video_count">조회수 1889만회</div>
-                    <div class="play_icon"></div>
-                    <div class="more_icon"></div>
-                </div>
-                <div class="content_box">
-                    <div class="video_img"></div>
-                    <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
-                    </div>
-                    <div class="video_count">조회수 1889만회</div>
-                    <div class="play_icon"></div>
-                    <div class="more_icon"></div>
-                </div>
-                <div class="content_box">
-                    <div class="video_img"></div>
-                    <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
-                    </div>
-                    <div class="video_count">조회수 1889만회</div>
-                    <div class="play_icon"></div>
-                    <div class="more_icon"></div>
-                </div>
-                <div class="content_box">
-                    <div class="video_img"></div>
-                    <div class="video_title">코딩할때 듣기 좋은 노래 • lofi type beat • 3 hours
-                    </div>
-                    <div class="video_count">조회수 1889만회</div>
-                    <div class="play_icon"></div>
-                    <div class="more_icon"></div>
+            <div class="content_section" id="youtube_search_content">
+                <div class="recommend_spinner spinner_search" style="display: none;">
+                    <div class="recommend_spinner_lorder"></div>
                 </div>
             </div>
         </div>
@@ -100,68 +53,72 @@
                 </div>
                 <!-- news 크롤링 결과-->
             </div>
-            <div class="search_news_content" id="test">
+            <div class="search_news_content" id="test" style="display: none">
                 <p>검색</p>
-                <div class="search_section">
-                    <div class="recommend_news_search_content">
-                        <div class="recommend_news_search_content_image">
-                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">
-                        </div>
-                        <div class="recommend_news_search_content_desc">
-                            <div class="recommend_news_search_content_desc_title">
-                                <p>이디야커피, '바닐라 라떼·쇼콜라 모카' 출시</p>
-                            </div>
-                            <div class="recommend_news_search_content_desc_detail">
-                                <p>이디야커피는 컵커피 '바닐라 라떼'와 '쇼콜라 모카' 2종을 출시했다고 24일 밝혔다. 컵커피는 자체 로스팅 공장 드림팩토리에서 첨단 로스터기로 로스팅한
-                                    신선한 원두만을 사용한 제품이다. 융드립 추출 방식을 사용해...</p>
-                            </div>
-                            <div class="recommend_news_search_content_desc_footer">
-                                <div class="recommend_news_search_content_desc_footer_newspaper">
-                                    <p>테스트 신문사아</p>
-                                </div>
-                                <div class="recommend_news_search_content_desc_footer_time">
-                                    <p>8시간 전</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="recommend_news_search_content_more">
-                            <div class="profile_like_news_toggle">
-                                <img src="/static/images/share.png">
-                            </div>
-                            <div class="profile_like_news_heart" style="display: block">
-                                <img src="">
-                            </div>
-                        </div>
+                <div class="search_section" id="news_search_content">
+                    <div class="recommend_spinner spinner_search" style="display: flex;">
+                        <div class="recommend_spinner_lorder"></div>
                     </div>
-                    <div class="recommend_news_search_content">
-                        <div class="recommend_news_search_content_image">
-                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">
-                        </div>
-                        <div class="recommend_news_search_content_desc">
-                            <div class="recommend_news_search_content_desc_title">
-                                <p>이디야커피, '바닐라 라떼·쇼콜라 모카' 출시</p>
-                            </div>
-                            <div class="recommend_news_search_content_desc_detail">
-                                <p>이디야커피는 컵커피 '바닐라 라떼'와 '쇼콜라 모카' 2종을 출시했다고 24일 밝혔다. 컵커피는 자체 로스팅 공장 드림팩토리에서 첨단 로스터기로 로스팅한
-                                    신선한 원두만을 사용한 제품이다. 융드립 추출 방식을 사용해...</p>
-                            </div>
-                            <div class="recommend_news_search_content_desc_footer">
-                                <div class="recommend_news_search_content_desc_footer_newspaper">
-                                    <p>테스트 신문사아</p>
-                                </div>
-                                <div class="recommend_news_search_content_desc_footer_time">
-                                    <p>8시간 전</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="recommend_news_search_content_more">
-                            <div class="profile_like_news_toggle">
-                                <img src="/static/images/share.png">
-                            </div>
-                            <div class="profile_like_news_heart" style="display: none"></div>
-                            <div class="profile_like_news_heart_empty" style="display: block"></div>
-                        </div>
-                    </div>
+                    <!-- news 검색 결과 -->
+{#                    <div class="recommend_news_search_content">#}
+{#                        <div class="recommend_news_search_content_image">#}
+{#                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">#}
+{#                        </div>#}
+{#                        <div class="recommend_news_search_content_desc">#}
+{#                            <div class="recommend_news_search_content_desc_title">#}
+{#                                <p>이디야커피, '바닐라 라떼·쇼콜라 모카' 출시</p>#}
+{#                            </div>#}
+{#                            <div class="recommend_news_search_content_desc_detail">#}
+{#                                <p>이디야커피는 컵커피 '바닐라 라떼'와 '쇼콜라 모카' 2종을 출시했다고 24일 밝혔다. 컵커피는 자체 로스팅 공장 드림팩토리에서 첨단 로스터기로 로스팅한#}
+{#                                    신선한 원두만을 사용한 제품이다. 융드립 추출 방식을 사용해...</p>#}
+{#                            </div>#}
+{#                            <div class="recommend_news_search_content_desc_footer">#}
+{#                                <div class="recommend_news_search_content_desc_footer_newspaper">#}
+{#                                    <p>테스트 신문사아</p>#}
+{#                                </div>#}
+{#                                <div class="recommend_news_search_content_desc_footer_time">#}
+{#                                    <p>8시간 전</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="recommend_news_search_content_more">#}
+{#                            <div class="profile_like_news_toggle">#}
+{#                                <img src="/static/images/share.png">#}
+{#                            </div>#}
+{#                            <div class="profile_like_news_heart" style="display: block">#}
+{#                                <img src="">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="recommend_news_search_content">#}
+{#                        <div class="recommend_news_search_content_image">#}
+{#                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">#}
+{#                        </div>#}
+{#                        <div class="recommend_news_search_content_desc">#}
+{#                            <div class="recommend_news_search_content_desc_title">#}
+{#                                <p>이디야커피, '바닐라 라떼·쇼콜라 모카' 출시</p>#}
+{#                            </div>#}
+{#                            <div class="recommend_news_search_content_desc_detail">#}
+{#                                <p>이디야커피는 컵커피 '바닐라 라떼'와 '쇼콜라 모카' 2종을 출시했다고 24일 밝혔다. 컵커피는 자체 로스팅 공장 드림팩토리에서 첨단 로스터기로 로스팅한#}
+{#                                    신선한 원두만을 사용한 제품이다. 융드립 추출 방식을 사용해...</p>#}
+{#                            </div>#}
+{#                            <div class="recommend_news_search_content_desc_footer">#}
+{#                                <div class="recommend_news_search_content_desc_footer_newspaper">#}
+{#                                    <p>테스트 신문사아</p>#}
+{#                                </div>#}
+{#                                <div class="recommend_news_search_content_desc_footer_time">#}
+{#                                    <p>8시간 전</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="recommend_news_search_content_more">#}
+{#                            <div class="profile_like_news_toggle">#}
+{#                                <img src="/static/images/share.png">#}
+{#                            </div>#}
+{#                            <div class="profile_like_news_heart" style="display: none"></div>#}
+{#                            <div class="profile_like_news_heart_empty" style="display: block"></div>#}
+{#                        </div>#}
+{#                    </div>#}
                     <!-- 기존 news Template -->
                     {#                    <div class="profile_like_news">#}
                     {#                        <li>#}
@@ -211,22 +168,38 @@
 
             </div>
         </div>
-        <div class="search_book_content">
+        <div class="search_book_content" style="display:none;">
             <p>검색</p>
-            <div class="content_book_section">
-                <div class="content_box">
-                    <div class="book_img"></div>
-                    <div class="more_icon"></div>
-                    <div class="search_content_part">
-                        <div class="toggle">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
+            <div class="content_book_section" id="book_search_content">
+                <div class="recommend_spinner spinner_search" style="display: flex;">
+                    <div class="recommend_spinner_lorder"></div>
+                </div>
+                <!-- book 검색 결과 -->
+                <div class="content_box" id="book_example">
+                    <div class="recommend_toggle recommend_book_toggle">
+                        <div class="profile_like_news_toggle" onclick="content_do_share('url')">
+                            <img src="/static/images/share.png">
                         </div>
-                        <div class="book_title">책제목</div>
-                        <div class="book_write">저자</div>
-                        <div class="book_price">가격</div>
+                        <div class="profile_like_news_heart"
+                             style="background-image: url('/static/images/empty_heart.png')">
+                        </div>
                     </div>
+                    <a href="https://naver.com" target="_blank">
+                        <div class="book_img" style=""></div>
+                    </a>
+                </div>
+                <div class="content_box" id="book_example">
+                    <div class="recommend_toggle recommend_book_toggle">
+                        <div class="profile_like_news_toggle" onclick="content_do_share('url')">
+                            <img src="/static/images/share.png">
+                        </div>
+                        <div class="profile_like_news_heart"
+                             style="background-image: url('/static/images/empty_heart.png')">
+                        </div>
+                    </div>
+                    <a href="https://naver.com" target="_blank">
+                        <div class="book_img" style=""></div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -255,54 +228,16 @@
                 <!-- Shopping 크롤링 결과-->
             </div>
         </div>
-        <div class="search_content">
+        <div class="search_content" style="display:none;">
             <p>검색</p>
-            <div class="content_section">
-                <div class="recommend_shopping_search_row">
-                    <div class="recommend_shopping_search_content">
-                        <div class="more_icon" onclick="more_open_or_off(this.id)"></div>
-                        <div class="toggle" style="display: none">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
-                        </div>
-                        <div class="recommend_shopping_search_content_img" onclick="">
-                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">
-                        </div>
 
-                        <div class="recommend_shopping_search_content_desc">
-                            <div class="recommend_shopping_search_content_desc_bar"></div>
-                            <div class="recommend_shopping_search_content_desc_title">
-                                <p>타이니탄 다이너마이트 모니터 피규어</p>
-                            </div>
-                            <div class="recommend_shopping_search_content_desc_price">
-                                <p>15,380</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recommend_shopping_search_content">
-                        <div class="more_icon"></div>
-                        <div class="toggle" style="display: none">
-                            <p>공유하기</p>
-                            <div class="line"></div>
-                            <p>찜하기</p>
-                        </div>
-                        <div class="recommend_shopping_search_content_img" onclick="">
-                            <img src="/static/images/70ad8c1c-7d9b-4dee-9317-6053e0359a60.jpg">
-                        </div>
 
-                        <div class="recommend_shopping_search_content_desc">
-                            <div class="recommend_shopping_search_content_desc_bar"></div>
-                            <div class="recommend_shopping_search_content_desc_title">
-                                <p>타이니탄 다이너마이트 모니터 피규어</p>
-                            </div>
-                            <div class="recommend_shopping_search_content_desc_price">
-                                <p>15,380</p>
-                            </div>
-                        </div>
-                    </div>
-
+            <div class="content_section" id="shopping_search_content">
+                <div class="recommend_spinner spinner_search" style="display: flex;">
+                    <div class="recommend_spinner_lorder"></div>
                 </div>
+                <!-- Shopping 검색 결과  -->
+
             </div>
         </div>
     </div>

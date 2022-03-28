@@ -7,7 +7,7 @@ function click_recommend_function() {
         data: {"target": "커피"},
         datatype: 'form',
         success: function (response) {
-            console.log(response['all_response']['news'])
+            console.log(response['all_response']['book'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -15,6 +15,7 @@ function click_recommend_function() {
             for (let k = 0; k < spinners.length; k++) {
                 spinners[k].style.display = 'none';
             }
+
             // content 내용 붙이기
             youtube_content_add(response['all_response']['youtube'], 'crawling')
             news_content_add(response['all_response']['news'], 'crawling')
@@ -24,10 +25,13 @@ function click_recommend_function() {
 
             // hovering_like
             hovering_like_heart()
-
+            set_animation_more()
 
             // clicked_like
             like_news()
+
+            // search_bar
+            initialize_search_bar()
         }
     })
 
@@ -95,7 +99,12 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                         <p>찜하기</p>
                                     </div>
                                 </div>`
-        $('#youtube_recommend_content').append(temp_html)
+        if (content_type === 'c'){
+            $('#youtube_recommend_content').append(temp_html)
+        }
+        else if( content_type === 's'){
+            $('#youtube_search_content').append(temp_html)
+        }
     }
 }
 
@@ -136,7 +145,7 @@ function news_content_add(news_crawling_data_list, type) {
                                 </div>
                             </div>
                             <div class="recommend_news_search_content_more">
-                                <div class="profile_like_news_toggle" onclick="content_do_share(${content_id})">
+                                <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
                                     <img src="/static/images/share.png">
                                 </div>
                                 <div class="profile_like_news_heart" style="background-image: url('/static/images/empty_heart.png')">
@@ -145,7 +154,12 @@ function news_content_add(news_crawling_data_list, type) {
                             </div>
                         </div>`
         //
-        $('#news_recommend_content').append(temp_html)
+        if (content_type === 'c'){
+            $('#news_recommend_content').append(temp_html)
+        }
+        else if( content_type === 's'){
+            $('#news_search_content').append(temp_html)
+        }
     }
 }
 
@@ -164,15 +178,43 @@ function book_content_add(book_crawling_data_list, type) {
         let book_row = book_crawling_data_list[i]
         let content_id = 'book_' + content_type + '_' + i
         let temp_html = `<div class="content_box" id="${content_id}"> 
-                    <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
-                    <div class="more_icon" onclick="more_open_or_off(${content_id})"></div>
-                    <div class="toggle" style="display: none;">
-                        <p>공유하기</p>
-                        <div class="line"></div>
-                        <p>찜하기</p>
-                    </div>
-                </div>`
-        $('#book_recommend_content').append(temp_html)
+                            <div class="recommend_book_desc">
+                                <div class="recommend_book_desc_row">
+                                    <p>title</p>
+                                    <p>${book_row[0]}</p>
+                                </div>
+                                <div class="recommend_book_desc_row">
+                                    <p>series</p>
+                                    <p>${book_row[3]}</p>
+                                </div>
+                                <div class="recommend_book_desc_row">
+                                    <p>Author</p>
+                                    <p>${book_row[1]}</p>
+                                    <p>${book_row[2]}</p>
+                                </div>
+                                <div class="recommend_book_desc_row">
+                                    <p>Price</p>
+                                    <p>${book_row[4]}</p>
+                                </div>
+                            </div>
+                            <div class="recommend_toggle recommend_book_toggle">
+                                <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')">
+                                    <img src="/static/images/share.png">
+                                </div>
+                                <div class="profile_like_news_heart"
+                                     style="background-image: url('/static/images/empty_heart.png')">
+                                </div>
+                            </div>
+                            <a href="${book_row[5]}" target="_blank">
+                                <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
+                            </a>
+                        </div>`
+        if (content_type === 'c'){
+            $('#book_recommend_content').append(temp_html)
+        }
+        else if( content_type === 's'){
+            $('#book_search_content').append(temp_html)
+        }
     }
 }
 
@@ -192,13 +234,12 @@ function shopping_content_add(shopping_crawling_data_list, type) {
         let shopping_row = shopping_crawling_data_list[i]
         let content_id = 'shopping_' + content_type + '_' + i
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
-                                    <div class="more_icon" id="shopping_recommend_${i}" onclick="more_open_or_off(this.id)"></div>
-                                    <div class="toggle" style="display: none">
-                                        <div class="toggle_row">
-                                            <p>공유하기</p>
+                                    <div class="recommend_toggle">
+                                        <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
+                                            <img src="/static/images/share.png">
                                         </div>
-                                        <div class="toggle_row">
-                                            <p>찜하기</p>
+                                        <div class="profile_like_news_heart"
+                                             style="background-image: url('/static/images/empty_heart.png')">
                                         </div>
                                     </div>
                                     <a href="${shopping_row[3]}" target="_blank">
@@ -216,7 +257,13 @@ function shopping_content_add(shopping_crawling_data_list, type) {
                                         </div>
                                     </div>
                                 </div>`
-        $('#shopping_recommend_content').append(temp_html)
+        if (content_type === 'c'){
+            $('#shopping_recommend_content').append(temp_html)
+        }
+        else if( content_type === 's'){
+            $('#shopping_search_content').append(temp_html)
+        }
+
     }
 }
 
@@ -224,6 +271,12 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 // more function
 
 function more_open_or_off(id) {
+    let other_toggles = document.getElementsByClassName('toggle')
+
+    for (let i = 0; i < other_toggles.length; i++) {
+        other_toggles[i].style.display = 'none'
+    }
+
     let toggle = document.getElementById(id).nextElementSibling
     if (toggle.style.display === 'none') {
         toggle.style.display = 'block'
@@ -231,6 +284,23 @@ function more_open_or_off(id) {
         toggle.style.display = 'none'
     }
 
+}
+
+// more_shopping_function
+
+function set_animation_more() {
+    let shopping_content = document.getElementsByClassName('recommend_toggle')
+    for (let i = 0; i < shopping_content.length; i++) {
+        shopping_content[i].addEventListener('mouseover', function () {
+            shopping_content[i].style.animation = 'appear_toggle 1s ease-out forwards'
+
+        })
+        shopping_content[i].addEventListener('mouseout', function () {
+            shopping_content[i].style.animation = ''
+            shopping_content[i].style.opacity = '0'
+
+        })
+    }
 }
 
 // like clicked
@@ -256,8 +326,99 @@ function hovering_like_heart() {
     }
 }
 
-// 공유하기!
-function content_do_share(id){
 
+
+
+function content_do_share(str) {
+    var textarea = document.createElement('textarea');
+    textarea.value = str;
+    document.body.appendChild(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, 9999);
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('복사되었습니다')
 }
 
+// search 관련
+function initialize_search_bar() {
+    let search_bars = document.getElementsByClassName('search_bar')
+    for (let i = 0; i < search_bars.length; i++) {
+        search_bars[i].children[1].addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                let search_word = search_bars[i].children[1].value
+                console.log('search word is ', search_word)
+                search_bars[i].children[1].value = ''
+
+
+
+                // 이전 데이터 지우기
+                clear_content()
+
+                // // spinner running
+                let search_spinner = document.getElementsByClassName('spinner_search')
+                //
+                // for(let i=0; i<search_spinner.length;i++){
+                //     search_spinner[i].style.display ='flex'
+                // }
+
+
+                // search_창 보이기
+                let search_contents = document.getElementsByClassName('search_content')
+                for(let k=0; k<search_contents.length; k++){
+                    search_contents[k].style.display = 'block'
+                }
+                document.getElementsByClassName('search_news_content')[0].style.display='block'
+                document.getElementsByClassName('search_book_content')[0].style.display='block'
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/search/crawling',
+                    data: {"target": search_word },
+                    datatype: 'form',
+                    success: function (response) {
+                        console.log(response['all_response'])
+                        // search_spinner 정지
+                        for(let i=0; i<search_spinner.length;i++){
+                            search_spinner[i].style.display ='none'
+                        }
+
+
+                        // content 내용 붙이기
+                        youtube_content_add(response['all_response']['youtube'], 'search')
+                        news_content_add(response['all_response']['news'], 'search')
+                        book_content_add(response['all_response']['book'], 'search')
+                        shopping_content_add(response['all_response']['shopping'], 'search')
+
+                        // hovering_like
+                        hovering_like_heart()
+                        set_animation_more()
+
+                        // clicked_like
+                        like_news()
+                    }
+                })
+            }
+        })
+
+    }
+}
+
+function clear_content(){
+    let spinner_html = `<div class="recommend_spinner spinner_search" style="display: flex;">
+                            <div class="recommend_spinner_lorder"></div>
+                        </div>`
+
+    $('#youtube_search_content').empty();
+    $('#youtube_search_content').append(spinner_html);
+
+    $('#news_search_content').empty();
+    $('#news_search_content').append(spinner_html);
+
+    $('#book_search_content').empty();
+    $('#book_search_content').append(spinner_html);
+
+    $('#shopping_search_content').empty();
+    $('#shopping_search_content').append(spinner_html);
+}
