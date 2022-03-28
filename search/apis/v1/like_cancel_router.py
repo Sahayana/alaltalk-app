@@ -1,4 +1,4 @@
-from typing import Tuple, Dict
+from typing import Dict, Tuple
 
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Router
@@ -28,5 +28,3 @@ def do_like_book(request):
 @router.post("/shopping")
 def do_like_shopping(request):
     return 0
-
-

@@ -19,9 +19,9 @@ from django.contrib import admin
 from django.urls import include, path
 from ninja import NinjaAPI
 
-from search.apis.v1.search_router import router as search_router
-from search.apis.v1.like_router import router as like_router
 from search.apis.v1.like_cancel_router import router as like_cancel_router
+from search.apis.v1.like_router import router as like_router
+from search.apis.v1.search_router import router as search_router
 
 from . import views
 

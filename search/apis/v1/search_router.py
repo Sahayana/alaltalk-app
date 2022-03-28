@@ -4,8 +4,10 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
-from ...functions import crawling_youtube, crawling_shopping_only_bs4
-from search.service.search_service import crawling_news, crawling_book
+
+from search.service.search_service import crawling_book, crawling_news
+
+from ...functions import crawling_shopping_only_bs4, crawling_youtube
 from .schemas import CrawlingRequest, CrawlingResponse
 
 router = Router(tags=["search"])
@@ -38,7 +40,7 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
     try:
         all_response["book"] = crawling_book(crawling_request.target)
     except:
-        all_response['book'] = []
+        all_response["book"] = []
     return 201, {"all_response": all_response}
 
 
@@ -75,5 +77,3 @@ def do_like_news(request):
 @router.post("/cancel_like/news")
 def cancel_like_news(request):
     return 0
-
-

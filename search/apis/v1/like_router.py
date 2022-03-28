@@ -1,12 +1,14 @@
-from typing import Tuple, Dict
+from typing import Dict, Tuple
+
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Router
 from ninja.errors import HttpError
 
-from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest
-from search.service.like_service import do_like_youtube_service
-from ...models import Youtube
 from accounts.models import CustomUser
+from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse
+from search.service.like_service import do_like_youtube_service
+
+from ...models import Youtube
 
 router = Router(tags=["like"])
 
@@ -19,7 +21,7 @@ def do_like_youtube(request, youtube_dict: YoutubeLikeRequest) -> Tuple[int, Dic
         result = do_like_youtube_service(user_id, youtube_dict)
     except CustomUser.DoesNotExist:
         raise HttpError(404, f"User is not Exist")
-    return 201, {'result': result}
+    return 201, {"result": result}
 
 
 @csrf_exempt
@@ -38,4 +40,3 @@ def do_like_book(request):
 @router.post("/shopping")
 def do_like_shopping(request):
     return 0
-
