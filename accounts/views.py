@@ -109,11 +109,12 @@ def profile_change(request):
     if request.method == "POST":
         nickname = request.POST.get("nickname")
         bio = request.POST.get("bio")
-        print(request.FILES.get("img"))
+        # print(request.FILES.get("img"))
         if request.FILES.get("img") != None:
             img = request.FILES.get("img")
             img_extension = img.name.split(".")[-1]
-            img.name = user.email.split("@")[0] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
+            username, domain = user.email.split('@')
+            img.name = username + domain.split('.')[0] + domain.split('.')[1] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
             user.img = img
         if request.POST.get("password"):
             password = request.POST.get("password")

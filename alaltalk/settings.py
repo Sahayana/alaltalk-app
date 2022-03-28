@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -191,8 +191,8 @@ except FileNotFoundError:
 
 
 # AWS S3 connet
-# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
     secret = json.loads(f.read())
