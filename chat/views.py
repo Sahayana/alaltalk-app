@@ -17,24 +17,12 @@ from chat.models import ChatMessage, ChatRoom
 def show_chat_list(request):
     # chat_list = CustomUser.objects.get(id=request.user.id).friends.all()
     # print(chat_list)
-    chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user.id) | Q(participant2=request.user.id)).all()
+    chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
     print(chatroom_list)
-    # all_chat_list = []
-    # for chatroom in chatroom_list:
-    #     print(chatroom)
-    #     if chatroom.participant1 == request.user.id:
-    #         chat_list = CustomUser.objects.get(id=chatroom.participant2.id)
-    #         print(chatroom.participant2.nickname)
-    #         all_chat_list.append(chat_list)
-    #         print(chat_list)
-    #     else:
-    #         chat_list = CustomUser.objects.get(id=chatroom.participant1.id)
-    #         all_chat_list.append(chat_list)
-    #         print(chatroom.participant1.nickname)
-    #         print(chat_list)
-    # print(all_chat_list)
-    # chat_list = CustomUser.objects.all().exclude(is_superuser=True).exclude(id=request.user.id)
-    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list})
+
+    all_message = ChatMessage.objects.all()
+
+    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list, 'all_message': all_message})
 
 
 # 채팅하기 버튼 클릭 시 채팅방 생성
@@ -42,26 +30,27 @@ def show_chat_list(request):
 @login_required
 def create_chat_room(request, id):
     user = request.user
-    print(user.id)
+    print(user)
     partner = CustomUser.objects.get(id=id)
-    print(partner.id)
+    print(partner)
+
     if user == request.user:
-        exist_room1 = ChatRoom.objects.filter(participant1=user.id, participant2=partner.id)
-        exist_room2 = ChatRoom.objects.filter(participant1=partner.id, participant2=user.id)
+        exist_room1 = ChatRoom.objects.filter(participant1=user, participant2=partner)
+        exist_room2 = ChatRoom.objects.filter(participant1=partner, participant2=user)
         if exist_room1:
-            room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
+            room = ChatRoom.objects.get(participant1=user, participant2=partner)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
         elif exist_room2:
-            room = ChatRoom.objects.get(participant1=partner.id, participant2=user.id)
+            room = ChatRoom.objects.get(participant1=partner, participant2=user)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
         else:
-            chat_room = ChatRoom.objects.create(participant1=user.id, participant2=partner.id)
+            chat_room = ChatRoom.objects.create(participant1=user, participant2=partner)
             chat_room.save()
 
             # ChatRoom에 있는 room id 로 redirect
-            room = ChatRoom.objects.get(participant1=user.id, participant2=partner.id)
+            room = ChatRoom.objects.get(participant1=user, participant2=partner)
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
     else:
@@ -76,11 +65,10 @@ def create_chat_message(request, room_id):
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
-        print(chatroom.participant1.id, chatroom.participant2.id, user.id)
-        chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user.id) | Q(participant2=request.user.id)).all()
+        print(chatroom.participant1, chatroom.participant2, user)
+        chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
         print(chatroom_list)
-        # last_message = ChatMessage.objects.filter(chatroom_id=room_id).latest('chatroom_id')
-        # print(last_message.message)
+        all_message = ChatMessage.objects.all()
         return render(
             request,
             "chat/chat_room.html",
@@ -90,6 +78,6 @@ def create_chat_message(request, room_id):
                 "user_id": mark_safe(json.dumps(request.user.id)),
                 "participant1": chatroom.participant1.id,
                 "participant2": chatroom.participant2.id,
-                # 'last_message': last_message.message,
+                "all_message": all_message,
             },
         )
