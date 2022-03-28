@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
+from search.models import Youtube,News,Book,Shopping
 
 
 # userlist 중에 친구신청-수락한 유저 리스트 불러오기
@@ -69,6 +70,14 @@ def create_chat_message(request, room_id):
         chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
         print(chatroom_list)
         all_message = ChatMessage.objects.all()
+        participant1_like_youtube = Youtube.objects.filter(user=chatroom.participant1)
+        participant2_like_youtube = Youtube.objects.filter(user=chatroom.participant2)
+        participant1_like_news = News.objects.filter(user=chatroom.participant1)
+        participant2_like_news = News.objects.filter(user=chatroom.participant2)
+        participant1_like_book = Book.objects.filter(user=chatroom.participant1)
+        participant2_like_book = Book.objects.filter(user=chatroom.participant2)
+        participant1_like_shopping = Shopping.objects.filter(user=chatroom.participant1)
+        participant2_like_shopping = Shopping.objects.filter(user=chatroom.participant2)
         return render(
             request,
             "chat/chat_room.html",
@@ -76,8 +85,16 @@ def create_chat_message(request, room_id):
                 "room_id": mark_safe(json.dumps(room_id)),
                 "chatroom_list": chatroom_list,
                 "user_id": mark_safe(json.dumps(request.user.id)),
-                "participant1": chatroom.participant1.id,
-                "participant2": chatroom.participant2.id,
+                "participant1": chatroom.participant1,
+                "participant2": chatroom.participant2,
                 "all_message": all_message,
+                "participant1_like_youtube":participant1_like_youtube,
+                "participant2_like_youtube":participant2_like_youtube,
+                "participant1_like_news":participant1_like_news,
+                "participant2_like_news":participant2_like_news,
+                "participant1_like_book":participant1_like_book,
+                "participant2_like_book":participant2_like_book,
+                "participant1_like_shopping":participant1_like_shopping,
+                "participant2_like_shopping":participant2_like_shopping,
             },
         )

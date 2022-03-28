@@ -68,14 +68,25 @@
     <div class="right_wrap">
         <div class="chat_container">
             <div class="top_bar">
+                {% if participant1.id == user.id %}
                 <div class="partner_info">
                     <div class="partner_img"></div>
                     <div class="info_group">
-                        <div class="partner_name">김코딩</div>
-                        <div class="partner_id">coding@example.com</div>
+                        <div class="partner_name">{{ participant2.nickname }}</div>
+                        <div class="partner_id">{{ participant2.email }}</div>
                     </div>
 
                 </div>
+                {% else %}
+                <div class="partner_info">
+                    <div class="partner_img"></div>
+                    <div class="info_group">
+                        <div class="partner_name">{{ participant1.nickname }}</div>
+                        <div class="partner_id">{{ participant1.email }}</div>
+                    </div>
+
+                </div>
+                {% endif %}
                 <div class="right_icon">
                     <div class="close_btn" onclick="location.href='/chat'"></div>
                     <div class="toggle_icon"></div>
@@ -163,8 +174,8 @@
 
     const room_id = {{ room_id }};
     const user_id = {{ user_id }};
-    const participant1 = {{ participant1 }};
-    const participant2 = {{ participant2 }};
+    const participant1 = {{ participant1.id }};
+    const participant2 = {{ participant2.id }};
 
     {#웹소켓 연결 JS#}
     if (participant1 === user_id || participant2 === user_id) {

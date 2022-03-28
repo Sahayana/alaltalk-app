@@ -9,7 +9,7 @@ def create_single_user(email:str, nickname:str, password:str,**kwargs: str) -> C
     return user
 
 def check_email_duplication(email:str) -> CustomUser:
-    return CustomUser.objects.filter(eamil__iexact=email).exists()
+    return CustomUser.objects.filter(email__iexact=email).exists()
 
 # def change_user_profile(user: CustomUser, nickname:str, bio:str, **kwargs: str) -> CustomUser:
 #     user.nickname = nickname
