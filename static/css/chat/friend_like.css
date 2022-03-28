@@ -1,0 +1,402 @@
+.friends_like_container .friends_like_info {
+    display: flex;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.friends_like_container .friends_like_close_btn{
+    position: absolute;
+    top: 50px;
+    left: 95%;
+    background-image: url("../../images/x_black.png");
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.friends_like_img {
+    width: 46px;
+    height: 46px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.friends_like_info_group {
+    margin-left: 10px;
+}
+
+
+.friends_like_id {
+    opacity: .4;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.friends_like_container {
+  position: relative;
+  width: 100%;
+  padding-top: 25px;
+  padding-left: 25px;
+  display: none;
+}
+
+
+.friends_like_category {
+  margin-top: 25px;
+  font-weight: 700;
+  color: #d2d2d2;
+}
+
+.friends_like_category span {
+  margin-right: 12px;
+  cursor: pointer;
+}
+
+.friends_like_youtube {
+  padding-top: 60px;
+  width: 95%;
+  height: 100%;
+  overflow-x: auto;
+  max-height: 680px;
+  display: none;
+}
+
+.friends_like_youtube::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+.friends_like_youtube::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.friends_like_grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.friends_like_youtube_container {
+  margin-bottom: 40px;
+  width: 14vw;
+  position: relative;
+}
+.friends_like_content_box {
+    min-width: 280px;
+    width: 100%;
+    height: 240px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    margin-right: 10px;
+    position: relative;
+}
+
+.friends_like_video_img {
+    width: 100%;
+    height: 170px;
+    background-color: #d2d2d2;
+}
+
+
+
+.profile_like_news {
+  padding-top: 40px;
+  width: 95%;
+  height: 100%;
+  display: none;
+  overflow-y: auto;
+  max-height: 680px;
+}
+.profile_like_news::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+.profile_like_news::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.profile_like_news li {
+  width: 95%;
+  height: 10vw;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  position: relative;
+}
+
+.profile_like_news_image {
+  background-color: #b7b7b7;
+  width: 11vw;
+  height: 6vw;
+}
+
+.profile_like_news_info {
+  width: 33vw;
+}
+
+.profile_like_news_title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.profile_like_news_content {
+  margin-bottom: 12px;
+}
+
+.profile_like_news_button {
+  padding-top: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.profile_like_news_setting {
+  background-image: url('../../images/more_deep_purple.png');
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+}
+
+.profile_like_news_heart {
+  background-image: url('../../images/heart.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+}
+
+.profile_like_news_toggle {
+  position: absolute;
+  top: -25px;
+  left: 92%;
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #a185f2;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.profile_like_book {
+  padding-top: 60px;
+  width: 95%;
+  height: 100%;
+  position: relative;
+  display: none;
+  overflow-x: auto;
+  max-height: 660px;
+}
+
+.profile_like_book::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+.profile_like_book::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.profile_like_book_grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.profile_like_book_container {
+  margin-bottom: 40px;
+  width: 24vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-direction: row;
+  position: relative;
+}
+
+.profile_like_book_image {
+  width: 9vw;
+  height: 12vw;
+  background-color: #b7b7b7;
+}
+
+.profile_like_book_info {
+  margin-left: 10px;
+  height: 12vw;
+  width: 60%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.profile_like_book_title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile_like_book_writer {
+  font-size: 13px;
+  color: #b7b7b7;
+}
+
+.profile_like_book_translator {
+  font-size: 13px;
+  color: #b7b7b7;
+}
+
+.profile_like_book_price {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.profile_like_book_button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.profile_like_book_setting {
+  background-image: url('../../images/more_deep_purple.png');
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+}
+
+.profile_like_book_heart {
+  background-image: url('../../images/heart.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+}
+
+.profile_like_book_toggle {
+  position: absolute;
+  top: -45px;
+  left: 84%;
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #a185f2;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+.profile_like_shopping {
+  padding-top: 60px;
+  width: 95%;
+  height: 100%;
+  position: relative;
+  overflow-x: auto;
+  max-height: 660px;
+  display: none;
+}
+
+.profile_like_shopping::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+.profile_like_shopping::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.profile_like_shopping_grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.profile_like_shopping_container {
+  margin-bottom: 40px;
+  width: 24vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-direction: row;
+  position: relative;
+}
+
+.profile_like_shopping_image {
+  width: 9vw;
+  height: 12vw;
+  background-color: #b7b7b7;
+}
+
+.profile_like_shopping_info {
+  margin-top: 30px;
+  margin-left: 10px;
+  height: 12vw;
+  width: 60%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.profile_like_shopping_title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile_like_shopping_brand {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #b7b7b7;
+}
+
+.profile_like_shopping_price {
+  margin-top: 40%;
+  font-weight: bold;
+}
+
+.profile_like_shopping_button {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.profile_like_shopping_setting {
+  background-image: url('../../images/more_deep_purple.png');
+  background-size: contain;
+  width: 40px;
+  height: 40px;
+}
+
+.profile_like_shopping_heart {
+  background-image: url('../../images/heart.png');
+  background-size: contain;
+  width: 25px;
+  height: 25px;
+}
+
+.profile_like_shopping_toggle {
+  position: absolute;
+  top: -45px;
+  left: 84%;
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #a185f2;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}

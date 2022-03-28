@@ -98,3 +98,7 @@ def create_chat_message(request, room_id):
                 "participant2_like_shopping":participant2_like_shopping,
             },
         )
+
+@login_required
+def show_freind_like_list(request):
+    return render(request, "chat/freind_like.html")

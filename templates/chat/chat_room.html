@@ -11,6 +11,7 @@
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat/friend_like.css' %}">
     <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}?after">
     <!--google font-->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
@@ -41,7 +42,7 @@
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {% for message in all_message %}
                                     {% if chatroom.id == message.chatroom_id %}
-                                        <div class="partner_last_msg">{{ message.message}}</div>
+                                        <div class="partner_last_msg">{{ message.message }}</div>
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -53,7 +54,7 @@
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
                                 {% for message in all_message %}
                                     {% if chatroom.id == message.chatroom_id %}
-                                        <div class="partner_last_msg">{{ message.message}}</div>
+                                        <div class="partner_last_msg">{{ message.message }}</div>
                                     {% endif %}
                                 {% endfor %}
                             </div>
@@ -69,23 +70,23 @@
         <div class="chat_container">
             <div class="top_bar">
                 {% if participant1.id == user.id %}
-                <div class="partner_info">
-                    <div class="partner_img"></div>
-                    <div class="info_group">
-                        <div class="partner_name">{{ participant2.nickname }}</div>
-                        <div class="partner_id">{{ participant2.email }}</div>
-                    </div>
+                    <div class="partner_info">
+                        <div class="partner_img"></div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ participant2.nickname }}</div>
+                            <div class="partner_id">{{ participant2.email }}</div>
+                        </div>
 
-                </div>
+                    </div>
                 {% else %}
-                <div class="partner_info">
-                    <div class="partner_img"></div>
-                    <div class="info_group">
-                        <div class="partner_name">{{ participant1.nickname }}</div>
-                        <div class="partner_id">{{ participant1.email }}</div>
-                    </div>
+                    <div class="partner_info">
+                        <div class="partner_img"></div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ participant1.nickname }}</div>
+                            <div class="partner_id">{{ participant1.email }}</div>
+                        </div>
 
-                </div>
+                    </div>
                 {% endif %}
                 <div class="right_icon">
                     <div class="close_btn" onclick="location.href='/chat'"></div>
@@ -94,7 +95,7 @@
                 <div class="toggle_content">
                     <p id="recommend_btn" onclick="show_recommend()">추천컨텐츠</p>
                     <div class="line"></div>
-                    <p>친구 찜 목록 보기</p>
+                    <p id="freind_like_list" onclick="show_friend_like()">친구 찜 목록 보기</p>
                 </div>
             </div>
 
@@ -107,6 +108,244 @@
                 <input id="chat_message_input" type="text" placeholder="입력하세요." name="message">
             </div>
         </div>
+
+
+        <div class="friends_like_container" id="friends_like_container">
+            <div class="friends_like_close_btn" onclick="close_friend_like_list()"></div>
+            {% if participant1.id == user.id %}
+                <div class="friends_like_info">
+                    <div class="friends_like_img" style="background-image: url({{ participant2.img }})"></div>
+                    <div class="friends_like_info_group">
+                        <div class="friends_like_name">{{ participant2.nickname }}</div>
+                        <div class="friends_like_id">{{ participant2.email }}</div>
+                    </div>
+                    <div class="friends_like_bio">{{ participant2.bio }}</div>
+                </div>
+                <div class="friends_like_category">
+                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
+                    <span id="news" onclick="news_like()">NEWS</span>
+                    <span id="book" onclick="book_like()">BOOK</span>
+                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
+                </div>
+                <div class="friends_like_youtube" id="friends_like_youtube">
+                    <div class="friends_like_grid">
+                        <div class="friends_like_youtube_container">
+                            {% for youtube in participant2_like_youtube %}
+                                <div class="friends_like_content_box">
+                                    <iframe class="friends_like_video_img" src="{{ youtube.url }}"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen>ㅇ
+                                    </iframe>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="friends_like_news" id="friends_like_news">
+                    {% for news in participant2_like_news %}
+                        <div class="friends_like_news_content">
+                            <div class="friends_like_news_content_image">
+                                <a href={{ news.link }} target="_blank">
+                                    <img src={{ news.thumbnail }}>
+                                </a>
+                            </div>
+                            <div class="friends_like_news_content_desc">
+                                <div class="friends_like_news_content_desc_title">
+                                    <p>{{ news.title }}</p>
+                                </div>
+                                <div class="friends_like_news_content_desc_detail">
+                                    <p>{{ news.content }}</p>
+                                </div>
+                                <div class="friends_like_news_content_desc_footer">
+                                    <div class="friends_like_news_content_content_desc_footer_newspaper">
+                                        <p>{{ news.company }}</p>
+                                    </div>
+                                    <div class="friends_like_news_content_desc_footer_time">
+                                        <p>{{ news.date }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="friends_like_book" id="friends_like_book">
+                    <div class="friends_like_book_grid">
+                        {% for book in participant2_like_book %}
+                            <div class="friends_like_content_box">
+                                <div class="friends_like_book_desc">
+                                    <div class="friends_like_book_desc_row">
+                                        <p>title</p>
+                                        <p>{{ book.title }}</p>
+                                    </div>
+                                    <div class="friends_like_book_desc_row">
+                                        <p>series</p>
+                                        <p>${book_row[3]}</p>
+                                    </div>
+                                    <div class="friends_like_book_desc_row">
+                                        <p>Author</p>
+                                        <p>{{ book.author }}</p>
+                                        <p>{{ book.company }}</p>
+                                    </div>
+                                    <div class="friends_like_book_desc_row">
+                                        <p>Price</p>
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <a href={{ book.link }} target="_blank">
+                                    <div class="friends_like_book_img"
+                                         style="background-image: url({{ book.thumbnail }})"></div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="friends_like_shopping" id="friends_like_shopping">
+                    <div class="friends_like_shopping_grid">
+                        {% for shopping in participant2_like_shopping %}
+                            <div class="friends_like_shopping_content">
+                                <a href={{ shopping.link }} target="_blank">
+                                    <div class="friends_like_shopping_content_img">
+                                        <img src={{ shopping.thumbnail }}>
+                                    </div>
+                                </a>
+                                <div class="friends_like_shopping_content_desc">
+                                    <div class="friends_like_shopping_content_desc_bar"></div>
+                                    <div class="friends_like_shopping_content_desc_title">
+                                        <p>{{ shopping.title }}</p>
+                                    </div>
+                                    <div class="friends_like_shopping_content_desc_price">
+                                        <p>{{ shopping.price }} 원</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="friends_like_info">
+                    <div class="friends_like_img" style="background-image: url({{ participant2.img }})"></div>
+                    <div class="friends_like_info_group">
+                        <div class="friends_like_name">{{ participant2.nickname }}</div>
+                        <div class="friends_like_id">{{ participant2.email }}</div>
+                    </div>
+                    <div class="friends_like_bio">{{ participant2.bio }}</div>
+                </div>
+                <div class="friends_like_category">
+                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
+                    <span id="news" onclick="news_like()">NEWS</span>
+                    <span id="book" onclick="book_like()">BOOK</span>
+                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
+                </div>
+                <div class="friends_like_youtube" id="friends_like_youtube">
+                    <div class="friends_like_grid">
+                        <div class="friends_like_youtube_container">
+                            {% for youtube in participant1_like_youtube %}
+                                <div class="friends_like_content_box">
+                                    <iframe class="friends_like_video_img" src="{{ youtube.url }}"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen>ㅇ
+                                    </iframe>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="friends_like_news" id="friends_like_news">
+                    {% for news in participant1_like_news %}
+                        <div class="friends_like_news_content">
+                            <div class="friends_like_news_content_image">
+                                <a href={{ news.link }} target="_blank">
+                                    <img src={{ news.thumbnail }}>
+                                </a>
+                            </div>
+                            <div class="friends_like_news_content_desc">
+                                <div class="friends_like_news_content_desc_title">
+                                    <p>{{ news.title }}</p>
+                                </div>
+                                <div class="friends_like_news_content_desc_detail">
+                                    <p>{{ news.content }}</p>
+                                </div>
+                                <div class="friends_like_news_content_desc_footer">
+                                    <div class="friends_like_news_content_content_desc_footer_newspaper">
+                                        <p>{{ news.company }}</p>
+                                    </div>
+                                    <div class="friends_like_news_content_desc_footer_time">
+                                        <p>{{ news.date }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="friends_like_book" id="friends_like_book">
+                    <div class="friends_like_book_grid">
+                        {% for book in participant1_like_book %}
+                            <div class="friends_like_content_box">
+                                <div class="friends_like_book_desc">
+                                    <div class="friends_like_book_desc_row">
+                                        <p>title</p>
+                                        <p>{{ book.title }}</p>
+                                    </div>
+                                    <div class="friends_like_book_desc_row">
+                                        <p>series</p>
+                                        <p>${book_row[3]}</p>
+                                    </div>
+                                    <div class="friends_like_book_desc_row">
+                                        <p>Author</p>
+                                        <p>{{ book.author }}</p>
+                                        <p>{{ book.company }}</p>
+                                    </div>
+                                    <div class="friends_like_book_desc_row">
+                                        <p>Price</p>
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <a href={{ book.link }} target="_blank">
+                                    <div class="friends_like_book_img"
+                                         style="background-image: url({{ book.thumbnail }})"></div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="friends_like_shopping" id="friends_like_shopping">
+                    <div class="friends_like_shopping_grid">
+                        {% for shopping in participant1_like_shopping %}
+                            <div class="friends_like_shopping_content">
+                                <a href={{ shopping.link }} target="_blank">
+                                    <div class="friends_like_shopping_content_img">
+                                        <img src={{ shopping.thumbnail }}>
+                                    </div>
+                                </a>
+                                <div class="friends_like_shopping_content_desc">
+                                    <div class="friends_like_shopping_content_desc_bar"></div>
+                                    <div class="friends_like_shopping_content_desc_title">
+                                        <p>{{ shopping.title }}</p>
+                                    </div>
+                                    <div class="friends_like_shopping_content_desc_price">
+                                        <p>{{ shopping.price }} 원</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+
     </div>
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
@@ -171,6 +410,79 @@
         $(".chat_list_container").show();
         $('.close_btn').show();
     }
+
+
+    function show_friend_like() {
+        $('.chat_list_container').hide();
+        $('.close_btn').hide();
+        $('.chat_container').appendTo('.left_wrap');
+        {#$('.right_wrap').empty();#}
+        $('.friends_like_container').show();
+
+        $("#freind_like_list").attr('onclick', '').unbind('click');
+        $(".toggle_content").hide();
+        $(".toggle_content").css('cursor', 'pointer');
+
+    }
+
+    function close_friend_like_list() {
+        $('.right_wrap').empty();
+        $('.chat_container').appendTo('.right_wrap');
+        $(".chat_list_container").show();
+        $('.close_btn').show();
+    }
+
+    //친구 찜목록 카테고리
+
+    //youtube카테고리 클릭
+    function youtube_like() {
+        document.getElementById('youtube').style.color = '#7657CE';
+        document.getElementById('news').style.color = '#d2d2d2';
+        document.getElementById('book').style.color = '#d2d2d2';
+        document.getElementById('shopping').style.color = '#d2d2d2';
+
+        document.getElementById('friends_like_youtube').style.display = 'block';
+        document.getElementById('friends_like_news').style.display = 'none';
+        document.getElementById('friends_like_book').style.display = 'none';
+        document.getElementById('friends_like_shopping').style.display = 'none';
+    }
+
+    function news_like() {
+        document.getElementById('news').style.color = '#7657CE';
+        document.getElementById('youtube').style.color = '#d2d2d2';
+        document.getElementById('book').style.color = '#d2d2d2';
+        document.getElementById('shopping').style.color = '#d2d2d2';
+
+        document.getElementById('friends_like_news').style.display = 'block';
+        document.getElementById('friends_like_youtube').style.display = 'none';
+        document.getElementById('friends_like_book').style.display = 'none';
+        document.getElementById('friends_like_shopping').style.display = 'none';
+    }
+
+    function book_like() {
+        document.getElementById('book').style.color = '#7657CE';
+        document.getElementById('youtube').style.color = '#d2d2d2';
+        document.getElementById('news').style.color = '#d2d2d2';
+        document.getElementById('shopping').style.color = '#d2d2d2';
+
+        document.getElementById('friends_like_book').style.display = 'block';
+        document.getElementById('friends_like_youtube').style.display = 'none';
+        document.getElementById('friends_like_news').style.display = 'none';
+        document.getElementById('friends_like_shopping').style.display = 'none';
+    }
+
+    function shopping_like() {
+        document.getElementById('shopping').style.color = '#7657CE';
+        document.getElementById('youtube').style.color = '#d2d2d2';
+        document.getElementById('news').style.color = '#d2d2d2';
+        document.getElementById('book').style.color = '#d2d2d2';
+
+        document.getElementById('friends_like_shopping').style.display = 'block';
+        document.getElementById('friends_like_youtube').style.display = 'none';
+        document.getElementById('friends_like_news').style.display = 'none';
+        document.getElementById('friends_like_book').style.display = 'none';
+    }
+
 
     const room_id = {{ room_id }};
     const user_id = {{ user_id }};
