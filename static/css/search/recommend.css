@@ -965,19 +965,8 @@
 
 }
 
-.recommend_book_container .recommend_book_content .content_book_section .content_box {
-    min-width: 185px;
-    width: 100%;
-    height: 18vw;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    margin-right: 10px;
-    position: relative;
-}
-
-
 .recommend_book_toggle{
-    top: 0;
+    top: 0px;
     background-color: rgb(79 42 186 / 81%);
 }
 
@@ -996,6 +985,7 @@
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
+    min-width: 185px;
     width: 75%;
     height: auto;
     overflow: hidden;
@@ -1008,6 +998,7 @@
     box-sizing: border-box;
     border: min(1vw, 3px) solid #7556CD;
     background-color: #eaeaea;
+    position: relative;
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
@@ -1015,6 +1006,41 @@
     color: #5e5e5e;
     margin-left: 6px;
 }
+
+.recommend_book_desc{
+    width: 30vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.recommend_book_desc p{
+    width: 20%;
+    font-size: 1vw;
+}
+
+.recommend_book_desc_title, .recommend_book_desc_series, .recommend_book_desc_company, .recommend_book_desc_author, .recommend_book_desc_price{
+    width: 100%;
+    height: 4vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recommend_book_desc_title{
+    height: 5vw
+}
+.recommend_book_desc p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+
+
 
 
 
@@ -1086,7 +1112,7 @@
 
 .recommend_book_container .search_book_content .content_box {
     position: relative;
-    width: 15vw;
+    width: 48vw;
     height: 20vw;
     background-position: left;
     background-size: contain;
@@ -1094,6 +1120,10 @@
     text-align: left;
     margin: 5px 0 50px 35px;
     color: #5e5e5e;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .recommend_book_container .search_book_content .content_box .more_icon {

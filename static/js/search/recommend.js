@@ -1,7 +1,9 @@
 function click_recommend_function() {
     console.log('page is onload!')
 
-    let example_sentence = ["안녕하세요 이감국어교육연구소입니다.",
+    let form_data = new FormData()
+
+    let chat_log = sentence = ["안녕하세요 이감국어교육연구소입니다.",
                    "너무 길어서 힘드네요...어쩔 수 없죠그런데 제목도 깁니다 ㅠ",
                    "오늘은 문학에서 등장하는 정확히 잡기 힘든 개념어를 이야기해보고자 합니다."
                    ,"댓글로 질문해주셨던 대화체 독백체로 일단 시작을 해보겠습니다.",
@@ -25,25 +27,52 @@ function click_recommend_function() {
                    "이제 슬슬 짜증이 나죠. 제가 그래서 2번 3번이 다소 겹친다고 합니다.이 지점때문에 수능 문학 개념에서 그렇게 큰 비중을 차지하지는 못하게 됩니다..그냥 이해하기 쉽게 이렇게 생각합시다.",
                    "화자가 말을 하고 청자가 존재하되 청자의 반응이 없다면 청자가 존재하기때문에 대화는 아니더라도 대화체가 인정이 된다. 거기에 일단 청자의 반응이 없기 때문에 화자가 혼자 말하고 있고 따라서 독백, 독백체, 독백적 발화, 독백체도 맞는 말이다…하고 잡아주시면 됩니다.",
                    "아 독백체 진짜 짜증나요! 싶으시면 이렇게 생각하셔도 됩니다.대부분의 시는 독백체입니다.독백체가 아닌 시들은 ‘말’처럼 안 느껴집니다.이런 시들은 어떤 느낌이 드냐면..정말 담담한 느낌이 드는 경우가 많습니다.그래서 주로 평서형 종결 어미와 명사형 종결 어미들이 쓰입니다.이런 경우가 아니라면 보통 정말 ‘말’을 하는 듯한 인상을 주고, 그러면 독백체라고 인정합니다.",
-                   "다시 정리합니다.1.대화체와 독백체가 동시에 쓰일 수 있습니다.2.실제로 많은 시들이 독백체입니다.도움이 되셨길 바랍니다"]
+                   "다시 정리합니다.1.대화체와 독백체가 동시에 쓰일 수 있습니다.2.실제로 많은 시들이 독백체입니다.도움이 되셨길 바랍니다"];
+
+    form_data.append('chat_log', chat_log);
+    let machin_result = ''
+
 
     $.ajax({
-        type: 'POST',
-        url: 'http://127.0.0.1:5000/api/v1/textrank/',
-        data: {'chat_log': example_sentence},
-        datatype: 'json',
-        success: function(response){
-            console.log(response)
-        }
-    })
+        type: "POST",
+        url: "http://127.0.0.1:5000/api/v1/textrank/",
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        async: false,
+        enctype: 'multipart/form-data',
+        success: function (response) {
+            // console.log(response.keyword)
+            // console.log('추천시스템 성공!')
+            machin_result  = response.keyword[0]
 
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+
+    recommend_crawling_on(machin_result)
+
+}
+
+function make_reccommend(sentence){
+
+}
+
+function recommend_crawling_on(data){
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": "커피"},
+        data: {"target": data},
         datatype: 'form',
+        async: false,
         success: function (response) {
-            console.log(response['all_response']['news'])
+            console.log(response['all_response']['book'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -70,7 +99,6 @@ function click_recommend_function() {
             initialize_search_bar()
         }
     })
-
 }
 
 
@@ -82,18 +110,6 @@ function move_category(target_id) {
     document.getElementById('recommend_shopping_container').style.display = 'none'
     document.getElementById(target_id).style.display = 'block'
 }
-
-// // 각 nav_bar에 click event 주기
-// let navs = document.getElementsByClassName('recommend_nav')
-// let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-// for (let i = 0; i < navs.length; i++) {
-//     let nav_row = navs[i].children
-//     for (let j = 0; j < nav_row.length; j++) {
-//         nav_row[j].addEventListener('click', function () {
-//             move_category(navs_list_id[j])
-//         })
-//     }
-// }
 
 function give_event() {
     let navs = document.getElementsByClassName('recommend_nav')
@@ -107,6 +123,7 @@ function give_event() {
         }
     }
 }
+
 
 // Crawling 붙여 넣기
 // youtube
@@ -157,6 +174,10 @@ function news_content_add(news_crawling_data_list, type) {
     for (let i = 0; i < news_crawling_data_list.length; i++) {
         let news_row = news_crawling_data_list[i]
         let content_id = 'news_' + content_type + '_' + i
+        let heart_image = '/static/images/empty_heart.png'
+        if(news_row[6]){
+            heart_image = '/static/images/heart.png'
+        }
         let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
                             <div class="recommend_news_search_content_image">
                                 <a href="${news_row[3]}" target="_blank">
@@ -183,7 +204,7 @@ function news_content_add(news_crawling_data_list, type) {
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
                                     <img src="/static/images/share.png">
                                 </div>
-                                <div class="recommend_like_heart" style="background-image: url('/static/images/empty_heart.png')">
+                                <div class="recommend_like_heart" style="background-image: url('${heart_image}')">
                                     
                                 </div>
                             </div>
@@ -200,10 +221,14 @@ function news_content_add(news_crawling_data_list, type) {
 //book
 function book_content_add(book_crawling_data_list, type) {
     let content_type = ''
+    let display_value = 'none'
+    let width = '102%'
     if (type === 'crawling') {
         content_type = 'c';
     } else if (type === 'search') {
+        width = '15vw'
         content_type = 's';
+        display_value = 'flex'
     } else {
         return console.log('type is not define!!')
     }
@@ -211,18 +236,44 @@ function book_content_add(book_crawling_data_list, type) {
     for (let i = 0; i < book_crawling_data_list.length; i++) {
         let book_row = book_crawling_data_list[i]
         let content_id = 'book_' + content_type + '_' + i
+        let heart_image = '/static/images/empty_heart.png'
+        if(book_row[7]){
+            heart_image = '/static/images/heart.png'
+        }
         let temp_html = `<div class="content_box" id="${content_id}"> 
-                            <div class="recommend_toggle recommend_book_toggle">
+                            <div class="recommend_toggle recommend_book_toggle" style="width: ${width}">
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')">
                                     <img src="/static/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('/static/images/empty_heart.png')">
+                                     style="background-image: url('${heart_image}')">
                                 </div>
                             </div>
                             <a href="${book_row[5]}" target="_blank">
                                 <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
                             </a>
+                            <div class="recommend_book_desc" style="display: ${display_value}">
+                                <div class="recommend_book_desc_title">
+                                    <p>제목</p>
+                                    <p>${book_row[0]}</p>
+                                </div>
+                                <div class="recommend_book_desc_series">
+                                    <p>시리즈</p>
+                                    <p>${book_row[3]}</p>
+                                </div>
+                                <div class="recommend_book_desc_company">
+                                    <p>출판사</p>
+                                    <p>${book_row[2]}</p>
+                                </div>
+                                <div class="recommend_book_desc_author">
+                                    <p>작가</p>
+                                    <p>${book_row[1]}</p>
+                                </div>
+                                <div class="recommend_book_desc_price">
+                                    <p>가격</p>
+                                    <p>${book_row[4]}</p>
+                                </div>
+                            </div>
                         </div>`
         if (content_type === 'c') {
             $('#book_recommend_content').append(temp_html)
@@ -352,7 +403,9 @@ function like_check_hub(id, type) {
         let url = document.getElementById(id).firstElementChild.src
         // youtube like function
         like_youtube_ajax(url, type)
-    } else if (checker === 'news') {
+    }
+    // news data 가져 오기
+    else if (checker === 'news') {
         let news = document.getElementById(id)
         let link = news.children[0].children[0].href
         let title = news.children[1].children[0].innerText
@@ -360,7 +413,6 @@ function like_check_hub(id, type) {
         let company = news.children[1].children[2].children[0].innerText
         let date = news.children[1].children[2].children[1].innerText
         let thumbnail = news.children[0].children[0].children[0].src
-
         let news_data = {}
         news_data['title'] = title
         news_data['date'] = date
@@ -369,8 +421,8 @@ function like_check_hub(id, type) {
         news_data['thumbnail'] = thumbnail
         news_data['link'] = link
 
-        console.log(news_data)
         like_news_ajax(news_data, type)
+<<<<<<< HEAD
     } else if (checker === 'book') {
         console.log('book!')
     } else if (checker === 'shopping') {
@@ -386,6 +438,30 @@ function like_check_hub(id, type) {
         shopping_data['thumbnail'] = thumbnail
         shopping_data['link'] = link
 
+=======
+    }
+    // book data 가져 오기
+    else if (checker === 'book') {
+        let book = document.getElementById(id)
+        let title = book.children[2].children[0].children[1].innerText
+        let author = book.children[2].children[3].children[1].innerText
+        let company = book.children[2].children[2].children[1].innerText
+        let price = book.children[2].children[4].children[1].innerText
+        let link = book.children[1].href
+        let thumbnail = book.children[1].children[0].style.backgroundImage.split('url("')[1].split('")')[0]
+
+        let book_data = {}
+        book_data['title'] = title
+        book_data['author'] = author
+        book_data['company'] = company
+        book_data['price'] = price
+        book_data['link'] = link
+        book_data['thumbnail'] = thumbnail
+        like_book_ajax(book_data, type)
+    }
+    // shopping data 가져오기
+    else if (checker === 'shopping') {
+>>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
         console.log('shopping')
     }
 }
@@ -448,23 +524,40 @@ function like_news_ajax(data, type){
     }
 }
 
+<<<<<<< HEAD
 function like_shopping_ajax(data, type){
     // 쇼핑 like 할때
     if(type  === 'like'){
         $.ajax({
             type: 'POST',
             url: '/api/like/shopping',
+=======
+function like_book_ajax(data, type){
+    // 책 like 할때
+    if(type  === 'like'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like/book',
+>>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
             data: data,
             success: function(response){
                 alert(response['result'])
             }
         })
     }
+<<<<<<< HEAD
     // 쇼핑 like 취소 할 때
     else if(type==='like_cancel'){
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/shopping',
+=======
+    // 책 like 취소 할 때
+    else if(type==='like_cancel'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like_cancel/book',
+>>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
             data: data,
             success: function(response){
                 alert(response['result'])
@@ -472,8 +565,11 @@ function like_shopping_ajax(data, type){
         })
     }
 }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
 
 // 공유하기 버튼
 function content_do_share(str) {
@@ -523,7 +619,7 @@ function initialize_search_bar() {
                     data: {"target": search_word},
                     datatype: 'form',
                     success: function (response) {
-                        console.log(response['all_response'])
+
                         // search_spinner 정지
                         for (let i = 0; i < search_spinner.length; i++) {
                             search_spinner[i].style.display = 'none'
