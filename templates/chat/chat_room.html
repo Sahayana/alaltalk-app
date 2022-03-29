@@ -229,12 +229,12 @@
                 </div>
             {% else %}
                 <div class="friends_like_info">
-                    <div class="friends_like_img" style="background-image: url({{ participant2.img }})"></div>
+                    <div class="friends_like_img" style="background-image: url({{ participant1.img }})"></div>
                     <div class="friends_like_info_group">
-                        <div class="friends_like_name">{{ participant2.nickname }}</div>
-                        <div class="friends_like_id">{{ participant2.email }}</div>
+                        <div class="friends_like_name">{{ participant1.nickname }}</div>
+                        <div class="friends_like_id">{{ participant1.email }}</div>
                     </div>
-                    <div class="friends_like_bio">{{ participant2.bio }}</div>
+                    <div class="friends_like_bio">{{ participant1.bio }}</div>
                 </div>
                 <div class="friends_like_category">
                     <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
@@ -255,6 +255,14 @@
                                     </iframe>
                                 </div>
                             {% endfor %}
+                            <div class="friends_like_content_box">
+                                <iframe class="friends_like_video_img" src="{{ youtube.url }}"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowfullscreen>ㅇ
+                                </iframe>
+                            </div>
                         </div>
 
                     </div>

@@ -1,5 +1,6 @@
 import json
 
+from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -61,7 +62,7 @@ def create_chat_room(request, id):
 # 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
 @csrf_exempt
 @login_required
-def create_chat_message(request, room_id):
+def post_data_to_chat_room(request, room_id):
 
     if request.method == "GET":
         user = request.user
@@ -99,6 +100,23 @@ def create_chat_message(request, room_id):
             },
         )
 
+@csrf_exempt
 @login_required
-def show_freind_like_list(request):
-    return render(request, "chat/freind_like.html")
+def chat_log_send(request):
+    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    chat_log = []
+    print(room_id)
+    chatroom = ChatRoom.objects.get(id = room_id)
+    all_chat = ChatMessage.objects.filter(chatroom=chatroom)
+
+    if len(all_chat) > 50:
+        all_chat = all_chat[:50]
+
+    for chat in all_chat:
+        chat_log.append(chat.message)
+        print('채팅 메세지: ',chat.message)
+    print('채팅로그 담긴리스트',chat_log)
+    context = {
+        'chat_log' : chat_log
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")

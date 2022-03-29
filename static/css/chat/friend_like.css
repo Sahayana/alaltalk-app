@@ -61,7 +61,6 @@
   height: 100%;
   overflow-x: auto;
   max-height: 680px;
-  display: none;
 }
 
 .friends_like_youtube::-webkit-scrollbar {
