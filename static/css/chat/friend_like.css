@@ -104,7 +104,7 @@
 
 
 
-.profile_like_news {
+.friends_like_news {
   padding-top: 40px;
   width: 95%;
   height: 100%;
@@ -112,85 +112,98 @@
   overflow-y: auto;
   max-height: 680px;
 }
-.profile_like_news::-webkit-scrollbar {
+.friends_like_news::-webkit-scrollbar {
   width: 10px;
   height: 0;
 }
 
-.profile_like_news::-webkit-scrollbar-thumb {
+.friends_like_news::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.profile_like_news li {
-  width: 95%;
-  height: 10vw;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-  position: relative;
+.friends_like_news_content {
+    position: relative;
+    width: 50vw;
+    height: 15vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 2vw;
 }
 
-.profile_like_news_image {
-  background-color: #b7b7b7;
-  width: 11vw;
-  height: 6vw;
+.friends_like_news_content p{
+    margin:0
 }
 
-.profile_like_news_info {
-  width: 33vw;
+.friends_like_news_content_image{
+    width: 12vw;
+    height: 12vw;
+    background-color: #3D3D3D;
+    object-fit: contain;
+    object-position: center;
+    border: min(2vw, 2px) solid #7556CD;
 }
 
-.profile_like_news_title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 5px;
+.friends_like_news_content_image img{
+    width: 100%;
+    height: 100%;
 }
 
-.profile_like_news_content {
-  margin-bottom: 12px;
+.friends_like_news_content_desc{
+    width: 30vw;
+    height: 12vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-.profile_like_news_button {
-  padding-top: 40px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
+.friends_like_news_content_desc_title{
+    width: 30vw;
+    height: 3vw;
+    overflow: hidden;
 }
 
-.profile_like_news_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  background-size: contain;
-  width: 40px;
-  height: 40px;
+.friends_like_news_content_desc_title p{
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+    font-size: 2vw;
 }
 
-.profile_like_news_heart {
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
+.friends_like_news_content_desc_detail{
+    width: 30vw;
+    height: 5vw;
+    overflow: hidden;
 }
 
-.profile_like_news_toggle {
-  position: absolute;
-  top: -25px;
-  left: 92%;
-  width: 80px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
+.friends_like_news_content_desc_footer{
+    width: 30vw;
+    height: 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-.profile_like_book {
+.friends_like_news_content_desc_footer_newspaper{
+    width: 30%;
+    height: 100%;
+    text-align: left;
+}
+
+.friends_like_news_content_desc_footer_time{
+    width: 30%;
+    height: 100%;
+    text-align: right;
+}
+
+.friends_like_book {
   padding-top: 60px;
   width: 95%;
   height: 100%;
@@ -200,31 +213,33 @@
   max-height: 660px;
 }
 
-.profile_like_book::-webkit-scrollbar {
+.friends_like_book::-webkit-scrollbar {
   width: 10px;
   height: 0;
 }
 
-.profile_like_book::-webkit-scrollbar-thumb {
+.friends_like_book::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.profile_like_book_grid {
+.friends_like_book_grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-.profile_like_book_container {
-  margin-bottom: 40px;
-  width: 24vw;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-direction: row;
-  position: relative;
+.friends_like_content_box {
+    position: relative;
+    width: 15vw;
+    height: 20vw;
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: left;
+    margin: 5px 0 50px 35px;
+    color: #5e5e5e;
 }
 
 .profile_like_book_image {
