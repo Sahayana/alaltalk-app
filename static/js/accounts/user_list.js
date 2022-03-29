@@ -5,6 +5,15 @@ function searchUser(){
 
     let query = "";
     query = $("#search_input").val();
+
+    if (query==='' || query==='.'){
+        return;
+    }
+
+    if (query.length < 3){
+        alert("2글자 이상 입력해주세요.");
+        return;
+    }
     
     let userListUri = $(".search_bar").data('uri');   
 
