@@ -43,7 +43,7 @@ function click_recommend_function() {
         data: {"target": "커피"},
         datatype: 'form',
         success: function (response) {
-            console.log(response['all_response']['shopping'])
+            console.log(response['all_response']['news'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -353,7 +353,24 @@ function like_check_hub(id, type) {
         // youtube like function
         like_youtube_ajax(url, type)
     } else if (checker === 'news') {
-        console.log('news!')
+        let news = document.getElementById(id)
+        let link = news.children[0].children[0].href
+        let title = news.children[1].children[0].innerText
+        let content = news.children[1].children[1].innerText
+        let company = news.children[1].children[2].children[0].innerText
+        let date = news.children[1].children[2].children[1].innerText
+        let thumbnail = news.children[0].children[0].children[0].src
+
+        let news_data = {}
+        news_data['title'] = title
+        news_data['date'] = date
+        news_data['company'] = company
+        news_data['content'] = content
+        news_data['thumbnail'] = thumbnail
+        news_data['link'] = link
+
+        console.log(news_data)
+        like_news_ajax(news_data, type)
     } else if (checker === 'book') {
         console.log('book!')
     } else if (checker === 'shopping') {
@@ -392,6 +409,31 @@ function like_youtube_ajax(data, type) {
         })
     }
 
+}
+
+function like_news_ajax(data, type){
+    // 뉴스 like 할때
+    if(type  === 'like'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like/news',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+    // 뉴스 like 취소 할 때
+    else if(type==='like_cancel'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like_cancel/news',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
 }
 
 

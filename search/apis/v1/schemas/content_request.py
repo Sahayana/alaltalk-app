@@ -20,6 +20,7 @@ class NewsLikeRequest(Schema):
     content: str
     thumbnail: str
 
+
 class BookLikeRequest(Schema):
     title: str
     price: str

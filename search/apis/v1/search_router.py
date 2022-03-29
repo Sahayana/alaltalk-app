@@ -35,6 +35,9 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
         all_response["youtube"] = []
     try:
         all_response["news"] = crawling_news(crawling_request.target)
+        for news_row in all_response['news']:
+            if News.objects.filter(user=request.user.id, link=news_row[3]).exists():
+                news_row[6] = True
     except Exception as e:
         print('news_crawling Error: ', e)
         all_response["news"] = []
