@@ -1,7 +1,9 @@
 function click_recommend_function() {
     console.log('page is onload!')
 
-    let example_sentence = ["안녕하세요 이감국어교육연구소입니다.",
+    let form_data = new FormData()
+
+    let chat_log = sentence = ["안녕하세요 이감국어교육연구소입니다.",
                    "너무 길어서 힘드네요...어쩔 수 없죠그런데 제목도 깁니다 ㅠ",
                    "오늘은 문학에서 등장하는 정확히 잡기 힘든 개념어를 이야기해보고자 합니다."
                    ,"댓글로 질문해주셨던 대화체 독백체로 일단 시작을 해보겠습니다.",
@@ -25,23 +27,50 @@ function click_recommend_function() {
                    "이제 슬슬 짜증이 나죠. 제가 그래서 2번 3번이 다소 겹친다고 합니다.이 지점때문에 수능 문학 개념에서 그렇게 큰 비중을 차지하지는 못하게 됩니다..그냥 이해하기 쉽게 이렇게 생각합시다.",
                    "화자가 말을 하고 청자가 존재하되 청자의 반응이 없다면 청자가 존재하기때문에 대화는 아니더라도 대화체가 인정이 된다. 거기에 일단 청자의 반응이 없기 때문에 화자가 혼자 말하고 있고 따라서 독백, 독백체, 독백적 발화, 독백체도 맞는 말이다…하고 잡아주시면 됩니다.",
                    "아 독백체 진짜 짜증나요! 싶으시면 이렇게 생각하셔도 됩니다.대부분의 시는 독백체입니다.독백체가 아닌 시들은 ‘말’처럼 안 느껴집니다.이런 시들은 어떤 느낌이 드냐면..정말 담담한 느낌이 드는 경우가 많습니다.그래서 주로 평서형 종결 어미와 명사형 종결 어미들이 쓰입니다.이런 경우가 아니라면 보통 정말 ‘말’을 하는 듯한 인상을 주고, 그러면 독백체라고 인정합니다.",
-                   "다시 정리합니다.1.대화체와 독백체가 동시에 쓰일 수 있습니다.2.실제로 많은 시들이 독백체입니다.도움이 되셨길 바랍니다"]
+                   "다시 정리합니다.1.대화체와 독백체가 동시에 쓰일 수 있습니다.2.실제로 많은 시들이 독백체입니다.도움이 되셨길 바랍니다"];
+
+    form_data.append('chat_log', chat_log);
+    let machin_result = ''
+
 
     $.ajax({
-        type: 'POST',
-        url: 'http://127.0.0.1:5000/api/v1/textrank/',
-        data: {'chat_log': example_sentence},
-        datatype: 'json',
-        success: function(response){
-            console.log(response)
-        }
-    })
+        type: "POST",
+        url: "http://127.0.0.1:5000/api/v1/textrank/",
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        async: false,
+        enctype: 'multipart/form-data',
+        success: function (response) {
+            // console.log(response.keyword)
+            // console.log('추천시스템 성공!')
+            machin_result  = response.keyword[0]
 
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+
+    recommend_crawling_on(machin_result)
+
+}
+
+function make_reccommend(sentence){
+
+}
+
+function recommend_crawling_on(data){
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": "커피"},
+        data: {"target": data},
         datatype: 'form',
+        async: false,
         success: function (response) {
             console.log(response['all_response']['book'])
 
@@ -70,7 +99,6 @@ function click_recommend_function() {
             initialize_search_bar()
         }
     })
-
 }
 
 
@@ -375,7 +403,9 @@ function like_check_hub(id, type) {
         let url = document.getElementById(id).firstElementChild.src
         // youtube like function
         like_youtube_ajax(url, type)
-    } else if (checker === 'news') {
+    }
+    // news data 가져 오기
+    else if (checker === 'news') {
         let news = document.getElementById(id)
         let link = news.children[0].children[0].href
         let title = news.children[1].children[0].innerText
@@ -383,7 +413,6 @@ function like_check_hub(id, type) {
         let company = news.children[1].children[2].children[0].innerText
         let date = news.children[1].children[2].children[1].innerText
         let thumbnail = news.children[0].children[0].children[0].src
-
         let news_data = {}
         news_data['title'] = title
         news_data['date'] = date
@@ -392,9 +421,10 @@ function like_check_hub(id, type) {
         news_data['thumbnail'] = thumbnail
         news_data['link'] = link
 
-        console.log(news_data)
         like_news_ajax(news_data, type)
-    } else if (checker === 'book') {
+    }
+    // book data 가져 오기
+    else if (checker === 'book') {
         let book = document.getElementById(id)
         let title = book.children[2].children[0].children[1].innerText
         let author = book.children[2].children[3].children[1].innerText
@@ -411,7 +441,9 @@ function like_check_hub(id, type) {
         book_data['link'] = link
         book_data['thumbnail'] = thumbnail
         like_book_ajax(book_data, type)
-    } else if (checker === 'shopping') {
+    }
+    // shopping data 가져오기
+    else if (checker === 'shopping') {
         console.log('shopping')
     }
 }
@@ -547,7 +579,7 @@ function initialize_search_bar() {
                     data: {"target": search_word},
                     datatype: 'form',
                     success: function (response) {
-                        console.log(response['all_response'])
+
                         // search_spinner 정지
                         for (let i = 0; i < search_spinner.length; i++) {
                             search_spinner[i].style.display = 'none'
