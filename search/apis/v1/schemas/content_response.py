@@ -12,6 +12,7 @@ class ShoppingLikeResponse(Schema):
 class NewsLikeResponse(Schema):
     result: str
 
+
 class BookLikeResponse(Schema):
     result: str
 

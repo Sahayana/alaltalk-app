@@ -374,6 +374,18 @@ function like_check_hub(id, type) {
     } else if (checker === 'book') {
         console.log('book!')
     } else if (checker === 'shopping') {
+        let shopping = document.getElementById(id)
+        let link = shopping.children[0].children[0].href
+        let price = shopping.children[1].children[0].innerText
+        let date = shopping.children[1].children[2].children[1].innerText
+        let thumbnail = shopping.children[0].children[0].children[0].src
+
+        let shopping_data = {}
+        shopping_data['price'] = price
+        shopping_data['date'] = date
+        shopping_data['thumbnail'] = thumbnail
+        shopping_data['link'] = link
+
         console.log('shopping')
     }
 }
@@ -435,6 +447,32 @@ function like_news_ajax(data, type){
         })
     }
 }
+
+function like_shopping_ajax(data, type){
+    // 쇼핑 like 할때
+    if(type  === 'like'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like/shopping',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+    // 쇼핑 like 취소 할 때
+    else if(type==='like_cancel'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like_cancel/shopping',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+}
+
 
 
 // 공유하기 버튼

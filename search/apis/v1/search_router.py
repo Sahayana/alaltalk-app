@@ -43,6 +43,9 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
         all_response["news"] = []
     try:
         all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
+        for shopping_row in all_response['shopping']:
+            if Shopping.objects.filter(user=request.user.id, link=shopping_row[2]).exists():
+                shopping_row[4] = True
     except Exception as e:
         print('shopping_crawling Error: ', e)
         all_response["shopping"] = []
