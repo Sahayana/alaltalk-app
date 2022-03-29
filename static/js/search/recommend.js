@@ -43,7 +43,7 @@ function click_recommend_function() {
         data: {"target": "커피"},
         datatype: 'form',
         success: function (response) {
-            console.log(response['all_response']['news'])
+            console.log(response['all_response']['book'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -83,18 +83,6 @@ function move_category(target_id) {
     document.getElementById(target_id).style.display = 'block'
 }
 
-// // 각 nav_bar에 click event 주기
-// let navs = document.getElementsByClassName('recommend_nav')
-// let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-// for (let i = 0; i < navs.length; i++) {
-//     let nav_row = navs[i].children
-//     for (let j = 0; j < nav_row.length; j++) {
-//         nav_row[j].addEventListener('click', function () {
-//             move_category(navs_list_id[j])
-//         })
-//     }
-// }
-
 function give_event() {
     let navs = document.getElementsByClassName('recommend_nav')
     let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
@@ -107,6 +95,7 @@ function give_event() {
         }
     }
 }
+
 
 // Crawling 붙여 넣기
 // youtube
@@ -157,6 +146,10 @@ function news_content_add(news_crawling_data_list, type) {
     for (let i = 0; i < news_crawling_data_list.length; i++) {
         let news_row = news_crawling_data_list[i]
         let content_id = 'news_' + content_type + '_' + i
+        let heart_image = '/static/images/empty_heart.png'
+        if(news_row[6]){
+            heart_image = '/static/images/heart.png'
+        }
         let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
                             <div class="recommend_news_search_content_image">
                                 <a href="${news_row[3]}" target="_blank">
@@ -183,7 +176,7 @@ function news_content_add(news_crawling_data_list, type) {
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
                                     <img src="/static/images/share.png">
                                 </div>
-                                <div class="recommend_like_heart" style="background-image: url('/static/images/empty_heart.png')">
+                                <div class="recommend_like_heart" style="background-image: url('${heart_image}')">
                                     
                                 </div>
                             </div>
@@ -200,10 +193,14 @@ function news_content_add(news_crawling_data_list, type) {
 //book
 function book_content_add(book_crawling_data_list, type) {
     let content_type = ''
+    let display_value = 'none'
+    let width = '102%'
     if (type === 'crawling') {
         content_type = 'c';
     } else if (type === 'search') {
+        width = '15vw'
         content_type = 's';
+        display_value = 'flex'
     } else {
         return console.log('type is not define!!')
     }
@@ -211,18 +208,44 @@ function book_content_add(book_crawling_data_list, type) {
     for (let i = 0; i < book_crawling_data_list.length; i++) {
         let book_row = book_crawling_data_list[i]
         let content_id = 'book_' + content_type + '_' + i
+        let heart_image = '/static/images/empty_heart.png'
+        if(book_row[7]){
+            heart_image = '/static/images/heart.png'
+        }
         let temp_html = `<div class="content_box" id="${content_id}"> 
-                            <div class="recommend_toggle recommend_book_toggle">
+                            <div class="recommend_toggle recommend_book_toggle" style="width: ${width}">
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')">
                                     <img src="/static/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('/static/images/empty_heart.png')">
+                                     style="background-image: url('${heart_image}')">
                                 </div>
                             </div>
                             <a href="${book_row[5]}" target="_blank">
                                 <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
                             </a>
+                            <div class="recommend_book_desc" style="display: ${display_value}">
+                                <div class="recommend_book_desc_title">
+                                    <p>제목</p>
+                                    <p>${book_row[0]}</p>
+                                </div>
+                                <div class="recommend_book_desc_series">
+                                    <p>시리즈</p>
+                                    <p>${book_row[3]}</p>
+                                </div>
+                                <div class="recommend_book_desc_company">
+                                    <p>출판사</p>
+                                    <p>${book_row[2]}</p>
+                                </div>
+                                <div class="recommend_book_desc_author">
+                                    <p>작가</p>
+                                    <p>${book_row[1]}</p>
+                                </div>
+                                <div class="recommend_book_desc_price">
+                                    <p>가격</p>
+                                    <p>${book_row[4]}</p>
+                                </div>
+                            </div>
                         </div>`
         if (content_type === 'c') {
             $('#book_recommend_content').append(temp_html)
@@ -372,7 +395,22 @@ function like_check_hub(id, type) {
         console.log(news_data)
         like_news_ajax(news_data, type)
     } else if (checker === 'book') {
-        console.log('book!')
+        let book = document.getElementById(id)
+        let title = book.children[2].children[0].children[1].innerText
+        let author = book.children[2].children[3].children[1].innerText
+        let company = book.children[2].children[2].children[1].innerText
+        let price = book.children[2].children[4].children[1].innerText
+        let link = book.children[1].href
+        let thumbnail = book.children[1].children[0].style.backgroundImage.split('url("')[1].split('")')[0]
+
+        let book_data = {}
+        book_data['title'] = title
+        book_data['author'] = author
+        book_data['company'] = company
+        book_data['price'] = price
+        book_data['link'] = link
+        book_data['thumbnail'] = thumbnail
+        like_book_ajax(book_data, type)
     } else if (checker === 'shopping') {
         console.log('shopping')
     }
@@ -436,6 +474,30 @@ function like_news_ajax(data, type){
     }
 }
 
+function like_book_ajax(data, type){
+    // 책 like 할때
+    if(type  === 'like'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like/book',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+    // 책 like 취소 할 때
+    else if(type==='like_cancel'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like_cancel/book',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+}
 
 // 공유하기 버튼
 function content_do_share(str) {
