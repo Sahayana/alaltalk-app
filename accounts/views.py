@@ -165,7 +165,7 @@ def send_request(request, receiver_id):
 @login_required
 def accept_request(request, request_id):
     user_id = request.user.id
-    accept_friend_request(user_id=user_id.id, request_id=request_id)
+    accept_friend_request(user_id=user_id, request_id=request_id)
     return JsonResponse({"msg": "accepted"})
 
 
