@@ -14,6 +14,7 @@ media
 config
 .ebextensions/
 requirements.txt
+alaltalk_RDS.txt
 
 
 
