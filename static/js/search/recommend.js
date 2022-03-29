@@ -68,7 +68,7 @@ function recommend_crawling_on(data){
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": data},
+        data: {"target": '코딩'},
         datatype: 'form',
         async: false,
         success: function (response) {
@@ -298,13 +298,17 @@ function shopping_content_add(shopping_crawling_data_list, type) {
     for (let i = 0; i < shopping_crawling_data_list.length; i++) {
         let shopping_row = shopping_crawling_data_list[i]
         let content_id = 'shopping_' + content_type + '_' + i
+        let heart_image = '/static/images/empty_heart.png'
+        if(shopping_row[4]){
+            heart_image = '/static/images/heart.png'
+        }
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
                                     <div class="recommend_toggle">
                                         <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
                                             <img src="/static/images/share.png">
                                         </div>
                                         <div class="recommend_like_heart"
-                                             style="background-image: url('/static/images/empty_heart.png')">
+                                             style="background-image: url('${heart_image}')">
                                         </div>
                                     </div>
                                     <a href="${shopping_row[3]}" target="_blank">
@@ -413,6 +417,7 @@ function like_check_hub(id, type) {
         let company = news.children[1].children[2].children[0].innerText
         let date = news.children[1].children[2].children[1].innerText
         let thumbnail = news.children[0].children[0].children[0].src
+
         let news_data = {}
         news_data['title'] = title
         news_data['date'] = date
@@ -422,23 +427,6 @@ function like_check_hub(id, type) {
         news_data['link'] = link
 
         like_news_ajax(news_data, type)
-<<<<<<< HEAD
-    } else if (checker === 'book') {
-        console.log('book!')
-    } else if (checker === 'shopping') {
-        let shopping = document.getElementById(id)
-        let link = shopping.children[0].children[0].href
-        let price = shopping.children[1].children[0].innerText
-        let date = shopping.children[1].children[2].children[1].innerText
-        let thumbnail = shopping.children[0].children[0].children[0].src
-
-        let shopping_data = {}
-        shopping_data['price'] = price
-        shopping_data['date'] = date
-        shopping_data['thumbnail'] = thumbnail
-        shopping_data['link'] = link
-
-=======
     }
     // book data 가져 오기
     else if (checker === 'book') {
@@ -457,12 +445,24 @@ function like_check_hub(id, type) {
         book_data['price'] = price
         book_data['link'] = link
         book_data['thumbnail'] = thumbnail
+
         like_book_ajax(book_data, type)
     }
-    // shopping data 가져오기
+    // shopping data 가져 오기
     else if (checker === 'shopping') {
->>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
-        console.log('shopping')
+        let shopping = document.getElementById(id)
+        let link = shopping.children[1].href
+        let price = shopping.children[2].children[2].children[0].innerText
+        let title = shopping.children[2].children[1].children[0].innerText
+        let thumbnail = shopping.children[1].children[0].children[0].src
+
+        let shopping_data = {}
+        shopping_data['price'] = price
+        shopping_data['title'] = title
+        shopping_data['thumbnail'] = thumbnail
+        shopping_data['link'] = link
+        console.log(shopping_data)
+        like_shopping_ajax(shopping_data, type)
     }
 }
 
@@ -524,40 +524,23 @@ function like_news_ajax(data, type){
     }
 }
 
-<<<<<<< HEAD
-function like_shopping_ajax(data, type){
-    // 쇼핑 like 할때
-    if(type  === 'like'){
-        $.ajax({
-            type: 'POST',
-            url: '/api/like/shopping',
-=======
 function like_book_ajax(data, type){
     // 책 like 할때
     if(type  === 'like'){
         $.ajax({
             type: 'POST',
             url: '/api/like/book',
->>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
             data: data,
             success: function(response){
                 alert(response['result'])
             }
         })
     }
-<<<<<<< HEAD
-    // 쇼핑 like 취소 할 때
-    else if(type==='like_cancel'){
-        $.ajax({
-            type: 'POST',
-            url: '/api/like_cancel/shopping',
-=======
     // 책 like 취소 할 때
     else if(type==='like_cancel'){
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/book',
->>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
             data: data,
             success: function(response){
                 alert(response['result'])
@@ -565,11 +548,32 @@ function like_book_ajax(data, type){
         })
     }
 }
-<<<<<<< HEAD
 
+function like_shopping_ajax(data, type){
+    // 쇼핑 like 할때
+    if(type  === 'like'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like/shopping',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+    // 쇼핑 like 취소 할 때
+    else if(type==='like_cancel'){
+        $.ajax({
+            type: 'POST',
+            url: '/api/like_cancel/shopping',
+            data: data,
+            success: function(response){
+                alert(response['result'])
+            }
+        })
+    }
+}
 
-=======
->>>>>>> c72fa176af5371a47ba303d2abec9c7c2b4b9591
 
 // 공유하기 버튼
 function content_do_share(str) {
