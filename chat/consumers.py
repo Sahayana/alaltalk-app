@@ -2,16 +2,26 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-
 from accounts.models import CustomUser
-
 from .models import ChatMessage
+from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.sessions.models import Session
 
 
 class ChatConsumer(WebsocketConsumer):
     def fetch_messages(self, data):
+        # s = SessionStore()
+        # s.create()
+        # session_key = s.session_key
+        # SessionStore(session_key=session_key)
+        # session = Session.objects.get(pk=session_key)
+        # print(session)
+
         messages = ChatMessage.last_10_messages()
-        content = {"command": "messages", "messages": self.messages_to_json(messages)}
+        content = {
+            "command": "messages",
+            "messages": self.messages_to_json(messages)
+        }
         self.send_chat_message(content)
 
     def new_message(self, data):
@@ -19,6 +29,7 @@ class ChatConsumer(WebsocketConsumer):
         chatroom_id = data["room_id"]
         author = CustomUser.objects.filter(id=user_id)[0]
         author_id = author.id
+        print(author_id)
         message = ChatMessage.objects.create(author_id=author_id, message=data["message"], chatroom_id=chatroom_id)
         content = {"command": "new_message", "message": self.message_to_json(message)}
         return self.send_chat_message(content)

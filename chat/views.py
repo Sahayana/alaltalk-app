@@ -6,9 +6,10 @@ from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
+from django.contrib.sessions.models import Session
+from django.contrib.sessions.backends.db import SessionStore
 
 
 # userlist 중에 친구신청-수락한 유저 리스트 불러오기
@@ -58,10 +59,10 @@ def create_chat_room(request, id):
 
 
 # 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
+# @channel_session
 @csrf_exempt
 @login_required
 def create_chat_message(request, room_id):
-
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
@@ -76,8 +77,8 @@ def create_chat_message(request, room_id):
                 "room_id": mark_safe(json.dumps(room_id)),
                 "chatroom_list": chatroom_list,
                 "user_id": mark_safe(json.dumps(request.user.id)),
-                "participant1": chatroom.participant1.id,
-                "participant2": chatroom.participant2.id,
+                "participant1": chatroom.participant1,
+                "participant2": chatroom.participant2,
                 "all_message": all_message,
             },
         )
