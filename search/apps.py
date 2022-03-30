@@ -18,7 +18,7 @@ class SearchConfig(AppConfig):
     options.add_argument("headless")
     options.add_argument("--incognito")
 
-    driver = webdriver.Chrome(executable_path=webdriver_path_for_mac, options=options)
+    driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
 
     # 쿠기 삭제
     driver.delete_all_cookies()

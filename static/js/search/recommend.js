@@ -32,34 +32,32 @@ function get_chat_log(){
 function click_recommend_function() {
     console.log('page is onload!')
 
-    get_chat_log()
-    let machin_result = ''
-    let form_data = new FormData()
-    form_data.append('chat_log', chat_log);
-
-    $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:5000/api/v1/textrank/",
-        data: form_data,
-        cache: false,
-        processData: false,
-        contentType: false,
-        async: true,
-        enctype: 'multipart/form-data',
-        success: function (response) {
-            // console.log(response.keyword)
-            // console.log('추천시스템 성공!')
-            machin_result  = response.keyword[0]
-
-        },
-        error: function (request, status, error) {
-            alert('error')
-
-            console.log(request, status, error)
-        }
-
-    });
-
+    let machin_result = '아이유'
+    // let form_data = new FormData()
+    // form_data.append('chat_log', chat_log);
+    //
+    // $.ajax({
+    //     type: "POST",
+    //     url: "http://127.0.0.1:5000/api/v1/textrank/",
+    //     data: form_data,
+    //     cache: false,
+    //     processData: false,
+    //     contentType: false,
+    //     async: false,
+    //     enctype: 'multipart/form-data',
+    //     success: function (response) {
+    //         // console.log(response.keyword)
+    //         // console.log('추천시스템 성공!')
+    //         machin_result  = response.keyword[0]
+    //
+    //     },
+    //     error: function (request, status, error) {
+    //         alert('error')
+    //
+    //         console.log(request, status, error)
+    //     }
+    //
+    // });
     recommend_crawling_on(machin_result)
 
 }
@@ -72,7 +70,7 @@ function recommend_crawling_on(data){
         datatype: 'form',
         async: true,
         success: function (response) {
-            console.log(response['all_response']['Youtube'])
+            console.log(response['all_response'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -404,9 +402,18 @@ function like_check_hub(id, type) {
     let checker = id.split('_')[0]
     if (checker === 'youtube') {
         // url 가져 오기
-        let url = document.getElementById(id).firstElementChild.src
+        let youtube = document.getElementById(id)
+        let url = youtube.firstElementChild.src
+        let title = youtube.children[1].innerText
+        let views = youtube.children[1].innerText
+        let youtube_data = {}
+
+        youtube_data['url'] = url
+        youtube_data['title'] = title
+        youtube_data['views'] = views
+
         // youtube like function
-        like_youtube_ajax(url, type)
+        like_youtube_ajax(youtube_data, type)
     }
     // news data 가져 오기
     else if (checker === 'news') {
@@ -475,7 +482,7 @@ function like_youtube_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like/youtube',
-            data: {'url': data},
+            data: data,
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
