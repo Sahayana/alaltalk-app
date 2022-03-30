@@ -12,10 +12,20 @@ class ShoppingLikeRequest(Schema):
     thumbnail: str
 
 
-class BookLikeRequest(Schema):
+class NewsLikeRequest(Schema):
+    title: str
+    date: str
     link: str
-    thumbnail: str
     company: str
-    author : str
+    content: str
+    thumbnail: str
+
+
+class BookLikeRequest(Schema):
     title: str
     price: str
+    link: str
+    company: str
+    author: str
+    thumbnail: str
+

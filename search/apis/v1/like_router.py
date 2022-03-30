@@ -4,23 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from ninja.errors import HttpError
 from accounts.models import CustomUser
-
-from search.apis.v1.schemas import (
-    ShoppingLikeRequest,
-    ShoppingLikeResponse,
-    YoutubeLikeRequest,
-    YoutubeLikeResponse,
-)
-from search.service.like_service import (
-    do_like_shopping_service,
-    do_like_youtube_service,
-)
-
-from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest
-from search.apis.v1.schemas import BookLikeResponse, BookLikeRequest
-from search.service.like_service import do_like_youtube_service, do_like_shopping_service, do_like_book_service
-
-from ...models import Youtube
+from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest, NewsLikeResponse, NewsLikeRequest, BookLikeResponse, BookLikeRequest
+from search.service.like_service import do_like_youtube_service, do_like_shopping_service, do_like_news_service, do_like_book_service
 
 router = Router(tags=["like"])
 
@@ -37,9 +22,21 @@ def do_like_youtube(request, youtube_dict: YoutubeLikeRequest = Form(...)) -> Tu
 
 
 @csrf_exempt
-@router.post("/news")
-def do_like_book(request):
-    return 0
+@router.post("/news", response={201: NewsLikeResponse})
+def do_like_news(request, News_request: NewsLikeRequest = Form(...)) -> Tuple[int, Dict]:
+    try:
+        result = do_like_news_service(
+            request.user.id,
+            title=News_request.title,
+            date=News_request.date,
+            company=News_request.company,
+            content=News_request.content,
+            thumbnail_url=News_request.thumbnail,
+            link_url=News_request.link
+        )
+    except CustomUser.DoesNotExist:
+        raise HttpError(404, 'User does not exist!!!')
+    return 201, {'result': result}
 
 
 @csrf_exempt

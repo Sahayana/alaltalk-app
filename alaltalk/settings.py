@@ -148,6 +148,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_DIR = os.path.join(BASE_DIR, "static")
+print(STATIC_DIR)
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
@@ -190,16 +191,17 @@ except FileNotFoundError:
     pass
 
 
-# AWS S3 connet
+# # # AWS S3 connet
 # DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+#
+# with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
+#     secret = json.loads(f.read())
+#
+# AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
+# AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
+# AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
+# AWS_REGION = "ap-northeast-2"
+# AWS_DEFAULT_ACL = "public-read"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
 
-with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
-    secret = json.loads(f.read())
-
-AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
-AWS_REGION = "ap-northeast-2"
-AWS_DEFAULT_ACL = "public-read"
-AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
