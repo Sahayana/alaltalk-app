@@ -1,6 +1,18 @@
+//  전역 변수 선언
+var keyowrd = []
+var chat_log = ["오늘 날씨 너무 좋다.", "맞아 춥지도 않고 딱 좋아"];
 
+
+// 0. 추천 버튼 누르면 시작되는 함수 ( 함수 시작 )
+function click_recommend_function() {
+    // 1. 채팅 로그 불러오기!
+    get_chat_log()
+    // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
+    get_keyword(chat_log)
+}
+
+// 데이터 준비 함수 - [ get_chat_log, get_keyword, recommend_crawling_on ]
 // 채팅로그 받아오기
-var chat_log = ["아이유 너무 이뻐요~~~", "나는 아이유노래 나온거 봤어??"];
 function get_chat_log(){
    var link = document.location.href;
     let room_id = link.split('/');
@@ -25,13 +37,10 @@ function get_chat_log(){
     });
 }
 
-var keyowrd = []
 //키워드 추출 ajax 통신 함수
 function get_keyword(chat_log){
     let form_data = new FormData()
-
     form_data.append('chat_log', chat_log);
-
     $.ajax({
         type: "POST",
         url: "http://13.125.250.182:8000/api/v1/textrank/",
@@ -55,7 +64,7 @@ function get_keyword(chat_log){
     });
 }
 
-
+// 크롤링 시작 함수
 function recommend_crawling_on(data){
     $.ajax({
         type: 'POST',
@@ -95,27 +104,8 @@ function recommend_crawling_on(data){
 }
 
 
-// 0. 추천 버튼 누르면 시작되는 함수 ( 가장 처음 )
-function click_recommend_function() {
-    // 1. 채팅 로그 불러오기!
-    get_chat_log()
-    // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
-    get_keyword(chat_log)
-}
 
-
-
-// 탭 이동 함수
-function move_category(target_id) {
-    document.getElementById('recommend_youtube_container').style.display = 'none'
-    document.getElementById('recommend_news_container').style.display = 'none'
-    document.getElementById('recommend_book_container').style.display = 'none'
-    document.getElementById('recommend_shopping_container').style.display = 'none'
-    document.getElementById(target_id).style.display = 'block'
-}
-
-
-// Crawling 붙여 넣기
+// Crawling 함수 - - [ youtube_content_add, news_content_add, book_content_add, shopping_content_add ]
 // youtube
 function youtube_content_add(youtube_crawling_data_list, type) {
     let content_type = ''
@@ -273,7 +263,6 @@ function book_content_add(book_crawling_data_list, type) {
     }
 }
 
-
 // shopping
 function shopping_content_add(shopping_crawling_data_list, type) {
     let content_type = ''
@@ -326,42 +315,8 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 }
 
 
-// more function
-
-function more_open_or_off(id) {
-    let other_toggles = document.getElementsByClassName('toggle')
-
-    for (let i = 0; i < other_toggles.length; i++) {
-        other_toggles[i].style.display = 'none'
-    }
-
-    let toggle = document.getElementById(id).nextElementSibling
-    if (toggle.style.display === 'none') {
-        toggle.style.display = 'block'
-    } else {
-        toggle.style.display = 'none'
-    }
-
-}
-
-// more_shopping_function
-
-function set_animation_more() {
-    let shopping_content = document.getElementsByClassName('recommend_toggle')
-    for (let i = 0; i < shopping_content.length; i++) {
-        shopping_content[i].addEventListener('mouseover', function () {
-            shopping_content[i].style.animation = 'appear_toggle 1s ease-out forwards'
-
-        })
-        shopping_content[i].addEventListener('mouseout', function () {
-            shopping_content[i].style.animation = ''
-            shopping_content[i].style.opacity = '0'
-
-        })
-    }
-}
-
-// like clicked
+// Event 등록 함수 - 크롤링 이후에 실행! - [ set_animation_more,  clicked_like_heart,  ]
+// like
 function clicked_like_heart() {
 
     $('recommend_like_heart').off('click')
@@ -389,6 +344,111 @@ function clicked_like_heart() {
     }
 }
 
+// Book, Shopping mouse_over
+function set_animation_more() {
+    let shopping_content = document.getElementsByClassName('recommend_toggle')
+    for (let i = 0; i < shopping_content.length; i++) {
+        shopping_content[i].addEventListener('mouseover', function () {
+            shopping_content[i].style.animation = 'appear_toggle 1s ease-out forwards'
+
+        })
+        shopping_content[i].addEventListener('mouseout', function () {
+            shopping_content[i].style.animation = ''
+            shopping_content[i].style.opacity = '0'
+
+        })
+    }
+}
+
+// Search Bar
+function initialize_search_bar() {
+    let search_bars = document.getElementsByClassName('search_bar')
+    for (let i = 0; i < search_bars.length; i++) {
+        search_bars[i].children[1].addEventListener('keyup', (e) => {
+            if (e.keyCode === 13) {
+                let search_word = search_bars[i].children[1].value
+                search_bars[i].children[1].value = ''
+
+
+                // 이전 데이터 지우기
+                clear_content()
+
+                // // spinner running
+                let search_spinner = document.getElementsByClassName('spinner_search')
+                //
+                // for(let i=0; i<search_spinner.length;i++){
+                //     search_spinner[i].style.display ='flex'
+                // }
+
+
+                // search_창 보이기
+                let search_contents = document.getElementsByClassName('search_content')
+                for (let k = 0; k < search_contents.length; k++) {
+                    search_contents[k].style.display = 'block'
+                }
+                document.getElementsByClassName('search_news_content')[0].style.display = 'block'
+                document.getElementsByClassName('search_book_content')[0].style.display = 'block'
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/search/crawling',
+                    data: {"target": search_word},
+                    datatype: 'form',
+                    success: function (response) {
+
+                        // search_spinner 정지
+                        for (let i = 0; i < search_spinner.length; i++) {
+                            search_spinner[i].style.display = 'none'
+                        }
+
+
+                        // content 내용 붙이기
+                        youtube_content_add(response['all_response']['youtube'], 'search')
+                        news_content_add(response['all_response']['news'], 'search')
+                        book_content_add(response['all_response']['book'], 'search')
+                        shopping_content_add(response['all_response']['shopping'], 'search')
+
+                        // hovering_like
+                        clicked_like_heart()
+                        set_animation_more()
+
+                        // clicked_like
+                        // like_news()
+                    }
+                })
+            }
+        })
+
+    }
+}
+
+// Recommend Toggle switch
+function recommend_switch_setting(){
+    let switches = document.getElementsByClassName('recommend_container_total_toggle')
+    for(let i=0; i<switches.length; i++){
+        switches[i].addEventListener('click', (e)=>{
+            console.log('switch clicked!!!!')
+            console.log(e.target.innerText)
+            let state = e.target.innerText
+
+            if(state ==='ON'){
+
+                e.target.innerText = 'OFF';
+                e.target.nextElementSibling.style.display='none'
+            }
+            else if(state === 'OFF'){
+
+                e.target.innerText = 'ON';
+                e.target.nextElementSibling.style.display='flex'
+            }
+        })
+    }
+}
+
+
+
+// Event에 등록 되는 함수들
 // like 분류 함수 (youtube? news? book? shopping?)
 function like_check_hub(id, type) {
     let checker = id.split('_')[0]
@@ -467,7 +527,7 @@ function like_check_hub(id, type) {
     }
 }
 
-
+// Youtube 찜 API
 function like_youtube_ajax(data, type) {
 
     // like 할 때
@@ -500,6 +560,7 @@ function like_youtube_ajax(data, type) {
 
 }
 
+// News 찜 API
 function like_news_ajax(data, type){
     // 뉴스 like 할때
     if(type  === 'like'){
@@ -525,6 +586,7 @@ function like_news_ajax(data, type){
     }
 }
 
+// Book 찜 API
 function like_book_ajax(data, type){
     // 책 like 할때
     if(type  === 'like'){
@@ -550,6 +612,7 @@ function like_book_ajax(data, type){
     }
 }
 
+// Shopping 찜 API
 function like_shopping_ajax(data, type){
     // 쇼핑 like 할때
     if(type  === 'like'){
@@ -576,6 +639,7 @@ function like_shopping_ajax(data, type){
 }
 
 
+// 태그에 고정된 Event
 // 공유하기 버튼
 function content_do_share(str) {
     var textarea = document.createElement('textarea');
@@ -588,69 +652,16 @@ function content_do_share(str) {
     alert('복사되었습니다')
 }
 
-// search 관련
-function initialize_search_bar() {
-    let search_bars = document.getElementsByClassName('search_bar')
-    for (let i = 0; i < search_bars.length; i++) {
-        search_bars[i].children[1].addEventListener('keyup', (e) => {
-            if (e.keyCode === 13) {
-                let search_word = search_bars[i].children[1].value
-                search_bars[i].children[1].value = ''
-
-
-                // 이전 데이터 지우기
-                clear_content()
-
-                // // spinner running
-                let search_spinner = document.getElementsByClassName('spinner_search')
-                //
-                // for(let i=0; i<search_spinner.length;i++){
-                //     search_spinner[i].style.display ='flex'
-                // }
-
-
-                // search_창 보이기
-                let search_contents = document.getElementsByClassName('search_content')
-                for (let k = 0; k < search_contents.length; k++) {
-                    search_contents[k].style.display = 'block'
-                }
-                document.getElementsByClassName('search_news_content')[0].style.display = 'block'
-                document.getElementsByClassName('search_book_content')[0].style.display = 'block'
-
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/search/crawling',
-                    data: {"target": search_word},
-                    datatype: 'form',
-                    success: function (response) {
-
-                        // search_spinner 정지
-                        for (let i = 0; i < search_spinner.length; i++) {
-                            search_spinner[i].style.display = 'none'
-                        }
-
-
-                        // content 내용 붙이기
-                        youtube_content_add(response['all_response']['youtube'], 'search')
-                        news_content_add(response['all_response']['news'], 'search')
-                        book_content_add(response['all_response']['book'], 'search')
-                        shopping_content_add(response['all_response']['shopping'], 'search')
-
-                        // hovering_like
-                        clicked_like_heart()
-                        set_animation_more()
-
-                        // clicked_like
-                        // like_news()
-                    }
-                })
-            }
-        })
-
-    }
+// 탭 이동 함수
+function move_category(target_id) {
+    document.getElementById('recommend_youtube_container').style.display = 'none'
+    document.getElementById('recommend_news_container').style.display = 'none'
+    document.getElementById('recommend_book_container').style.display = 'none'
+    document.getElementById('recommend_shopping_container').style.display = 'none'
+    document.getElementById(target_id).style.display = 'block'
 }
 
+// 검색시 이전의 검색 내용 지우는 함수
 function clear_content() {
     let spinner_html = `<div class="recommend_spinner spinner_search" style="display: flex;">
                             <div class="recommend_spinner_lorder"></div>
@@ -669,24 +680,3 @@ function clear_content() {
     $('#shopping_search_content').append(spinner_html);
 }
 
-function recommend_switch_setting(){
-    let switches = document.getElementsByClassName('recommend_container_total_toggle')
-    for(let i=0; i<switches.length; i++){
-        switches[i].addEventListener('click', (e)=>{
-            console.log('switch clicked!!!!')
-            console.log(e.target.innerText)
-            let state = e.target.innerText
-
-            if(state ==='ON'){
-
-                e.target.innerText = 'OFF';
-                e.target.nextElementSibling.style.display='none'
-            }
-            else if(state === 'OFF'){
-
-                e.target.innerText = 'ON';
-                e.target.nextElementSibling.style.display='flex'
-            }
-        })
-    }
-}
