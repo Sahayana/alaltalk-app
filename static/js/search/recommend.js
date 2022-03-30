@@ -578,7 +578,6 @@ function search_to_youtube(word) {
             console.log(response['result'])
             clear_search_spinner()
             youtube_content_add(response['result'], 'search')
-            // clicked_like_heart()
         }
     })
 }
@@ -593,7 +592,6 @@ function search_to_news(word) {
             console.log(response['result'])
             clear_search_spinner()
             news_content_add(response['result'], 'search')
-            clicked_like_heart()
         }
     })
 }
@@ -608,8 +606,6 @@ function search_to_book(word) {
             console.log(response['result'])
             clear_search_spinner()
             book_content_add(response['result'], 'search')
-            clicked_like_heart()
-            set_animation_more()
         }
     })
 }
@@ -624,8 +620,7 @@ function search_to_shopping(word) {
             console.log(response['result'])
             clear_search_spinner()
             shopping_content_add(response['result'], 'search')
-            clicked_like_heart()
-            set_animation_more()
+
         }
     })
 }
