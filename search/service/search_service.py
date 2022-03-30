@@ -30,7 +30,7 @@ def crawling_news(search: str) -> List[List[str]]:
         test_title.append(name[i]["href"])
         test_title.append(content[i].get_text())
         test_title.append(image[i]["src"])
-        test_title.append(False)
+        test_title.append('False')
         answer.append(test_title)
 
     return answer
@@ -75,7 +75,7 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(price[i].get_text())
         test_title.append(link[i]["href"])
         test_title.append(image[i]["src"])
-        test_title.append(False)
+        test_title.append('False')
         answer.append(test_title)
     return answer
 

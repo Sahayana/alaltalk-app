@@ -11,13 +11,14 @@ function click_recommend_function() {
     get_keyword(chat_log)
 }
 
+
 // 데이터 준비 함수 - [ get_chat_log, get_keyword, recommend_crawling_on ]
-// 채팅로그 받아오기
-function get_chat_log(){
-   var link = document.location.href;
+// 채팅 로그 받아 오기
+function get_chat_log() {
+    var link = document.location.href;
     let room_id = link.split('/');
     room_id = parseInt(room_id[5]);
-    
+
     $.ajax({
         url: "/chat/chatlog/",
         type: 'POST',
@@ -38,7 +39,7 @@ function get_chat_log(){
 }
 
 //키워드 추출 ajax 통신 함수
-function get_keyword(chat_log){
+function get_keyword(chat_log) {
     let form_data = new FormData()
     form_data.append('chat_log', chat_log);
     $.ajax({
@@ -65,7 +66,7 @@ function get_keyword(chat_log){
 }
 
 // 크롤링 시작 함수
-function recommend_crawling_on(data){
+function recommend_crawling_on(data) {
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
@@ -88,24 +89,18 @@ function recommend_crawling_on(data){
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
 
-            // 6. 좋아요 이벤트 주기
-            clicked_like_heart()
 
-            // 7. 더보기 애니메이션 주기 ( book, shopping )
-            set_animation_more()
-
-            // 8. 검색창 초기화
+            // 6. 검색창 초기화
             initialize_search_bar()
 
-            // 9. 스위치 초기화
+            // 7. 스위치 초기화
             recommend_switch_setting()
         }
     })
 }
 
 
-
-// Crawling 함수 - - [ youtube_content_add, news_content_add, book_content_add, shopping_content_add ]
+// recommend 함수 - [ youtube_content_add, news_content_add, book_content_add, shopping_content_add ]
 // youtube
 function youtube_content_add(youtube_crawling_data_list, type) {
     let content_type = ''
@@ -121,7 +116,7 @@ function youtube_content_add(youtube_crawling_data_list, type) {
         let youtube_row = youtube_crawling_data_list[i]
         let content_id = 'youtube_' + content_type + '_' + i
         let heart_image = '/static/images/empty_heart.png'
-        if(youtube_row[4]){
+        if (youtube_row[4] === 'True') {
             heart_image = '/static/images/heart.png'
         }
         let temp_html = `<div class="content_box" id="${content_id}">
@@ -129,7 +124,7 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
                                     <div class="video_count">${youtube_row[3]}</div>
                                     <div class="recommend_youtube_heart_parent">
-                                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})">
+                                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
                                     </div>
                                 </div>`
         if (content_type === 'c') {
@@ -155,7 +150,7 @@ function news_content_add(news_crawling_data_list, type) {
         let news_row = news_crawling_data_list[i]
         let content_id = 'news_' + content_type + '_' + i
         let heart_image = '/static/images/empty_heart.png'
-        if(news_row[6]){
+        if (news_row[6] === 'True') {
             heart_image = '/static/images/heart.png'
         }
         let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
@@ -184,7 +179,7 @@ function news_content_add(news_crawling_data_list, type) {
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
                                     <img src="/static/images/share.png">
                                 </div>
-                                <div class="recommend_like_heart" style="background-image: url('${heart_image}')">
+                                <div class="recommend_like_heart" style="background-image: url('${heart_image}')" onclick="click_like(event)">
                                     
                                 </div>
                             </div>
@@ -217,16 +212,16 @@ function book_content_add(book_crawling_data_list, type) {
         let book_row = book_crawling_data_list[i]
         let content_id = 'book_' + content_type + '_' + i
         let heart_image = '/static/images/empty_heart.png'
-        if(book_row[7]){
+        if (book_row[7] === 'True') {
             heart_image = '/static/images/heart.png'
         }
         let temp_html = `<div class="content_box" id="${content_id}"> 
-                            <div class="recommend_toggle recommend_book_toggle" style="width: ${width}">
-                                <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')">
+                            <div class="recommend_toggle recommend_book_toggle" style="width: ${width}"  onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
+                                <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')" >
                                     <img src="/static/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('${heart_image}')">
+                                     style="background-image: url('${heart_image}')" onclick="click_like(event)">
                                 </div>
                             </div>
                             <a href="${book_row[5]}" target="_blank">
@@ -278,16 +273,16 @@ function shopping_content_add(shopping_crawling_data_list, type) {
         let shopping_row = shopping_crawling_data_list[i]
         let content_id = 'shopping_' + content_type + '_' + i
         let heart_image = '/static/images/empty_heart.png'
-        if(shopping_row[4]){
+        if (shopping_row[4] === 'True') {
             heart_image = '/static/images/heart.png'
         }
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
-                                    <div class="recommend_toggle">
+                                    <div class="recommend_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
                                         <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
                                             <img src="/static/images/share.png">
                                         </div>
                                         <div class="recommend_like_heart"
-                                             style="background-image: url('${heart_image}')">
+                                             style="background-image: url('${heart_image}')" onclick="click_like(event)">
                                         </div>
                                     </div>
                                     <a href="${shopping_row[3]}" target="_blank">
@@ -315,71 +310,21 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 }
 
 
-// Event 등록 함수 - 크롤링 이후에 실행! - [ set_animation_more,  clicked_like_heart,  ]
-// like
-function clicked_like_heart() {
 
-    $('recommend_like_heart').off('click')
-    let empty_heart_classes = document.getElementsByClassName('recommend_like_heart')
-    let background_heart = 'url("/static/images/heart.png")'
-    let background_empty_heart = 'url("/static/images/empty_heart.png")'
-    for (let i = 0; i < empty_heart_classes.length; i++) {
-        empty_heart_classes[i].addEventListener('click', (event) => {
-                let curr_backgroundImage = event.target.style.backgroundImage;
-                let id = event.target.parentElement.parentElement.id
-
-                if (curr_backgroundImage === background_empty_heart) {
-                    event.target.style.backgroundImage = background_heart
-                    like_check_hub(id, 'like')
-
-                } else {
-                    event.target.style.backgroundImage = background_empty_heart
-                    like_check_hub(id, 'like_cancel')
-
-                }
-
-            }
-        )
-
-    }
-}
-
-// Book, Shopping mouse_over
-function set_animation_more() {
-    let shopping_content = document.getElementsByClassName('recommend_toggle')
-    for (let i = 0; i < shopping_content.length; i++) {
-        shopping_content[i].addEventListener('mouseover', function () {
-            shopping_content[i].style.animation = 'appear_toggle 1s ease-out forwards'
-
-        })
-        shopping_content[i].addEventListener('mouseout', function () {
-            shopping_content[i].style.animation = ''
-            shopping_content[i].style.opacity = '0'
-
-        })
-    }
-}
-
-// Search Bar
+// Event 등록 함수 - 크롤링 이후에 실행! - [  ]
+// Search Bar 이벤트 등록
 function initialize_search_bar() {
     let search_bars = document.getElementsByClassName('search_bar')
     for (let i = 0; i < search_bars.length; i++) {
         search_bars[i].children[1].addEventListener('keyup', (e) => {
             if (e.keyCode === 13) {
+                let category = e.target.parentElement.parentElement.id.split('_')[1]
                 let search_word = search_bars[i].children[1].value
                 search_bars[i].children[1].value = ''
 
 
                 // 이전 데이터 지우기
                 clear_content()
-
-                // // spinner running
-                let search_spinner = document.getElementsByClassName('spinner_search')
-                //
-                // for(let i=0; i<search_spinner.length;i++){
-                //     search_spinner[i].style.display ='flex'
-                // }
-
 
                 // search_창 보이기
                 let search_contents = document.getElementsByClassName('search_content')
@@ -389,34 +334,8 @@ function initialize_search_bar() {
                 document.getElementsByClassName('search_news_content')[0].style.display = 'block'
                 document.getElementsByClassName('search_book_content')[0].style.display = 'block'
 
+                search_hub(category, search_word)
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/search/crawling',
-                    data: {"target": search_word},
-                    datatype: 'form',
-                    success: function (response) {
-
-                        // search_spinner 정지
-                        for (let i = 0; i < search_spinner.length; i++) {
-                            search_spinner[i].style.display = 'none'
-                        }
-
-
-                        // content 내용 붙이기
-                        youtube_content_add(response['all_response']['youtube'], 'search')
-                        news_content_add(response['all_response']['news'], 'search')
-                        book_content_add(response['all_response']['book'], 'search')
-                        shopping_content_add(response['all_response']['shopping'], 'search')
-
-                        // hovering_like
-                        clicked_like_heart()
-                        set_animation_more()
-
-                        // clicked_like
-                        // like_news()
-                    }
-                })
             }
         })
 
@@ -424,32 +343,30 @@ function initialize_search_bar() {
 }
 
 // Recommend Toggle switch
-function recommend_switch_setting(){
+function recommend_switch_setting() {
     let switches = document.getElementsByClassName('recommend_container_total_toggle')
-    for(let i=0; i<switches.length; i++){
-        switches[i].addEventListener('click', (e)=>{
+    for (let i = 0; i < switches.length; i++) {
+        switches[i].addEventListener('click', (e) => {
             console.log('switch clicked!!!!')
             console.log(e.target.innerText)
             let state = e.target.innerText
 
-            if(state ==='ON'){
+            if (state === 'ON') {
 
                 e.target.innerText = 'OFF';
-                e.target.nextElementSibling.style.display='none'
-            }
-            else if(state === 'OFF'){
+                e.target.nextElementSibling.style.display = 'none'
+            } else if (state === 'OFF') {
 
                 e.target.innerText = 'ON';
-                e.target.nextElementSibling.style.display='flex'
+                e.target.nextElementSibling.style.display = 'flex'
             }
         })
     }
 }
 
 
-
 // Event에 등록 되는 함수들
-// like 분류 함수 (youtube? news? book? shopping?)
+// 찜 분류 함수 (youtube? news? book? shopping?)
 function like_check_hub(id, type) {
     let checker = id.split('_')[0]
     if (checker === 'youtube') {
@@ -544,7 +461,7 @@ function like_youtube_ajax(data, type) {
             }
         })
     } // like 취소
-    else if(type === 'like_cancel'){
+    else if (type === 'like_cancel') {
         let result = 'Like cancel result : '
         $.ajax({
             type: 'POST',
@@ -561,25 +478,25 @@ function like_youtube_ajax(data, type) {
 }
 
 // News 찜 API
-function like_news_ajax(data, type){
+function like_news_ajax(data, type) {
     // 뉴스 like 할때
-    if(type  === 'like'){
+    if (type === 'like') {
         $.ajax({
             type: 'POST',
             url: '/api/like/news',
             data: data,
-            success: function(response){
+            success: function (response) {
                 alert(response['result'])
             }
         })
     }
     // 뉴스 like 취소 할 때
-    else if(type==='like_cancel'){
+    else if (type === 'like_cancel') {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/news',
             data: data,
-            success: function(response){
+            success: function (response) {
                 alert(response['result'])
             }
         })
@@ -587,25 +504,25 @@ function like_news_ajax(data, type){
 }
 
 // Book 찜 API
-function like_book_ajax(data, type){
+function like_book_ajax(data, type) {
     // 책 like 할때
-    if(type  === 'like'){
+    if (type === 'like') {
         $.ajax({
             type: 'POST',
             url: '/api/like/book',
             data: data,
-            success: function(response){
+            success: function (response) {
                 alert(response['result'])
             }
         })
     }
     // 책 like 취소 할 때
-    else if(type==='like_cancel'){
+    else if (type === 'like_cancel') {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/book',
             data: data,
-            success: function(response){
+            success: function (response) {
                 alert(response['result'])
             }
         })
@@ -613,33 +530,118 @@ function like_book_ajax(data, type){
 }
 
 // Shopping 찜 API
-function like_shopping_ajax(data, type){
+function like_shopping_ajax(data, type) {
     // 쇼핑 like 할때
-    if(type  === 'like'){
+    if (type === 'like') {
         $.ajax({
             type: 'POST',
             url: '/api/like/shopping',
             data: data,
-            success: function(response){
+            success: function (response) {
                 alert(response['result'])
             }
         })
     }
     // 쇼핑 like 취소 할 때
-    else if(type==='like_cancel'){
+    else if (type === 'like_cancel') {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/shopping',
             data: data,
-            success: function(response){
+            success: function (response) {
                 alert(response['result'])
             }
         })
     }
 }
 
+// Search API
+function search_hub(category, word) {
+    if (category === 'youtube') {
+        search_to_youtube(word)
+    } else if (category === 'news') {
+        search_to_news(word)
+    } else if (category === 'book') {
+        search_to_book(word)
+    } else if (category === 'shopping') {
+        search_to_shopping(word)
+    }
+}
+
+// Search_youtube
+function search_to_youtube(word) {
+    $.ajax({
+        type: 'POST',
+        url: '/api/search/youtube',
+        data: {'search': word},
+        success: function (response) {
+            console.log(response['result'])
+            clear_search_spinner()
+            youtube_content_add(response['result'], 'search')
+            // clicked_like_heart()
+        }
+    })
+}
+
+// Search_news
+function search_to_news(word) {
+    $.ajax({
+        type: 'POST',
+        url: '/api/search/news',
+        data: {'search': word},
+        success: function (response) {
+            console.log(response['result'])
+            clear_search_spinner()
+            news_content_add(response['result'], 'search')
+            clicked_like_heart()
+        }
+    })
+}
+
+// Search_book
+function search_to_book(word) {
+    $.ajax({
+        type: 'POST',
+        url: '/api/search/book',
+        data: {'search': word},
+        success: function (response) {
+            console.log(response['result'])
+            clear_search_spinner()
+            book_content_add(response['result'], 'search')
+            clicked_like_heart()
+            set_animation_more()
+        }
+    })
+}
+
+// Search_shopping
+function search_to_shopping(word) {
+    $.ajax({
+        type: 'POST',
+        url: '/api/search/shopping',
+        data: {'search': word},
+        success: function (response) {
+            console.log(response['result'])
+            clear_search_spinner()
+            shopping_content_add(response['result'], 'search')
+            clicked_like_heart()
+            set_animation_more()
+        }
+    })
+}
+
 
 // 태그에 고정된 Event
+// 탭 이동 함수
+function move_category(target_id) {
+    document.getElementById('recommend_youtube_container').style.display = 'none'
+    document.getElementById('recommend_news_container').style.display = 'none'
+    document.getElementById('recommend_book_container').style.display = 'none'
+    document.getElementById('recommend_shopping_container').style.display = 'none'
+    document.getElementById(target_id).style.display = 'block'
+    document.getElementById(target_id).children[2].children[1].style.display = 'none'
+}
+
 // 공유하기 버튼
 function content_do_share(str) {
     var textarea = document.createElement('textarea');
@@ -652,13 +654,35 @@ function content_do_share(str) {
     alert('복사되었습니다')
 }
 
-// 탭 이동 함수
-function move_category(target_id) {
-    document.getElementById('recommend_youtube_container').style.display = 'none'
-    document.getElementById('recommend_news_container').style.display = 'none'
-    document.getElementById('recommend_book_container').style.display = 'none'
-    document.getElementById('recommend_shopping_container').style.display = 'none'
-    document.getElementById(target_id).style.display = 'block'
+// 좋아요 눌렀을 때
+function click_like(event) {
+    let background_heart = 'url("/static/images/heart.png")'
+    let background_empty_heart = 'url("/static/images/empty_heart.png")'
+    let curr_backgroundImage = event.target.style.backgroundImage;
+    let id = event.target.parentElement.parentElement.id
+
+    if (curr_backgroundImage === background_empty_heart) {
+        event.target.style.backgroundImage = background_heart
+        like_check_hub(id, 'like')
+
+    } else {
+        event.target.style.backgroundImage = background_empty_heart
+        like_check_hub(id, 'like_cancel')
+
+    }
+}
+
+// book, shopping 나타나기 애니메이션 효과
+function appear_toggle(id){
+    let toggle = document.getElementById(id)
+   toggle.children[0].style.animation = 'appear_toggle 1s ease-out forwards'
+}
+
+// book, shopping 사라지기 애니메이션 효과
+function disappear_toggle(id){
+    let toggle = document.getElementById(id)
+    toggle.children[0].style.animation = ''
+     toggle.children[0].style.opacity = '0'
 }
 
 // 검색시 이전의 검색 내용 지우는 함수
@@ -679,4 +703,13 @@ function clear_content() {
     $('#shopping_search_content').empty();
     $('#shopping_search_content').append(spinner_html);
 }
+
+// 스피너 검색 스피너 삭제
+function clear_search_spinner() {
+    let search_spinner = document.getElementsByClassName('spinner_search')
+    for (let i = 0; i < search_spinner.length; i++) {
+        search_spinner[i].style.display = 'none'
+    }
+}
+
 
