@@ -167,17 +167,32 @@ except ImportError:
 
 # Email 전송을 위한 설정
 
-try:
-    with open(os.path.join(BASE_DIR, "alaltalk/config/email.json")) as f:
-        email = json.loads(f.read())
+# try:
+#     with open(os.path.join(BASE_DIR, "alaltalk/config/email.json")) as f:
+#         email = json.loads(f.read())
+#
+#     EMAIL_BACKEND = email["BACKEND"]
+#     EMAIL_HOST = email["HOST"]
+#     EMAIL_PORT = int(email["PORT"])
+#     EMAIL_HOST_USER = email["HOST_USER"]
+#     EMAIL_HOST_PASSWORD = email["HOST_PASSWORD"]
+#     EMAIL_USE_TLS = True
+#     EMAIL_USE_SSL = False
+#
+# except FileNotFoundError:
+#     pass
 
-    EMAIL_BACKEND = email["BACKEND"]
-    EMAIL_HOST = email["HOST"]
-    EMAIL_PORT = int(email["PORT"])
-    EMAIL_HOST_USER = email["HOST_USER"]
-    EMAIL_HOST_PASSWORD = email["HOST_PASSWORD"]
-    EMAIL_USE_TLS = True
-    EMAIL_USE_SSL = False
 
-except FileNotFoundError:
-    pass
+# AWS S3 connet
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+#
+# with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
+#     secret = json.loads(f.read())
+#
+# AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
+# AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
+# AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
+# AWS_REGION = "ap-northeast-2"
+# AWS_DEFAULT_ACL = "public-read"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)

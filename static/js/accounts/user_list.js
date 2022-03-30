@@ -5,6 +5,15 @@ function searchUser(){
 
     let query = "";
     query = $("#search_input").val();
+
+    if (query==='' || query==='.'){
+        return;
+    }
+
+    if (query.length < 3){
+        alert("2글자 이상 입력해주세요.");
+        return;
+    }
     
     let userListUri = $(".search_bar").data('uri');   
 
@@ -34,7 +43,7 @@ function appendResult(friend){
         tempHtml = `
         <div class="user_box">
             <div class="user_img">
-                <img src="/media/${friend[0]['img']}" alt="friend_p_img" srcset="">
+                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend[0]['img']}" alt="friend_p_img" srcset="">
             </div>
             <div class="info_group">
                 <div class="user_name">${friend[0]['nickname']}</div>
@@ -48,7 +57,7 @@ function appendResult(friend){
         tempHtml = `
         <div class="user_box">
             <div class="user_img">
-                <img src="/media/${friend[0]['img']}" alt="friend_p_img" srcset="">
+                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend[0]['img']}" alt="friend_p_img" srcset="">
             </div>
             <div class="info_group">
                 <div class="user_name">${friend[0]['nickname']}</div>
@@ -62,7 +71,7 @@ function appendResult(friend){
         tempHtml = `
         <div class="user_box">
             <div class="user_img">
-                <img src="/media/${friend[0]['img']}" alt="friend_p_img" srcset="">
+                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend[0]['img']}" alt="friend_p_img" srcset="">
             </div>
             <div class="info_group">
                 <div class="user_name">${friend[0]['nickname']}</div>

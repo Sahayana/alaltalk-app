@@ -22,7 +22,7 @@ class News(models.Model):
 class Book(models.Model):
     user = models.ForeignKey(CustomUser, related_name="book", on_delete=models.CASCADE)
     title = models.CharField(max_length=1000)
-    date = models.CharField(max_length=1000)
+    price = models.CharField(max_length=1000)
     author = models.CharField(max_length=1000)
     company = models.CharField(max_length=1000)
     thumbnail = models.ImageField()
@@ -32,6 +32,6 @@ class Book(models.Model):
 class Shopping(models.Model):
     user = models.ForeignKey(CustomUser, related_name="shopping", on_delete=models.CASCADE)
     price = models.CharField(max_length=1000)
-    date = models.CharField(max_length=1000)
     thumbnail = models.ImageField()
     link = models.URLField()
+    title = models.CharField(max_length=1000)

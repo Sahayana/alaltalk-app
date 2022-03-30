@@ -11,6 +11,27 @@
 }
 
 
+.recommend_toggle{
+    position: absolute;
+    width: 102%;
+    height: 3vw;
+    background-color: rgb(79, 42, 186, 0.5) ;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+}
+
+@keyframes appear_toggle {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
 
 
 /*******************************youtube*******************************/
@@ -692,7 +713,7 @@
     height: 40px;
 }
 
-.profile_like_news_heart {
+.recommend_like_heart {
     background-image: url("/static/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
@@ -701,6 +722,12 @@
     height: 25px;
     cursor: pointer;
     object-fit: cover;
+}
+
+.recommend_youtube_like_heart{
+    position: absolute;
+    left: 19vw;
+    top: 16vw;
 }
 
 .profile_like_news_heart:hover{
@@ -909,7 +936,6 @@
 .recommend_book_container .recommend_book_content p {
     font-weight: 700;
     color: #7657CE;
-    margin-bottom: 12px;
 }
 
 .recommend_book_container .recommend_book_content .content_book_section {
@@ -942,11 +968,17 @@
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
     min-width: 185px;
     width: 100%;
-    height: 240px;
+    height: 18vw;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
     margin-right: 10px;
     position: relative;
+}
+
+
+.recommend_book_toggle{
+    top: 0;
+    background-color: rgb(79 42 186 / 81%);
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box:last-child {
@@ -954,10 +986,10 @@
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box .book_img {
-    width: 100%;
-    height: 100%;
-    background-color: #d2d2d2;
-    background-image: url("../../images/book_sample1.png");
+    width: 12vw;
+    height: 16vw;
+    background-color: #ffffff;
+    background-image: url('../../images/book_sample1.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -968,11 +1000,14 @@
     height: auto;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin: 6px 6px;
     box-sizing: border-box;
+    border: min(1vw, 3px) solid #7556CD;
+    background-color: #eaeaea;
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
@@ -1031,56 +1066,34 @@
 }
 
 .recommend_book_container .search_book_content .content_book_section {
-    display: flex;
+    display: block;
     flex-wrap: wrap;
 }
 
-.recommend_book_container .search_book_content .content_box {
-    width: 310px;
-    height: 240px;
-    border: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    margin-right: 14px;
-    margin-bottom: 12px;
-    position: relative;
-}
 
 .recommend_book_container .search_book_content .content_box:last-child {
     margin-right: 0;
 }
 
 .recommend_book_container .search_book_content .content_box .book_img {
-    width: 100%;
+    width: 15vw;
     height: 240px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
-.recommend_book_container .search_book_content .content_box {
-    width: 75%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    margin: 6px 6px;
-}
 
 .recommend_book_container .search_book_content .content_box {
-    font-size: 16px;
-    color: #5e5e5e;
-    margin: 10px 0 0 6px;
-}
-
-.recommend_book_container .search_book_content .content_box {
-    width: 330px;
-    height: 240px;
-    background-image: url("../../images/book_sample2.jpg");
+    position: relative;
+    width: 15vw;
+    height: 20vw;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
     text-align: left;
     margin: 5px 0 50px 35px;
     color: #5e5e5e;
-
 }
 
 .recommend_book_container .search_book_content .content_box .more_icon {
@@ -1454,6 +1467,8 @@
     background-size: contain;
     cursor: pointer;
 }
+
+
 
 .recommend_shopping_search_content .toggle{
     position: absolute;

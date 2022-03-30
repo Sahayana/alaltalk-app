@@ -4,8 +4,11 @@ from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
-from ...functions import crawling_youtube, crawling_shopping_only_bs4
-from search.service.search_service import crawling_news, crawling_book
+
+from search.models import Book, News, Shopping, Youtube
+from search.service.search_service import crawling_book, crawling_news
+
+from ...functions import crawling_shopping_only_bs4, crawling_youtube
 from .schemas import CrawlingRequest, CrawlingResponse
 
 router = Router(tags=["search"])
@@ -22,10 +25,29 @@ def open_test(request):
 def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest = Form(...)) -> Tuple[int, Dict]:
     all_response = {}
     content_count = 10
-    all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
-    all_response["news"] = crawling_news(crawling_request.target)
-    all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
-    all_response["book"] = crawling_book(crawling_request.target)
+    try:
+        all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
+        for youtube_row in all_response['youtube']:
+            if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
+                youtube_row[4] = True
+    except Exception as e:
+        print('youtube_crawling Error: ', e)
+        all_response["youtube"] = []
+    try:
+        all_response["news"] = crawling_news(crawling_request.target)
+    except Exception as e:
+        print('news_crawling Error: ', e)
+        all_response["news"] = []
+    try:
+        all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
+    except Exception as e:
+        print('shopping_crawling Error: ', e)
+        all_response["shopping"] = []
+    try:
+        all_response["book"] = crawling_book(crawling_request.target)
+    except Exception as e:
+        print('book_crawling Error: ', e)
+        all_response['book'] = []
     return 201, {"all_response": all_response}
 
 
@@ -61,39 +83,4 @@ def do_like_news(request):
 @csrf_exempt
 @router.post("/cancel_like/news")
 def cancel_like_news(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/like/youtube")
-def do_like_youtube(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/cancel_like/youtube")
-def cancel_like_youtube(request):
-    return 0
-
-@csrf_exempt
-@router.post("/like/book")
-def do_like_book(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/cancel_like/book")
-def cancel_like_book(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/like/shopping")
-def do_like_shopping(request):
-    return 0
-
-
-@csrf_exempt
-@router.post("/cancel_like/shopping")
-def cancel_like_shopping(request):
     return 0

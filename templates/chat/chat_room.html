@@ -71,8 +71,13 @@
                 <div class="partner_info">
                     <div class="partner_img"></div>
                     <div class="info_group">
-                        <div class="partner_name">김코딩</div>
-                        <div class="partner_id">coding@example.com</div>
+                        {% if user.id == participant1.id %}
+                            <div class="partner_name">{{ participant2.nickname }}</div>
+                            <div class="partner_id">{{ participant2.email }}</div>
+                        {% elif user.id == participant2.id %}
+                            <div class="partner_name">{{ participant1.nickname }}</div>
+                            <div class="partner_id">{{ participant1.email }}</div>
+                        {% endif %}
                     </div>
 
                 </div>
@@ -88,6 +93,13 @@
             </div>
 
             <div id="chat_box" class="chat_box">
+                {% for message in last_messages %}
+                    {% if message.author.id == user.id %}
+                        <div class='user_to_partner'>{{ message.message }}</div>
+                    {% else %}
+                        <div class='partner_to_user'>{{ message.message }}</div>
+                    {% endif %}
+                {% endfor %}
                 {#                채팅내용 들어가는 곳#}
             </div>
             <div class="input_bar">
@@ -165,6 +177,7 @@
     const user_id = {{ user_id }};
     const participant1 = {{ participant1.id }};
     const participant2 = {{ participant2.id }};
+    {#const last_messages = {{ last_messages }};#}
 
     {#웹소켓 연결 JS#}
     if (participant1 === user_id || participant2 === user_id) {
@@ -180,12 +193,6 @@
         {#기존에 열려있던 웹소켓에서는 가져오지 않도록 설정#}
         {#불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정#}
         chatSocket.onopen = function (e) {
-            {#const sessionData = '{{ session }}';#}
-            {#sessionStorage.setItem("session", sessionData)#}
-            {#console.log(sessionStorage.getItem("session"))#}
-            {#console.log(sessionStorage.length)#}
-            {#console.log(sessionStorage.valueOf())#}
-            fetchMessages();
             console.log('Chat socket open');
         }
 
@@ -207,11 +214,19 @@
             }
         };
 
-        {#consumer에게 fetch_messages가 실행되도록 명령#}
 
+        {#consumer에게 fetch_messages가 실행되도록 명령#}
         function fetchMessages() {
             chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
         }
+
+        {#엔터키로 메세지 전송#}
+        document.querySelector('#chat_message_input').focus();
+        document.querySelector('#chat_message_input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat_message_submit').click();
+            }
+        };
 
         {#해당 input에 메세지를 작성하고 버튼을 클릭하면#}
         {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
