@@ -41,7 +41,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
         video_url = data.select("a")[0].attrs["href"]
         video_title = data.select("a")[1].attrs["title"]
         youtube_base_url = "https://www.youtube.com"
-        video_already = False
+        video_already = 'False'
         if "/shorts" in video_url:
             continue
         else:
@@ -131,7 +131,7 @@ def crawling_shopping_only_bs4(search_word: str, count: int) -> List[List[str]]:
         shopping_product.append(shopping_name)
         shopping_product.append(shopping_price)
         shopping_product.append(shopping_url)
-        shopping_product.append(False)
+        shopping_product.append('False')
         answer.append(shopping_product)
     print("shopping crawling function time is ", time.time() - start, "seconds")
     return answer[:count]
