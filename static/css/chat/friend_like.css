@@ -1,3 +1,5 @@
+
+
 .friends_like_container .friends_like_info {
     display: flex;
     align-items: center;
@@ -7,7 +9,7 @@
 .friends_like_container .friends_like_close_btn{
     position: absolute;
     top: 50px;
-    left: 95%;
+    left: 90%;
     background-image: url("../../images/x_black.png");
     width: 25px;
     height: 25px;
@@ -35,6 +37,34 @@
     margin-top: 4px;
 }
 
+
+/*유튜브 친구 찜 목록*/
+.friends_like_youtube {
+  margin-top: 30px;
+  width: 95%;
+  height: 87%;
+  overflow-x: auto;
+  max-height: 680px;
+  /*display: none;*/
+}
+
+.friends_like_youtube::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+.friends_like_youtube::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.friends_like_youtube_grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .friends_like_container {
   position: relative;
   width: 100%;
@@ -55,62 +85,58 @@
   cursor: pointer;
 }
 
-.friends_like_youtube {
-  padding-top: 60px;
-  width: 95%;
-  height: 100%;
-  overflow-x: auto;
-  max-height: 680px;
+.friends_like_category span:first-child {
+    color: #7657CE;
 }
 
-.friends_like_youtube::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
-}
-
-.friends_like_youtube::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
-}
-
-.friends_like_grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.friends_like_youtube_container {
-  margin-bottom: 40px;
-  width: 14vw;
-  position: relative;
-}
-.friends_like_content_box {
-    min-width: 280px;
-    width: 100%;
+.friends_like_youtube_content_box {
+    width: 310px;
     height: 240px;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
-    margin-right: 10px;
+    margin-right: 14px;
+    margin-bottom: 12px;
     position: relative;
 }
 
-.friends_like_video_img {
+.friends_like_youtube_content_box:last-child {
+    margin-right: 0;
+}
+
+.friends_like_youtube_content_box .video_img {
     width: 100%;
-    height: 170px;
+    height: 175px;
     background-color: #d2d2d2;
 }
 
+.friends_like_youtube_content_box .video_title {
+    width: 75%;
+    height: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin: 6px 6px;
+}
+
+.friends_like_youtube_content_box .video_count {
+    font-size: 14px;
+    color: #5e5e5e;
+    margin-left: 6px;
+}
 
 
+/*뉴스 친구 찜 목록*/
 .friends_like_news {
-  padding-top: 40px;
+  margin-top: 30px;
   width: 95%;
-  height: 100%;
+  height: 88%;
   display: none;
   overflow-y: auto;
   max-height: 680px;
 }
+
 .friends_like_news::-webkit-scrollbar {
   width: 10px;
   height: 0;
@@ -122,19 +148,19 @@
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.friends_like_news_content {
+.friends_like_news_content{
     position: relative;
-    width: 50vw;
+    width: 100%;
     height: 15vw;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 2vw;
 }
 
 .friends_like_news_content p{
-    margin:0
+    margin:0;
+    color: #7657CE;
 }
 
 .friends_like_news_content_image{
@@ -149,10 +175,11 @@
 .friends_like_news_content_image img{
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .friends_like_news_content_desc{
-    width: 30vw;
+    width: 90%;
     height: 12vw;
     display: flex;
     flex-direction: column;
@@ -162,26 +189,26 @@
 }
 
 .friends_like_news_content_desc_title{
-    width: 30vw;
-    height: 3vw;
-    overflow: hidden;
+    width: 90%;
+
+
 }
 
 .friends_like_news_content_desc_title p{
     width: 100%;
-    height: 80%;
-    overflow: hidden;
+    /*height: 80%;*/
+    /*overflow: hidden;*/
     font-size: 2vw;
 }
 
 .friends_like_news_content_desc_detail{
-    width: 30vw;
-    height: 5vw;
+    width: 90%;
+    /*height: 5vw;*/
     overflow: hidden;
 }
 
 .friends_like_news_content_desc_footer{
-    width: 30vw;
+    width: 90%;
     height: 2vw;
     display: flex;
     flex-direction: row;
@@ -202,10 +229,15 @@
     text-align: right;
 }
 
+
+
+
+/*책 찜목록*/
+
 .friends_like_book {
-  padding-top: 60px;
+  margin-top: 30px;
   width: 95%;
-  height: 100%;
+  height: 88%;
   position: relative;
   display: none;
   overflow-x: auto;
@@ -223,194 +255,190 @@
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.friends_like_book_grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.friends_like_book_content_box:last-child {
+    margin-right: 0;
 }
 
-.friends_like_content_box {
-    position: relative;
+.friends_like_book_content_box .book_img {
     width: 15vw;
+    height: 240px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+.friends_like_book_content_box {
+    position: relative;
+    width: 48vw;
     height: 20vw;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
     text-align: left;
     margin: 5px 0 50px 35px;
-    color: #5e5e5e;
+    font-weight: 700;
+    color: #7657CE;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-.profile_like_book_image {
-  width: 9vw;
-  height: 12vw;
-  background-color: #b7b7b7;
+
+.friends_like_book_desc{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
 }
 
-.profile_like_book_info {
-  margin-left: 10px;
-  height: 12vw;
-  width: 60%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-direction: column;
+.friends_like_book_desc p{
+    width: 20%;
+    font-size: 1vw;
 }
 
-.profile_like_book_title {
-  font-size: 18px;
-  font-weight: bold;
+.friends_like_book_desc_title, .friends_like_book_desc_series, .friends_like_book_desc_company, .friends_like_book_desc_author, .friends_like_book_desc_price{
+    width: 100%;
+    height: 4vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.profile_like_book_writer {
-  font-size: 13px;
-  color: #b7b7b7;
+.friends_like_book_desc_title{
+    height: 5vw
+}
+.friends_like_book_desc_title p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
 }
 
-.profile_like_book_translator {
-  font-size: 13px;
-  color: #b7b7b7;
+.friends_like_book_desc_series p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
 }
 
-.profile_like_book_price {
-  margin-top: 20px;
-  font-weight: bold;
+.friends_like_book_desc_company p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
 }
 
-.profile_like_book_button {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
+.friends_like_book_desc_author p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+.friends_like_book_desc_price p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
 }
 
-.profile_like_book_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  background-size: contain;
-  width: 40px;
-  height: 40px;
-}
+/*친구 찜 목록 쇼핑*/
 
-.profile_like_book_heart {
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
-}
-
-.profile_like_book_toggle {
-  position: absolute;
-  top: -45px;
-  left: 84%;
-  width: 80px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-}
-
-.profile_like_shopping {
-  padding-top: 60px;
+.friends_like_shopping {
+  margin-top: 30px;
   width: 95%;
-  height: 100%;
+  height: 88%;
   position: relative;
+  display: none;
   overflow-x: auto;
   max-height: 660px;
-  display: none;
+    font-weight: 700;
+    color: #7657CE;
 }
 
-.profile_like_shopping::-webkit-scrollbar {
+.friends_like_shopping::-webkit-scrollbar {
   width: 10px;
   height: 0;
 }
 
-.profile_like_shopping::-webkit-scrollbar-thumb {
+.friends_like_shopping::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.profile_like_shopping_grid {
+.friends_like_shopping_grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-.profile_like_shopping_container {
-  margin-bottom: 40px;
-  width: 24vw;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-direction: row;
-  position: relative;
+
+.friends_like_shopping_content{
+    position: relative;
+    width: 18vw;
+    height : 25vw;
+    border:0.5vw solid #7556CD;
+    margin: 1vw;
 }
 
-.profile_like_shopping_image {
-  width: 9vw;
-  height: 12vw;
-  background-color: #b7b7b7;
+
+.friends_like_shopping_content_img{
+    width: 15vw;
+    height: 15vw;
+    background-color: #ef1c1c;
+    margin: 1vw 1.5vw;
+    object-fit: cover;
 }
 
-.profile_like_shopping_info {
-  margin-top: 30px;
-  margin-left: 10px;
-  height: 12vw;
-  width: 60%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
+.friends_like_shopping_content_img img{
+    width: 100%;
+    height: 100%;
 }
 
-.profile_like_shopping_title {
-  font-size: 18px;
-  font-weight: bold;
+.friends_like_shopping_content_desc{
+    width: 90%;
+    height: 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vw auto 0;
 }
 
-.profile_like_shopping_brand {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #b7b7b7;
+.friends_like_shopping_content_desc_bar{
+    margin-top: 1vw;
+    width: 90%;
+    height: 2px;
+    background-color: #7556CD;
 }
 
-.profile_like_shopping_price {
-  margin-top: 40%;
-  font-weight: bold;
+.friends_like_shopping_content_desc_title {
+    text-align: left;
+    width: 100%;
+    height: 3.5vw;
+    overflow: hidden;
 }
 
-.profile_like_shopping_button {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
+.friends_like_shopping_content_desc_title p{
+    margin: 0 auto;
 }
 
-.profile_like_shopping_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  background-size: contain;
-  width: 40px;
-  height: 40px;
+.friends_like_shopping_content_desc_price{
+    text-align: right;
+    width: 100%;
+    height: 3vw;
+
 }
 
-.profile_like_shopping_heart {
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
-}
-
-.profile_like_shopping_toggle {
-  position: absolute;
-  top: -45px;
-  left: 84%;
-  width: 80px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
+.friends_like_shopping_content_desc_price p{
+    font-size: 2vw;
+    color: #ae0000;
+    font-weight: 800;
+    margin: 0 auto;
 }

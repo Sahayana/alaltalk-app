@@ -98,7 +98,9 @@
 
             <div class="profile_follow_list">
                 <li>
-                    <div class="profile_chat_avatar"></div>
+                    <div class="profile_chat_avatar">
+                        <img src="{{sender.img.url}}" alt="friend_p_img" srcset="">
+                    </div>
                     <div class="profile_follow_list_body">
                         <div class="profile_follow_list_info">
                             <div class="profile_follow_user">{{sender.nickname}}</div>
@@ -126,45 +128,47 @@
 
             <!-- 유튜브 찜 목록 -->
             <div class="profile_like_youtube" id="profile_like_youtube">
-                {% if user.youtube.all > 0 %}
-                {% for youtube in user.youtube.all %}                                    
-                <div class="content_box" id="youtube_s_{{youtube.id}}">
-                    <iframe class="video_img" src="{{youtube.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
-                    <div class="video_title" style="font-size: 13px">{{youtube.title}}</div>
-                    <div class="video_count">{{youtube.views}}</div>
-                    <div class="recommend_youtube_heart_parent">
-                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
-                    </div>
-                </div>                
-                {% endfor %}
-                {% endif %}                  
+                <div class="profile_youtube_content">
+                    {% if youtubes %}
+                    {% for youtube in youtubes %}                                    
+                    <div class="content_box" id="youtube_s_{{youtube.id}}">
+                        <iframe class="video_img" src="{{youtube.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
+                        <div class="video_title" style="font-size: 13px">{{youtube.title}}</div>
+                        <div class="video_count">{{youtube.views}}</div>
+                        <div class="recommend_youtube_heart_parent">
+                            <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                        </div>
+                    </div>                
+                    {% endfor %}
+                    {% endif %} 
+                </div>                               
             </div>
             <!-- 유튜브 찜 목록 끝 -->
 
 
             <!-- 뉴스 찜 목록 -->
-            <div class="profile_like_news" id="profile_like_news">
-                {% if user.news.all > 0 %}
-                {% for news in user.news.all %}
-                <div class="recommend_news_search_content" id="news_s_{{news.id}}">
+            <div class="profile_like_news" id="profile_like_news">                
+                {% if news %}
+                {% for article in news %}
+                <div class="recommend_news_search_content" id="news_s_{{article.id}}">
                     <div class="recommend_news_search_content_image">
-                        <a href="{{news.link}}" target="_blank">
-                            <img src="{{news.thumbnail}}">
+                        <a href="{{article.link}}" target="_blank">
+                            <img src="{{article.thumbnail}}">
                         </a>
                     </div>
                     <div class="recommend_news_search_content_desc">
                         <div class="recommend_news_search_content_desc_title">
-                            <p>{{news.title}}</p>
+                            <p>{{article.title}}</p>
                         </div>
                         <div class="recommend_news_search_content_desc_detail">
-                            <p>{{news.content}}</p>
+                            <p>{{article.content}}</p>
                         </div>
                         <div class="recommend_news_search_content_desc_footer">
                             <div class="recommend_news_search_content_desc_footer_newspaper">
-                                <p>{{news.company}}</p>
+                                <p>{{article.company}}</p>
                             </div>
                             <div class="recommend_news_search_content_desc_footer_time">
-                                <p>{{news.date}}</p>
+                                <p>{{article.date}}</p>
                             </div>
                         </div>
                     </div>
@@ -178,15 +182,16 @@
                     </div>
                 </div>
                 {% endfor %}
-                {% endif %}                      
+                {% endif %} 
+                                                 
             </div>
             <!-- 뉴스 찜 목록 끝 -->
 
 
             <!-- 책 찜 목록 -->
             <div class="profile_like_book" id="profile_like_book">
-                {% if user.book.all > 0 %}
-                {% for book in user.book.all %}
+                {% if books %}
+                {% for book in books %}
                 <div class="content_box" id="book_s_{{book.id}}"> 
                     <div class="recommend_toggle recommend_book_toggle" style="width: 15vw">
                         <div class="profile_like_news_toggle" onclick="content_do_share({{book.link}})">
@@ -230,34 +235,36 @@
             
             <!-- 쇼핑 찜 목록 -->
             <div class="profile_like_shopping" id="profile_like_shopping">
-                {% if user.shopping.all > 0 %}
-                {% for shopping in user.shopping.all %}
-                <div class="recommend_shopping_search_content" id="{{shopping.id}}">
-                    <div class="recommend_toggle">
-                        <div class="profile_like_news_toggle" onclick="content_do_share({{shopping.link}})">
-                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                <div class="profile_shopping_content">
+                    {% if shoppings %}
+                    {% for shopping in shoppings %}
+                    <div class="recommend_shopping_search_content" id="{{shopping.id}}">
+                        <div class="recommend_toggle">
+                            <div class="profile_like_news_toggle" onclick="content_do_share({{shopping.link}})">
+                                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                            </div>
+                            <div class="recommend_like_heart"
+                                style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                            </div>
                         </div>
-                        <div class="recommend_like_heart"
-                             style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                        <a href="{{shopping.link}}" target="_blank">
+                            <div class="recommend_shopping_search_content_img">
+                                <img src="{{shopping.thumbnail}}">
+                            </div>
+                        </a>
+                        <div class="recommend_shopping_search_content_desc">
+                            <div class="recommend_shopping_search_content_desc_bar"></div>
+                            <div class="recommend_shopping_search_content_desc_title">
+                                <p>{{shopping.title}}</p>
+                            </div>
+                            <div class="recommend_shopping_search_content_desc_price">
+                                <p>{{shopping.price}}원</p>
+                            </div>
                         </div>
                     </div>
-                    <a href="{{shopping.link}}" target="_blank">
-                        <div class="recommend_shopping_search_content_img">
-                            <img src="{{shopping.thumbnail}}">
-                        </div>
-                    </a>
-                    <div class="recommend_shopping_search_content_desc">
-                        <div class="recommend_shopping_search_content_desc_bar"></div>
-                        <div class="recommend_shopping_search_content_desc_title">
-                            <p>{{shopping.title}}</p>
-                        </div>
-                        <div class="recommend_shopping_search_content_desc_price">
-                            <p>{{shopping.price}}원</p>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-                {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>                
             </div>
             <!-- 쇼핑 찜 목록 끝-->
         </div>

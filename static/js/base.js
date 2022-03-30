@@ -29,7 +29,6 @@ function switch_chat() {
     $('#right_wrap').load("/api/search/recommend");
     setTimeout(function(){
         click_recommend_function();
-        give_event()
     }, 100)
 }
 

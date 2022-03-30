@@ -93,10 +93,14 @@ def friend_list(request):
 @login_required
 def mypage(request):
     user = get_user_model().objects.get(id=request.user.id)
-    friend_requests = FriendRequest.objects.filter(receiver=user)
+    friend_requests = FriendRequest.objects.filter(receiver=user)    
     context = {
         "user": user,
         "friend_requests": friend_requests,
+        "youtubes": user.youtube.all(),
+        "news": user.news.all(),
+        "books": user.book.all(),
+        "shoppings": user.shopping.all(),
     }
     return render(request, "accounts/mypage.html", context)
 
