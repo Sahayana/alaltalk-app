@@ -131,10 +131,14 @@
                 <div class="friends_like_youtube_grid">
                     {% for youtube in participant_like_youtube %}
                         <div class="friends_like_youtube_content_box">
-                                <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
-                                <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
-                                <div class="video_count">{{ youtube.views }}</div>
-                            </div>
+                            <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>ㅇ
+                            </iframe>
+                            <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
+                            <div class="video_count">{{ youtube.views }}</div>
+                        </div>
                     {% endfor %}
 
 
