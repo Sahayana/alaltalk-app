@@ -47,7 +47,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
         else:
             crawling_url = str(video_url).split("=")[1]
         crawling_url = youtube_base_url + "/embed/" + crawling_url
-        crawling_data.append([crawling_url, video_url, video_title, video_views, video_already])
+        crawling_data.append([crawling_url, youtube_base_url + video_url, video_title, video_views, video_already])
 
     print("youtube crawling function time is ", time.time() - start, "seconds")
     return crawling_data[0:content_count]
