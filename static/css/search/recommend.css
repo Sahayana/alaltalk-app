@@ -259,7 +259,7 @@ body {
 
 
 .recommend_youtube_container {
-    /*display: none;*/
+    display: none;
 }
 
 .right_wrap .recommend_youtube_container {
@@ -541,7 +541,7 @@ body {
 
 
 .recommend_news_container {
-    display: none;
+    /*display: none;*/
 }
 
 .right_wrap {
