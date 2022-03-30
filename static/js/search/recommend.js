@@ -26,14 +26,44 @@ function get_chat_log(){
     });
 }
 
+var keyowrd = []
+//키워드 추출 ajax 통신 함수
+function get_keyword(chat_log){
+    let form_data = new FormData()
+
+    form_data.append('chat_log', chat_log);
+
+    $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:5000/api/v1/textrank/",
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        async: false,
+        enctype: 'multipart/form-data',
+        success: function (response) {
+            console.log(response.keyword)
+            keyowrd = response.keyword;
+
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+}
+
 
 // 추천 버튼 누르면 시작되는 함수 ( 가장 처음 )
 function click_recommend_function() {
     get_chat_log()
-
     let form_data = new FormData()
     form_data.append('chat_log', chat_log);
     console.log(form_data.get)
+
     //
     $.ajax({
         type: "POST",
