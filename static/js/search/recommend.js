@@ -33,31 +33,31 @@ function click_recommend_function() {
     console.log('page is onload!')
 
     let machin_result = '아이유'
-    // let form_data = new FormData()
-    // form_data.append('chat_log', chat_log);
-    //
-    // $.ajax({
-    //     type: "POST",
-    //     url: "http://127.0.0.1:5000/api/v1/textrank/",
-    //     data: form_data,
-    //     cache: false,
-    //     processData: false,
-    //     contentType: false,
-    //     async: false,
-    //     enctype: 'multipart/form-data',
-    //     success: function (response) {
-    //         // console.log(response.keyword)
-    //         // console.log('추천시스템 성공!')
-    //         machin_result  = response.keyword[0]
-    //
-    //     },
-    //     error: function (request, status, error) {
-    //         alert('error')
-    //
-    //         console.log(request, status, error)
-    //     }
-    //
-    // });
+    let form_data = new FormData()
+    form_data.append('chat_log', chat_log);
+
+    $.ajax({
+        type: "POST",
+        url: "http://13.125.250.182:8000/api/v1/textrank/",
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        async: false,
+        enctype: 'multipart/form-data',
+        success: function (response) {
+            // console.log(response.keyword)
+            // console.log('추천시스템 성공!')
+            machin_result  = response.keyword[0]
+
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
     recommend_crawling_on(machin_result)
 
 }
