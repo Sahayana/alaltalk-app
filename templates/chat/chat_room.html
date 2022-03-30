@@ -37,7 +37,8 @@
                 {% for chatroom in chatroom_list %}
                     {% if chatroom.participant1.id == user.id %}
                         <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
-                            <div class="partner_img" style="background-image: url({{ chatroom.participant2.img }})"></div>
+                            <div class="partner_img"
+                                 style="background-image: url({{ chatroom.participant2.img }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {% for message in all_message %}
@@ -49,7 +50,8 @@
                         </a>
                     {% else %}
                         <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
-                            <div class="partner_img" style="background-image: url({{ chatroom.participant1.img }})"></div>
+                            <div class="partner_img"
+                                 style="background-image: url({{ chatroom.participant1.img }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
                                 {% for message in all_message %}
@@ -527,6 +529,7 @@
         {#ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다#}
         {#message를 created_at의 순서대로 보여준다.#}
         chatSocket.onmessage = function (e) {
+            $('#chat_message_input').val('');
             const data = JSON.parse(e.data);
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
@@ -538,37 +541,49 @@
             }
         };
 
-
         {#consumer에게 fetch_messages가 실행되도록 명령#}
         function fetchMessages() {
             chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
         }
 
         {#엔터키로 메세지 전송#}
-        document.querySelector('#chat_message_input').focus();
-        document.querySelector('#chat_message_input').onkeyup = function(e) {
+        {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
+        {#document.querySelector('#chat_message_input').focus();#}
+        document.querySelector('#chat_message_input').onkeyup = function (e) {
             if (e.keyCode === 13) {  // enter, return
-                document.querySelector('#chat_message_submit').click();
+                const messageInputDom = document.querySelector('#chat_message_input');
+                const message = messageInputDom.value
+                if (message === '') {
+                    console.log('채팅 start!')
+                } else {
+                    chatSocket.send(JSON.stringify({
+                        'command': 'new_messages',
+                        'message': message,
+                        'from': user_id,
+                        'room_id': room_id,
+                    }));
+                }
+                messageInputDom.value = '';
             }
         };
 
         {#해당 input에 메세지를 작성하고 버튼을 클릭하면#}
         {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
-        document.querySelector('#chat_message_submit').onclick = function (e) {
-            const messageInputDom = document.querySelector('#chat_message_input');
-            const message = messageInputDom.value
-            if (message === '') {
-                alert('메세지를 입력해주세요.')
-            } else {
-                chatSocket.send(JSON.stringify({
-                    'command': 'new_messages',
-                    'message': message,
-                    'from': user_id,
-                    'room_id': room_id,
-                }));
-            }
+        {#document.querySelector('#chat_message_submit').onclick = function (e) {#}
+        {#    const messageInputDom = document.querySelector('#chat_message_input');#}
+        {#    const message = messageInputDom.value#}
+        {#    if (message === '') {#}
+        {#        alert('메세지를 입력해주세요.')#}
+        {#    } else {#}
+        {#        chatSocket.send(JSON.stringify({#}
+        {#            'command': 'new_messages',#}
+        {#            'message': message,#}
+        {#            'from': user_id,#}
+        {#            'room_id': room_id,#}
+        {#        }));#}
+        {#    }#}
             {#messageInputDom.value = '';#}
-        };
+        // };
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {
