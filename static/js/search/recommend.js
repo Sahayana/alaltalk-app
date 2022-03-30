@@ -405,7 +405,7 @@ function like_check_hub(id, type) {
         let youtube = document.getElementById(id)
         let url = youtube.firstElementChild.src
         let title = youtube.children[1].innerText
-        let views = youtube.children[1].innerText
+        let views = youtube.children[2].innerText
         let youtube_data = {}
 
         youtube_data['url'] = url
@@ -444,6 +444,7 @@ function like_check_hub(id, type) {
         let price = book.children[2].children[4].children[1].innerText
         let link = book.children[1].href
         let thumbnail = book.children[1].children[0].style.backgroundImage.split('url("')[1].split('")')[0]
+        let series = book.children[2].children[1].children[1].innerText
 
         let book_data = {}
         book_data['title'] = title
@@ -452,6 +453,7 @@ function like_check_hub(id, type) {
         book_data['price'] = price
         book_data['link'] = link
         book_data['thumbnail'] = thumbnail
+        book_data['series'] = series
 
         like_book_ajax(book_data, type)
     }
@@ -495,7 +497,7 @@ function like_youtube_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/youtube',
-            data: {'url': data},
+            data: data,
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result

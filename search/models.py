@@ -8,7 +8,7 @@ class Youtube(models.Model):
     user = models.ForeignKey(CustomUser, related_name="youtube", on_delete=models.CASCADE)
     url = models.URLField(max_length=1000)
     title = models.CharField(max_length=1000, default='')
-    count = models.CharField(max_length=1000, default='')
+    views = models.CharField(max_length=1000, default='')
 
 
 class News(models.Model):

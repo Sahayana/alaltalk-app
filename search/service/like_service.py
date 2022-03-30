@@ -3,11 +3,11 @@ from accounts.models import CustomUser
 from ..models import Book, News, Shopping, Youtube
 
 
-def do_like_youtube_service(user_id: int, youtube_url: str) -> str:
+def do_like_youtube_service(user_id: int, youtube_url: str, title: str, views: str) -> str:
     user = CustomUser.objects.get(pk=user_id)
     youtube_check = Youtube.objects.filter(user=user, url=youtube_url).exists()
     if not youtube_check:
-        Youtube.objects.create(user=user, url=youtube_url)
+        Youtube.objects.create(user=user, url=youtube_url, title=title, views=views)
         return "success"
     else:
         return "AlreadyExist"
@@ -24,7 +24,7 @@ def do_like_shopping_service(user_id: int, title: str, price: str, thumbnail_url
         return 'AlreadyExist'
 
 
-def do_like_book_service(user_id: int, title: str, price: str, author: str, company: str, thumbnail: str, link: str) -> str:
+def do_like_book_service(user_id: int, title: str, price: str, author: str, company: str, thumbnail: str, link: str, series: str) -> str:
     user = CustomUser.objects.get(pk=user_id)
     book_check = Book.objects.filter(user=user, link=link).exists()
     if not book_check:
@@ -35,7 +35,8 @@ def do_like_book_service(user_id: int, title: str, price: str, author: str, comp
             price=price,
             author=author,
             company=company,
-            thumbnail=thumbnail
+            thumbnail=thumbnail,
+            series=series
         )
         return 'success'
     else:
