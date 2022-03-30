@@ -14,7 +14,7 @@ function get_chat_log(){
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {
-            console.log(response.chat_log);
+            console.log('chat_log:', response.chat_log);
             chat_log = response.chat_log;
 
         },
@@ -32,66 +32,33 @@ function get_chat_log(){
 function click_recommend_function() {
     console.log('page is onload!')
 
-    let form_data = new FormData()
-
-    let chat_log = sentence = ["안녕하세요 이감국어교육연구소입니다.",
-                   "너무 길어서 힘드네요...어쩔 수 없죠그런데 제목도 깁니다 ㅠ",
-                   "오늘은 문학에서 등장하는 정확히 잡기 힘든 개념어를 이야기해보고자 합니다."
-                   ,"댓글로 질문해주셨던 대화체 독백체로 일단 시작을 해보겠습니다.",
-                   "일단 제목은 더럽게 길지만 요약하자면 일단 다음과 같이 분류할 수 있습니다.",
-                   "1.대화의 형식2.대화체3.독백 = 독백체 = 독백적 발화(내적 독백과 다름) = 독백적 어조2번의 개념이 1번 개념을 포함하고 있으며2번 개념과 3번 개념은 다소 겹칩니다.",
-                   "정리한다면서 더더욱 복잡해지고 있습니다.",
-                   "네 이렇게나 어렵기 때문에 수능에서도 그렇게 엄격하게 출제한 적은 별로 없습니다.",
-                   "일단 상황을 전제해 봅시다.A와 B 두 사람이 있습니다.",
-                   "A가 B에게 말을 하고 B는 그에 대한 반응을 보입니다(대답을 합니다)A는 이 때 화자가 되고 B는 청자가 됩니다.",
-                   "화자가 드러나고 청자가 화자의 말에 대한 반응을 합니다.이건 명백한 ‘대화’의 상황입니다.",
-                   "대화의 상황은 대화의 형식을 빌려~ 라고 선지에서 주로 표현되며이것이 1번의 개념이 됩니다.그러면 1번의 대화와 2번의 대화체는 어떻게 다를까요?겉모습부터 봅시다.",
-                   "대화체라는 녀석한테는 대화와 다르게 ‘체’가 추가되었습니다. ‘체’는 말투처럼 이해하시길 바랍니다.",
-                   "즉, 대화체는 대화를 하는 듯한 말투입니다.그리고 실제 수능에서는 이와 비슷한‘말을 건네는 어투’로 가장 많이 등장합니다.다시 말해서 실제로 대화가 이루어질 필요는 없습니다.",
-                   "다시 말해서 화자가 말을 건네고 있다면 청자의 반응이 존재하지 않더라도,청자의 존재만 뚜렷하게 인정된다면 대화체가 인정됩니다.왜? 실제 청자의 대답이 없더라도 충분히 대화를 하는 듯한 말투가 되기 때문입니다.",
-                   "그러면 대화체면 대화다라는 말은 성립할까요?아닙니다. 아닐수도 있죠. 왜냐하면 청자의 반응이 없더라도 청자의 존재만 인정되면 대화체가 되지만 대화는 반드시 청자의 대답을, 반응을 필요로 하기 때문입니다.",
-                   "그렇다면 대화는 대화체다 라는 말은 어떨까요?성립합니다. 왜냐하면 대화라면 화자도 말을 하고 청자도 그에 대한 반응을 하고 있으니 청자가 당연히 존재하므로 대화체로 인정되기 때문입니다.",
-                   "다시 정리하겠습니다.1.대화체는 대화의 형식을포함합니다. 다만 대화체는 대화의 형식과다릅니다.2. 대화의 형식은 청자의 반응을 반드시 필요로 하지만 대화체는 청자의 반응을 필요로 하지는 않습니다. 화자의 존재만 전제되면 됩니다.3. 말을 건네는 어투도 대화체랑거의 같은 표현입니다..",
-                   "다만 표현 조금 더 단단하게 잡고 간다면 대화체는 말을 건네는 어투일때도 인정이 되고대화적 형식일때도 인정이 되는 겁니다.",
-                   "이제 마지막 개념을 잡아봅시다.독백이나 독백체나 독백적 발화나 독백적 어조나 다 같은 표현으로 생각해도 괜찮아요.독백은 말 그대로 화자가 혼자 말하는 상황 상상하시면 됩니다.그러면 청자는 반드시 필요할까요? 아뇨 없어도 됩니다.따라서 말을 하는 듯하는데 청자가 존재하지 않다면 독백, 독백체로 인정됩니다.",
-                   "아 그러면 청자가 존재하면, 즉 드러나면 독백이 아닌가요?그렇지는 않습니다.다시 말해서 청자가 존재함이 인정되도, 실제로 청자의 반응이 없다면 이는 대화체로도 인정되지만 독백체로도 인정이 됩니다.",
-                   "이제 슬슬 짜증이 나죠. 제가 그래서 2번 3번이 다소 겹친다고 합니다.이 지점때문에 수능 문학 개념에서 그렇게 큰 비중을 차지하지는 못하게 됩니다..그냥 이해하기 쉽게 이렇게 생각합시다.",
-                   "화자가 말을 하고 청자가 존재하되 청자의 반응이 없다면 청자가 존재하기때문에 대화는 아니더라도 대화체가 인정이 된다. 거기에 일단 청자의 반응이 없기 때문에 화자가 혼자 말하고 있고 따라서 독백, 독백체, 독백적 발화, 독백체도 맞는 말이다…하고 잡아주시면 됩니다.",
-                   "아 독백체 진짜 짜증나요! 싶으시면 이렇게 생각하셔도 됩니다.대부분의 시는 독백체입니다.독백체가 아닌 시들은 ‘말’처럼 안 느껴집니다.이런 시들은 어떤 느낌이 드냐면..정말 담담한 느낌이 드는 경우가 많습니다.그래서 주로 평서형 종결 어미와 명사형 종결 어미들이 쓰입니다.이런 경우가 아니라면 보통 정말 ‘말’을 하는 듯한 인상을 주고, 그러면 독백체라고 인정합니다.",
-                   "다시 정리합니다.1.대화체와 독백체가 동시에 쓰일 수 있습니다.2.실제로 많은 시들이 독백체입니다.도움이 되셨길 바랍니다"];
-
-    form_data.append('chat_log', chat_log);
-    let machin_result = ''
-
-
-    $.ajax({
-        type: "POST",
-        url: "http://127.0.0.1:5000/api/v1/textrank/",
-        data: form_data,
-        cache: false,
-        processData: false,
-        contentType: false,
-        async: false,
-        enctype: 'multipart/form-data',
-        success: function (response) {
-            // console.log(response.keyword)
-            // console.log('추천시스템 성공!')
-            machin_result  = response.keyword[0]
-
-        },
-        error: function (request, status, error) {
-            alert('error')
-
-            console.log(request, status, error)
-        }
-
-    });
-
+    let machin_result = '아이유'
+    // let form_data = new FormData()
+    // form_data.append('chat_log', chat_log);
+    //
+    // $.ajax({
+    //     type: "POST",
+    //     url: "http://127.0.0.1:5000/api/v1/textrank/",
+    //     data: form_data,
+    //     cache: false,
+    //     processData: false,
+    //     contentType: false,
+    //     async: false,
+    //     enctype: 'multipart/form-data',
+    //     success: function (response) {
+    //         // console.log(response.keyword)
+    //         // console.log('추천시스템 성공!')
+    //         machin_result  = response.keyword[0]
+    //
+    //     },
+    //     error: function (request, status, error) {
+    //         alert('error')
+    //
+    //         console.log(request, status, error)
+    //     }
+    //
+    // });
     recommend_crawling_on(machin_result)
-
-}
-
-function make_reccommend(sentence){
 
 }
 
@@ -99,11 +66,11 @@ function recommend_crawling_on(data){
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": '코딩'},
+        data: {"target": data},
         datatype: 'form',
-        async: false,
+        async: true,
         success: function (response) {
-            console.log(response['all_response']['book'])
+            console.log(response['all_response'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
@@ -435,9 +402,18 @@ function like_check_hub(id, type) {
     let checker = id.split('_')[0]
     if (checker === 'youtube') {
         // url 가져 오기
-        let url = document.getElementById(id).firstElementChild.src
+        let youtube = document.getElementById(id)
+        let url = youtube.firstElementChild.src
+        let title = youtube.children[1].innerText
+        let views = youtube.children[2].innerText
+        let youtube_data = {}
+
+        youtube_data['url'] = url
+        youtube_data['title'] = title
+        youtube_data['views'] = views
+
         // youtube like function
-        like_youtube_ajax(url, type)
+        like_youtube_ajax(youtube_data, type)
     }
     // news data 가져 오기
     else if (checker === 'news') {
@@ -468,6 +444,7 @@ function like_check_hub(id, type) {
         let price = book.children[2].children[4].children[1].innerText
         let link = book.children[1].href
         let thumbnail = book.children[1].children[0].style.backgroundImage.split('url("')[1].split('")')[0]
+        let series = book.children[2].children[1].children[1].innerText
 
         let book_data = {}
         book_data['title'] = title
@@ -476,6 +453,7 @@ function like_check_hub(id, type) {
         book_data['price'] = price
         book_data['link'] = link
         book_data['thumbnail'] = thumbnail
+        book_data['series'] = series
 
         like_book_ajax(book_data, type)
     }
@@ -506,7 +484,7 @@ function like_youtube_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like/youtube',
-            data: {'url': data},
+            data: data,
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
@@ -519,7 +497,7 @@ function like_youtube_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/youtube',
-            data: {'url': data},
+            data: data,
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result

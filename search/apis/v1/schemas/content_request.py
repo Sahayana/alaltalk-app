@@ -3,6 +3,8 @@ from ninja import Schema
 
 class YoutubeLikeRequest(Schema):
     url: str
+    title: str
+    views: str
 
 
 class ShoppingLikeRequest(Schema):
@@ -28,4 +30,5 @@ class BookLikeRequest(Schema):
     company: str
     author: str
     thumbnail: str
+    series : str
 
