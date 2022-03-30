@@ -10,6 +10,7 @@
     <script src="https://kit.fontawesome.com/97ea407338.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -20,20 +21,20 @@
         <img src="/static/images/landing/landing_logo.png">
     </div>
     <div class="landing_header_right">
-        <div><u>login or sign up</u></div>
+        <div onclick="location.href='accounts/signup'"><u>sign up</u></div>
     </div>
 </div>
 <div class="landing_banner">
     <div class="landing_bottom_gradient_box"></div>
     <p class="landing_welcome_text">Welcome to our chat service!</p>
     <div class="landing_login_container">
-        <div class="landing_login_box">
+        <div class="landing_login_box" onclick="location.href='accounts/login'">
             <p> Log In</p>
             <i class="fa-solid fa-arrow-right-long fa-2x landing_login_allow"></i>
         </div>
 
-        <div class="landing_sign_up_container">
-            <p><u>Not a member yet?</u></p>
+        <div class="landing_sign_up_container" >
+            <p onclick="location.href='accounts/signup'"><u>Not a member yet?</u></p>
         </div>
     </div>
 </div>
@@ -95,7 +96,7 @@
         <div class="landing_whale_4">
             <img src="/static/images/landing/whales/landing_whale_pattern_4.png">
         </div>
-        <div class="landing_content_row_3">
+        <div class="landing_content_row landing_content_row_3">
             <div class="landing_whale_4">
                 <img src="/static/images/landing/whales/landing_whale_pattern_4.png">
             </div>
@@ -136,7 +137,7 @@
         <div class="landing_whale_6">
             <img src="/static/images/landing/whales/landing_whale_pattern_6.png">
         </div>
-        <div class="landing_content_row_4">
+        <div class="landing_content_row landing_content_row_4">
             <div class="landing_content_row_4_left">
                 <div class="landing_content_row_4_left_mac_header">
                     <div class="landing_content_row_4_mac_header_button_box">
@@ -183,7 +184,7 @@
     </div>
 
     <div class="landing_content_row_5_wrapper" id="landing_row_5">
-        <div class="landing_content_row_5">
+        <div class="landing_content_row landing_content_row_5">
             <div class="landing_content_row_5_col_1">
                 <div class="landing_content_row_5_col_1_title">
                     <p>Our</p>
@@ -345,7 +346,7 @@
         </div>
     </div>
 </div>
-<script src="/static/js/landing.js"></script>
+<script src="/static/js/landing/landing.js"></script>
 </body>
 
 </html>

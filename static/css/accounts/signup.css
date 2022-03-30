@@ -1,7 +1,15 @@
 * {
-  font-family: 'Noto Sans CJK KR', 'Roboto';
+  font-family: 'Noto Sans KR', 'Roboto';
   font-size: 16px;
   letter-spacing: -0.5px;
+}
+
+/* 크롬에서 input 입력시 검은색 테두리 생기는 현상 방지 */
+
+*,
+*:focus,
+*:hover {
+  outline: none;
 }
 
 body {
@@ -23,6 +31,7 @@ body {
 
 .signup-container .signup-left-wrapper {
   width: 50%;
+  height: 700px;
   border: 1px solid transparent;
   border-radius: 12px;
   background-color: #a185f2;
@@ -37,15 +46,15 @@ body {
   .signup-left-wrapper
   .signup-form-container
   .signup-profile-img {
-  width: 150px;
-  height: 140px;
+  width: 180px;
+  height: 170px;
   background-color: white;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10%;
+  margin-bottom: 5%;
   cursor: pointer;
 }
 
@@ -70,33 +79,28 @@ body {
 .signup-container .signup-left-wrapper .signup-form-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: stretch;
   align-items: center;
   width: 100%;
   padding-top: 0;
-  position: relative;
-  top: 55px;
+  /* position: relative;
+  top: 80px; */
 }
 
 .signup-container .signup-left-wrapper .signup-form-container div {
-  margin-bottom: 2%;
-  width: 70%;
+  /* width: 70%;
   height: 2%;
-  background: white;
-  padding: 1em;
+  background: white; */
+  /* padding: 1em; */
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
-  color: #4d4d4d;
-  justify-content: center;
-  align-items: center;
+  justify-content: stretch;
+  align-items: flex-start;
+  margin-bottom: 8px;
 }
 
-.signup-container .signup-left-wrapper .signup-form-container .profile-bio {
-  height: 10%;
-}
-
-.signup-container
+/* .signup-container
   .signup-left-wrapper
   .signup-form-container
   .profile-bio
@@ -104,20 +108,25 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-}
+} */
 
 .signup-container .signup-left-wrapper .signup-form-container div > input {
-  outline: none;
+  /* outline: none;
   border: none;
   width: 100%;
   padding: 0;
   border-width: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; */
+  border: 2px solid #a185f2;
+  border-radius: 10px;
+  width: 370px;
+  height: 40px;
+  padding-left: 10px;
 }
 
 .signup-container .signup-left-wrapper .signup-form-container .btn-signup {
   margin-top: 3%;
-  width: 75%;
+  width: 380px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,18 +168,19 @@ body {
 .signup-container .signup-left-wrapper .move-to-signin .loginBtn {
   font-size: 80%;
   border: none;
-  color: #7657ce;
+  color: #ffffff;
   background: transparent;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  margin-top: 15%;
+  margin-top: 10%;
 }
 
-.signup-container .signup-left-wrapper .signup-form-container > small {
+.signup-container .signup-left-wrapper .signup-form-container > div > small {
   font-size: 75%;
   visibility: hidden;
-  color: red;
-  margin-top: -1%;
+  color: #ffffff;
+  margin-top: 1%;
+  padding-left: 5px;
 }
 
 /* right wrapper 작업 */
@@ -200,6 +210,7 @@ body {
   color: #7657ce;
   font-weight: 600;
   margin-left: -10%;
+  margin-top: 10%;
 }
 
 .signup-container .signup-right-wrapper .agree-container {
@@ -209,10 +220,18 @@ body {
   align-items: center;
 }
 
+.signup-container .signup-right-wrapper .agree-container .agree-clause {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .signup-container .signup-right-wrapper .agree-container .agree-clause > p {
   font-size: 80%;
   margin-bottom: -3%;
   color: #7657ce;
+  height: 30px;
 }
 
 .signup-container .signup-right-wrapper .agree-container .agree-checkbox {

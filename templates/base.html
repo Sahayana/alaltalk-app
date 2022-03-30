@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <title>alaltalk!!</title>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -8,9 +10,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css%22%3E">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js%22%3E"></script>
-    <link rel="stylesheet" href="../static/css/base.css">
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/chat/chat_room.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search/recommend.css' %}">
 </head>
 <body>
+<button onclick="switch_chat()"> hi!</button>
 <div class="outline">
     <div class="nav">
         <div class="logo"><div class="logo_img"></div></div>
@@ -20,14 +26,15 @@
             <div class="icon mypage_icon"></div>
         </div>
     </div>
-    <div class="left_wrap">
-        
+    <div class="left_wrap" id="left_wrap">
     </div>
 
-    <div class="right_wrap">
-        
+    <div class="right_wrap" id="right_wrap">
+
     </div>
 </div>
-
+<script src="{% static 'js/base.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/search/recommend.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/search/recommend_like.js' %}" type="text/javascript"></script>
 </body>
 </html>

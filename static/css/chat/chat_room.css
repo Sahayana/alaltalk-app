@@ -1,5 +1,5 @@
 * {
-    font-family: "Noto Sans CJK KR", "Roboto";
+    font-family: "Noto Sans KR", "Roboto";
     font-size: 16px;
     letter-spacing: -0.5px;
 }
@@ -54,7 +54,7 @@ body {
     background-image: url("../../images/user_outline.png");
 }
 .nav .icon_group .icon.chat_icon {
-    background-image: url("../../images/chat_outline.png");
+    background-image: url("../../images/chat.png");
 }
 .nav .icon_group .icon.mypage_icon {
     background-image: url("../../images/mypage_outline.png");
@@ -70,7 +70,9 @@ body {
     font-size: 18px;
     color: #5e5e5e;
     font-weight: 500;
-    padding: 24px 0 24px 24px;
+    /* 수정 - js*/
+    /*padding: 24px 0 24px 24px;*/
+    padding: 24px 0 0 24px;
     box-sizing: border-box;
 }
 .left_wrap .chat_list {
@@ -93,6 +95,9 @@ body {
     background-color: #FAF9FF;
     border-radius: 2px;
 
+}
+.left_wrap .chat_list a {
+    text-decoration: none;
 }
 .left_wrap .chat_list .chat_partner {
     width: 100%;
@@ -128,20 +133,16 @@ body {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    display: none;
+}
+.chat_list .chat_partner .info_group .partner_last_msg:last-child {
+    display: block;
 }
 .right_wrap {
     width: 60%;
 }
-.right_wrap .chat_start_msg {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: #5e5e5e;
-    display: none;
-}
-.right_wrap .chat_start_msg .chat_start_img {
+
+.chat_start_msg .chat_start_img {
     background-image: url("../../images/chat_start.png");
     width: 300px;
     height: 200px;
@@ -150,11 +151,11 @@ body {
     background-size: contain;
     opacity: .5;
 }
-.right_wrap .chat_container {
+.chat_container {
     position: static;
 }
 
-.right_wrap .chat_container .top_bar {
+.chat_container .top_bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -167,35 +168,35 @@ body {
 
 }
 
-.right_wrap .chat_container .top_bar .partner_info {
+.chat_container .top_bar .partner_info {
     display: flex;
     align-items: center;
     margin-left: 12px;
 }
 
-.right_wrap .chat_container .top_bar .partner_info .partner_img {
+.chat_container .top_bar .partner_info .partner_img {
     width: 46px;
     height: 46px;
     background-color: #fff;
     border-radius: 50%;
 }
 
-.right_wrap .chat_container .top_bar .partner_info .info_group {
+.chat_container .top_bar .partner_info .info_group {
     color: #fff;
     margin-left: 10px;
 }
 
-.right_wrap .chat_container .top_bar .partner_info .info_group .partner_name {
+.chat_container .top_bar .partner_info .info_group .partner_name {
 
 }
 
-.right_wrap .chat_container .top_bar .partner_info .info_group .partner_id {
+.chat_container .top_bar .partner_info .info_group .partner_id {
     opacity: .4;
     font-size: 14px;
     margin-top: 4px;
 }
 
-.right_wrap .chat_container .top_bar .toggle_icon {
+.chat_container .top_bar .toggle_icon {
     background-image: url("../../images/list_white.png");
     width: 46px;
     height: 46px;
@@ -203,10 +204,29 @@ body {
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 12px;
+    cursor: pointer;
 }
 
-.right_wrap .chat_container .top_bar .toggle_content {
-    /*display: none;*/
+.chat_container .top_bar .close_btn {
+    background-image: url("../../images/x_black.png");
+    width: 25px;
+    height: 25px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.chat_container .top_bar .right_icon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat_container .top_bar .toggle_content {
+    display: none;
     font-size: 14px;
     color: #5e5e5e;
     background-color: #fff;
@@ -217,19 +237,20 @@ body {
     position: absolute;
     right: 0;
     top: 60px;
+    cursor: pointer;
 }
 
-.right_wrap .chat_container .top_bar .toggle_content p {
+.chat_container .top_bar .toggle_content p {
     margin: 12px 0px 6px 10px;
 }
 
-.right_wrap .chat_container .top_bar .toggle_content .line {
+.chat_container .top_bar .toggle_content .line {
     background-color: #e5e5e5;
     width: 100%;
     height: 1px;
 }
 
-.right_wrap .chat_container .input_bar {
+.chat_container .input_bar {
     width: 100%;
     height: 60px;
     background-color: #7657CE;
@@ -240,7 +261,7 @@ body {
     border-bottom-right-radius: 16px;
 }
 
-.right_wrap .chat_container .input_bar .attach_icon {
+.chat_container .input_bar .attach_icon {
     background-image: url("../../images/send_white.png");
     background-position: center;
     background-repeat: no-repeat;
@@ -250,7 +271,7 @@ body {
     margin-left: 12px;
 }
 
-.right_wrap .chat_container .input_bar input {
+.chat_container .input_bar input {
     width: 100%;
     height: 40px;
     border-radius: 10px;
@@ -263,7 +284,7 @@ body {
     font-size: 14px;
 }
 
-.right_wrap .chat_container .chat_box {
+.chat_container .chat_box {
     display: flex;
     flex-direction: column;
     padding: 12px 16px 12px 10px;
@@ -272,23 +293,23 @@ body {
     overflow-y: auto;
 }
 
-.right_wrap .chat_container .chat_box::-webkit-scrollbar {
+.chat_container .chat_box::-webkit-scrollbar {
     width: 10px;
 }
 
-.right_wrap .chat_container .chat_box::-webkit-scrollbar-thumb {
+.chat_container .chat_box::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: inset 0px 0px 5px #A185F2;
 }
 
-.right_wrap .chat_container .chat_box::-webkit-scrollbar-track {
+.chat_container .chat_box::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 10px;
 
 }
 
-.right_wrap .chat_container .chat_box .user_to_partner {
+.chat_container .chat_box .user_to_partner {
     align-self: flex-end;
     max-width: 520px;
     width: auto;
@@ -301,7 +322,7 @@ body {
     margin-right: -6px;
 }
 
-.right_wrap .chat_container .chat_box .partner_to_user {
+.chat_container .chat_box .partner_to_user {
     align-self: flex-start;
     max-width: 520px;
     width: auto;

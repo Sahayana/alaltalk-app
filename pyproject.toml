@@ -5,7 +5,7 @@ description = "A messenger with contents recommendation algorithm applied."
 authors = ["sahayana <saokhueyang@gmail.com:>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 Django = "4.0.2"
 django-ninja = "^0.17.0"
 black = "^22.1.0"
@@ -15,9 +15,24 @@ django-stubs = "^1.9.0"
 Pillow = "^9.0.1"
 PyMySQL = "1.0.2"
 types-PyMySQL = "1.0.6"
+<<<<<<< HEAD
 requests = "^2.27.1"
 newspaper3k = "^0.2.8"
 pandas = "^1.4.1"
+=======
+bs4 = "^0.0.1"
+requests = "^2.27.1"
+selenium = "^4.1.3"
+mysqlclient = "^2.1.0"
+channels = "^3.0.4"
+channels-redis = "^3.4.0"
+django-storages = "^1.12.3"
+boto3 = "^1.21.25"
+pytest = "^7.1.1"
+pytest-django = "^4.5.2"
+supervisor = "^4.2.4"
+gunicorn = "20.0.4"
+>>>>>>> 7aaf3b2567d2b177067861d46b0947f158cf2b73
 
 [tool.poetry.dev-dependencies]
 
@@ -27,7 +42,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
-python_version = 3.9
+python_version = 3.8
 strict = true
 
 [[tool.mypy.overrides]]

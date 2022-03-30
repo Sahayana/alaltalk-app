@@ -30,10 +30,34 @@ document.addEventListener('scroll', function (){
 })
 
 function see_our_page(){
-    let row = document.getElementById('landing_row_4')
+    var start_scroll = $('html');
+    let row = document.getElementById('landing_row_1');
     let scroll_position = row.offsetTop + row.offsetHeight
-    window.scrollTo({top: scroll_position, behavior: 'smooth'});
+    // window.scrollTo({top: scroll_position, behavior: 'smooth'});
+    var page = 2;
+
+    // $('#landing_row_1').animate({scrollTop:$(this.hash).offset().top}, 500);
+    start_scroll.animate({scrollTop :scroll_position},500);
+    $(window).on("wheel", function(e) {
+    if(start_scroll.is(":animated")) return;
+    if(e.originalEvent.deltaY > 0) {
+        if(page == 7) return;
+        page++;
+    } else if(e.originalEvent.deltaY < 0) {
+        if(page == 1) return;
+        page--;
+    }
+    if(page > 4) {
+        var posTop =(page-1) * (scroll_position+30);
+    } else {
+        var posTop =(page-1) * scroll_position;
+    }
+
+    start_scroll.animate({scrollTop : posTop});
+})
+
 }
+
 
 
 
