@@ -123,88 +123,147 @@
                 <span id="book" onclick="book_like()">BOOK</span>
                 <span id="shopping" onclick="shopping_like()">SHOPPING</span>
             </div>
+
+            <!-- 유튜브 찜 목록 -->
             <div class="profile_like_youtube" id="profile_like_youtube">
-                <div class="profile_like_grid">
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
+                {% if user.youtube.all > 0 %}
+                {% for youtube in user.youtube.all %}                                    
+                <div class="content_box" id="youtube_s_{{youtube.id}}">
+                    <iframe class="video_img" src="{{youtube.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
+                    <div class="video_title" style="font-size: 13px">{{youtube.title}}</div>
+                    <div class="video_count">{{youtube.views}}</div>
+                    <div class="recommend_youtube_heart_parent">
+                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
                     </div>
-                    <div class="profile_like_youtube_container">
-                        <div class="profile_like_setting"></div>
-                        <div class="profile_like_youtube_toggle">
-                            <p>공유하기</p>
-                        </div>
-                        <div class="profile_like_heart"></div>
-                        <iframe src="https://www.youtube.com/embed/DP8oNU1CGHQ?mute=0&autoplay=0" frameborder="0" allowfullscreen ></iframe>
-                    </div>   
-                </div>
+                </div>                
+                {% endfor %}
+                {% endif %}                  
             </div>
-            
+            <!-- 유튜브 찜 목록 끝 -->
+
+
+            <!-- 뉴스 찜 목록 -->
             <div class="profile_like_news" id="profile_like_news">
-                <li>
-                    <div class="profile_like_news_image"></div>
-                    <div class="profile_like_news_info">
-                        <div class="profile_like_news_title">미세먼지 농도 '나쁨'...건조한 날씨 계속[오후날씨 꿀팁]</div>
-                        <div class="profile_like_news_content">경기도와 인천, 충남엔 초미세먼지 주의보가 내려졌습니다. 현재 서울의 초미세먼지 농도는 63마이크로그램 등 노란색으로 보이는 전국 대부분 지역에서 나쁨 단...</div>
-                        <div class="profile_like_news_company">KBS</div>
+                {% if user.news.all > 0 %}
+                {% for news in user.news.all %}
+                <div class="recommend_news_search_content" id="news_s_{{news.id}}">
+                    <div class="recommend_news_search_content_image">
+                        <a href="{{news.link}}" target="_blank">
+                            <img src="{{news.thumbnail}}">
+                        </a>
                     </div>
-                    <div class="profile_like_news_toggle">
-                            <p>공유하기</p>
+                    <div class="recommend_news_search_content_desc">
+                        <div class="recommend_news_search_content_desc_title">
+                            <p>{{news.title}}</p>
+                        </div>
+                        <div class="recommend_news_search_content_desc_detail">
+                            <p>{{news.content}}</p>
+                        </div>
+                        <div class="recommend_news_search_content_desc_footer">
+                            <div class="recommend_news_search_content_desc_footer_newspaper">
+                                <p>{{news.company}}</p>
+                            </div>
+                            <div class="recommend_news_search_content_desc_footer_time">
+                                <p>{{news.date}}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="profile_like_news_button">
-                        <div class="profile_like_news_setting"></div>
-                        <div class="profile_like_news_heart"></div>
+                    <div class="recommend_news_search_content_more">
+                        <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
+                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                        </div>
+                        <div class="recommend_like_heart" style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                            
+                        </div>
                     </div>
-                </li>                         
+                </div>
+                {% endfor %}
+                {% endif %}                      
             </div>
+            <!-- 뉴스 찜 목록 끝 -->
 
+
+            <!-- 책 찜 목록 -->
             <div class="profile_like_book" id="profile_like_book">
-                <div class="profile_like_book_grid">
-                    <div class="profile_like_book_container">
-                        <div class="profile_like_book_image"></div>
-                        <div class="profile_like_book_info">
-                            <div class="profile_like_book_title">Clean Code 클린코드</div>
-                            <div class="profile_like_book_writer">로버트 C. 마틴 저</div>
-                            <div class="profile_like_book_translator">/박제호, 이해영</div>
-                            <div class="profile_like_book_price">29,700원</div>
+                {% if user.book.all > 0 %}
+                {% for book in user.book.all %}
+                <div class="content_box" id="book_s_{{book.id}}"> 
+                    <div class="recommend_toggle recommend_book_toggle" style="width: 15vw">
+                        <div class="profile_like_news_toggle" onclick="content_do_share({{book.link}})">
+                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                         </div>
-                        <div class="profile_like_book_toggle">
-                            <p>공유하기</p>
+                        <div class="recommend_like_heart"
+                             style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
                         </div>
-                        <div class="profile_like_book_button">
-                            <div class="profile_like_book_setting"></div>
-                            <div class="profile_like_book_heart"></div>
+                    </div>
+                    <a href="{{book.link}}" target="_blank">
+                        <div class="book_img" style="background-image: url('{{book.thumbnail}}')"></div>
+                    </a>
+                    <div class="recommend_book_desc" style="display: flex">
+                        <div class="recommend_book_desc_title">
+                            <p>제목</p>
+                            <p>{{book.title}}</p>
                         </div>
-                    </div>                    
+                        <div class="recommend_book_desc_series">
+                            <p>시리즈</p>
+                            <p>{{book.series}}</p>
+                        </div>
+                        <div class="recommend_book_desc_company">
+                            <p>출판사</p>
+                            <p>{{book.company}}</p>
+                        </div>
+                        <div class="recommend_book_desc_author">
+                            <p>작가</p>
+                            <p>{{book.author}}}</p>
+                        </div>
+                        <div class="recommend_book_desc_price">
+                            <p>가격</p>
+                            <p>{{book.price}}원</p>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
+                {% endif %}
             </div>
+            <!-- 책 찜 목록 끝 -->
 
+            
+            <!-- 쇼핑 찜 목록 -->
             <div class="profile_like_shopping" id="profile_like_shopping">
-                <div class="profile_like_shopping_grid">
-                    <div class="profile_like_shopping_container">
-                        <div class="profile_like_shopping_image"></div>
-                        <div class="profile_like_shopping_info">
-                            <div class="profile_like_shopping_title">엄청난 노트북</div>
-                            <div class="profile_like_shopping_brand">쿠팡</div>
-                            <div class="profile_like_shopping_price">2,229,700원</div>
+                {% if user.shopping.all > 0 %}
+                {% for shopping in user.shopping.all %}
+                <div class="recommend_shopping_search_content" id="{{shopping.id}}">
+                    <div class="recommend_toggle">
+                        <div class="profile_like_news_toggle" onclick="content_do_share({{shopping.link}})">
+                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                         </div>
-                        <div class="profile_like_shopping_toggle">
-                            <p>공유하기</p>
+                        <div class="recommend_like_heart"
+                             style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
                         </div>
-                        <div class="profile_like_shopping_button">
-                            <div class="profile_like_shopping_setting"></div>
-                            <div class="profile_like_shopping_heart"></div>
+                    </div>
+                    <a href="{{shopping.link}}" target="_blank">
+                        <div class="recommend_shopping_search_content_img">
+                            <img src="{{shopping.thumbnail}}">
                         </div>
-                    </div>                                     
+                    </a>
+                    <div class="recommend_shopping_search_content_desc">
+                        <div class="recommend_shopping_search_content_desc_bar"></div>
+                        <div class="recommend_shopping_search_content_desc_title">
+                            <p>{{shopping.title}}</p>
+                        </div>
+                        <div class="recommend_shopping_search_content_desc_price">
+                            <p>{{shopping.price}}원</p>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
+                {% endif %}
             </div>
+            <!-- 쇼핑 찜 목록 끝-->
         </div>
     </div>
 </div>
 <script defer src="{% static 'js/accounts/mypage.js' %}"></script>
+<script defer src="{% static 'js/search/recommend.js' %}"></script>
 </body>
 </html>

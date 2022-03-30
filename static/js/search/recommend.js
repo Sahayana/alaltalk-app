@@ -90,11 +90,11 @@ function recommend_crawling_on(data){
             clicked_like_heart()
             set_animation_more()
 
-            // clicked_like
-            // like_news()
-
             // search_bar
             initialize_search_bar()
+
+            // toggle switch setting
+            recommend_switch_setting()
         }
     })
 }
@@ -675,4 +675,26 @@ function clear_content() {
 
     $('#shopping_search_content').empty();
     $('#shopping_search_content').append(spinner_html);
+}
+
+function recommend_switch_setting(){
+    let switches = document.getElementsByClassName('recommend_container_total_toggle')
+    for(let i=0; i<switches.length; i++){
+        switches[i].addEventListener('click', (e)=>{
+            console.log('switch clicked!!!!')
+            console.log(e.target.innerText)
+            let state = e.target.innerText
+
+            if(state ==='ON'){
+
+                e.target.innerText = 'OFF';
+                e.target.nextElementSibling.style.display='none'
+            }
+            else if(state === 'OFF'){
+
+                e.target.innerText = 'ON';
+                e.target.nextElementSibling.style.display='flex'
+            }
+        })
+    }
 }
