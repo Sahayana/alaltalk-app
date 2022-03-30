@@ -71,24 +71,13 @@
     <div class="right_wrap">
         <div class="chat_container">
             <div class="top_bar">
-                {% if participant1.id == user.id %}
-                    <div class="partner_info">
-                        <div class="partner_img" style="background-image: url({{ participant2.img }})"></div>
-                        <div class="info_group">
-                            <div class="partner_name">{{ participant2.nickname }}</div>
-                            <div class="partner_id">{{ participant2.email }}</div>
-                        </div>
+                <div class="partner_info">
+                    <div class="partner_img" style="background-image: url({{ participant.img }})"></div>
+                    <div class="info_group">
+                        <div class="partner_name">{{ participant.nickname }}</div>
+                        <div class="partner_id">{{ participant.email }}</div>
                     </div>
-                {% else %}
-                    <div class="partner_info">
-                        <div class="partner_img" style="background-image: url({{ participant1.img }})"></div>
-                        <div class="info_group">
-                            <div class="partner_name">{{ participant1.nickname }}</div>
-                            <div class="partner_id">{{ participant1.email }}</div>
-                        </div>
-
-                    </div>
-                {% endif %}
+                </div>
                 <div class="right_icon">
                     <div class="close_btn" onclick="location.href='/chat'"></div>
                     <div class="toggle_icon"></div>
@@ -124,149 +113,24 @@
 
         <div class="friends_like_container" id="friends_like_container">
             <div class="friends_like_close_btn" onclick="close_friend_like_list()"></div>
-            {% if participant1.id == user.id %}
-                <div class="friends_like_info">
-                    <div class="friends_like_img" style="background-image: url({{ participant2.img }})"></div>
-                    <div class="friends_like_info_group">
-                        <div class="friends_like_name">{{ participant2.nickname }}</div>
-                        <div class="friends_like_id">{{ participant2.email }}</div>
-                    </div>
-                    <div class="friends_like_bio">{{ participant2.bio }}</div>
+            <div class="friends_like_info">
+                <div class="friends_like_img" style="background-image: url({{ participant.img }})"></div>
+                <div class="friends_like_info_group">
+                    <div class="friends_like_name">{{ participant.nickname }}</div>
+                    <div class="friends_like_id">{{ participant.email }}</div>
                 </div>
-                <div class="friends_like_category">
-                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
-                    <span id="news" onclick="news_like()">NEWS</span>
-                    <span id="book" onclick="book_like()">BOOK</span>
-                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
-                </div>
-                <div class="friends_like_youtube" id="friends_like_youtube">
-                    <div class="friends_like_grid">
-                        <div class="friends_like_youtube_container">
-                            {% for youtube in participant2_like_youtube %}
-                                <div class="friends_like_content_box">
-                                    <iframe class="friends_like_video_img" src="{{ youtube.url }}"
-                                            title="YouTube video player"
-                                            frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen>ㅇ
-                                    </iframe>
-                                </div>
-                            {% endfor %}
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="friends_like_news" id="friends_like_news">
-                    {% for news in participant2_like_news %}
-                        <div class="friends_like_news_content">
-                            <div class="friends_like_news_content_image">
-                                <a href={{ news.link }} target="_blank">
-                                    <img src={{ news.thumbnail }}>
-                                </a>
-                            </div>
-                            <div class="friends_like_news_content_desc">
-                                <div class="friends_like_news_content_desc_title">
-                                    <p>{{ news.title }}</p>
-                                </div>
-                                <div class="friends_like_news_content_desc_detail">
-                                    <p>{{ news.content }}</p>
-                                </div>
-                                <div class="friends_like_news_content_desc_footer">
-                                    <div class="friends_like_news_content_content_desc_footer_newspaper">
-                                        <p>{{ news.company }}</p>
-                                    </div>
-                                    <div class="friends_like_news_content_desc_footer_time">
-                                        <p>{{ news.date }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <div class="friends_like_book" id="friends_like_book">
-                    <div class="friends_like_book_grid">
-                        {% for book in participant2_like_book %}
-                            <div class="friends_like_content_box">
-                                <div class="friends_like_book_desc">
-                                    <div class="friends_like_book_desc_row">
-                                        <p>title</p>
-                                        <p>{{ book.title }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>series</p>
-                                        <p>${book_row[3]}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Author</p>
-                                        <p>{{ book.author }}</p>
-                                        <p>{{ book.company }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Price</p>
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <a href={{ book.link }} target="_blank">
-                                    <div class="friends_like_book_img"
-                                         style="background-image: url({{ book.thumbnail }})"></div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="friends_like_shopping" id="friends_like_shopping">
-                    <div class="friends_like_shopping_grid">
-                        {% for shopping in participant2_like_shopping %}
-                            <div class="friends_like_shopping_content">
-                                <a href={{ shopping.link }} target="_blank">
-                                    <div class="friends_like_shopping_content_img">
-                                        <img src={{ shopping.thumbnail }}>
-                                    </div>
-                                </a>
-                                <div class="friends_like_shopping_content_desc">
-                                    <div class="friends_like_shopping_content_desc_bar"></div>
-                                    <div class="friends_like_shopping_content_desc_title">
-                                        <p>{{ shopping.title }}</p>
-                                    </div>
-                                    <div class="friends_like_shopping_content_desc_price">
-                                        <p>{{ shopping.price }} 원</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% else %}
-                <div class="friends_like_info">
-                    <div class="friends_like_img" style="background-image: url({{ participant1.img }})"></div>
-                    <div class="friends_like_info_group">
-                        <div class="friends_like_name">{{ participant1.nickname }}</div>
-                        <div class="friends_like_id">{{ participant1.email }}</div>
-                    </div>
-                    <div class="friends_like_bio">{{ participant1.bio }}</div>
-                </div>
-                <div class="friends_like_category">
-                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
-                    <span id="news" onclick="news_like()">NEWS</span>
-                    <span id="book" onclick="book_like()">BOOK</span>
-                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
-                </div>
-                <div class="friends_like_youtube" id="friends_like_youtube">
-                    <div class="friends_like_grid">
-                        <div class="friends_like_youtube_container">
-                            {% for youtube in participant1_like_youtube %}
-                                <div class="friends_like_content_box">
-                                    <iframe class="friends_like_video_img" src="{{ youtube.url }}"
-                                            title="YouTube video player"
-                                            frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen>ㅇ
-                                    </iframe>
-                                </div>
-                            {% endfor %}
+                <div class="friends_like_bio">{{ participant.bio }}</div>
+            </div>
+            <div class="friends_like_category">
+                <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
+                <span id="news" onclick="news_like()">NEWS</span>
+                <span id="book" onclick="book_like()">BOOK</span>
+                <span id="shopping" onclick="shopping_like()">SHOPPING</span>
+            </div>
+            <div class="friends_like_youtube" id="friends_like_youtube">
+                <div class="friends_like_grid">
+                    <div class="friends_like_youtube_container">
+                        {% for youtube in participant_like_youtube %}
                             <div class="friends_like_content_box">
                                 <iframe class="friends_like_video_img" src="{{ youtube.url }}"
                                         title="YouTube video player"
@@ -275,94 +139,95 @@
                                         allowfullscreen>ㅇ
                                 </iframe>
                             </div>
-                        </div>
-
+                        {% endfor %}
                     </div>
-                </div>
 
-                <div class="friends_like_news" id="friends_like_news">
-                    {% for news in participant1_like_news %}
-                        <div class="friends_like_news_content">
-                            <div class="friends_like_news_content_image">
-                                <a href={{ news.link }} target="_blank">
-                                    <img src={{ news.thumbnail }}>
-                                </a>
+                </div>
+            </div>
+
+            <div class="friends_like_news" id="friends_like_news">
+                {% for news in participant_like_news %}
+                    <div class="friends_like_news_content">
+                        <div class="friends_like_news_content_image">
+                            <a href={{ news.link }} target="_blank">
+                                <img src={{ news.thumbnail }}>
+                            </a>
+                        </div>
+                        <div class="friends_like_news_content_desc">
+                            <div class="friends_like_news_content_desc_title">
+                                <p>{{ news.title }}</p>
                             </div>
-                            <div class="friends_like_news_content_desc">
-                                <div class="friends_like_news_content_desc_title">
-                                    <p>{{ news.title }}</p>
+                            <div class="friends_like_news_content_desc_detail">
+                                <p>{{ news.content }}</p>
+                            </div>
+                            <div class="friends_like_news_content_desc_footer">
+                                <div class="friends_like_news_content_content_desc_footer_newspaper">
+                                    <p>{{ news.company }}</p>
                                 </div>
-                                <div class="friends_like_news_content_desc_detail">
-                                    <p>{{ news.content }}</p>
+                                <div class="friends_like_news_content_desc_footer_time">
+                                    <p>{{ news.date }}</p>
                                 </div>
-                                <div class="friends_like_news_content_desc_footer">
-                                    <div class="friends_like_news_content_content_desc_footer_newspaper">
-                                        <p>{{ news.company }}</p>
-                                    </div>
-                                    <div class="friends_like_news_content_desc_footer_time">
-                                        <p>{{ news.date }}</p>
-                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="friends_like_book" id="friends_like_book">
+                <div class="friends_like_book_grid">
+                    {% for book in participant_like_book %}
+                        <div class="friends_like_content_box">
+                            <div class="friends_like_book_desc">
+                                <div class="friends_like_book_desc_row">
+                                    <p>title</p>
+                                    <p>{{ book.title }}</p>
+                                </div>
+                                <div class="friends_like_book_desc_row">
+                                    <p>series</p>
+                                    <p>${book_row[3]}</p>
+                                </div>
+                                <div class="friends_like_book_desc_row">
+                                    <p>Author</p>
+                                    <p>{{ book.author }}</p>
+                                    <p>{{ book.company }}</p>
+                                </div>
+                                <div class="friends_like_book_desc_row">
+                                    <p>Price</p>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <a href={{ book.link }} target="_blank">
+                                <div class="friends_like_book_img"
+                                     style="background-image: url({{ book.thumbnail }})"></div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="friends_like_shopping" id="friends_like_shopping">
+                <div class="friends_like_shopping_grid">
+                    {% for shopping in participant_like_shopping %}
+                        <div class="friends_like_shopping_content">
+                            <a href={{ shopping.link }} target="_blank">
+                                <div class="friends_like_shopping_content_img">
+                                    <img src={{ shopping.thumbnail }}>
+                                </div>
+                            </a>
+                            <div class="friends_like_shopping_content_desc">
+                                <div class="friends_like_shopping_content_desc_bar"></div>
+                                <div class="friends_like_shopping_content_desc_title">
+                                    <p>{{ shopping.title }}</p>
+                                </div>
+                                <div class="friends_like_shopping_content_desc_price">
+                                    <p>{{ shopping.price }} 원</p>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
+            </div>
 
-                <div class="friends_like_book" id="friends_like_book">
-                    <div class="friends_like_book_grid">
-                        {% for book in participant1_like_book %}
-                            <div class="friends_like_content_box">
-                                <div class="friends_like_book_desc">
-                                    <div class="friends_like_book_desc_row">
-                                        <p>title</p>
-                                        <p>{{ book.title }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>series</p>
-                                        <p>${book_row[3]}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Author</p>
-                                        <p>{{ book.author }}</p>
-                                        <p>{{ book.company }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Price</p>
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <a href={{ book.link }} target="_blank">
-                                    <div class="friends_like_book_img"
-                                         style="background-image: url({{ book.thumbnail }})"></div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="friends_like_shopping" id="friends_like_shopping">
-                    <div class="friends_like_shopping_grid">
-                        {% for shopping in participant1_like_shopping %}
-                            <div class="friends_like_shopping_content">
-                                <a href={{ shopping.link }} target="_blank">
-                                    <div class="friends_like_shopping_content_img">
-                                        <img src={{ shopping.thumbnail }}>
-                                    </div>
-                                </a>
-                                <div class="friends_like_shopping_content_desc">
-                                    <div class="friends_like_shopping_content_desc_bar"></div>
-                                    <div class="friends_like_shopping_content_desc_title">
-                                        <p>{{ shopping.title }}</p>
-                                    </div>
-                                    <div class="friends_like_shopping_content_desc_price">
-                                        <p>{{ shopping.price }} 원</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
         </div>
 
 
