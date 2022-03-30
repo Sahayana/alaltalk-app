@@ -1,3 +1,34 @@
+
+// 채팅로그 받아오기
+var chat_log = [];
+function get_chat_log(){
+   var link = document.location.href;
+    console.log(link);
+    let room_id = link.split('/');
+    room_id = parseInt(room_id[5]);
+    
+    $.ajax({
+        url: "/chat/chatlog/",
+        type: 'POST',
+        data: JSON.stringify({"room_id": room_id}),
+        enctype: 'multipart/form-data',
+        async: false,
+        success: function (response) {
+            console.log(response.chat_log);
+            chat_log = response.chat_log;
+
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+}
+
+
+
 function click_recommend_function() {
     console.log('page is onload!')
 
