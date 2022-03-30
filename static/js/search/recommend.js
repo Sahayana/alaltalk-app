@@ -104,6 +104,8 @@ function recommend_crawling_on(data){
         async: false,
         success: function (response) {
             console.log(response['all_response']['book'])
+            console.log(response['all_response']['shopping'])
+            console.log(response['all_response']['news'])
 
             // 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
