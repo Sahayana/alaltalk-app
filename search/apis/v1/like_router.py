@@ -15,7 +15,7 @@ router = Router(tags=["like"])
 def do_like_youtube(request, youtube_dict: YoutubeLikeRequest = Form(...)) -> Tuple[int, Dict]:
     user_id = request.user.id
     try:
-        result = do_like_youtube_service(user_id, youtube_dict.url)
+        result = do_like_youtube_service(user_id=user_id, youtube_url=youtube_dict.url, title=youtube_dict.title, views=youtube_dict.views)
     except CustomUser.DoesNotExist:
         raise HttpError(404, f"User is not Exist")
     return 201, {"result": result}
@@ -50,7 +50,8 @@ def do_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[in
             author=book_request.author,
             company=book_request.company,
             thumbnail=book_request.thumbnail,
-            link=book_request.link
+            link=book_request.link,
+            series = book_request.series
         )
     except CustomUser.DoesNotExist:
         raise HttpError(404, 'User does not exist!')
