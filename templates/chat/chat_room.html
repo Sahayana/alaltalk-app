@@ -144,7 +144,7 @@
             <div class="friends_like_news" id="friends_like_news">
                 {% for news in participant_like_news %}
                     <div class="friends_like_news_content">
-                            <div class="friends_like_news_content">
+                            <div class="friends_like_news_content_image">
                                 <a href="{{ news.link }}" target="_blank">
                                     <img src="{{ news.thumbnail }}">
                                 </a>
@@ -170,55 +170,53 @@
             </div>
 
             <div class="friends_like_book" id="friends_like_book">
-                <div class="friends_like_book_grid">
-                    {% for book in participant_like_book %}
-                        <div class="content_box">
-                            <a href="{{ book.link }}" target="_blank">
-                                <div class="book_img" style="background-image: url('{{ thumbnail }}')"></div>
-                            </a>
-                            <div class="recommend_book_desc">
-                                <div class="recommend_book_desc_title">
-                                    <p>제목</p>
-                                    <p>{{ book.title }}</p>
-                                </div>
-                                <div class="recommend_book_desc_series">
-                                    <p>시리즈</p>
-                                    <p>{{ book.series }}</p>
-                                </div>
-                                <div class="recommend_book_desc_company">
-                                    <p>출판사</p>
-                                    <p>{{ book.company }}</p>
-                                </div>
-                                <div class="recommend_book_desc_author">
-                                    <p>작가</p>
-                                    <p>{{ book.author }}</p>
-                                </div>
-                                <div class="recommend_book_desc_price">
-                                    <p>가격</p>
-                                    <p>{{ book.price }}</p>
-                                </div>
+                {% for book in participant_like_book %}
+                    <div class="friends_like_book_content_box">
+                        <a href="{{ book.link }}" target="_blank">
+                            <div class="book_img" style="background-image: url('{{ book.thumbnail }}')"></div>
+                        </a>
+                        <div class="friends_like_book_desc">
+                            <div class="friends_like_book_desc_title">
+                                <p>제목</p>
+                                <p>{{ book.title }}</p>
+                            </div>
+                            <div class="friends_like_book_desc_series">
+                                <p>시리즈</p>
+                                <p>{{ book.series }}</p>
+                            </div>
+                            <div class="friends_like_book_desc_company">
+                                <p>출판사</p>
+                                <p>{{ book.company }}</p>
+                            </div>
+                            <div class="friends_like_book_desc_author">
+                                <p>작가</p>
+                                <p>{{ book.author }}</p>
+                            </div>
+                            <div class="friends_like_book_desc_price">
+                                <p>가격</p>
+                                <p>{{ book.price }}</p>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
 
             <div class="friends_like_shopping" id="friends_like_shopping">
                 <div class="friends_like_shopping_grid">
                     {% for shopping in participant_like_shopping %}
-                        <div class="recommend_shopping_search_content">
+                        <div class="friends_like_shopping_content">
                             <a href="{{ shopping.link }}" target="_blank">
-                                <div class="recommend_shopping_search_content_img">
+                                <div class="friends_like_shopping_content_img">
                                     <img src="{{ shopping.thumbnail }}">
                                 </div>
                             </a>
-                            <div class="recommend_shopping_search_content_desc">
-                                <div class="recommend_shopping_search_content_desc_bar"></div>
-                                <div class="recommend_shopping_search_content_desc_title">
+                            <div class="friends_like_shopping_content_desc">
+                                <div class="friends_like_shopping_content_desc_bar"></div>
+                                <div class="friends_like_shopping_content_desc_title">
                                     <p>{{ shopping.title }}</p>
                                 </div>
-                                <div class="recommend_shopping_search_content_desc_price">
-                                    <p>{{ shopping.price }} 원</p>
+                                <div class="friends_like_shopping_content_desc_price">
+                                    <p>{{ shopping.price }}</p>
                                 </div>
                             </div>
                         </div>
