@@ -27,10 +27,45 @@ function get_chat_log(){
     });
 }
 
+var keyowrd = []
+//키워드 추출 ajax 통신 함수
+function get_keyword(chat_log){
+    let form_data = new FormData()
+
+    form_data.append('chat_log', chat_log);
+
+    $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:5000/api/v1/textrank/",
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        async: false,
+        enctype: 'multipart/form-data',
+        success: function (response) {
+            console.log(response.keyword)
+            keyowrd = response.keyword;
+
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+}
+
 
 
 function click_recommend_function() {
     console.log('page is onload!')
+
+    // 채팅로그 가져와서 키워드 추출
+    // get_chat_log()
+    // get_keyword(chat_log)
+    // let machin_result = keyowrd[0];
 
     let machin_result = '아이유'
     // let form_data = new FormData()
