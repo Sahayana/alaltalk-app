@@ -38,7 +38,7 @@
                     {% if chatroom.participant1.id == user.id %}
                         <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
                             <div class="partner_img"
-                                 style="background-image: url({{ chatroom.participant2.img }})"></div>
+                                 style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {% for message in all_message %}
@@ -51,7 +51,7 @@
                     {% else %}
                         <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
                             <div class="partner_img"
-                                 style="background-image: url({{ chatroom.participant1.img }})"></div>
+                                 style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
                                 {% for message in all_message %}
@@ -72,7 +72,7 @@
         <div class="chat_container">
             <div class="top_bar">
                 <div class="partner_info">
-                    <div class="partner_img" style="background-image: url({{ participant.img }})"></div>
+                    <div class="partner_img" style="background-image: url({{ participant.img.url }})"></div>
                     <div class="info_group">
                         <div class="partner_name">{{ participant.nickname }}</div>
                         <div class="partner_id">{{ participant.email }}</div>
@@ -114,7 +114,7 @@
         <div class="friends_like_container" id="friends_like_container">
             <div class="friends_like_close_btn" id="friend_like_close" onclick="close_friend_like_list()"></div>
             <div class="friends_like_info">
-                <div class="friends_like_img" style="background-image: url({{ participant.img }})"></div>
+                <div class="friends_like_img" style="background-image: url({{ participant.img.url }})"></div>
                 <div class="friends_like_info_group">
                     <div class="friends_like_name">{{ participant.nickname }}</div>
                     <div class="friends_like_id">{{ participant.email }}</div>
@@ -131,10 +131,14 @@
                 <div class="friends_like_youtube_grid">
                     {% for youtube in participant_like_youtube %}
                         <div class="friends_like_youtube_content_box">
-                                <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
-                                <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
-                                <div class="video_count">{{ youtube.views }}</div>
-                            </div>
+                            <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>ㅇ
+                            </iframe>
+                            <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
+                            <div class="video_count">{{ youtube.views }}</div>
+                        </div>
                     {% endfor %}
 
 
