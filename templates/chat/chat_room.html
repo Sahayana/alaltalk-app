@@ -83,9 +83,9 @@
                     <div class="toggle_icon"></div>
                 </div>
                 <div class="toggle_content">
-                    <p id="recommend_btn" onclick="show_recommend()">추천컨텐츠</p>
+                    <p id="recommend_btn">추천컨텐츠</p>
                     <div class="line"></div>
-                    <p id="freind_like_list" onclick="show_friend_like()">친구 찜 목록 보기</p>
+                    <p id="freind_like_list">친구 찜 목록 보기</p>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@
 
 
         <div class="friends_like_container" id="friends_like_container">
-            <div class="friends_like_close_btn" onclick="close_friend_like_list()"></div>
+            <div class="friends_like_close_btn" id="friend_like_close" onclick="close_friend_like_list()"></div>
             <div class="friends_like_info">
                 <div class="friends_like_img" style="background-image: url({{ participant.img }})"></div>
                 <div class="friends_like_info_group">
@@ -274,49 +274,58 @@
         });
     });
 
-    function show_recommend() {
+    $('#recommend_btn').on('click', function () {
+        $('.friends_like_container').hide();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
         $('.chat_container').appendTo('.left_wrap');
+        $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
         $('.right_wrap').load("/api/search/recommend");
 
-        $("#recommend_btn").attr('onclick', '').unbind('click');
+        //$("#recommend_btn").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
         setTimeout(function () {
             click_recommend_function();
             give_event()
         }, 100)
-    }
+    });
 
     function close_recommend() {
         $('.right_wrap').empty();
         $('.chat_container').appendTo('.right_wrap');
+        $('.friends_like_container').appendTo('.right_wrap');
         $(".chat_list_container").show();
         $('.close_btn').show();
     }
 
 
-    function show_friend_like() {
+    $('#freind_like_list').on('click', function () {
+        $('.chat_container').appendTo('.left_wrap');
+        $('.friends_like_container').appendTo('.left_wrap');
+        $('.right_wrap').empty();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
-        $('.chat_container').appendTo('.left_wrap');
+
         {#$('.right_wrap').empty();#}
+        $('.friends_like_container').appendTo('.right_wrap');
         $('.friends_like_container').show();
 
-        $("#freind_like_list").attr('onclick', '').unbind('click');
+        //$("#freind_like_list").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
 
-    }
+    });
 
-    function close_friend_like_list() {
+    $('#friend_like_close').on('click', function () {
+        $('.friends_like_container').appendTo('.left_wrap');
+        $('.friends_like_container').hide();
         $('.right_wrap').empty();
         $('.chat_container').appendTo('.right_wrap');
         $(".chat_list_container").show();
         $('.close_btn').show();
-    }
+    });
 
     //친구 찜목록 카테고리
 
