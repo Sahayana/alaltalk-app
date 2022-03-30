@@ -1,5 +1,6 @@
 import json
 
+from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -9,6 +10,7 @@ from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
+from search.models import Youtube,News,Book,Shopping
 
 
 # ChatRoom 모델에서 유저가 속해있는 채팅방 리스트 불러오기
@@ -56,7 +58,7 @@ def create_chat_room(request, id):
 # 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
 @csrf_exempt
 @login_required
-def create_chat_message(request, room_id):
+def post_data_to_chat_room(request, room_id):
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
@@ -67,6 +69,15 @@ def create_chat_message(request, room_id):
         test = len(last_messages) - 20
         if len(last_messages) > 20:
             last_messages = last_messages[test:]
+
+        participant1_like_youtube = Youtube.objects.filter(user=chatroom.participant1)
+        participant2_like_youtube = Youtube.objects.filter(user=chatroom.participant2)
+        participant1_like_news = News.objects.filter(user=chatroom.participant1)
+        participant2_like_news = News.objects.filter(user=chatroom.participant2)
+        participant1_like_book = Book.objects.filter(user=chatroom.participant1)
+        participant2_like_book = Book.objects.filter(user=chatroom.participant2)
+        participant1_like_shopping = Shopping.objects.filter(user=chatroom.participant1)
+        participant2_like_shopping = Shopping.objects.filter(user=chatroom.participant2)
 
         return render(
             request,
@@ -79,6 +90,35 @@ def create_chat_message(request, room_id):
                 "participant2": chatroom.participant2,
                 "all_message": all_message,
                 "last_messages": last_messages,
+                "participant1_like_youtube": participant1_like_youtube,
+                "participant2_like_youtube": participant2_like_youtube,
+                "participant1_like_news": participant1_like_news,
+                "participant2_like_news": participant2_like_news,
+                "participant1_like_book": participant1_like_book,
+                "participant2_like_book": participant2_like_book,
+                "participant1_like_shopping": participant1_like_shopping,
+                "participant2_like_shopping": participant2_like_shopping,
             },
         )
 
+
+@csrf_exempt
+@login_required
+def chat_log_send(request):
+    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    chat_log = []
+    print(room_id)
+    chatroom = ChatRoom.objects.get(id = room_id)
+    all_chat = ChatMessage.objects.filter(chatroom=chatroom)
+
+    if len(all_chat) > 50:
+        all_chat = all_chat[:50]
+
+    for chat in all_chat:
+        chat_log.append(chat.message)
+        print('채팅 메세지: ',chat.message)
+    print('채팅로그 담긴리스트',chat_log)
+    context = {
+        'chat_log' : chat_log
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")

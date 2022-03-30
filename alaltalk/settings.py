@@ -90,25 +90,14 @@ WSGI_APPLICATION = "alaltalk.wsgi.application"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-# # 기존 연결된 DATABASE - SQlite
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
-# DATABASE - MYSQL (재성님 계정)
+#  기존 연결된 DATABASE - SQlite
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "alaltalk_aws",
-        "USER": "admin",
-        "PASSWORD": "3zGGNStrf2fCxlCCN6n3",
-        "HOST": "alaltalk.chsfxpt2fyr9.ap-northeast-2.rds.amazonaws.com",
-        "PORT": "3306",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -144,6 +133,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_DIR = os.path.join(BASE_DIR, "static")
+print(STATIC_DIR)
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
@@ -159,11 +149,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "accounts.CustomUser"
 AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
+
 # local_setting을 위한 설정
 try:
     from alaltalk.local_settings import *
 except ImportError:
     pass
+
 
 # Email 전송을 위한 설정
 
@@ -183,9 +175,10 @@ except ImportError:
 #     pass
 
 
-# AWS S3 connet
+# # # AWS S3 connet
 # DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+#
 #
 # with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
 #     secret = json.loads(f.read())
@@ -196,3 +189,23 @@ except ImportError:
 # AWS_REGION = "ap-northeast-2"
 # AWS_DEFAULT_ACL = "public-read"
 # AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+
+
+# MySQL Configuration
+try:
+    with open(os.path.join(BASE_DIR, "alaltalk/config/sql.json")) as f:
+        sql = json.loads(f.read())
+
+    DATABASES = {
+        "default": {
+            "ENGINE": sql['RDS']["ENGINE"],
+            "NAME": sql['RDS']["NAME"],
+            "USER": sql['RDS']["USER"],
+            "PASSWORD": sql['RDS']["PASSWORD"],
+            "HOST": sql['RDS']["HOST"],
+            "PORT": sql['RDS']["PORT"],
+        }
+    }
+
+except FileNotFoundError:
+    pass

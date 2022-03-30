@@ -35,16 +35,25 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
         all_response["youtube"] = []
     try:
         all_response["news"] = crawling_news(crawling_request.target)
+        for news_row in all_response['news']:
+            if News.objects.filter(user=request.user.id, link=news_row[3]).exists():
+                news_row[6] = True
     except Exception as e:
         print('news_crawling Error: ', e)
         all_response["news"] = []
     try:
         all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
+        for shopping_row in all_response['shopping']:
+            if Shopping.objects.filter(user=request.user.id, link=shopping_row[3]).exists():
+                shopping_row[4] = True
     except Exception as e:
         print('shopping_crawling Error: ', e)
         all_response["shopping"] = []
     try:
         all_response["book"] = crawling_book(crawling_request.target)
+        for news_row in all_response['book']:
+            if Book.objects.filter(user=request.user.id, link=news_row[5]).exists():
+                news_row[7] = True
     except Exception as e:
         print('book_crawling Error: ', e)
         all_response['book'] = []
