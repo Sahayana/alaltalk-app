@@ -41,10 +41,9 @@
         <p class="title">채팅</p>
         <div class="chat_list">
             {% for chatroom in chatroom_list %}
-{#                {% for message in all_message %}#}
                     {% if chatroom.participant1.id == user.id %}
                         <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
-                            <div class="partner_img"></div>
+                            <div class="partner_img" style="background-image: url({{ chatroom.participant2.img }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {#chatroom.id로 필터링 된 메세지의 맨 마지막 메세지 가져오기#}
@@ -57,7 +56,7 @@
                         </a>
                     {% else %}
                         <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
-                            <div class="partner_img"></div>
+                            <div class="partner_img" style="background-image: url({{ chatroom.participant1.img }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
                                 {% for message in all_message %}
