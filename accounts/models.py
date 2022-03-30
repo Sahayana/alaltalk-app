@@ -50,7 +50,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     bio = models.CharField(max_length=150, blank=True)
-    img = models.ImageField(default="https://sahayana-nts.s3.ap-northeast-2.amazonaws.com/style_pepe.png", upload_to="profile_img")
+    img = models.ImageField(default="profile_img/testuser1testusercom-2022-03-28.png", upload_to="profile_img")
     friends = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
 
     # Boolean field
