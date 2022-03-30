@@ -1,9 +1,8 @@
 
 // 채팅로그 받아오기
-var chat_log = [];
+var chat_log = ["아이유 너무 이뻐요~~~", "나는 아이유노래 나온거 봤어??"];
 function get_chat_log(){
    var link = document.location.href;
-    console.log(link);
     let room_id = link.split('/');
     room_id = parseInt(room_id[5]);
     
@@ -14,7 +13,6 @@ function get_chat_log(){
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {
-            console.log('chat_log:', response.chat_log);
             chat_log = response.chat_log;
 
         },
@@ -36,7 +34,7 @@ function get_keyword(chat_log){
 
     $.ajax({
         type: "POST",
-        url: "http://127.0.0.1:5000/api/v1/textrank/",
+        url: "http://13.125.250.182:8000/api/v1/textrank/",
         data: form_data,
         cache: false,
         processData: false,
@@ -46,56 +44,17 @@ function get_keyword(chat_log){
         success: function (response) {
             console.log(response.keyword)
             keyowrd = response.keyword;
-
+            // 3. 키워드 내용을 기반으로 크롤링
+            recommend_crawling_on(keyowrd[0])
         },
         error: function (request, status, error) {
             alert('error')
-
             console.log(request, status, error)
         }
 
     });
 }
 
-
-
-function click_recommend_function() {
-    console.log('page is onload!')
-
-    // 채팅로그 가져와서 키워드 추출
-    // get_chat_log()
-    // get_keyword(chat_log)
-    // let machin_result = keyowrd[0];
-
-    let machin_result = '아이유'
-    // let form_data = new FormData()
-    // form_data.append('chat_log', chat_log);
-    //
-    // $.ajax({
-    //     type: "POST",
-    //     url: "http://127.0.0.1:5000/api/v1/textrank/",
-    //     data: form_data,
-    //     cache: false,
-    //     processData: false,
-    //     contentType: false,
-    //     async: false,
-    //     enctype: 'multipart/form-data',
-    //     success: function (response) {
-    //         // console.log(response.keyword)
-    //         // console.log('추천시스템 성공!')
-    //         machin_result  = response.keyword[0]
-    //
-    //     },
-    //     error: function (request, status, error) {
-    //         alert('error')
-    //
-    //         console.log(request, status, error)
-    //     }
-    //
-    // });
-    recommend_crawling_on(machin_result)
-
-}
 
 function recommend_crawling_on(data){
     $.ajax({
@@ -107,32 +66,43 @@ function recommend_crawling_on(data){
         success: function (response) {
             console.log(response['all_response'])
 
-            // 스피너 멈추기
+            // 4. 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
 
             for (let k = 0; k < spinners.length; k++) {
                 spinners[k].style.display = 'none';
             }
 
-            // content 내용 붙이기
+            // 5. content 내용 붙이기
             youtube_content_add(response['all_response']['youtube'], 'crawling')
             news_content_add(response['all_response']['news'], 'crawling')
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
 
-
-            // hovering_like
+            // 6. 좋아요 이벤트 주기
             clicked_like_heart()
+
+            // 7. 더보기 애니메이션 주기 ( book, shopping )
             set_animation_more()
 
-            // search_bar
+            // 8. 검색창 초기화
             initialize_search_bar()
 
-            // toggle switch setting
+            // 9. 스위치 초기화
             recommend_switch_setting()
         }
     })
 }
+
+
+// 0. 추천 버튼 누르면 시작되는 함수 ( 가장 처음 )
+function click_recommend_function() {
+    // 1. 채팅 로그 불러오기!
+    get_chat_log()
+    // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
+    get_keyword(chat_log)
+}
+
 
 
 // 탭 이동 함수
@@ -142,19 +112,6 @@ function move_category(target_id) {
     document.getElementById('recommend_book_container').style.display = 'none'
     document.getElementById('recommend_shopping_container').style.display = 'none'
     document.getElementById(target_id).style.display = 'block'
-}
-
-function give_event() {
-    let navs = document.getElementsByClassName('recommend_nav')
-    let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-    for (let i = 0; i < navs.length; i++) {
-        let nav_row = navs[i].children
-        for (let j = 0; j < nav_row.length; j++) {
-            nav_row[j].addEventListener('click', function () {
-                move_category(navs_list_id[j])
-            })
-        }
-    }
 }
 
 

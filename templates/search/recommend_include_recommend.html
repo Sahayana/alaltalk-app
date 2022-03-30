@@ -1,11 +1,10 @@
 <div class="recommend_close_btn" onclick="close_recommend()"></div>
 <div class="recommend_youtube_container" id="recommend_youtube_container" style="display: block">
     <div class="recommend_nav">
-        <span>YOUTUBE</span>
-        <span>NEWS</span>
-        <span>BOOK</span>
-        <span>SHOPPING</span>
-
+        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
+        <span onclick="move_category('recommend_news_container')">NEWS</span>
+        <span onclick="move_category('recommend_book_container')">BOOK</span>
+        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
     </div>
     <div class="search_bar">
         <div class="search_icon"></div>
@@ -37,11 +36,11 @@
 </div>
 <div class="recommend_news_container" id="recommend_news_container" style="display: none">
     <div class="recommend_nav">
-        <span>YOUTUBE</span>
-        <span>NEWS</span>
-        <span>BOOK</span>
-        <span>SHOPPING</span>
-    </div>  
+        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
+        <span onclick="move_category('recommend_news_container')">NEWS</span>
+        <span onclick="move_category('recommend_book_container')">BOOK</span>
+        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
+    </div>
     <div class="search_bar">
         <div class="search_icon"></div>
         <input type="text" placeholder="Search">
@@ -71,10 +70,10 @@
 </div>
 <div class="recommend_book_container" id="recommend_book_container" style="display: none">
     <div class="recommend_nav">
-        <span>YOUTUBE</span>
-        <span>NEWS</span>
-        <span>BOOK</span>
-        <span>SHOPPING</span>
+        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
+        <span onclick="move_category('recommend_news_container')">NEWS</span>
+        <span onclick="move_category('recommend_book_container')">BOOK</span>
+        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
     </div>
     <div class="search_bar">
         <div class="search_icon"></div>
@@ -107,10 +106,10 @@
 </div>
 <div class="recommend_shopping_container" id="recommend_shopping_container" style="display: none">
     <div class="recommend_nav">
-        <span>YOUTUBE</span>
-        <span>NEWS</span>
-        <span>BOOK</span>
-        <span>SHOPPING</span>
+        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
+        <span onclick="move_category('recommend_news_container')">NEWS</span>
+        <span onclick="move_category('recommend_book_container')">BOOK</span>
+        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
     </div>
     <div class="search_bar">
         <div class="search_icon"></div>
