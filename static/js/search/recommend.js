@@ -13,7 +13,6 @@ function get_chat_log(){
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {
-            console.log('chat_log:', response.chat_log);
             chat_log = response.chat_log;
 
         },
@@ -26,15 +25,13 @@ function get_chat_log(){
     });
 }
 
-
-// 추천 버튼 누르면 시작되는 함수 ( 가장 처음 )
-function click_recommend_function() {
-    get_chat_log()
-
+var keyowrd = []
+//키워드 추출 ajax 통신 함수
+function get_keyword(chat_log){
     let form_data = new FormData()
+
     form_data.append('chat_log', chat_log);
-    console.log(form_data.get)
-    //
+
     $.ajax({
         type: "POST",
         url: "http://13.125.250.182:8000/api/v1/textrank/",
@@ -42,21 +39,22 @@ function click_recommend_function() {
         cache: false,
         processData: false,
         contentType: false,
-        async: true,
+        async: false,
         enctype: 'multipart/form-data',
         success: function (response) {
-            recommend_crawling_on(response.keyword[0])
+            console.log(response.keyword)
+            keyowrd = response.keyword;
+            // 3. 키워드 내용을 기반으로 크롤링
+            recommend_crawling_on(keyowrd[0])
         },
         error: function (request, status, error) {
             alert('error')
-
             console.log(request, status, error)
         }
 
     });
-
-
 }
+
 
 function recommend_crawling_on(data){
     $.ajax({
@@ -68,30 +66,43 @@ function recommend_crawling_on(data){
         success: function (response) {
             console.log(response['all_response'])
 
-            // 스피너 멈추기
+            // 4. 스피너 멈추기
             let spinners = document.getElementsByClassName('recommend_spinner')
 
             for (let k = 0; k < spinners.length; k++) {
                 spinners[k].style.display = 'none';
             }
 
-            // content 내용 붙이기
+            // 5. content 내용 붙이기
             youtube_content_add(response['all_response']['youtube'], 'crawling')
             news_content_add(response['all_response']['news'], 'crawling')
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
-            // hovering_like
+
+            // 6. 좋아요 이벤트 주기
             clicked_like_heart()
+
+            // 7. 더보기 애니메이션 주기 ( book, shopping )
             set_animation_more()
 
-            // search_bar
+            // 8. 검색창 초기화
             initialize_search_bar()
 
-            // toggle switch setting
+            // 9. 스위치 초기화
             recommend_switch_setting()
         }
     })
 }
+
+
+// 0. 추천 버튼 누르면 시작되는 함수 ( 가장 처음 )
+function click_recommend_function() {
+    // 1. 채팅 로그 불러오기!
+    get_chat_log()
+    // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
+    get_keyword(chat_log)
+}
+
 
 
 // 탭 이동 함수
