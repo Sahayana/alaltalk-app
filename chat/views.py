@@ -4,26 +4,22 @@ from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
 from search.models import Youtube,News,Book,Shopping
 
 
-# userlist 중에 친구신청-수락한 유저 리스트 불러오기
-# ChatMessage 모델에서 메세지 불러와서 가장 최근 메세지를 보여줌
+# ChatRoom 모델에서 유저가 속해있는 채팅방 리스트 불러오기
+# ChatMessage 모델에서 마지막 메세지 출력
 @login_required
 def show_chat_list(request):
-    # chat_list = CustomUser.objects.get(id=request.user.id).friends.all()
-    # print(chat_list)
-    chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
-    print(chatroom_list)
-
+    user = request.user
+    chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all()
     all_message = ChatMessage.objects.all()
-
     return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list, "all_message": all_message})
 
 
@@ -63,14 +59,17 @@ def create_chat_room(request, id):
 @csrf_exempt
 @login_required
 def post_data_to_chat_room(request, room_id):
-
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
-        print(chatroom.participant1, chatroom.participant2, user)
-        chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
-        print(chatroom_list)
+        chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all()
         all_message = ChatMessage.objects.all()
+
+        last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
+        test = len(last_messages) - 20
+        if len(last_messages) > 20:
+            last_messages = last_messages[test:]
+
         participant1_like_youtube = Youtube.objects.filter(user=chatroom.participant1)
         participant2_like_youtube = Youtube.objects.filter(user=chatroom.participant2)
         participant1_like_news = News.objects.filter(user=chatroom.participant1)
@@ -79,6 +78,7 @@ def post_data_to_chat_room(request, room_id):
         participant2_like_book = Book.objects.filter(user=chatroom.participant2)
         participant1_like_shopping = Shopping.objects.filter(user=chatroom.participant1)
         participant2_like_shopping = Shopping.objects.filter(user=chatroom.participant2)
+
         return render(
             request,
             "chat/chat_room.html",
@@ -89,16 +89,18 @@ def post_data_to_chat_room(request, room_id):
                 "participant1": chatroom.participant1,
                 "participant2": chatroom.participant2,
                 "all_message": all_message,
-                "participant1_like_youtube":participant1_like_youtube,
-                "participant2_like_youtube":participant2_like_youtube,
-                "participant1_like_news":participant1_like_news,
-                "participant2_like_news":participant2_like_news,
-                "participant1_like_book":participant1_like_book,
-                "participant2_like_book":participant2_like_book,
-                "participant1_like_shopping":participant1_like_shopping,
-                "participant2_like_shopping":participant2_like_shopping,
+                "last_messages": last_messages,
+                "participant1_like_youtube": participant1_like_youtube,
+                "participant2_like_youtube": participant2_like_youtube,
+                "participant1_like_news": participant1_like_news,
+                "participant2_like_news": participant2_like_news,
+                "participant1_like_book": participant1_like_book,
+                "participant2_like_book": participant2_like_book,
+                "participant1_like_shopping": participant1_like_shopping,
+                "participant2_like_shopping": participant2_like_shopping,
             },
         )
+
 
 @csrf_exempt
 @login_required

@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}">
-    <link rel="stylesheet" href="{% static 'css/chat/friend_like.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}?after">
+    <link rel="stylesheet" href="{% static 'css/chat/friend_like.css' %}?after">
     <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}?after">
     <!--google font-->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
@@ -37,7 +37,8 @@
                 {% for chatroom in chatroom_list %}
                     {% if chatroom.participant1.id == user.id %}
                         <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
-                            <div class="partner_img"></div>
+                            <div class="partner_img"
+                                 style="background-image: url({{ chatroom.participant2.img }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {% for message in all_message %}
@@ -49,7 +50,8 @@
                         </a>
                     {% else %}
                         <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
-                            <div class="partner_img"></div>
+                            <div class="partner_img"
+                                 style="background-image: url({{ chatroom.participant1.img }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
                                 {% for message in all_message %}
@@ -71,16 +73,15 @@
             <div class="top_bar">
                 {% if participant1.id == user.id %}
                     <div class="partner_info">
-                        <div class="partner_img"></div>
+                        <div class="partner_img" style="background-image: url({{ participant2.img }})"></div>
                         <div class="info_group">
                             <div class="partner_name">{{ participant2.nickname }}</div>
                             <div class="partner_id">{{ participant2.email }}</div>
                         </div>
-
                     </div>
                 {% else %}
                     <div class="partner_info">
-                        <div class="partner_img"></div>
+                        <div class="partner_img" style="background-image: url({{ participant1.img }})"></div>
                         <div class="info_group">
                             <div class="partner_name">{{ participant1.nickname }}</div>
                             <div class="partner_id">{{ participant1.email }}</div>
@@ -100,6 +101,17 @@
             </div>
 
             <div id="chat_box" class="chat_box">
+                {% for message in last_messages %}
+                    {% if message.author.id == user.id %}
+                        <div class='user_to_partner'>{{ message.message }}</div>
+                    {% else %}
+                        <div class='partner_to_user'>{{ message.message }}</div>
+                    {% endif %}
+                {% endfor %}
+                <div class="line">
+                    -------------------------
+                    날짜나 시간 표시해주면 좋을듯 싶다
+                </div>
                 {#                채팅내용 들어가는 곳#}
             </div>
             <div class="input_bar">
@@ -360,6 +372,9 @@
 <script src="{% static 'js/search/recommend.js' %}"></script>
 <script>
     $(document).ready(function () {
+        // 채팅 스크롤 하단 고정
+        var scrollDown = $('#chat_box').prop('scrollHeight');
+        $('#chat_box').scrollTop(scrollDown);
 
         // 친구 리스트 이동
         let friendListIcon = $(".user_icon");
@@ -491,7 +506,6 @@
         document.getElementById('friends_like_book').style.display = 'none';
     }
 
-
     const room_id = {{ room_id }};
     const user_id = {{ user_id }};
     const participant1 = {{ participant1.id }};
@@ -511,8 +525,9 @@
         {#기존에 열려있던 웹소켓에서는 가져오지 않도록 설정#}
         {#불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정#}
         chatSocket.onopen = function (e) {
-            fetchMessages();
+            console.log('Chat socket open');
         }
+
 
         {#consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐#}
         {#fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고#}
@@ -520,6 +535,7 @@
         {#ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다#}
         {#message를 created_at의 순서대로 보여준다.#}
         chatSocket.onmessage = function (e) {
+            $('#chat_message_input').val('');
             const data = JSON.parse(e.data);
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
@@ -528,6 +544,8 @@
                 }
             } else if (data['command'] === 'new_message') {
                 createMessage(data['message']);
+                var scrollDown = $('#chat_box').prop('scrollHeight');
+                $('#chat_box').scrollTop(scrollDown);
             }
         };
 
@@ -537,23 +555,49 @@
             chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
         }
 
+        {#엔터키로 메세지 전송#}
+        {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
+        {#document.querySelector('#chat_message_input').focus();#}
+        document.querySelector('#chat_message_input').onkeyup = function (e) {
+            if (e.keyCode === 13) {  // enter, return
+                if ($('#chat_message_input').val().length === 0) {
+                    {#alert('메세지를 입력해주세요!')#}
+                    return false;
+                }
+                const messageInputDom = document.querySelector('#chat_message_input');
+                const message = messageInputDom.value
+                if (message === '') {
+                    console.log('websocket load message')
+                    return true;
+                } else {
+                    chatSocket.send(JSON.stringify({
+                        'command': 'new_messages',
+                        'message': message,
+                        'from': user_id,
+                        'room_id': room_id,
+                    }));
+                }
+                messageInputDom.value = '';
+            }
+        };
+
         {#해당 input에 메세지를 작성하고 버튼을 클릭하면#}
         {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
-        document.querySelector('#chat_message_submit').onclick = function (e) {
-            const messageInputDom = document.querySelector('#chat_message_input');
-            const message = messageInputDom.value
-            if (message === '') {
-                alert('메세지를 입력해주세요.')
-            } else {
-                chatSocket.send(JSON.stringify({
-                    'command': 'new_messages',
-                    'message': message,
-                    'from': user_id,
-                    'room_id': room_id,
-                }));
-            }
-            {#messageInputDom.value = '';#}
-        };
+        {#document.querySelector('#chat_message_submit').onclick = function (e) {#}
+        {#    const messageInputDom = document.querySelector('#chat_message_input');#}
+        {#    const message = messageInputDom.value#}
+        {#    if (message === '') {#}
+        {#        alert('메세지를 입력해주세요.')#}
+        {#    } else {#}
+        {#        chatSocket.send(JSON.stringify({#}
+        {#            'command': 'new_messages',#}
+        {#            'message': message,#}
+        {#            'from': user_id,#}
+        {#            'room_id': room_id,#}
+        {#        }));#}
+        {#    }#}
+        {#messageInputDom.value = '';#}
+        // };
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {

@@ -16,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -53,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 ROOT_URLCONF = "alaltalk.urls"
@@ -73,7 +72,6 @@ TEMPLATES = [
     },
 ]
 
-
 ASGI_APPLICATION = "alaltalk.asgi.application"
 CHANNEL_LAYERS = {
     "default": {
@@ -83,9 +81,10 @@ CHANNEL_LAYERS = {
         },
     },
 }
+SESSION_COOKIE_AGE = 600
+SESSION_SAVE_EVERY_REQUEST = True
 
 WSGI_APPLICATION = "alaltalk.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -98,7 +97,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
 
 
 # Password validation
@@ -119,7 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -130,7 +127,6 @@ TIME_ZONE = "Asia/Seoul"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -145,7 +141,6 @@ STATICFILES_DIRS = [
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -155,42 +150,48 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
 
+# local_setting을 위한 설정
+try:
+    from alaltalk.local_settings import *
+except ImportError:
+    pass
+
 
 # Email 전송을 위한 설정
 
-try:
-    with open(os.path.join(BASE_DIR, "alaltalk/config/email.json")) as f:
-        email = json.loads(f.read())
-
-    EMAIL_BACKEND = email["BACKEND"]
-    EMAIL_HOST = email["HOST"]
-    EMAIL_PORT = int(email["PORT"])
-    EMAIL_HOST_USER = email["HOST_USER"]
-    EMAIL_HOST_PASSWORD = email["HOST_PASSWORD"]
-    EMAIL_USE_TLS = True
-    EMAIL_USE_SSL = False
-
-except FileNotFoundError:
-    pass
+# try:
+#     with open(os.path.join(BASE_DIR, "alaltalk/config/email.json")) as f:
+#         email = json.loads(f.read())
+#
+#     EMAIL_BACKEND = email["BACKEND"]
+#     EMAIL_HOST = email["HOST"]
+#     EMAIL_PORT = int(email["PORT"])
+#     EMAIL_HOST_USER = email["HOST_USER"]
+#     EMAIL_HOST_PASSWORD = email["HOST_PASSWORD"]
+#     EMAIL_USE_TLS = True
+#     EMAIL_USE_SSL = False
+#
+# except FileNotFoundError:
+#     pass
 
 
 # # # AWS S3 connet
 # DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 # STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
-    secret = json.loads(f.read())
-
-AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
-AWS_REGION = "ap-northeast-2"
-AWS_DEFAULT_ACL = "public-read"
-AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
+#
+#
+# with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
+#     secret = json.loads(f.read())
+#
+# AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
+# AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
+# AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
+# AWS_REGION = "ap-northeast-2"
+# AWS_DEFAULT_ACL = "public-read"
+# AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
 
 
 # MySQL Configuration
-
 try:
     with open(os.path.join(BASE_DIR, "alaltalk/config/sql.json")) as f:
         sql = json.loads(f.read())
