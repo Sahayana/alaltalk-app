@@ -155,12 +155,6 @@ AUTH_USER_MODEL = "accounts.CustomUser"
 AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
 
-# local_setting을 위한 설정
-# try:
-#     from alaltalk.local_settings import *
-# except ImportError:
-#     pass
-
 
 # Email 전송을 위한 설정
 
