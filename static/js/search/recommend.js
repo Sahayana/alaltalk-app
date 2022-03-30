@@ -1,9 +1,8 @@
 
 // 채팅로그 받아오기
-var chat_log = [];
+var chat_log = ["아이유 너무 이뻐요~~~", "나는 아이유노래 나온거 봤어??"];
 function get_chat_log(){
    var link = document.location.href;
-    console.log(link);
     let room_id = link.split('/');
     room_id = parseInt(room_id[5]);
     
@@ -28,14 +27,14 @@ function get_chat_log(){
 }
 
 
-
+// 추천 버튼 누르면 시작되는 함수 ( 가장 처음 )
 function click_recommend_function() {
-    console.log('page is onload!')
+    get_chat_log()
 
-    let machin_result = '아이유'
     let form_data = new FormData()
     form_data.append('chat_log', chat_log);
-
+    console.log(form_data.get)
+    //
     $.ajax({
         type: "POST",
         url: "http://13.125.250.182:8000/api/v1/textrank/",
@@ -43,13 +42,10 @@ function click_recommend_function() {
         cache: false,
         processData: false,
         contentType: false,
-        async: false,
+        async: true,
         enctype: 'multipart/form-data',
         success: function (response) {
-            // console.log(response.keyword)
-            // console.log('추천시스템 성공!')
-            machin_result  = response.keyword[0]
-
+            recommend_crawling_on(response.keyword[0])
         },
         error: function (request, status, error) {
             alert('error')
@@ -58,7 +54,7 @@ function click_recommend_function() {
         }
 
     });
-    recommend_crawling_on(machin_result)
+
 
 }
 
@@ -84,8 +80,6 @@ function recommend_crawling_on(data){
             news_content_add(response['all_response']['news'], 'crawling')
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
-
-
             // hovering_like
             clicked_like_heart()
             set_animation_more()
@@ -107,19 +101,6 @@ function move_category(target_id) {
     document.getElementById('recommend_book_container').style.display = 'none'
     document.getElementById('recommend_shopping_container').style.display = 'none'
     document.getElementById(target_id).style.display = 'block'
-}
-
-function give_event() {
-    let navs = document.getElementsByClassName('recommend_nav')
-    let navs_list_id = ['recommend_youtube_container', 'recommend_news_container', 'recommend_book_container', 'recommend_shopping_container']
-    for (let i = 0; i < navs.length; i++) {
-        let nav_row = navs[i].children
-        for (let j = 0; j < nav_row.length; j++) {
-            nav_row[j].addEventListener('click', function () {
-                move_category(navs_list_id[j])
-            })
-        }
-    }
 }
 
 
