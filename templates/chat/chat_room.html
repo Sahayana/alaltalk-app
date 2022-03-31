@@ -38,7 +38,7 @@
                     {% if chatroom.participant1.id == user.id %}
                         <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
                             <div class="partner_img"
-                                 style="background-image: url({{ chatroom.participant2.img }})"></div>
+                                 style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
                                 {% for message in all_message %}
@@ -51,7 +51,7 @@
                     {% else %}
                         <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
                             <div class="partner_img"
-                                 style="background-image: url({{ chatroom.participant1.img }})"></div>
+                                 style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
                                 {% for message in all_message %}
@@ -71,32 +71,21 @@
     <div class="right_wrap">
         <div class="chat_container">
             <div class="top_bar">
-                {% if participant1.id == user.id %}
-                    <div class="partner_info">
-                        <div class="partner_img" style="background-image: url({{ participant2.img }})"></div>
-                        <div class="info_group">
-                            <div class="partner_name">{{ participant2.nickname }}</div>
-                            <div class="partner_id">{{ participant2.email }}</div>
-                        </div>
+                <div class="partner_info">
+                    <div class="partner_img" style="background-image: url({{ participant.img.url }})"></div>
+                    <div class="info_group">
+                        <div class="partner_name">{{ participant.nickname }}</div>
+                        <div class="partner_id">{{ participant.email }}</div>
                     </div>
-                {% else %}
-                    <div class="partner_info">
-                        <div class="partner_img" style="background-image: url({{ participant1.img }})"></div>
-                        <div class="info_group">
-                            <div class="partner_name">{{ participant1.nickname }}</div>
-                            <div class="partner_id">{{ participant1.email }}</div>
-                        </div>
-
-                    </div>
-                {% endif %}
+                </div>
                 <div class="right_icon">
                     <div class="close_btn" onclick="location.href='/chat'"></div>
                     <div class="toggle_icon"></div>
                 </div>
                 <div class="toggle_content">
-                    <p id="recommend_btn" onclick="show_recommend()">추천컨텐츠</p>
+                    <p id="recommend_btn">추천컨텐츠</p>
                     <div class="line"></div>
-                    <p id="freind_like_list" onclick="show_friend_like()">친구 찜 목록 보기</p>
+                    <p id="freind_like_list">친구 찜 목록 보기</p>
                 </div>
             </div>
 
@@ -122,46 +111,45 @@
 
 
         <div class="friends_like_container" id="friends_like_container">
-            <div class="friends_like_close_btn" onclick="close_friend_like_list()"></div>
-            {% if participant1.id == user.id %}
-                <div class="friends_like_info">
-                    <div class="friends_like_img" style="background-image: url({{ participant2.img }})"></div>
-                    <div class="friends_like_info_group">
-                        <div class="friends_like_name">{{ participant2.nickname }}</div>
-                        <div class="friends_like_id">{{ participant2.email }}</div>
-                    </div>
-                    <div class="friends_like_bio">{{ participant2.bio }}</div>
+            <div class="friends_like_close_btn" id="friend_like_close" onclick="close_friend_like_list()"></div>
+            <div class="friends_like_info">
+                <div class="friends_like_img" style="background-image: url({{ participant.img.url }})"></div>
+                <div class="friends_like_info_group">
+                    <div class="friends_like_name">{{ participant.nickname }}</div>
+                    <div class="friends_like_id">{{ participant.email }}</div>
                 </div>
-                <div class="friends_like_category">
-                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
-                    <span id="news" onclick="news_like()">NEWS</span>
-                    <span id="book" onclick="book_like()">BOOK</span>
-                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
-                </div>
-                <div class="friends_like_youtube" id="friends_like_youtube">
-                    <div class="friends_like_grid">
-                        <div class="friends_like_youtube_container">
-                            {% for youtube in participant2_like_youtube %}
-                                <div class="friends_like_content_box">
-                                    <iframe class="friends_like_video_img" src="{{ youtube.url }}"
-                                            title="YouTube video player"
-                                            frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen>ㅇ
-                                    </iframe>
-                                </div>
-                            {% endfor %}
+                <div class="friends_like_bio">{{ participant.bio }}</div>
+            </div>
+            <div class="friends_like_category">
+                <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
+                <span id="news" onclick="news_like()">NEWS</span>
+                <span id="book" onclick="book_like()">BOOK</span>
+                <span id="shopping" onclick="shopping_like()">SHOPPING</span>
+            </div>
+            <div class="friends_like_youtube" id="friends_like_youtube">
+                <div class="friends_like_youtube_grid">
+                    {% for youtube in participant_like_youtube %}
+                        <div class="friends_like_youtube_content_box">
+                            <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>ㅇ
+                            </iframe>
+                            <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
+                            <div class="video_count">{{ youtube.views }}</div>
                         </div>
+                    {% endfor %}
 
-                    </div>
+
                 </div>
+            </div>
 
-                <div class="friends_like_news" id="friends_like_news">
-                    {% for news in participant2_like_news %}
-                        <div class="friends_like_news_content">
+            <div class="friends_like_news" id="friends_like_news">
+                {% for news in participant_like_news %}
+                    <div class="friends_like_news_content">
                             <div class="friends_like_news_content_image">
-                                <a href={{ news.link }} target="_blank">
-                                    <img src={{ news.thumbnail }}>
+                                <a href="{{ news.link }}" target="_blank">
+                                    <img src="{{ news.thumbnail }}">
                                 </a>
                             </div>
                             <div class="friends_like_news_content_desc">
@@ -172,7 +160,7 @@
                                     <p>{{ news.content }}</p>
                                 </div>
                                 <div class="friends_like_news_content_desc_footer">
-                                    <div class="friends_like_news_content_content_desc_footer_newspaper">
+                                    <div class="friends_like_news_content_desc_footer_newspaper">
                                         <p>{{ news.company }}</p>
                                     </div>
                                     <div class="friends_like_news_content_desc_footer_time">
@@ -181,187 +169,64 @@
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                {% endfor %}
+            </div>
 
-                <div class="friends_like_book" id="friends_like_book">
-                    <div class="friends_like_book_grid">
-                        {% for book in participant2_like_book %}
-                            <div class="friends_like_content_box">
-                                <div class="friends_like_book_desc">
-                                    <div class="friends_like_book_desc_row">
-                                        <p>title</p>
-                                        <p>{{ book.title }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>series</p>
-                                        <p>${book_row[3]}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Author</p>
-                                        <p>{{ book.author }}</p>
-                                        <p>{{ book.company }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Price</p>
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <a href={{ book.link }} target="_blank">
-                                    <div class="friends_like_book_img"
-                                         style="background-image: url({{ book.thumbnail }})"></div>
-                                </a>
+            <div class="friends_like_book" id="friends_like_book">
+                {% for book in participant_like_book %}
+                    <div class="friends_like_book_content_box">
+                        <a href="{{ book.link }}" target="_blank">
+                            <div class="book_img" style="background-image: url('{{ book.thumbnail }}')"></div>
+                        </a>
+                        <div class="friends_like_book_desc">
+                            <div class="friends_like_book_desc_title">
+                                <p>제목</p>
+                                <p>{{ book.title }}</p>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="friends_like_shopping" id="friends_like_shopping">
-                    <div class="friends_like_shopping_grid">
-                        {% for shopping in participant2_like_shopping %}
-                            <div class="friends_like_shopping_content">
-                                <a href={{ shopping.link }} target="_blank">
-                                    <div class="friends_like_shopping_content_img">
-                                        <img src={{ shopping.thumbnail }}>
-                                    </div>
-                                </a>
-                                <div class="friends_like_shopping_content_desc">
-                                    <div class="friends_like_shopping_content_desc_bar"></div>
-                                    <div class="friends_like_shopping_content_desc_title">
-                                        <p>{{ shopping.title }}</p>
-                                    </div>
-                                    <div class="friends_like_shopping_content_desc_price">
-                                        <p>{{ shopping.price }} 원</p>
-                                    </div>
-                                </div>
+                            <div class="friends_like_book_desc_series">
+                                <p>시리즈</p>
+                                <p>{{ book.series }}</p>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% else %}
-                <div class="friends_like_info">
-                    <div class="friends_like_img" style="background-image: url({{ participant1.img }})"></div>
-                    <div class="friends_like_info_group">
-                        <div class="friends_like_name">{{ participant1.nickname }}</div>
-                        <div class="friends_like_id">{{ participant1.email }}</div>
-                    </div>
-                    <div class="friends_like_bio">{{ participant1.bio }}</div>
-                </div>
-                <div class="friends_like_category">
-                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
-                    <span id="news" onclick="news_like()">NEWS</span>
-                    <span id="book" onclick="book_like()">BOOK</span>
-                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
-                </div>
-                <div class="friends_like_youtube" id="friends_like_youtube">
-                    <div class="friends_like_grid">
-                        <div class="friends_like_youtube_container">
-                            {% for youtube in participant1_like_youtube %}
-                                <div class="friends_like_content_box">
-                                    <iframe class="friends_like_video_img" src="{{ youtube.url }}"
-                                            title="YouTube video player"
-                                            frameborder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen>ㅇ
-                                    </iframe>
-                                </div>
-                            {% endfor %}
-                            <div class="friends_like_content_box">
-                                <iframe class="friends_like_video_img" src="{{ youtube.url }}"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen>ㅇ
-                                </iframe>
+                            <div class="friends_like_book_desc_company">
+                                <p>출판사</p>
+                                <p>{{ book.company }}</p>
+                            </div>
+                            <div class="friends_like_book_desc_author">
+                                <p>작가</p>
+                                <p>{{ book.author }}</p>
+                            </div>
+                            <div class="friends_like_book_desc_price">
+                                <p>가격</p>
+                                <p>{{ book.price }}</p>
                             </div>
                         </div>
-
                     </div>
-                </div>
+                {% endfor %}
+            </div>
 
-                <div class="friends_like_news" id="friends_like_news">
-                    {% for news in participant1_like_news %}
-                        <div class="friends_like_news_content">
-                            <div class="friends_like_news_content_image">
-                                <a href={{ news.link }} target="_blank">
-                                    <img src={{ news.thumbnail }}>
-                                </a>
-                            </div>
-                            <div class="friends_like_news_content_desc">
-                                <div class="friends_like_news_content_desc_title">
-                                    <p>{{ news.title }}</p>
+            <div class="friends_like_shopping" id="friends_like_shopping">
+                <div class="friends_like_shopping_grid">
+                    {% for shopping in participant_like_shopping %}
+                        <div class="friends_like_shopping_content">
+                            <a href="{{ shopping.link }}" target="_blank">
+                                <div class="friends_like_shopping_content_img">
+                                    <img src="{{ shopping.thumbnail }}">
                                 </div>
-                                <div class="friends_like_news_content_desc_detail">
-                                    <p>{{ news.content }}</p>
+                            </a>
+                            <div class="friends_like_shopping_content_desc">
+                                <div class="friends_like_shopping_content_desc_bar"></div>
+                                <div class="friends_like_shopping_content_desc_title">
+                                    <p>{{ shopping.title }}</p>
                                 </div>
-                                <div class="friends_like_news_content_desc_footer">
-                                    <div class="friends_like_news_content_content_desc_footer_newspaper">
-                                        <p>{{ news.company }}</p>
-                                    </div>
-                                    <div class="friends_like_news_content_desc_footer_time">
-                                        <p>{{ news.date }}</p>
-                                    </div>
+                                <div class="friends_like_shopping_content_desc_price">
+                                    <p>{{ shopping.price }}</p>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
                 </div>
+            </div>
 
-                <div class="friends_like_book" id="friends_like_book">
-                    <div class="friends_like_book_grid">
-                        {% for book in participant1_like_book %}
-                            <div class="friends_like_content_box">
-                                <div class="friends_like_book_desc">
-                                    <div class="friends_like_book_desc_row">
-                                        <p>title</p>
-                                        <p>{{ book.title }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>series</p>
-                                        <p>${book_row[3]}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Author</p>
-                                        <p>{{ book.author }}</p>
-                                        <p>{{ book.company }}</p>
-                                    </div>
-                                    <div class="friends_like_book_desc_row">
-                                        <p>Price</p>
-                                        <p></p>
-                                    </div>
-                                </div>
-                                <a href={{ book.link }} target="_blank">
-                                    <div class="friends_like_book_img"
-                                         style="background-image: url({{ book.thumbnail }})"></div>
-                                </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="friends_like_shopping" id="friends_like_shopping">
-                    <div class="friends_like_shopping_grid">
-                        {% for shopping in participant1_like_shopping %}
-                            <div class="friends_like_shopping_content">
-                                <a href={{ shopping.link }} target="_blank">
-                                    <div class="friends_like_shopping_content_img">
-                                        <img src={{ shopping.thumbnail }}>
-                                    </div>
-                                </a>
-                                <div class="friends_like_shopping_content_desc">
-                                    <div class="friends_like_shopping_content_desc_bar"></div>
-                                    <div class="friends_like_shopping_content_desc_title">
-                                        <p>{{ shopping.title }}</p>
-                                    </div>
-                                    <div class="friends_like_shopping_content_desc_price">
-                                        <p>{{ shopping.price }} 원</p>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
         </div>
 
 
@@ -410,49 +275,58 @@
         });
     });
 
-    function show_recommend() {
+    $('#recommend_btn').on('click', function () {
+        $('.friends_like_container').hide();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
         $('.chat_container').appendTo('.left_wrap');
+        $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
         $('.right_wrap').load("/api/search/recommend");
 
-        $("#recommend_btn").attr('onclick', '').unbind('click');
+        //$("#recommend_btn").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
         setTimeout(function () {
             click_recommend_function();
             give_event()
         }, 100)
-    }
+    });
 
     function close_recommend() {
         $('.right_wrap').empty();
         $('.chat_container').appendTo('.right_wrap');
+        $('.friends_like_container').appendTo('.right_wrap');
         $(".chat_list_container").show();
         $('.close_btn').show();
     }
 
 
-    function show_friend_like() {
+    $('#freind_like_list').on('click', function () {
+        $('.chat_container').appendTo('.left_wrap');
+        $('.friends_like_container').appendTo('.left_wrap');
+        $('.right_wrap').empty();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
-        $('.chat_container').appendTo('.left_wrap');
+
         {#$('.right_wrap').empty();#}
+        $('.friends_like_container').appendTo('.right_wrap');
         $('.friends_like_container').show();
 
-        $("#freind_like_list").attr('onclick', '').unbind('click');
+        //$("#freind_like_list").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
 
-    }
+    });
 
-    function close_friend_like_list() {
+    $('#friend_like_close').on('click', function () {
+        $('.friends_like_container').appendTo('.left_wrap');
+        $('.friends_like_container').hide();
         $('.right_wrap').empty();
         $('.chat_container').appendTo('.right_wrap');
         $(".chat_list_container").show();
         $('.close_btn').show();
-    }
+    });
 
     //친구 찜목록 카테고리
 

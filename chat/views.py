@@ -71,14 +71,18 @@ def post_data_to_chat_room(request, room_id):
             last_messages = last_messages[limit:]
         latest_created_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by('-created_at')[0]
 
-        participant1_like_youtube = Youtube.objects.filter(user=chatroom.participant1)
-        participant2_like_youtube = Youtube.objects.filter(user=chatroom.participant2)
-        participant1_like_news = News.objects.filter(user=chatroom.participant1)
-        participant2_like_news = News.objects.filter(user=chatroom.participant2)
-        participant1_like_book = Book.objects.filter(user=chatroom.participant1)
-        participant2_like_book = Book.objects.filter(user=chatroom.participant2)
-        participant1_like_shopping = Shopping.objects.filter(user=chatroom.participant1)
-        participant2_like_shopping = Shopping.objects.filter(user=chatroom.participant2)
+        if chatroom.participant1.id == user.id:
+            participant = chatroom.participant2
+            participant_like_youtube = Youtube.objects.filter(user=chatroom.participant2)
+            participant_like_news = News.objects.filter(user=chatroom.participant2)
+            participant_like_book = Book.objects.filter(user=chatroom.participant2)
+            participant_like_shopping = Shopping.objects.filter(user=chatroom.participant2)
+        else :
+            participant = chatroom.participant1
+            participant_like_youtube = Youtube.objects.filter(user=chatroom.participant1)
+            participant_like_news = News.objects.filter(user=chatroom.participant1)
+            participant_like_book = Book.objects.filter(user=chatroom.participant1)
+            participant_like_shopping = Shopping.objects.filter(user=chatroom.participant1)
 
         return render(
             request,
@@ -89,17 +93,14 @@ def post_data_to_chat_room(request, room_id):
                 "user_id": mark_safe(json.dumps(request.user.id)),
                 "participant1": chatroom.participant1,
                 "participant2": chatroom.participant2,
+                "participant": participant,
                 "all_message": all_message,
                 "last_messages": last_messages,
                 "latest_created_message": latest_created_message,
-                "participant1_like_youtube": participant1_like_youtube,
-                "participant2_like_youtube": participant2_like_youtube,
-                "participant1_like_news": participant1_like_news,
-                "participant2_like_news": participant2_like_news,
-                "participant1_like_book": participant1_like_book,
-                "participant2_like_book": participant2_like_book,
-                "participant1_like_shopping": participant1_like_shopping,
-                "participant2_like_shopping": participant2_like_shopping,
+                "participant_like_youtube": participant_like_youtube,
+                "participant_like_news": participant_like_news,
+                "participant_like_book": participant_like_book,
+                "participant_like_shopping": participant_like_shopping,
             },
         )
 

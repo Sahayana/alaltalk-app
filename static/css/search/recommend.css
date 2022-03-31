@@ -138,6 +138,22 @@
 }
 
 .recommend_youtube_container .recommend_content{
+    position: relative;
+}
+
+.recommend_container_total_toggle{
+    position: absolute;
+    width: 5vw;
+    height: 3vw;
+    background-color: #7556CD;
+    font-size: 1.5vw;
+    line-height: 2vw;
+    color: white;
+    left: 46vw;
+    top: 0vw;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 1vw;
 }
 
 .recommend_youtube_container .recommend_content p {
@@ -427,6 +443,10 @@
     background-color: #fff;
     border-radius: 10px;
 
+}
+
+.recommend_news_container .recommend_news_content{
+    position: relative;
 }
 
 .recommend_news_container .recommend_news_content p {
@@ -933,6 +953,10 @@
 
 }
 
+.recommend_book_container .recommend_book_content{
+    position: relative;
+}
+
 .recommend_book_container .recommend_book_content p {
     font-weight: 700;
     color: #7657CE;
@@ -1247,6 +1271,10 @@
     background-color: #fff;
     border-radius: 10px;
 
+}
+
+.recommend_shopping_container .recommend_content{
+    position: relative;
 }
 
 .recommend_shopping_container .recommend_content p {

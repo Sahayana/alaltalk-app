@@ -328,6 +328,13 @@ body {
   border-radius: 50%;
   width: 80px;
   height: 80px;
+  overflow: hidden;
+}
+
+.profile_chat_avatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .profile_follow_list {
@@ -400,27 +407,91 @@ body {
   cursor: pointer;
 }
 
-.profile_like_youtube {
-  padding-top: 60px;
+/* --------------profile_like_youtube------------ */
+
+.right_wrap .profile_like_container .profile_like_youtube {
+  margin-top: 30px;
   width: 95%;
-  height: 100%;
+  height: 87%;
   overflow-x: auto;
   max-height: 680px;
-  display: none;
+  /*display: none;*/
 }
 
-.profile_like_youtube::-webkit-scrollbar {
+.right_wrap .profile_like_container .profile_like_youtube::-webkit-scrollbar {
   width: 10px;
   height: 0;
 }
 
-.profile_like_youtube::-webkit-scrollbar-thumb {
+.right_wrap .profile_like_container .profile_like_youtube::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.profile_like_grid {
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box {
+    width: 310px;
+    height: 240px;
+    border: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    margin-right: 14px;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box:last-child {
+    margin-right: 0;
+}
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .video_img {
+    width: 100%;
+    height: 175px;
+    background-color: #d2d2d2;
+}
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .video_title {
+    width: 75%;
+    height: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin: 6px 6px;
+}
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .video_count {
+    font-size: 14px;
+    color: #5e5e5e;
+    margin-left: 6px;
+}
+
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .recommend_youtube_heart_parent .profile_like_heart {
+    background-image: url("/static/images/empty_heart.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .recommend_youtube_heart_parent .profile_youtube_like_heart{
+    position: absolute;
+    left: 9vw;
+    top: 15vw;
+}
+
+/* .profile_like_grid {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -433,335 +504,467 @@ body {
 }
 .profile_like_youtube_container iframe {
   width: 100%;
-}
+} */
 
-.profile_like_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  position: absolute;
-  top: 2px;
-  left: 14vw;
-  background-size: contain;
-  z-index: 3;
-  width: 40px;
-  height: 40px;
-}
+/* --------------profile_like_youtube ends here------------ */
 
-.profile_like_youtube_toggle {
-  position: absolute;
-  top: -42px;
-  left: 90%;
-  width: 80px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-}
 
-.profile_like_heart {
-  position: absolute;
-  top: 50px;
-  left: 14.5vw;
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
-}
 
-.profile_like_news {
-  padding-top: 40px;
+/* --------------profile_like_news------------ */
+
+.right_wrap .profile_like_container .profile_like_news {
+  margin-top: 30px;
   width: 95%;
-  height: 100%;
+  height: 88%;
   display: none;
   overflow-y: auto;
   max-height: 680px;
 }
-.profile_like_news::-webkit-scrollbar {
+
+.right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar {
   width: 10px;
   height: 0;
 }
 
-.profile_like_news::-webkit-scrollbar-thumb {
+.right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.profile_like_news li {
-  width: 95%;
-  height: 10vw;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: row;
-  position: relative;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content{
+    position: relative;
+    width: 100%;
+    height: 15vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
-.profile_like_news_image {
-  background-color: #b7b7b7;
-  width: 11vw;
-  height: 6vw;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content p{
+    margin:0;
+    color: #7657CE;
 }
 
-.profile_like_news_info {
-  width: 33vw;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_image{
+    width: 12vw;
+    height: 12vw;
+    background-color: #3D3D3D;
+    object-fit: contain;
+    object-position: center;
+    border: min(2vw, 2px) solid #7556CD;
 }
 
-.profile_like_news_title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 5px;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.profile_like_news_content {
-  margin-bottom: 12px;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc{
+    width: 90%;
+    height: 12vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-.profile_like_news_button {
-  padding-top: 40px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_title {
+    width: 90%;
+
+
 }
 
-.profile_like_news_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  background-size: contain;
-  width: 40px;
-  height: 40px;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_title p{
+    width: 100%;
+    /*height: 80%;*/
+    /*overflow: hidden;*/
+    font-size: 2vw;
 }
 
-.profile_like_news_heart {
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_detail{
+    width: 90%;
+    /*height: 5vw;*/
+    overflow: hidden;
 }
 
-.profile_like_news_toggle {
-  position: absolute;
-  top: -25px;
-  left: 92%;
-  width: 80px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_footer{
+    width: 90%;
+    height: 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
 }
 
-.profile_like_book {
-  padding-top: 60px;
-  width: 95%;
-  height: 100%;
-  position: relative;
-  display: none;
-  overflow-x: auto;
-  max-height: 660px;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_footer .profile_like_news_content_desc_footer_newspaper {
+    width: 30%;
+    height: 100%;
+    text-align: left;
 }
 
-.profile_like_book::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_footer .profile_like_news_content_desc_footer_time {
+    width: 30%;
+    height: 100%;
+    text-align: right;
 }
 
-.profile_like_book::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more{
+    width: 5vw;
+    height: 6vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.profile_like_book_grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more .profile_like_news_toggle {
+    position: static;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
 }
 
-.profile_like_book_container {
-  margin-bottom: 40px;
-  width: 24vw;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-direction: row;
-  position: relative;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more .profile_like_news_toggle:hover{
+    filter: opacity(0.7) drop-shadow(0 0 0 #ffffff);
 }
 
-.profile_like_book_image {
-  width: 9vw;
-  height: 12vw;
-  background-color: #b7b7b7;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more .profile_like_news_toggle img{
+    width: 100%;
+    height: 100%;
 }
 
-.profile_like_book_info {
-  margin-left: 10px;
-  height: 12vw;
-  width: 60%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-direction: column;
+.right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more .recommend_like_heart {
+    background-image: url("/static/images/empty_heart.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    object-fit: cover;
 }
 
-.profile_like_book_title {
-  font-size: 18px;
-  font-weight: bold;
-}
 
-.profile_like_book_writer {
-  font-size: 13px;
-  color: #b7b7b7;
-}
 
-.profile_like_book_translator {
-  font-size: 13px;
-  color: #b7b7b7;
-}
+/* -------------- profile_like_news ends here ------------ */
 
-.profile_like_book_price {
-  margin-top: 20px;
-  font-weight: bold;
-}
+/* -------------- profile_like_book ------------ */
 
-.profile_like_book_button {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-}
-
-.profile_like_book_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  background-size: contain;
-  width: 40px;
-  height: 40px;
-}
-
-.profile_like_book_heart {
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
-}
-
-.profile_like_book_toggle {
-  position: absolute;
-  top: -45px;
-  left: 84%;
-  width: 80px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-}
-
-.profile_like_shopping {
-  padding-top: 60px;
-  width: 95%;
-  height: 100%;
-  position: relative;
-  overflow-x: auto;
-  max-height: 660px;
-  display: none;
-}
-
-.profile_like_shopping::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
-}
-
-.profile_like_shopping::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
-}
-
-.profile_like_shopping_grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.profile_like_shopping_container {
-  margin-bottom: 40px;
-  width: 24vw;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-direction: row;
-  position: relative;
-}
-
-.profile_like_shopping_image {
-  width: 9vw;
-  height: 12vw;
-  background-color: #b7b7b7;
-}
-
-.profile_like_shopping_info {
+.right_wrap .profile_like_container .profile_like_book {
   margin-top: 30px;
-  margin-left: 10px;
-  height: 12vw;
-  width: 60%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
+  width: 95%;
+  height: 88%;
+  position: relative;
+  display: none;
+  overflow-x: auto;
+  max-height: 660px;
 }
 
-.profile_like_shopping_title {
-  font-size: 18px;
-  font-weight: bold;
+.right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
 }
 
-.profile_like_shopping_brand {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #b7b7b7;
-}
-
-.profile_like_shopping_price {
-  margin-top: 40%;
-  font-weight: bold;
-}
-
-.profile_like_shopping_button {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-}
-
-.profile_like_shopping_setting {
-  background-image: url('../../images/more_deep_purple.png');
-  background-size: contain;
-  width: 40px;
-  height: 40px;
-}
-
-.profile_like_shopping_heart {
-  background-image: url('../../images/heart.png');
-  background-size: contain;
-  width: 25px;
-  height: 25px;
-}
-
-.profile_like_shopping_toggle {
-  position: absolute;
-  top: -45px;
-  left: 84%;
-  width: 80px;
-  height: 40px;
+.right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar-thumb {
+  background-color: #fff;
   border-radius: 10px;
-  background-color: #a185f2;
-  text-align: center;
-  color: white;
-  font-weight: bold;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box:last-child {
+    margin-right: 0;
+}
+
+
+
+
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .book_img {
+    width: 15vw;
+    height: 240px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box {
+    position: relative;
+    width: 48vw;
+    height: 20vw;
+    background-position: left;
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-align: left;
+    margin: 5px 0 50px 35px;
+    font-weight: 700;
+    color: #7657CE;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc p{
+    width: 20%;
+    font-size: 1vw;
+}
+
+.profile_like_book_desc_title, .profile_like_book_desc_series, .profile_like_book_desc_company, .profile_like_book_desc_author, .profile_like_book_desc_price{
+    width: 100%;
+    height: 4vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_title{
+    height: 5vw
+}
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_title p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_series p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_company p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_author p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_price p:nth-child(2){
+    width: 70%;
+    font-size: 1.5vw;
+    overflow: hidden;
+
+}
+
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle{
+    position: absolute;
+    top: 0;
+    width: 102%;
+    height: 3vw;
+    background-color: rgb(79, 42, 186, 0.5) ;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle .profile_like_news_toggle {
+    position: static;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.profile_like_news_toggle:hover{
+    filter: opacity(0.7) drop-shadow(0 0 0 #ffffff);
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle .profile_like_news_toggle img{
+    width: 100%;
+    height: 100%;
+}
+
+.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle .recommend_like_heart {
+    background-image: url("/static/images/empty_heart.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+
+
+/* -------------- profile_like_book ends here ------------ */
+
+/* -------------- profile_like_shopping  ------------ */
+
+.right_wrap .profile_like_container .profile_like_shopping {
+  margin-top: 30px;
+  width: 95%;
+  height: 88%;
+  position: relative;
+  display: none;
+  overflow-x: auto;
+  max-height: 660px;
+    font-weight: 700;
+    color: #7657CE;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content{
+    position: relative;
+    width: 18vw;
+    height : 25vw;
+    border:0.5vw solid #7556CD;
+    margin: 1vw;
+}
+
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_img{
+    width: 15vw;
+    height: 15vw;
+    background-color: #ef1c1c;
+    margin: 1vw 1.5vw;
+    object-fit: cover;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_img img{
+    width: 100%;
+    height: 100%;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc{
+    width: 90%;
+    height: 8vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1vw auto 0;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_bar{
+    margin-top: 1vw;
+    width: 90%;
+    height: 2px;
+    background-color: #7556CD;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc  .profile_like_shopping_content_desc_title {
+    text-align: left;
+    width: 100%;
+    height: 3.5vw;
+    overflow: hidden;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc  .profile_like_shopping_content_desc_title p{
+    margin: 0 auto;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_price{
+    text-align: right;
+    width: 100%;
+    height: 3vw;
+
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_price p{
+    font-size: 2vw;
+    color: #ae0000;
+    font-weight: 800;
+    margin: 0 auto;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle{
+    position: absolute;
+    width: 102%;
+    height: 3vw;
+    background-color: rgb(79, 42, 186, 0.5) ;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+}
+
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle .profile_like_news_toggle {
+    position: static;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle .profile_like_news_toggle:hover {
+    filter: opacity(0.7) drop-shadow(0 0 0 #ffffff);
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle .profile_like_news_toggle img{
+    width: 100%;
+    height: 100%;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle .recommend_like_heart {
+    background-image: url("/static/images/empty_heart.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    object-fit: cover;
+}
+
+
+@keyframes appear_toggle {
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
 }

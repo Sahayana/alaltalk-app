@@ -311,7 +311,20 @@ function declineRequest(requestId){
 
 
 
+function set_animation_more() {
+    let shopping_content = document.getElementsByClassName('recommend_toggle')
+    for (let i = 0; i < shopping_content.length; i++) {
+        shopping_content[i].addEventListener('mouseover', function () {
+            shopping_content[i].style.animation = 'appear_toggle 1s ease-out forwards'
 
+        })
+        shopping_content[i].addEventListener('mouseout', function () {
+            shopping_content[i].style.animation = ''
+            shopping_content[i].style.opacity = '0'
+
+        })
+    }
+}
 
 
 
@@ -319,7 +332,7 @@ function declineRequest(requestId){
 
 $(document).ready(function(){
 
-    
+    set_animation_more()
     
     // 프로필 이미지 업로드
     let profileImgDiv = document.querySelector('.profile_image_change');
