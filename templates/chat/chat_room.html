@@ -79,13 +79,15 @@
                     </div>
                 </div>
                 <div class="right_icon">
-                    <div class="close_btn" onclick="location.href='/chat'"></div>
+{#                    <div class="close_btn" onclick="location.href='/chat'"></div>#}
                     <div class="toggle_icon"></div>
                 </div>
                 <div class="toggle_content">
                     <p id="recommend_btn">추천컨텐츠</p>
                     <div class="line"></div>
                     <p id="freind_like_list">친구 찜 목록 보기</p>
+                    <div class="line"></div>
+                    <p id="close_chat_room" onclick="location.href='/chat'">닫기</p>
                 </div>
             </div>
 
@@ -232,8 +234,8 @@
 
     </div>
 </div>
-<script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
-<script src="{% static 'js/search/recommend.js' %}"></script>
+<script src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
+<script src="{% static 'js/search/recommend.js' %}?after"></script>
 <script>
     $(document).ready(function () {
         // 채팅 스크롤 하단 고정
@@ -279,6 +281,7 @@
         $('.friends_like_container').hide();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
+        $('.close_chat_room').hide();
         $('.chat_container').appendTo('.left_wrap');
         $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
@@ -299,6 +302,7 @@
         $('.friends_like_container').appendTo('.right_wrap');
         $(".chat_list_container").show();
         $('.close_btn').show();
+        $('.close_chat_room').show();
     }
 
 
@@ -308,6 +312,7 @@
         $('.right_wrap').empty();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
+        $('.close_chat_room').hide();
 
         {#$('.right_wrap').empty();#}
         $('.friends_like_container').appendTo('.right_wrap');
@@ -326,6 +331,7 @@
         $('.chat_container').appendTo('.right_wrap');
         $(".chat_list_container").show();
         $('.close_btn').show();
+        $('.close_chat_room').show()
     });
 
     //친구 찜목록 카테고리
@@ -416,7 +422,7 @@
                     createMessage(data['messages'][i]);
                 }
             } else if (data['command'] === 'new_message') {
-                messageCounter(data['message']);
+                {#messageCounter(data['message']);#}
                 createMessage(data['message']);
                 var scrollDown = $('#chat_box').prop('scrollHeight');
                 $('#chat_box').scrollTop(scrollDown);
@@ -430,7 +436,7 @@
                 var alarm = new Audio('/static/audios/message_alarm.mp3')
                 console.log("알람")
                 alarm.play();
-                $('.partner_last_msg').append(message);
+                {#$('.partner_last_msg').append(message);#}
             }
 
         }
