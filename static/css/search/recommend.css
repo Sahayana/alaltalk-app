@@ -746,8 +746,8 @@
 
 .recommend_youtube_like_heart{
     position: absolute;
-    left: 19vw;
-    top: 16vw;
+    left: 240px;
+    top: 200px;
 }
 
 .profile_like_news_heart:hover{
