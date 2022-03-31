@@ -11,10 +11,17 @@
     <!-- reset css cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
+    <<<<<<< HEAD
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/accounts/mypage.css' %}?after">
+
+    =======
     <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/accounts/mypage.css' %}">
 
+    >>>>>>> c149c981b8cddf0b6c51387a4f5480b6cc4870a3
 </head>
 <body>
 <div class="outline">
@@ -61,7 +68,7 @@
         <div class="profile_auth_container" id="profile_auth_container">
             <form class="profile_auth_form">
                 {% csrf_token %}
-                <p id="password-again-helper">비밀번호를 입력해주세요:</p>
+                <p id="password-again-helper">비밀번호를 입력해주세요</p>
                 <input type="password" id="password-again-input">
                 <button type="button" id="password-again-btn" onclick=authCheck()>확인</button>
             </form>
@@ -76,22 +83,22 @@
                     <img id="profile-img-modified" src={{ user.img.url }} alt="profile-img" srcset="">
                 </div>
                 <div class="profile_change_field">
-                    <label for="profile-nickname">닉네임:</label>
+                    <label for="profile-nickname">닉네임</label>
                     <input type="text" id="profile-nickname" value="{{ user.nickname }}">
                     <small id="name_error">Error Message</small>
                 </div>
                 <div class="profile_change_field">
-                    <label for="profile-password-change">비밀번호:</label>
+                    <label for="profile-password-change">비밀번호</label>
                     <input class="pas" id="profile-password-change" type="password" name="password1">
                     <small id="pwd_error">Error Message</small>
                 </div>
                 <div class="profile_change_field">
-                    <label for="profile-password-check">비밀번호 확인:</label>
+                    <label for="profile-password-check">비밀번호 확인</label>
                     <input class="pas" id="profile-password-check" type="password" name="password2">
                     <small id="pwd_check_error">Error Message</small>
                 </div>
                 <div class="profile_change_field">
-                    <label for="profile-bio">한줄소개:</label>
+                    <label for="profile-bio">한줄소개</label>
                     <input type="text" id="profile-bio" value="{{ user.bio }}">
                 </div>
                 <button type="button" class="profile_change_button" id="profile_change_button" onclick=profileChange()>

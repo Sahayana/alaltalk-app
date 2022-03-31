@@ -36,20 +36,20 @@ body {
 }
 
 .signin-container .signin-left-wrapper .logo > img {
-  width: 90%;
-  height: 40%;
+  width: 50%;
 }
 
 .signin-container .signin-left-wrapper .logo .logo-helper {
   font-size: 80%;
   color: #a185f2;
-  margin-left: -17%;
+  margin-top: 20px;
+  margin-left: -20px;
 }
 
 /* signin-right-wrapper */
 
 .signin-container .signin-right-wrapper {
-  width: 50%;
+  width: 45%;
   height: 720px;
   display: flex;
   flex-direction: column;

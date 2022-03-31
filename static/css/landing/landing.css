@@ -1,31 +1,34 @@
-*{
+* {
     font-family: 'Roboto', sans-serif;
-}
-body{
-    /*background-color: #A185F2;*/
-    background:  rgba(161,133,242,1);
+    font-size: 16px;
+    letter-spacing: -0.5px;
 }
 
-body::-webkit-scrollbar{
-    width: 1.5vw;
+body {
+    background-color: #A185F2;
+    /*background:  rgba(161,133,242,1);*/
+}
+
+body::-webkit-scrollbar {
+    width: 1vw;
     background-color: transparent;
 }
 
-body::-webkit-scrollbar-thumb{
-    background-color: #020167;
+body::-webkit-scrollbar-thumb {
+    background-color: #7657CE;
     border-radius: 1vw;
-    border: 4px solid transparent;
+    border: 2px solid transparent;
     background-clip: padding-box;
 }
 
-body::-webkit-scrollbar-track{
+body::-webkit-scrollbar-track {
     border-radius: 1.5vw;
 }
 
-.landing_header{
+.landing_header {
     position: absolute;
     width: 100%;
-    height: 6vw;
+    height: 4vw;
     background-color: #7657CE;
     display: flex;
     flex-direction: row;
@@ -35,25 +38,22 @@ body::-webkit-scrollbar-track{
     animation: appear_header 1s ease-out;
 }
 
-.landing_header_left{
-    margin-left: 2vw;
-    width: 8vw;
-    height: 3vw;
-}
-.landing_header_left img{
-    width: 100%;
-    height:100%;
+.landing_header_left {
+    margin-left: 24px;
+    width: 6.4vw;
 }
 
-.landing_header_right{
+.landing_header_left img {
+    width: 100%;
+}
+
+.landing_header_right {
     color: white;
-    font-size: 1vw;
-    font-weight: 600;
-    margin-right: 40px;
+    margin-right: 24px;
     cursor: pointer;
 }
 
-.landing_banner{
+.landing_banner {
     position: relative;
     width: 100%;
     height: 90vh;
@@ -62,64 +62,72 @@ body::-webkit-scrollbar-track{
     background-position: center;
     background-size: cover;
     overflow: hidden;
-    z-index:  0;
+    z-index: 0;
 }
 
-.landing_bottom_gradient_box{
+.landing_bottom_gradient_box {
     width: 100%;
     height: 45vh;
     position: absolute;
     top: calc(90vh - 45vh);
     z-index: 2;
-    background: linear-gradient(0deg, rgba(161,133,242,1) 1%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(0deg, rgba(161, 133, 242, 1) 1%, rgba(255, 255, 255, 0) 100%);
 }
 
 
-.landing_welcome_text{
+.landing_welcome_text {
     font-weight: 700;
-    color : white;
-    font-size: min(3vw, 60px);
+    font-size: 50px;
+    color: white;
     width: 100%;
-    margin: 15% auto 0;
+    text-align: center;
+    margin-top: 14px;
+}
+
+.landing_welcome_text_strong {
+    color: white;
+    font-weight: 700;
+    margin-top: 330px;
+    font-size: 62px;
     text-align: center;
 }
 
-.landing_login_box{
+.landing_login_box {
     width: min(10vw, 300px);
     height: 2vw;
-    border: 0.5vw solid white;
+    border: 4px solid white;
     border-radius: 80px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin : 10vh auto 0;
+    margin: 140px auto 0;
     position: relative;
     cursor: pointer;
     z-index: 10;
 }
 
-.landing_login_box p{
+.landing_login_box p {
     font-size: min(1vw, 20px);
-    color: white;
+    color: #fff;
     font-weight: 600;
 }
 
 
-.landing_login_allow{
+.landing_login_allow {
     width: 10%;
     height: 10%;
-    position : absolute;
-    color : white;
-    top : 0;
-    left : 12.5vw;
+    position: absolute;
+    color: white;
+    top: 0;
+    left: 12.5vw;
 }
 
-.landing_sign_up_container{
+.landing_sign_up_container {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin : 50px auto;
+    margin: 20px auto;
     text-align: center;
     font-size: min(1vw, 20px);
     color: white;
@@ -130,19 +138,19 @@ body::-webkit-scrollbar-track{
     cursor: pointer;
 }
 
-.landing_sign_up_container p{
+.landing_sign_up_container p {
     z-index: 10;
 }
 
-.landing_see_our_page{
+.landing_see_our_page {
     position: relative;
-    margin: -50px auto 0;
-    width : 5vw;
+    margin: -75px auto 0;
+    width: 5vw;
     max-width: 200px;
     height: 5vw;
-    background-color: #020167;
+    background-color: #7657CE;
     border-radius: 100px;
-    border: 4px solid #7657CE;
+    border: 4px solid #a185f2;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -152,80 +160,83 @@ body::-webkit-scrollbar-track{
     cursor: pointer;
 }
 
-.landing_all_content_container{
+.landing_all_content_container {
     position: relative;
-    top:0;
+    top: 0;
     overflow: hidden;
 }
 
 
-
-
 /* row 관련 설정 & 첫 번째 row */
 
-.landing_content_row{
-    margin: 30vw auto 0;
+.landing_content_row {
     width: 80%;
-    max-width: 1440px;
+    height: 90vh;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-around;
+    margin: 150px auto 0;
+
 }
 
-.landing_content_row_text_box{
-    width: min(20vw, 300px);
+.landing_content_row_text_box {
+    /*width: min(20vw, 300px);*/
+    width: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: end;
+    padding-left: 50px;
 }
 
-.landing_content_row_text_1{
-    font-size: min(5vw, 100px);
+.landing_content_row_text_1 {
+    /*font-size: min(5vw, 120px);*/
+    font-size: 72px;
     font-weight: 600;
     color: white;
     text-align: right;
-    text-shadow: 10px 10px #474B50;
+
+    /*text-shadow: 10px 10px #474B50;*/
 
 }
 
-.landing_content_row_text_2{
-    font-size: min(3vw, 60px);
-    width: 100%;
-    height: 210px;
+.landing_content_row_text_2 {
+    /*font-size: min(3vw, 60px);*/
+    font-size: 40px;
+    color: #191919;
     text-align: right;
     font-weight: 600;
     margin-top: 10px;
-    text-shadow: 5px 5px 10px #474B50;
+    line-height: 40px;
+    /*text-shadow: 5px 5px 10px #474B50;*/
 
 }
 
-.landing_content_row_img{
+.landing_content_row_img {
     object-fit: cover;
-    width: min(40vw, 900px);
-    height: 30vw;
+    width: 700px;
     max-height: 700px;
+    box-shadow: 10px 10px 25px 1px rgba(0, 0, 0, .15);
 }
 
 
-.landing_content_row_img img{
+.landing_content_row_img img {
     width: 100%;
     height: 100%;
+    border-radius: 6px;
 }
-
-
 
 
 /* row2 에 대한 설정*/
 
-.lading_content_row_2{
+.lading_content_row_2 {
     position: relative;
-    width: min(70vw, 1440px);
-    margin-top: 25vw;
+    width: 80%;
+    height: 90vh;
+    margin: 150px auto 0;
 }
 
-.landing_slide_name_bar{
+.landing_slide_name_bar {
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -240,31 +251,31 @@ body::-webkit-scrollbar-track{
 
 }
 
-.landing_content_row_2_img{
-    position: relative;
+.landing_content_row_2_img.landing_content_row_2_img {
+    position: static;
     display: flex;
-    flex-direction: row;
-    justify-content: start;
     align-items: center;
-    width: min(40vw, 900px);
-    height: 30vw;
+    max-width: 800px;
+    width: auto;
 }
 
-.landing_content_row_2_img>img{
-    width: 20vw;
-}
-.landing_interest_slide{
-    width: 20vw;
-    height: min(30vw, 700px);
-    background-color: #0d55d9;
+.landing_content_row_2_img > img {
+    width: 45%;
+    position: relative;
+    left:0;
 }
 
-.landing_slide_next_button{
+.landing_interest_slide {
+    width: 65%;
+    position: relative;
+}
+
+.landing_slide_next_button {
     position: absolute;
-    top:calc(min(15vw, 350px) - min(2.5vh, 50px));
-    left: min(42vw, 950px);
-    width: min(5vw, 100px);
-    height: min(5vw, 100px);
+    top: 360px;
+    right: 345px;
+    width: min(3vw, 100px);
+    height: min(3vw, 100px);
     background-image: url("/static/images/landing/landing_next_slide_button.png");
     background-size: cover;
     background-repeat: no-repeat;
@@ -274,11 +285,11 @@ body::-webkit-scrollbar-track{
     cursor: pointer;
 }
 
-.landing_slide_next_button:hover{
+.landing_slide_next_button:hover {
     transform: scale(1.1);
 }
 
-.landing_content_row_2_text_box{
+.landing_content_row_2_text_box {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -286,39 +297,40 @@ body::-webkit-scrollbar-track{
     width: 20%;
     height: 20vw;
     text-align: left;
+    line-height: 30px;
 }
 
-.landing_content_row_2_text_1 , .landing_content_row_2_text_2{
+.landing_content_row_2_text_1, .landing_content_row_2_text_2 {
     text-align: left;
 }
 
 .landing_content_row_2_text_1 {
     font-size: min(5vw, 80px);
-    margin-top: 10%;
+    margin-top: 40px;
 }
 
 
-.landing_content_row_2_text_2{
+.landing_content_row_2_text_2 {
 
 }
 
 
 /* row3에 대한 설정 */
-.landing_content_row_3_wrapper{
+.landing_content_row_3_wrapper {
     position: relative;
 }
 
 
-.landing_content_row_3{
+.landing_content_row_3 {
     position: relative;
     background-color: white;
     width: 100%;
     height: 40vw;
-    margin: 25vw auto;
+    margin: 250px auto 0;
     overflow: hidden;
 }
 
-.landing_content_row_3_title{
+.landing_content_row_3_title {
     font-size: min(2vw, 60px);
     font-weight: 600;
     display: flex;
@@ -330,19 +342,19 @@ body::-webkit-scrollbar-track{
     margin-top: 3vw;
 }
 
-.landing_content_row_bar{
+.landing_content_row_bar {
     width: 0.5vw;
     height: 2vw;
     background-color: #7556CD;
 }
 
-.landing_content_row_3_content{
+.landing_content_row_3_content {
     width: 30vw;
     height: 30vw;
     margin: 2vw auto;
 }
 
-.landing_content_row_3_feature_box_row{
+.landing_content_row_3_feature_box_row {
     width: 100%;
     height: 50%;
     display: flex;
@@ -351,7 +363,7 @@ body::-webkit-scrollbar-track{
     align-items: center;
 }
 
-.landing_content_row_3_feature_box{
+.landing_content_row_3_feature_box {
     width: 45%;
     height: 90%;
     display: flex;
@@ -360,13 +372,13 @@ body::-webkit-scrollbar-track{
     align-items: center;
 }
 
-.landing_content_row_3_feature_box img{
+.landing_content_row_3_feature_box img {
     width: 50%;
     height: 50%;
     object-fit: cover;
 }
 
-.landing_content_row_3_feature_box p{
+.landing_content_row_3_feature_box p {
     font-size: 1.5vw;
     font-weight: 600;
     margin-top: 1vw;
@@ -374,15 +386,15 @@ body::-webkit-scrollbar-track{
 
 
 /*row 4에 관한 설정*/
-.landing_content_row_4_wrapper{
+.landing_content_row_4_wrapper {
     position: relative;
     width: 100%;
 }
 
-.landing_content_row_4{
-    width: 80vw;
-    height: 40vw;
-    margin: 0 auto;
+.landing_content_row_4 {
+    width: 80%;
+    height: 90vw;
+    margin: 150px auto 0;
     overflow: hidden;
     display: flex;
     flex-direction: row;
@@ -391,21 +403,21 @@ body::-webkit-scrollbar-track{
 
 }
 
-.landing_content_row_4_left{
+.landing_content_row_4_left {
     width: 40vw;
     height: 25vw;
     background-color: white;
-    border: min(1vw, 3px) solid rgba(217,217,217,1) ;
+    border: min(1vw, 3px) solid rgba(217, 217, 217, 1);
 }
 
-.landing_content_row_4_left_mac_header{
+.landing_content_row_4_left_mac_header {
     position: relative;
     width: 40vw;
     height: 3vw;
-    background: linear-gradient(0deg, rgba(217,217,217,1) 0%, rgba(234,234,235,1) 100%);
+    background: linear-gradient(0deg, rgba(217, 217, 217, 1) 0%, rgba(234, 234, 235, 1) 100%);
 }
 
-.landing_content_row_4_mac_header_button_box{
+.landing_content_row_4_mac_header_button_box {
     width: 10%;
     height: 100%;
     display: flex;
@@ -415,24 +427,24 @@ body::-webkit-scrollbar-track{
     margin-left: 1vw;
 }
 
-.landing_content_row_4_mac_header_button{
+.landing_content_row_4_mac_header_button {
     width: 1vw;
-    height:1vw;
+    height: 1vw;
     border-radius: 50%;
     background-color: #382C2C;
 }
 
-.landing_content_row_4_left_mac_body{
+.landing_content_row_4_left_mac_body {
     width: 40vw;
     height: 20vw;;
 
 }
 
-.landing_content_row_4_mac_content_wrapper{
+.landing_content_row_4_mac_content_wrapper {
 
 }
 
-.landing_content_row_4_mac_content{
+.landing_content_row_4_mac_content {
     width: 100%;
 
     display: flex;
@@ -441,20 +453,20 @@ body::-webkit-scrollbar-track{
     align-items: center;
 }
 
-.landing_content_row_4_mac_content img{
+.landing_content_row_4_mac_content img {
     width: 10vw;
     height: 10vw;
 }
 
-.landing_content_row_4_next_button{
-    left:33vw;
+.landing_content_row_4_next_button {
+    left: 33vw;
     top: calc(10vw - 2vw);
     z-index: 4;
-    background-image:url("/static/images/landing/landing_next_slide_button_2.png");
+    background-image: url("/static/images/landing/landing_next_slide_button_2.png");
 }
 
 
-.landing_content_row_4_right{
+.landing_content_row_4_right {
     width: 25vw;
     height: 25vw;
     display: flex;
@@ -463,13 +475,13 @@ body::-webkit-scrollbar-track{
     align-items: start;
 }
 
-.landing_content_row_4_title{
-    width:11vw;
+.landing_content_row_4_title {
+    width: 11vw;
     margin-top: 0;
     margin-left: 0;
 }
 
-.landing_content_row_4_right> p{
+.landing_content_row_4_right > p {
     margin-top: 1vw;
     width: 100%;
     text-align: left;
@@ -478,40 +490,39 @@ body::-webkit-scrollbar-track{
     color: white;
 }
 
-.landing_content_row_4_right_request_button{
+.landing_content_row_4_right_request_button {
     width: 15vw;
     height: 3vw;
     background-color: white;
     border-radius: 1.5vw;
     text-align: center;
-    line-height:3vw;
+    line-height: 3vw;
     font-weight: 600;
 
     cursor: pointer;
 }
 
 
-
 /*  row 5에 대한 설정*/
-.landing_content_row_5_wrapper{
+.landing_content_row_5_wrapper {
     position: relative;
     width: 100%;
     background-color: #FAF9FF;
 }
 
-.landing_content_row_5{
-    width: 70vw;
-    height: 40vw;
-    margin: 25vw auto 0;
+.landing_content_row_5 {
+    width: 80%;
+    height: 90vw;
+    margin: 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    font-weight: 800;
+    font-weight: 700;
     font-size: 1.5vw;
 }
 
-.landing_content_row_5_col_1{
+.landing_content_row_5_col_1 {
     width: 25vw;
     height: 30vw;
     display: flex;
@@ -522,7 +533,7 @@ body::-webkit-scrollbar-track{
 
 }
 
-.landing_content_row_5_col_1_title{
+.landing_content_row_5_col_1_title {
     width: 22vw;
     display: flex;
     flex-direction: row;
@@ -532,7 +543,7 @@ body::-webkit-scrollbar-track{
     font-size: 2vw;
 }
 
-.landing_content_row_5_col_1_profile_box{
+.landing_content_row_5_col_1_profile_box {
     position: relative;
     width: 20vw;
     height: 15vw;
@@ -540,29 +551,30 @@ body::-webkit-scrollbar-track{
 
 }
 
-.landing_content_row_5_col_1_profile_img{
+.landing_content_row_5_col_1_profile_img {
     width: 9vw;
-    height:  9vw;
+    height: 9vw;
     background-color: #3D3D3D;
     border-radius: 4.5vw;
     margin: 2vw auto 0;
     object-fit: cover;
 }
 
-.landing_content_row_5_col_1_profile_img img{
+.landing_content_row_5_col_1_profile_img img {
     width: 100%;
     height: 100%;
 }
 
 
-.landing_content_row_5_col_1_profile_name{
+.landing_content_row_5_col_1_profile_name {
     position: absolute;
     top: 9vw;
     left: 12.5vw;
 
 
 }
-.landing_content_row_5_col_1_profile_function{
+
+.landing_content_row_5_col_1_profile_function {
     width: 15vw;
     margin: 2vw auto;
     display: flex;
@@ -572,13 +584,13 @@ body::-webkit-scrollbar-track{
 
 }
 
-.landing_content_row_5_col_1_profile_function img{
-    width : 2vw;
+.landing_content_row_5_col_1_profile_function img {
+    width: 2vw;
     height: 2vw;
 
 }
 
-.landing_content_row_5_col_1_profile_bio{
+.landing_content_row_5_col_1_profile_bio {
     width: 20vw;
     height: 3vw;
     text-align: center;
@@ -586,8 +598,7 @@ body::-webkit-scrollbar-track{
 }
 
 
-
-.landing_content_row_5_bar{
+.landing_content_row_5_bar {
     width: 1vw;
     height: 80%;
     border-radius: 0.5vw;
@@ -595,7 +606,7 @@ body::-webkit-scrollbar-track{
 }
 
 
-.landing_content_row_5_col_2{
+.landing_content_row_5_col_2 {
     width: 20vw;
     height: 30vw;
     display: flex;
@@ -605,26 +616,24 @@ body::-webkit-scrollbar-track{
 }
 
 
-
-
 /* 고래 이미지 설정! */
 
-.landing_whale_1{
+.landing_whale_1 {
     position: absolute;
     width: 60vw;
     height: 25vw;
-    top: 20vw;
-    right:10vw;
+    top: 18vw;
+    right: 10vw;
     z-index: -1;
 }
 
-.landing_whale_1 img{
+.landing_whale_1 img {
     width: 100%;
     height: 100%;
     filter: opacity(1) drop-shadow(0 0 0 white) brightness(1);
 }
 
-.landing_whale_2{
+.landing_whale_2 {
     position: absolute;
     width: 15vw;
     height: 15vw;
@@ -633,12 +642,12 @@ body::-webkit-scrollbar-track{
     top: 70vw;
 }
 
-.landing_whale_2 img{
+.landing_whale_2 img {
     width: 100%;
     height: 100%;
 }
 
-.landing_whale_3{
+.landing_whale_3 {
     position: absolute;
     width: 8vw;
     height: 8vw;
@@ -648,68 +657,68 @@ body::-webkit-scrollbar-track{
     top: -8vw;
 }
 
-.landing_whale_3 img{
+.landing_whale_3 img {
     width: 100%;
     height: 100%;
 }
 
-.landing_whale_4{
+.landing_whale_4 {
     position: absolute;
     width: 20vw;
     height: 20vw;
     object-fit: cover;
-    right:1vw;
+    right: 1vw;
     top: -10vw;
 }
 
-.landing_whale_4 img{
+.landing_whale_4 img {
     width: 100%;
     height: 100%;
 }
 
-.landing_whale_5{
+.landing_whale_5 {
     position: absolute;
     width: 20vw;
     height: 20vw;
     object-fit: cover;
-    left:5vw;
+    left: 5vw;
     top: calc(40vw - 17vw);
 }
 
-.landing_whale_5 img{
+.landing_whale_5 img {
     width: 100%;
     height: 100%;
 }
 
-.landing_whale_6{
+.landing_whale_6 {
     position: absolute;
     width: 10vw;
     height: 10vw;
     object-fit: cover;
-    left:5vw;
+    left: 5vw;
     top: 35vw;
 }
 
-.landing_whale_6 img{
+.landing_whale_6 img {
     width: 100%;
     height: 100%;
 }
 
-.landing_whale_7{
+.landing_whale_7 {
     width: 10vw;
     height: 10vw;
     object-fit: cover;
-    margin : 10vw auto 0;
+    margin: 0 auto;
 }
 
-.landing_whale_7 img{
+.landing_whale_7 img {
     width: 100%;
     height: 100%;
 }
 
 /* footer 관련 */
-.landing_footer{
-    margin-top: 10vw;
+.landing_footer {
+    margin: 200px auto 20px;
     width: 100%;
     height: 15vw;
     display: flex;
@@ -717,16 +726,15 @@ body::-webkit-scrollbar-track{
     justify-content: space-evenly;
     align-content: center;
     color: white;
-    font-weight: bold;
 }
 
-.landing_footer_about_us{
+.landing_footer_about_us {
     width: 20vw;
     height: 100%;
     text-align: left;
 }
 
-.landing_footer_about_us img{
+.landing_footer_about_us img {
     display: block;
     width: 10vw;
     height: 4vw;
@@ -734,11 +742,14 @@ body::-webkit-scrollbar-track{
     margin-bottom: 1vw;
 }
 
-.landing_footer_about_us p{
+.landing_footer_about_us p {
     margin-bottom: 1vw;
 }
+.landing_footer_about_us p strong {
+    font-weight: 700;
+}
 
-.landing_footer_developer_container{
+.landing_footer_developer_container {
     width: 50vw;
     height: 100%;
     display: flex;
@@ -747,32 +758,32 @@ body::-webkit-scrollbar-track{
     align-items: center;
 }
 
-.landing_footer_developer_profile_box{
+.landing_footer_developer_profile_box {
     width: 9vw;
     height: 12vw;
     position: relative;
 }
 
-.landing_footer_developer_profile_title{
+.landing_footer_developer_profile_title {
     position: absolute;
-    top:-3vw;
+    top: -3vw;
     left: 0;
 }
 
-.landing_footer_developer_profile{
-    width:8vw;
+.landing_footer_developer_profile {
+    width: 8vw;
     height: 8vw;
     background-color: #020167;
     border-radius: 4vw;
-    margin:0 auto;
+    margin: 0 auto;
 }
 
-.landing_footer_developer_profile img{
+.landing_footer_developer_profile img {
     width: 100%;
     height: 100%;
 }
 
-.landing_footer_developer_name_box{
+.landing_footer_developer_name_box {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -780,12 +791,13 @@ body::-webkit-scrollbar-track{
     align-items: center;
     margin-top: 1vw;
 }
-.landing_footer_developer_profile_github{
-    width:2vw;
+
+.landing_footer_developer_profile_github {
+    width: 2vw;
     height: 2vw;
 }
 
-.landing_footer_developer_name_box img{
+.landing_footer_developer_name_box img {
     width: 100%;
     height: 100%;
 }
@@ -793,20 +805,20 @@ body::-webkit-scrollbar-track{
 /* animations */
 
 @keyframes appear_header {
-    from{
+    from {
         opacity: 0;
     }
-    to{
+    to {
         opacity: 1;
     }
 
 }
 
 @keyframes disappear_header {
-    from{
+    from {
         opacity: 1;
     }
-    to{
+    to {
         opacity: 0;
     }
 
