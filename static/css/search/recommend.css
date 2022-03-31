@@ -139,14 +139,16 @@
 
 .recommend_youtube_container .recommend_content{
     position: relative;
+    height: auto;
 }
 
 .recommend_container_total_toggle{
     position: absolute;
-    width: 5vw;
-    height: 3vw;
+    width: 3vw;
+    height: 1.5vw;
+    text-decoration: none;
     background-color: #7556CD;
-    font-size: 1.5vw;
+    font-size: 18px;
     line-height: 2vw;
     color: white;
     left: 46vw;
@@ -154,12 +156,12 @@
     text-align: center;
     font-weight: 600;
     border-radius: 1vw;
+    border: none;
 }
 
 .recommend_youtube_container .recommend_content p {
     font-weight: 700;
     color: #7657CE;
-    margin-bottom: 12px;
 }
 
 .recommend_youtube_container .recommend_content .content_section {

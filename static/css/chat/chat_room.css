@@ -224,6 +224,20 @@ body {
     align-items: center;
     justify-content: space-between;
 }
+#toggle_content {
+    display: none;
+    font-size: 14px;
+    color: #5e5e5e;
+    background-color: #fff;
+    padding: 4px 0;
+    box-sizing: border-box;
+    max-width: 120px;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    cursor: pointer;
+}
 
 .chat_container .top_bar .toggle_content {
     display: none;
