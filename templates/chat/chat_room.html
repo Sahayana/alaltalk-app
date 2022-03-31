@@ -108,9 +108,8 @@
                         <div class='partner_to_user'>{{ message.message }}</div>
                     {% endif %}
                 {% endfor %}
-                <div class="line">
-                    -------------------------
-                    날짜나 시간 표시해주면 좋을듯 싶다
+                <div class="created_message">
+                    {{ latest_created_message.created_at }}
                 </div>
                 {#                채팅내용 들어가는 곳#}
             </div>
@@ -543,11 +542,25 @@
                     createMessage(data['messages'][i]);
                 }
             } else if (data['command'] === 'new_message') {
+                messageCounter(data['message']);
                 createMessage(data['message']);
                 var scrollDown = $('#chat_box').prop('scrollHeight');
                 $('#chat_box').scrollTop(scrollDown);
             }
         };
+
+        function messageCounter(data) {
+            const author = data['author']
+            const message = data['message']
+            if (author === user_id) {
+                var alarm = new Audio('/static/audios/message_alarm.mp3')
+                console.log("알람")
+                alarm.play();
+                $('.partner_last_msg').append(message);
+            }
+
+        }
+
 
         {#consumer에게 fetch_messages가 실행되도록 명령#}
 
@@ -560,10 +573,9 @@
         {#document.querySelector('#chat_message_input').focus();#}
         document.querySelector('#chat_message_input').onkeyup = function (e) {
             if (e.keyCode === 13) {  // enter, return
-                if ($('#chat_message_input').val().length === 0) {
-                    {#alert('메세지를 입력해주세요!')#}
-                    return false;
-                }
+                // if ($('#chat_message_input').val().length === 0) {
+                //    return false;
+                // }
                 const messageInputDom = document.querySelector('#chat_message_input');
                 const message = messageInputDom.value
                 if (message === '') {
@@ -580,24 +592,6 @@
                 messageInputDom.value = '';
             }
         };
-
-        {#해당 input에 메세지를 작성하고 버튼을 클릭하면#}
-        {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
-        {#document.querySelector('#chat_message_submit').onclick = function (e) {#}
-        {#    const messageInputDom = document.querySelector('#chat_message_input');#}
-        {#    const message = messageInputDom.value#}
-        {#    if (message === '') {#}
-        {#        alert('메세지를 입력해주세요.')#}
-        {#    } else {#}
-        {#        chatSocket.send(JSON.stringify({#}
-        {#            'command': 'new_messages',#}
-        {#            'message': message,#}
-        {#            'from': user_id,#}
-        {#            'room_id': room_id,#}
-        {#        }));#}
-        {#    }#}
-        {#messageInputDom.value = '';#}
-        // };
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {
