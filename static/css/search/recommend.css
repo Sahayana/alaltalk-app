@@ -146,14 +146,14 @@
     width: 70px;
     height: 35px;
     background-color: #7556CD;
-    font-size: 1.5vw;
-    line-height: 2vw;
+    font-size: 22px;
+    line-height: 22px;
     color: white;
-    left: 46vw;
+    right: 25px;
     top: 0vw;
     text-align: center;
     font-weight: 600;
-    border-radius: 1vw;
+    border-radius: 12px;
 }
 
 .recommend_youtube_container .recommend_content p {
