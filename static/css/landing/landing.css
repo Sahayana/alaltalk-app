@@ -57,7 +57,7 @@ body::-webkit-scrollbar-track {
     position: relative;
     width: 100%;
     height: 90vh;
-    background-image: url("/static/images/landing/banner1.jpg");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/banner1.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -251,8 +251,8 @@ body::-webkit-scrollbar-track {
 
 }
 
-.landing_content_row_2_img.landing_content_row_2_img {
-    position: static;
+.landing_content_row_2_img, .landing_content_row_2_img {
+    position: relative;
     display: flex;
     align-items: center;
     max-width: 800px;
@@ -272,11 +272,11 @@ body::-webkit-scrollbar-track {
 
 .landing_slide_next_button {
     position: absolute;
-    top: 360px;
-    right: 345px;
+    top: 240px;
+    right: 20px;
     width: min(3vw, 100px);
     height: min(3vw, 100px);
-    background-image: url("/static/images/landing/landing_next_slide_button.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/landing_next_slide_button.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -462,7 +462,7 @@ body::-webkit-scrollbar-track {
     left: 33vw;
     top: calc(10vw - 2vw);
     z-index: 4;
-    background-image: url("/static/images/landing/landing_next_slide_button_2.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/landing_next_slide_button_2.png");
 }
 
 

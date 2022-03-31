@@ -474,7 +474,7 @@ body {
 }
 
 
-.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .recommend_youtube_heart_parent .profile_like_heart {
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .profile_like_heart {
     background-image: url("/static/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
@@ -485,10 +485,10 @@ body {
     object-fit: cover;
 }
 
-.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .recommend_youtube_heart_parent .profile_youtube_like_heart{
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .profile_youtube_like_heart{
     position: absolute;
-    left: 9vw;
-    top: 15vw;
+    left: 260px;
+    top: 200px;
 }
 
 /* .profile_like_grid {

@@ -144,19 +144,18 @@
 
 .recommend_container_total_toggle{
     position: absolute;
-    width: 3vw;
-    height: 1.5vw;
-    text-decoration: none;
+    width: 70px;
+    height: 35px;
     background-color: #7556CD;
-    font-size: 18px;
-    line-height: 2vw;
+    font-size: 22px;
+    line-height: 22px;
     color: white;
-    left: 46vw;
+    right: 25px;
     top: 0vw;
     text-align: center;
     font-weight: 600;
-    border-radius: 1vw;
     border: none;
+    border-radius: 12px;
 }
 
 .recommend_youtube_container .recommend_content p {
@@ -748,8 +747,8 @@
 
 .recommend_youtube_like_heart{
     position: absolute;
-    left: 19vw;
-    top: 16vw;
+    left: 240px;
+    top: 200px;
 }
 
 .profile_like_news_heart:hover{
