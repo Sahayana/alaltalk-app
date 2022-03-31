@@ -229,23 +229,23 @@ function book_content_add(book_crawling_data_list, type) {
                             </a>
                             <div class="recommend_book_desc" style="display: ${display_value}">
                                 <div class="recommend_book_desc_title">
-                                    <p>제목</p>
+                                    <p class="title">제목</p>
                                     <p>${book_row[0]}</p>
                                 </div>
                                 <div class="recommend_book_desc_series">
-                                    <p>시리즈</p>
+                                    <p class="title">시리즈</p>
                                     <p>${book_row[3]}</p>
                                 </div>
                                 <div class="recommend_book_desc_company">
-                                    <p>출판사</p>
+                                    <p class="title">출판사</p>
                                     <p>${book_row[2]}</p>
                                 </div>
                                 <div class="recommend_book_desc_author">
-                                    <p>작가</p>
+                                    <p class="title">작가</p>
                                     <p>${book_row[1]}</p>
                                 </div>
                                 <div class="recommend_book_desc_price">
-                                    <p>가격</p>
+                                    <p class="title">가격</p>
                                     <p>${book_row[4]}</p>
                                 </div>
                             </div>

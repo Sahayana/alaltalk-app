@@ -774,13 +774,14 @@ body::-webkit-scrollbar-track {
     width: 8vw;
     height: 8vw;
     background-color: #020167;
-    border-radius: 4vw;
+    border-radius: 50%;
     margin: 0 auto;
 }
 
 .landing_footer_developer_profile img {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
 }
 
 .landing_footer_developer_name_box {
