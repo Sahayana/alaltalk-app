@@ -143,8 +143,8 @@
 
 .recommend_container_total_toggle{
     position: absolute;
-    width: 5vw;
-    height: 3vw;
+    width: 70px;
+    height: 35px;
     background-color: #7556CD;
     font-size: 1.5vw;
     line-height: 2vw;
@@ -746,8 +746,8 @@
 
 .recommend_youtube_like_heart{
     position: absolute;
-    left: 19vw;
-    top: 16vw;
+    left: 240px;
+    top: 200px;
 }
 
 .profile_like_news_heart:hover{
