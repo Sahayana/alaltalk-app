@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>welcome to AlAlTalk</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/landing/no.css' %}">
-    <link rel="stylesheet" href="{% static 'css/landing/landing.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing/no.css' %}?after">
+    <link rel="stylesheet" href="{% static 'css/landing/landing.css' %}?after">
     <script src="https://kit.fontawesome.com/97ea407338.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -21,19 +21,20 @@
         <img src="/static/images/landing/landing_logo.png">
     </div>
     <div class="landing_header_right">
-        <div onclick="location.href='accounts/signup'"><u>sign up</u></div>
+        <div onclick="location.href='accounts/signup'">sign up</div>
     </div>
 </div>
 <div class="landing_banner">
     <div class="landing_bottom_gradient_box"></div>
-    <p class="landing_welcome_text">Welcome to our chat service!</p>
+    <p class="landing_welcome_text_strong">Welcome to</p>
+    <p class="landing_welcome_text">our special algorithm chat service!</p>
     <div class="landing_login_container">
         <div class="landing_login_box" onclick="location.href='accounts/login'">
             <p> Log In</p>
             <i class="fa-solid fa-arrow-right-long fa-2x landing_login_allow"></i>
         </div>
 
-        <div class="landing_sign_up_container" >
+        <div class="landing_sign_up_container">
             <p onclick="location.href='accounts/signup'"><u>Not a member yet?</u></p>
         </div>
     </div>
@@ -43,9 +44,9 @@
 </div>
 
 <div class="landing_all_content_container">
-    <div class="landing_whale_1">
-        <img src="/static/images/landing/whales/landing_whale_pattern_1.png">
-    </div>
+{#    <div class="landing_whale_1">#}
+{#        <img src="/static/images/landing/whales/landing_whale_pattern_1.png">#}
+{#    </div>#}
 
     <div class="landing_content_row" id="landing_row_1">
         <div class="landing_content_row_text_box">
@@ -57,22 +58,22 @@
         </div>
     </div>
 
-    <div class="landing_whale_2">
-        <img src="/static/images/landing/whales/landing_whale_pattern_2.png">
-    </div>
+{#    <div class="landing_whale_2">#}
+{#        <img src="/static/images/landing/whales/landing_whale_pattern_2.png">#}
+{#    </div>#}
 
     <div class="landing_content_row lading_content_row_2" id="landing_row_2">
-        <div class="landing_slide_name_bar">
-            <p>youtube</p>
-            <p>news</p>
-            <p>book</p>
-            <p>shopping</p>
-        </div>
-        <div class="landing_whale_3">
-            <img src="/static/images/landing/whales/landing_whale_pattern_3.png">
-        </div>
+{#        <div class="landing_slide_name_bar">#}
+{#            <p>youtube</p>#}
+{#            <p>news</p>#}
+{#            <p>book</p>#}
+{#            <p>shopping</p>#}
+{#        </div>#}
+{#        <div class="landing_whale_3">#}
+{#            <img src="/static/images/landing/whales/landing_whale_pattern_3.png">#}
+{#        </div>#}
         <div class="landing_content_row_img landing_content_row_2_img">
-            <img src="/static/images/landing/landing_content_2_chat.png">
+            <img src="/static/images/landing/landing_content_2_left.png">
             <div class="swiper landing_interest_slide">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -183,92 +184,92 @@
         </div>
     </div>
 
-    <div class="landing_content_row_5_wrapper" id="landing_row_5">
-        <div class="landing_content_row landing_content_row_5">
-            <div class="landing_content_row_5_col_1">
-                <div class="landing_content_row_5_col_1_title">
-                    <p>Our</p>
-                    <p>Best</p>
-                    <p>Team</p>
-                    <p>&</p>
-                    <p>Skills</p>
-                </div>
-                <div class="landing_content_row_5_col_1_profile_box" style="height:20vw">
-                    <div class="landing_content_row_5_col_1_profile_img">
-                        <img src="/static/images/landing/developer/landing_developer_앙금성.png">
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_name">
-                        <p>앙금성</p>
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_function">
-                        <img src="/static/images/landing/icons/landing_user.png">
-                        <p>User</p>
-                        <p>Function</p>
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_bio">
-                        <p>S.A. 공지사항에 올렸습니다.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="landing_content_row_5_bar"></div>
-            <div class="landing_content_row_5_col_2">
-                <div class="landing_content_row_5_col_1_profile_box">
-                    <div class="landing_content_row_5_col_1_profile_img">
-                        <img src="">
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_name">
-                        <p>김진주</p>
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_function">
-                        <img src="/static/images/landing/icons/landing_chat.png">
-                        <p>Chat</p>
-                        <p>Function</p>
-                    </div>
-                </div>
-                <div class="landing_content_row_5_col_1_profile_box">
-                    <div class="landing_content_row_5_col_1_profile_img">
-                        <img src="/static/images/landing/developer/landing_developer_김재성.png">
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_name">
-                        <p>김재성</p>
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_function">
-                        <img src="/static/images/landing/icons/landing_search.png">
-                        <p>Search</p>
-                        <p>Function</p>
-                    </div>
-                </div>
-            </div>
-            <div class="landing_content_row_5_col_2">
-                <div class="landing_content_row_5_col_1_profile_box">
-                    <div class="landing_content_row_5_col_1_profile_img">
-                        <img src="/static/images/landing/developer/landing_developer_윤소현.png">
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_name">
-                        <p>윤소현</p>
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_function">
-                        <img src="/static/images/landing/icons/landing_recommend.png">
-                        <p>AI</p>
-                        <p>Function</p>
-                    </div>
-                </div>
-                <div class="landing_content_row_5_col_1_profile_box">
-                    <div class="landing_content_row_5_col_1_profile_img">
-                        <img src="/static/images/landing/developer/landing_developer_선하진.png">
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_name">
-                        <p>선하진</p>
-                    </div>
-                    <div class="landing_content_row_5_col_1_profile_function">
-                        <img src="/static/images/landing/icons/landing_search.png">
-                        <p>Search</p>
-                        <p>Function</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{#    <div class="landing_content_row_5_wrapper" id="landing_row_5">#}
+{#        <div class="landing_content_row landing_content_row_5">#}
+{#            <div class="landing_content_row_5_col_1">#}
+{#                <div class="landing_content_row_5_col_1_title">#}
+{#                    <p>Our</p>#}
+{#                    <p>Best</p>#}
+{#                    <p>Team</p>#}
+{#                    <p>&</p>#}
+{#                    <p>Skills</p>#}
+{#                </div>#}
+{#                <div class="landing_content_row_5_col_1_profile_box" style="height:20vw">#}
+{#                    <div class="landing_content_row_5_col_1_profile_img">#}
+{#                        <img src="/static/images/landing/developer/landing_developer_앙금성.png">#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_name">#}
+{#                        <p>앙금성</p>#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_function">#}
+{#                        <img src="/static/images/landing/icons/landing_user.png">#}
+{#                        <p>User</p>#}
+{#                        <p>Function</p>#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_bio">#}
+{#                        <p>S.A. 공지사항에 올렸습니다.</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="landing_content_row_5_bar"></div>#}
+{#            <div class="landing_content_row_5_col_2">#}
+{#                <div class="landing_content_row_5_col_1_profile_box">#}
+{#                    <div class="landing_content_row_5_col_1_profile_img">#}
+{#                        <img src="">#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_name">#}
+{#                        <p>김진주</p>#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_function">#}
+{#                        <img src="/static/images/landing/icons/landing_chat.png">#}
+{#                        <p>Chat</p>#}
+{#                        <p>Function</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="landing_content_row_5_col_1_profile_box">#}
+{#                    <div class="landing_content_row_5_col_1_profile_img">#}
+{#                        <img src="/static/images/landing/developer/landing_developer_김재성.png">#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_name">#}
+{#                        <p>김재성</p>#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_function">#}
+{#                        <img src="/static/images/landing/icons/landing_search.png">#}
+{#                        <p>Search</p>#}
+{#                        <p>Function</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="landing_content_row_5_col_2">#}
+{#                <div class="landing_content_row_5_col_1_profile_box">#}
+{#                    <div class="landing_content_row_5_col_1_profile_img">#}
+{#                        <img src="/static/images/landing/developer/landing_developer_윤소현.png">#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_name">#}
+{#                        <p>윤소현</p>#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_function">#}
+{#                        <img src="/static/images/landing/icons/landing_recommend.png">#}
+{#                        <p>AI</p>#}
+{#                        <p>Function</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="landing_content_row_5_col_1_profile_box">#}
+{#                    <div class="landing_content_row_5_col_1_profile_img">#}
+{#                        <img src="/static/images/landing/developer/landing_developer_선하진.png">#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_name">#}
+{#                        <p>선하진</p>#}
+{#                    </div>#}
+{#                    <div class="landing_content_row_5_col_1_profile_function">#}
+{#                        <img src="/static/images/landing/icons/landing_search.png">#}
+{#                        <p>Search</p>#}
+{#                        <p>Function</p>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
     <div class="landing_whale_7">
         <img src="/static/images/landing/whales/landing_whale_pattern_7.png">
     </div>
@@ -290,7 +291,7 @@
 
             </div>
             <div class="landing_footer_developer_name_box">
-                <p>앙금성</p>
+                <p><strong>앙금성</strong><br>user function</p>
                 <div class="landing_footer_developer_profile_github">
                     <img src="/static/images/landing/icons/landing_github.png">
                 </div>
@@ -302,7 +303,7 @@
 
             </div>
             <div class="landing_footer_developer_name_box">
-                <p>김진주</p>
+                <p><strong>김진주</strong><br>chat function</p>
                 <div class="landing_footer_developer_profile_github">
                     <img src="/static/images/landing/icons/landing_github.png">
                 </div>
@@ -314,7 +315,7 @@
 
             </div>
             <div class="landing_footer_developer_name_box">
-                <p>김재성</p>
+                <p><strong>김재성</strong><br>search function</p>
                 <div class="landing_footer_developer_profile_github">
                     <img src="/static/images/landing/icons/landing_github.png">
                 </div>
@@ -326,7 +327,7 @@
 
             </div>
             <div class="landing_footer_developer_name_box">
-                <p>윤소현</p>
+                <p><strong>윤소현</strong><br>recommend function</p>
                 <div class="landing_footer_developer_profile_github">
                     <img src="/static/images/landing/icons/landing_github.png">
                 </div>
@@ -338,7 +339,7 @@
 
             </div>
             <div class="landing_footer_developer_name_box">
-                <p>선하진</p>
+                <p><strong>선하진</strong><br>search function</p>
                 <div class="landing_footer_developer_profile_github">
                     <img src="/static/images/landing/icons/landing_github.png">
                 </div>
