@@ -26,7 +26,7 @@ function get_chat_log() {
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {
-            chat_log = response.chat_log;
+            chat_log += response.chat_log;
 
         },
         error: function (request, status, error) {
