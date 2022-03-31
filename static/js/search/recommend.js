@@ -123,9 +123,9 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
                                     <div class="video_count">${youtube_row[3]}</div>
-                                    <div class="recommend_youtube_heart_parent">
-                                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
-                                    </div>
+                                    
+                                    <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
+                                    
                                 </div>`
         if (content_type === 'c') {
             $('#youtube_recommend_content').append(temp_html)
