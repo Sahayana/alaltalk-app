@@ -66,9 +66,11 @@ def post_data_to_chat_room(request, room_id):
         all_message = ChatMessage.objects.all()
 
         last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
-        test = len(last_messages) - 20
+        limit = len(last_messages) - 20
         if len(last_messages) > 20:
-            last_messages = last_messages[test:]
+            last_messages = last_messages[limit:]
+
+        # latest_created_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by('-created_at')[0]
 
         if chatroom.participant1.id == user.id:
             participant = chatroom.participant2
@@ -95,6 +97,7 @@ def post_data_to_chat_room(request, room_id):
                 "participant": participant,
                 "all_message": all_message,
                 "last_messages": last_messages,
+                # "latest_created_message": latest_created_message,
                 "participant_like_youtube": participant_like_youtube,
                 "participant_like_news": participant_like_news,
                 "participant_like_book": participant_like_book,

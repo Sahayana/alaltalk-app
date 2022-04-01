@@ -174,7 +174,7 @@ body {
 }
 
 .profile_default_image {
-  background-image: url('http://bootstrap.gallery/ichat/light-version/img/empty-chat-display.svg');
+  background-image: url('https://bootstrap.gallery/ichat/light-version/img/empty-chat-display.svg');
   width: 240px;
   height: 240px;
   background-size: contain;
@@ -204,26 +204,25 @@ body {
 }
 
 .profile_auth_container .profile_auth_form #password-again-helper {
-  color: #a185f2;
-  font-size: 15px;
+  color: #5e5e5e;
   margin-bottom: 8px;
-  margin-left: -90px;
 }
 
 .profile_auth_container .profile_auth_form #password-again-input {
-  border: 2px solid #a185f2;
+  border: 1px solid #e5e5e5;
   border-radius: 10px;
-  width: 250px;
-  height: 30px;
+  width: 300px;
+  height: 40px;
   margin-bottom: 10px;
   padding-left: 10px;
+  box-sizing: border-box;
 }
 
 .profile_auth_container .profile_auth_form #password-again-btn {
   color: #fff;
-  background-color: #7657ce;
-  width: 260px;
-  height: 30px;
+  background-color: #a185f2;
+  width: 300px;
+  height: 40px;
   border: 1px solid transparent;
   border-radius: 10px;
   cursor: pointer;
@@ -256,7 +255,7 @@ body {
 .profile_change_part .profile_image_change {
   width: 12vw;
   height: 12vw;
-  border: 1px gray solid;
+  border: 1px solid #e5e5e5;
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
@@ -277,13 +276,13 @@ body {
 }
 .profile_change_part > .profile_change_field > label {
   font-size: 14px;
-  color: #7657ce;
+  color: #5e5e5e;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
 .profile_change_part > .profile_change_field > input {
-  border: 2px solid #a185f2;
+  border: 2px solid #e5e5e5;
   border-radius: 10px;
   width: 300px;
   height: 40px;
@@ -475,7 +474,7 @@ body {
 }
 
 
-.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .recommend_youtube_heart_parent .profile_like_heart {
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .profile_like_heart {
     background-image: url("/static/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
@@ -486,10 +485,10 @@ body {
     object-fit: cover;
 }
 
-.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .recommend_youtube_heart_parent .profile_youtube_like_heart{
+.right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .profile_youtube_like_heart{
     position: absolute;
-    left: 9vw;
-    top: 15vw;
+    left: 260px;
+    top: 200px;
 }
 
 /* .profile_like_grid {

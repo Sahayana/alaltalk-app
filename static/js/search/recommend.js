@@ -26,7 +26,7 @@ function get_chat_log() {
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {
-            chat_log = response.chat_log;
+            chat_log += response.chat_log;
 
         },
         error: function (request, status, error) {
@@ -123,9 +123,9 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
                                     <div class="video_count">${youtube_row[3]}</div>
-                                    <div class="recommend_youtube_heart_parent">
-                                        <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
-                                    </div>
+                                    
+                                    <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
+                                    
                                 </div>`
         if (content_type === 'c') {
             $('#youtube_recommend_content').append(temp_html)
@@ -229,23 +229,23 @@ function book_content_add(book_crawling_data_list, type) {
                             </a>
                             <div class="recommend_book_desc" style="display: ${display_value}">
                                 <div class="recommend_book_desc_title">
-                                    <p>제목</p>
+                                    <p class="title">제목</p>
                                     <p>${book_row[0]}</p>
                                 </div>
                                 <div class="recommend_book_desc_series">
-                                    <p>시리즈</p>
+                                    <p class="title">시리즈</p>
                                     <p>${book_row[3]}</p>
                                 </div>
                                 <div class="recommend_book_desc_company">
-                                    <p>출판사</p>
+                                    <p class="title">출판사</p>
                                     <p>${book_row[2]}</p>
                                 </div>
                                 <div class="recommend_book_desc_author">
-                                    <p>작가</p>
+                                    <p class="title">작가</p>
                                     <p>${book_row[1]}</p>
                                 </div>
                                 <div class="recommend_book_desc_price">
-                                    <p>가격</p>
+                                    <p class="title">가격</p>
                                     <p>${book_row[4]}</p>
                                 </div>
                             </div>
