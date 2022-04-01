@@ -69,7 +69,6 @@ def post_data_to_chat_room(request, room_id):
         limit = len(last_messages) - 20
         if len(last_messages) > 20:
             last_messages = last_messages[limit:]
-
         # latest_created_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by('-created_at')[0]
 
         if chatroom.participant1.id == user.id:
