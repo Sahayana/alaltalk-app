@@ -72,14 +72,13 @@
     position: absolute;
     top: 50px;
     left: 95%;
-    background-image: url("../../images/x_black.png");
-    width: 25px;
-    height: 25px;
+    background-image: url("../../images/x_gray.png");
+    width: 30px;
+    height: 30px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    opacity: .3;
 }
 
 .recommend_youtube_container .search_bar {
@@ -1132,7 +1131,7 @@
     margin-top: 30px;
 }
 
-.recommend_book_container .search_book_content .title {
+.recommend_book_container .search_book_content .search_section .title {
     font-weight: 700;
     color: #7657CE;
     margin-bottom: 12px;

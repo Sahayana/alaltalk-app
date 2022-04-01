@@ -153,7 +153,8 @@ function news_content_add(news_crawling_data_list, type) {
         if (news_row[6] === 'True') {
             heart_image = '/static/images/heart.png'
         }
-        let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
+        let temp_html = `<p class="title">검색</p>
+                            <div class="recommend_news_search_content" id="${content_id}">
                             <div class="recommend_news_search_content_image">
                                 <a href="${news_row[3]}" target="_blank">
                                     <img src="${news_row[5]}">
@@ -308,7 +309,6 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 
     }
 }
-
 
 
 // Event 등록 함수 - 크롤링 이후에 실행! - [  ]
@@ -668,16 +668,16 @@ function click_like(event) {
 }
 
 // book, shopping 나타나기 애니메이션 효과
-function appear_toggle(id){
+function appear_toggle(id) {
     let toggle = document.getElementById(id)
-   toggle.children[0].style.animation = 'appear_toggle 1s ease-out forwards'
+    toggle.children[0].style.animation = 'appear_toggle 1s ease-out forwards'
 }
 
 // book, shopping 사라지기 애니메이션 효과
-function disappear_toggle(id){
+function disappear_toggle(id) {
     let toggle = document.getElementById(id)
     toggle.children[0].style.animation = ''
-     toggle.children[0].style.opacity = '0'
+    toggle.children[0].style.opacity = '0'
 }
 
 // 검색시 이전의 검색 내용 지우는 함수
