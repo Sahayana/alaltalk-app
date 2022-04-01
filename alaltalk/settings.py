@@ -198,12 +198,15 @@ try:
 
     DATABASES = {
         "default": {
-            "ENGINE": sql['RDS']["ENGINE"],
-            "NAME": sql['RDS']["NAME"],
-            "USER": sql['RDS']["USER"],
-            "PASSWORD": sql['RDS']["PASSWORD"],
-            "HOST": sql['RDS']["HOST"],
-            "PORT": sql['RDS']["PORT"],
+            "ENGINE": sql["RDS"]["ENGINE"],
+            "NAME": sql["RDS"]["NAME"],
+            "USER": sql["RDS"]["USER"],
+            "PASSWORD": sql["RDS"]["PASSWORD"],
+            "HOST": sql["RDS"]["HOST"],
+            "PORT": sql["RDS"]["PORT"],
+            "OPTIONS": {
+            "init_command" : "SET sql_mode='STRICT_TRANS_TABLES'",
+            }
         }
     }
 
