@@ -153,8 +153,7 @@ function news_content_add(news_crawling_data_list, type) {
         if (news_row[6] === 'True') {
             heart_image = '/static/images/heart.png'
         }
-        let temp_html = `<p class="title">검색</p>
-                            <div class="recommend_news_search_content" id="${content_id}">
+        let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
                             <div class="recommend_news_search_content_image">
                                 <a href="${news_row[3]}" target="_blank">
                                     <img src="${news_row[5]}">
@@ -202,7 +201,7 @@ function book_content_add(book_crawling_data_list, type) {
     if (type === 'crawling') {
         content_type = 'c';
     } else if (type === 'search') {
-        width = '15vw'
+        width = '200px'
         content_type = 's';
         display_value = 'flex'
     } else {
@@ -230,23 +229,23 @@ function book_content_add(book_crawling_data_list, type) {
                             </a>
                             <div class="recommend_book_desc" style="display: ${display_value}">
                                 <div class="recommend_book_desc_title">
-                                    <p class="title">제목</p>
+                                    <p class="category">제목</p>
                                     <p>${book_row[0]}</p>
                                 </div>
                                 <div class="recommend_book_desc_series">
-                                    <p class="title">시리즈</p>
+                                    <p class="category">시리즈</p>
                                     <p>${book_row[3]}</p>
                                 </div>
                                 <div class="recommend_book_desc_company">
-                                    <p class="title">출판사</p>
+                                    <p class="category">출판사</p>
                                     <p>${book_row[2]}</p>
                                 </div>
                                 <div class="recommend_book_desc_author">
-                                    <p class="title">작가</p>
+                                    <p class="category">작가</p>
                                     <p>${book_row[1]}</p>
                                 </div>
                                 <div class="recommend_book_desc_price">
-                                    <p class="title">가격</p>
+                                    <p class="category">가격</p>
                                     <p>${book_row[4]}</p>
                                 </div>
                             </div>
@@ -278,7 +277,7 @@ function shopping_content_add(shopping_crawling_data_list, type) {
             heart_image = '/static/images/heart.png'
         }
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
-                                    <div class="recommend_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
+                                    <div class="recommend_toggle recommend_book_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
                                         <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
                                             <img src="/static/images/share.png">
                                         </div>
@@ -294,10 +293,10 @@ function shopping_content_add(shopping_crawling_data_list, type) {
                                     <div class="recommend_shopping_search_content_desc">
                                         <div class="recommend_shopping_search_content_desc_bar"></div>
                                         <div class="recommend_shopping_search_content_desc_title">
-                                            <p>${shopping_row[1]}</p>
+                                            <p class="product">${shopping_row[1]}</p>
                                         </div>
                                         <div class="recommend_shopping_search_content_desc_price">
-                                            <p>${shopping_row[2]} 원</p>
+                                            <p class="price">${shopping_row[2]} 원</p>
                                         </div>
                                     </div>
                                 </div>`
