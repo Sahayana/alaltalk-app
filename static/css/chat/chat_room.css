@@ -107,6 +107,9 @@ body {
     border-bottom: 1px solid #e5e5e5;
     box-sizing: border-box;
 }
+.left_wrap .chat_list .chat_partner:link {
+    color: #5e5e5e;
+}
 
 .chat_list .chat_partner .partner_img {
     width: 56px;
@@ -120,6 +123,9 @@ body {
 }
 .chat_list .chat_partner .info_group .partner_name {
     font-weight: 500;
+}
+.chat_list .chat_partner .info_group .partner_name:link {
+    color: #5e5e5e;
 }
 .chat_list .chat_partner .info_group .partner_last_msg {
     font-size: 14px;
@@ -166,6 +172,9 @@ body {
     top: 0;
     border-top-right-radius: 14px;
 
+}
+.left_wrap .chat_container .top_bar {
+    border-top-right-radius: 0;
 }
 
 .chat_container .top_bar .partner_info {
@@ -273,6 +282,9 @@ body {
     display: flex;
     align-items: center;
     border-bottom-right-radius: 16px;
+}
+.left_wrap .chat_container .input_bar {
+    border-bottom-right-radius: 0;
 }
 
 .chat_container .input_bar .attach_icon {
