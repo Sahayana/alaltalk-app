@@ -78,11 +78,11 @@
 
 .recommend_close_btn {
     position: absolute;
-    top: 50px;
-    left: 95%;
-    background-image: url("../../images/x_gray.png");
-    width: 30px;
-    height: 30px;
+    top: 45px;
+    right: 55px;
+    background-image: url(../../images/x_gray.png);
+    width: 32px;
+    height: 32px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
