@@ -201,7 +201,7 @@ function book_content_add(book_crawling_data_list, type) {
     if (type === 'crawling') {
         content_type = 'c';
     } else if (type === 'search') {
-        width = '15vw'
+        width = '200px'
         content_type = 's';
         display_value = 'flex'
     } else {
@@ -229,23 +229,23 @@ function book_content_add(book_crawling_data_list, type) {
                             </a>
                             <div class="recommend_book_desc" style="display: ${display_value}">
                                 <div class="recommend_book_desc_title">
-                                    <p class="title">제목</p>
+                                    <p class="category">제목</p>
                                     <p>${book_row[0]}</p>
                                 </div>
                                 <div class="recommend_book_desc_series">
-                                    <p class="title">시리즈</p>
+                                    <p class="category">시리즈</p>
                                     <p>${book_row[3]}</p>
                                 </div>
                                 <div class="recommend_book_desc_company">
-                                    <p class="title">출판사</p>
+                                    <p class="category">출판사</p>
                                     <p>${book_row[2]}</p>
                                 </div>
                                 <div class="recommend_book_desc_author">
-                                    <p class="title">작가</p>
+                                    <p class="category">작가</p>
                                     <p>${book_row[1]}</p>
                                 </div>
                                 <div class="recommend_book_desc_price">
-                                    <p class="title">가격</p>
+                                    <p class="category">가격</p>
                                     <p>${book_row[4]}</p>
                                 </div>
                             </div>
@@ -277,7 +277,7 @@ function shopping_content_add(shopping_crawling_data_list, type) {
             heart_image = '/static/images/heart.png'
         }
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
-                                    <div class="recommend_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
+                                    <div class="recommend_toggle recommend_book_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
                                         <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
                                             <img src="/static/images/share.png">
                                         </div>
@@ -293,10 +293,10 @@ function shopping_content_add(shopping_crawling_data_list, type) {
                                     <div class="recommend_shopping_search_content_desc">
                                         <div class="recommend_shopping_search_content_desc_bar"></div>
                                         <div class="recommend_shopping_search_content_desc_title">
-                                            <p>${shopping_row[1]}</p>
+                                            <p class="product">${shopping_row[1]}</p>
                                         </div>
                                         <div class="recommend_shopping_search_content_desc_price">
-                                            <p>${shopping_row[2]} 원</p>
+                                            <p class="price">${shopping_row[2]} 원</p>
                                         </div>
                                     </div>
                                 </div>`
@@ -308,7 +308,6 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 
     }
 }
-
 
 
 // Event 등록 함수 - 크롤링 이후에 실행! - [  ]
@@ -668,16 +667,16 @@ function click_like(event) {
 }
 
 // book, shopping 나타나기 애니메이션 효과
-function appear_toggle(id){
+function appear_toggle(id) {
     let toggle = document.getElementById(id)
-   toggle.children[0].style.animation = 'appear_toggle 1s ease-out forwards'
+    toggle.children[0].style.animation = 'appear_toggle 1s ease-out forwards'
 }
 
 // book, shopping 사라지기 애니메이션 효과
-function disappear_toggle(id){
+function disappear_toggle(id) {
     let toggle = document.getElementById(id)
     toggle.children[0].style.animation = ''
-     toggle.children[0].style.opacity = '0'
+    toggle.children[0].style.opacity = '0'
 }
 
 // 검색시 이전의 검색 내용 지우는 함수

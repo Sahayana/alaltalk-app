@@ -1,18 +1,17 @@
 
-
 .friends_like_container .friends_like_info {
-    display: flex;
-    align-items: center;
-    margin-left: 12px;
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*margin-left: 12px;*/
 }
 
-.friends_like_container .friends_like_close_btn{
+.friends_like_container .friends_like_close_btn {
     position: absolute;
-    top: 50px;
-    left: 90%;
-    background-image: url("../../images/x_black.png");
-    width: 25px;
-    height: 25px;
+    top: 30px;
+    right: 45px;
+    background-image: url("../../images/x_gray.png");
+    width: 32px;
+    height: 32px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -27,9 +26,17 @@
 }
 
 .friends_like_info_group {
-    margin-left: 10px;
+    /*margin-left: 10px;*/
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    color: #5e5e5e
 }
 
+.friends_like_info_group .friends_like_name {
+    margin-right: 6px;
+    font-weight: 700;
+}
 
 .friends_like_id {
     opacity: .4;
@@ -40,49 +47,54 @@
 
 /*유튜브 친구 찜 목록*/
 .friends_like_youtube {
-  margin-top: 30px;
-  width: 95%;
-  height: 87%;
-  overflow-x: auto;
-  max-height: 680px;
-  /*display: none;*/
+    margin-top: 30px;
+    width: 98%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 680px;
+    /*display: none;*/
 }
 
 .friends_like_youtube::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
+    height: 12px;
 }
 
 .friends_like_youtube::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.friends_like_youtube::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .friends_like_youtube_grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+    width: 98%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .friends_like_container {
-  position: relative;
-  width: 100%;
-  padding-top: 25px;
-  padding-left: 25px;
-  display: none;
+    position: relative;
+    width: 100%;
+    padding-top: 25px;
+    padding-left: 25px;
+    display: none;
 }
 
 
 .friends_like_category {
-  margin-top: 25px;
-  font-weight: 700;
-  color: #d2d2d2;
+    margin-top: 25px;
+    font-weight: 700;
+    color: #d2d2d2;
 }
 
 .friends_like_category span {
-  margin-right: 12px;
-  cursor: pointer;
+    margin-right: 12px;
+    cursor: pointer;
 }
 
 .friends_like_category span:first-child {
@@ -90,7 +102,7 @@
 }
 
 .friends_like_youtube_content_box {
-    width: 310px;
+    width: 300px;
     height: 240px;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
@@ -129,87 +141,97 @@
 
 /*뉴스 친구 찜 목록*/
 .friends_like_news {
-  margin-top: 30px;
-  width: 95%;
-  height: 88%;
-  display: none;
-  overflow-y: auto;
-  max-height: 680px;
+    margin-top: 30px;
+    width: 95%;
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 680px;
 }
 
 .friends_like_news::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
+    width: 10px;
+    height: 0;
 }
 
 .friends_like_news::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #a185f2;
 }
 
-.friends_like_news_content{
+.friends_like_news_content {
     position: relative;
     width: 100%;
-    height: 15vw;
+    height: 10vw;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin-bottom: 12px;
 }
 
-.friends_like_news_content p{
-    margin:0;
-    color: #7657CE;
+.friends_like_news_content p {
+    color: #5e5e5e;
 }
 
-.friends_like_news_content_image{
-    width: 12vw;
-    height: 12vw;
+.friends_like_news_content_image {
+    width: 14vw;
+    height: 10vw;
     background-color: #3D3D3D;
-    object-fit: contain;
-    object-position: center;
-    border: min(2vw, 2px) solid #7556CD;
+    /*object-fit: contain;*/
+    /*object-position: center;*/
+    /*border: min(2vw, 2px) solid #7556CD;*/
 }
 
-.friends_like_news_content_image img{
+.friends_like_news_content_image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
-.friends_like_news_content_desc{
+.friends_like_news_content_desc {
     width: 90%;
-    height: 12vw;
+    height: 10vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    margin-left: 24px;
+
 
 }
 
-.friends_like_news_content_desc_title{
+.friends_like_news_content_desc_title {
     width: 90%;
-
+    margin-bottom: 32px;
 
 }
 
-.friends_like_news_content_desc_title p{
+.friends_like_news_content_desc_title p {
     width: 100%;
     /*height: 80%;*/
     /*overflow: hidden;*/
-    font-size: 2vw;
+    color: #5e5e5e;
+    font-size: 22px;
+    font-weight: 700;
 }
 
-.friends_like_news_content_desc_detail{
+.friends_like_news_content_desc_detail {
     width: 90%;
-    /*height: 5vw;*/
+    height: 48px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
-.friends_like_news_content_desc_footer{
+.friends_like_news_content_desc_footer {
     width: 90%;
-    height: 2vw;
+    /*height: 2vw;*/
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -217,42 +239,40 @@
 
 }
 
-.friends_like_news_content_desc_footer_newspaper{
+.friends_like_news_content_desc_footer_newspaper {
     width: 30%;
     height: 100%;
     text-align: left;
 }
 
-.friends_like_news_content_desc_footer_time{
+.friends_like_news_content_desc_footer_time {
     width: 30%;
     height: 100%;
     text-align: right;
 }
 
 
-
-
 /*책 찜목록*/
 
 .friends_like_book {
-  margin-top: 30px;
-  width: 95%;
-  height: 88%;
-  position: relative;
-  display: none;
-  overflow-x: auto;
-  max-height: 660px;
+    margin-top: 30px;
+    width: 95%;
+    height: 88%;
+    position: relative;
+    display: none;
+    overflow-x: auto;
+    max-height: 660px;
 }
 
 .friends_like_book::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
+    width: 10px;
+    height: 0;
 }
 
 .friends_like_book::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #a185f2;
 }
 
 .friends_like_book_content_box:last-child {
@@ -261,7 +281,7 @@
 
 .friends_like_book_content_box .book_img {
     width: 15vw;
-    height: 240px;
+    height: 200px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -270,79 +290,100 @@
 
 .friends_like_book_content_box {
     position: relative;
-    width: 48vw;
-    height: 20vw;
-    background-position: left;
-    background-size: contain;
-    background-repeat: no-repeat;
+    width: 95%;
+    height: 200px;
+    /*background-position: left;*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
     text-align: left;
-    margin: 5px 0 50px 35px;
-    font-weight: 700;
-    color: #7657CE;
+    margin-bottom: 24px;
+    /*font-weight: 700;*/
+    color: #5e5e5e;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
 
 }
 
 
-.friends_like_book_desc{
+.friends_like_book_desc {
     width: 70%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
+    margin-top: 32px;
+    /*justify-content: space-between;*/
+    /*align-items: start;*/
 }
 
-.friends_like_book_desc p{
-    width: 20%;
-    font-size: 1vw;
+.friends_like_book_desc p {
+    /*width: 20%;*/
+    /*font-size: 1vw;*/
+    /*font-size: 16px;*/
 }
 
-.friends_like_book_desc_title, .friends_like_book_desc_series, .friends_like_book_desc_company, .friends_like_book_desc_author, .friends_like_book_desc_price{
+.friends_like_book_desc_title,
+.friends_like_book_desc_series,
+.friends_like_book_desc_company,
+.friends_like_book_desc_author,
+.friends_like_book_desc_price {
     width: 100%;
-    height: 4vw;
+    /*height: 4vw;*/
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
 }
 
-.friends_like_book_desc_title{
-    height: 5vw
+.friends_like_book_desc_title .category,
+.friends_like_book_desc_series .category,
+.friends_like_book_desc_company .category,
+.friends_like_book_desc_author .category,
+.friends_like_book_desc_price .category {
+    width: 100px;
+    font-weight: 700;
+    color: #191919;
 }
-.friends_like_book_desc_title p:nth-child(2){
-    width: 70%;
-    font-size: 1.5vw;
+
+
+/*.friends_like_book_desc_title {*/
+/*    height: 5vw*/
+/*}*/
+
+.friends_like_book_desc_title p:nth-child(2) {
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
-.friends_like_book_desc_series p:nth-child(2){
-    width: 70%;
-    font-size: 1.5vw;
+.friends_like_book_desc_series p:nth-child(2) {
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
-.friends_like_book_desc_company p:nth-child(2){
-    width: 70%;
-    font-size: 1.5vw;
+.friends_like_book_desc_company p:nth-child(2) {
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
-.friends_like_book_desc_author p:nth-child(2){
-    width: 70%;
-    font-size: 1.5vw;
+.friends_like_book_desc_author p:nth-child(2) {
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
-.friends_like_book_desc_price p:nth-child(2){
-    width: 70%;
-    font-size: 1.5vw;
+
+.friends_like_book_desc_price p:nth-child(2) {
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
@@ -350,95 +391,105 @@
 /*친구 찜 목록 쇼핑*/
 
 .friends_like_shopping {
-  margin-top: 30px;
-  width: 95%;
-  height: 88%;
-  position: relative;
-  display: none;
-  overflow-x: auto;
-  max-height: 660px;
-    font-weight: 700;
-    color: #7657CE;
+    margin-top: 30px;
+    width: 95%;
+    position: relative;
+    display: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 680px;
+    /*font-weight: 700;*/
+    color: #5e5e5e;
 }
 
 .friends_like_shopping::-webkit-scrollbar {
-  width: 10px;
-  height: 0;
+    width: 10px;
+    height: 0;
 }
 
 .friends_like_shopping::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #a185f2;
 }
 
 .friends_like_shopping_grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /*display: grid;*/
+    /*grid-template-columns: repeat(2, 1fr);*/
 }
 
 
-.friends_like_shopping_content{
+.friends_like_shopping_content {
     position: relative;
-    width: 18vw;
-    height : 25vw;
-    border:0.5vw solid #7556CD;
-    margin: 1vw;
+    width: 200px;
+    height: 300px;
+    margin-right: 24px;
+    /*border: 0.5vw solid #7556CD;*/
+    /*margin: 1vw;*/
 }
 
 
-.friends_like_shopping_content_img{
-    width: 15vw;
-    height: 15vw;
-    background-color: #ef1c1c;
-    margin: 1vw 1.5vw;
+.friends_like_shopping_content_img {
+    width: 200px;
+    height: 200px;
+    /*background-color: #ef1c1c;*/
+    /*margin: 1vw 1.5vw;*/
     object-fit: cover;
+    object-position: center;
 }
 
-.friends_like_shopping_content_img img{
+.friends_like_shopping_content_img img {
     width: 100%;
     height: 100%;
 }
 
-.friends_like_shopping_content_desc{
-    width: 90%;
-    height: 8vw;
+.friends_like_shopping_content_desc {
+    width: 100%;
+    /*height: 8vw;*/
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1vw auto 0;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    /*margin: 1vw auto 0;*/
 }
 
-.friends_like_shopping_content_desc_bar{
-    margin-top: 1vw;
-    width: 90%;
-    height: 2px;
-    background-color: #7556CD;
-}
+/*.friends_like_shopping_content_desc_bar {*/
+/*    margin-top: 1vw;*/
+/*    width: 90%;*/
+/*    height: 2px;*/
+/*    background-color: #7556CD;*/
+/*}*/
 
 .friends_like_shopping_content_desc_title {
-    text-align: left;
+    /*text-align: left;*/
     width: 100%;
-    height: 3.5vw;
+    height: 30px;
+    margin-top: 12px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
-.friends_like_shopping_content_desc_title p{
-    margin: 0 auto;
+.friends_like_shopping_content_desc_title p {
+    /*margin: 0 auto;*/
 }
 
-.friends_like_shopping_content_desc_price{
-    text-align: right;
+.friends_like_shopping_content_desc_price {
+    text-align: left;
+    margin-top: 6px;
     width: 100%;
-    height: 3vw;
+    /*height: 3vw;*/
 
 }
 
-.friends_like_shopping_content_desc_price p{
-    font-size: 2vw;
-    color: #ae0000;
-    font-weight: 800;
-    margin: 0 auto;
+.friends_like_shopping_content_desc_price p {
+    font-size: 18px;
+    color: #191919;
+    font-weight: 700;
+    /*margin: 0 auto;*/
 }
