@@ -205,7 +205,7 @@ try:
             "HOST": sql["RDS"]["HOST"],
             "PORT": sql["RDS"]["PORT"],
             "OPTIONS": {
-            "init_command" : "SET sql_mode='STRICT_TRANS_TABLES'",
+            # "init_command" : "SET sql_mode='STRICT_TRANS_TABLES'",
             }
         }
     }
