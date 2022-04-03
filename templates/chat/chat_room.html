@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="right_icon">
-{#                    <div class="close_btn" onclick="location.href='/chat'"></div>#}
+                    {#                    <div class="close_btn" onclick="location.href='/chat'"></div>#}
                     <div class="toggle_icon"></div>
                 </div>
                 <div class="toggle_content">
@@ -114,14 +114,12 @@
 
         <div class="friends_like_container" id="friends_like_container">
             <div class="friends_like_close_btn" id="friend_like_close" onclick="close_friend_like_list()"></div>
-            <div class="friends_like_info">
-                <div class="friends_like_img" style="background-image: url({{ participant.img.url }})"></div>
-                <div class="friends_like_info_group">
-                    <div class="friends_like_name">{{ participant.nickname }}</div>
-                    <div class="friends_like_id">{{ participant.email }}</div>
-                </div>
-                <div class="friends_like_bio">{{ participant.bio }}</div>
+
+            <div class="friends_like_info_group">
+                <div class="friends_like_name">{{ participant.nickname }}</div>
+                <div class="friends_like_bio">님의 찜 목록</div>
             </div>
+
             <div class="friends_like_category">
                 <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
                 <span id="news" onclick="news_like()">NEWS</span>
@@ -149,28 +147,28 @@
             <div class="friends_like_news" id="friends_like_news">
                 {% for news in participant_like_news %}
                     <div class="friends_like_news_content">
-                            <div class="friends_like_news_content_image">
-                                <a href="{{ news.link }}" target="_blank">
-                                    <img src="{{ news.thumbnail }}">
-                                </a>
+                        <div class="friends_like_news_content_image">
+                            <a href="{{ news.link }}" target="_blank">
+                                <img src="{{ news.thumbnail }}">
+                            </a>
+                        </div>
+                        <div class="friends_like_news_content_desc">
+                            <div class="friends_like_news_content_desc_title">
+                                <p>{{ news.title }}</p>
                             </div>
-                            <div class="friends_like_news_content_desc">
-                                <div class="friends_like_news_content_desc_title">
-                                    <p>{{ news.title }}</p>
+                            <div class="friends_like_news_content_desc_detail">
+                                <p>{{ news.content }}</p>
+                            </div>
+                            <div class="friends_like_news_content_desc_footer">
+                                <div class="friends_like_news_content_desc_footer_newspaper">
+                                    <p>{{ news.company }}</p>
                                 </div>
-                                <div class="friends_like_news_content_desc_detail">
-                                    <p>{{ news.content }}</p>
-                                </div>
-                                <div class="friends_like_news_content_desc_footer">
-                                    <div class="friends_like_news_content_desc_footer_newspaper">
-                                        <p>{{ news.company }}</p>
-                                    </div>
-                                    <div class="friends_like_news_content_desc_footer_time">
-                                        <p>{{ news.date }}</p>
-                                    </div>
+                                <div class="friends_like_news_content_desc_footer_time">
+                                    <p>{{ news.date }}</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 {% endfor %}
             </div>
 
@@ -182,23 +180,23 @@
                         </a>
                         <div class="friends_like_book_desc">
                             <div class="friends_like_book_desc_title">
-                                <p>제목</p>
+                                <p class="category">제목</p>
                                 <p>{{ book.title }}</p>
                             </div>
                             <div class="friends_like_book_desc_series">
-                                <p>시리즈</p>
+                                <p class="category">시리즈</p>
                                 <p>{{ book.series }}</p>
                             </div>
                             <div class="friends_like_book_desc_company">
-                                <p>출판사</p>
+                                <p class="category">출판사</p>
                                 <p>{{ book.company }}</p>
                             </div>
                             <div class="friends_like_book_desc_author">
-                                <p>작가</p>
+                                <p class="category">작가</p>
                                 <p>{{ book.author }}</p>
                             </div>
                             <div class="friends_like_book_desc_price">
-                                <p>가격</p>
+                                <p class="category">가격</p>
                                 <p>{{ book.price }}</p>
                             </div>
                         </div>

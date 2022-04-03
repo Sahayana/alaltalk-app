@@ -12,8 +12,7 @@ db.sqlite3-journal
 migrations/
 media
 config
-.ebextensions/
-requirements.txt
+
 alaltalk_RDS.txt
 
 
