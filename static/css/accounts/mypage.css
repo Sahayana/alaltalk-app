@@ -35,7 +35,7 @@ body {
 
 .nav .logo .logo_img {
     height: 100%;
-    background-image: url('../../images/logo_vertical.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/logo_vertical.png');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -59,15 +59,15 @@ body {
 }
 
 .nav .icon_group .icon.user_icon {
-    background-image: url('../../images/user_outline.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/user_outline.png');
 }
 
 .nav .icon_group .icon.chat_icon {
-    background-image: url('../../images/chat_outline.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/chat_outline.png');
 }
 
 .nav .icon_group .icon.mypage_icon {
-    background-image: url('../../images/mypage.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/mypage.png');
 }
 
 .left_wrap {
@@ -374,7 +374,7 @@ body {
 }
 
 .profile_follow_add {
-    background-image: url('../../images/plus_purple.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/plus_purple.png');
     background-size: cover;
     width: 30px;
     height: 30px;
@@ -382,6 +382,7 @@ body {
     position: relative;
     margin-right: 66px;
 }
+
 .profile_follow_add p {
     position: absolute;
     left: -54px;
@@ -391,12 +392,13 @@ body {
 }
 
 .profile_follow_decline {
-    background-image: url('../../images/x_gray.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/x_gray.png');
     background-size: cover;
     width: 30px;
     height: 30px;
     position: relative;
 }
+
 .profile_follow_decline p {
     position: absolute;
     left: -54px;
@@ -443,37 +445,42 @@ body {
 .right_wrap .profile_like_container .profile_like_youtube {
     margin-top: 30px;
     width: 95%;
-    height: 87%;
-    overflow-x: auto;
-    max-height: 680px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 680px;
     /*display: none;*/
 }
 
 .right_wrap .profile_like_container .profile_like_youtube::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .right_wrap .profile_like_container .profile_like_youtube::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.right_wrap .profile_like_container .profile_like_youtube::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    width: 98%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 
 .right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box {
-    width: 310px;
+    width: 300px;
     height: 240px;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
-    margin-right: 14px;
-    margin-bottom: 60px;
+    margin-right: 18px;
+    margin-bottom: 12px;
     position: relative;
 }
 
@@ -489,7 +496,7 @@ body {
 
 .right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .video_title {
     width: 75%;
-    height: auto;
+    height: 25px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -506,20 +513,20 @@ body {
 
 
 .right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .profile_like_heart {
-    background-image: url("/static/images/empty_heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     object-fit: cover;
 }
 
 .right_wrap .profile_like_container .profile_like_youtube .profile_like_youtube_grid .profile_like_youtube_content_box .profile_youtube_like_heart {
     position: absolute;
-    left: 260px;
-    top: 200px;
+    right: 4px;
+    bottom: 4px;
 }
 
 /* .profile_like_grid {
@@ -545,65 +552,71 @@ body {
 .right_wrap .profile_like_container .profile_like_news {
     margin-top: 30px;
     width: 95%;
-    height: 88%;
     display: none;
     overflow-y: auto;
-    max-height: 680px;
+    overflow-x: hidden;
+    height: 680px;
 }
 
 .right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content {
     position: relative;
     width: 100%;
-    height: 15vw;
+    height: 10vw;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin-bottom: 18px;
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content p {
-    margin: 0;
-    color: #7657CE;
+    /*margin: 0;*/
+    color: #191919;
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_image {
-    width: 12vw;
-    height: 12vw;
+    width: 14vw;
+    height: 10vw;
     background-color: #3D3D3D;
-    object-fit: contain;
-    object-position: center;
-    border: min(2vw, 2px) solid #7556CD;
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc {
     width: 90%;
-    height: 12vw;
+    height: 10vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    margin-left: 24px;
 
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_title {
     width: 90%;
+    margin-bottom: 32px;
 
 
 }
@@ -612,18 +625,25 @@ body {
     width: 100%;
     /*height: 80%;*/
     /*overflow: hidden;*/
-    font-size: 2vw;
+    color: #5e5e5e;
+    font-size: 22px;
+    font-weight: 700;
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_detail {
     width: 90%;
-    /*height: 5vw;*/
+    height: 48px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_desc .profile_like_news_content_desc_footer {
     width: 90%;
-    height: 2vw;
+    /*height: 2vw;*/
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -654,8 +674,8 @@ body {
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more .profile_like_news_toggle {
     position: static;
-    width: 2vw;
-    height: 2vw;
+    width: 28px;
+    height: 28px;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
@@ -671,12 +691,12 @@ body {
 }
 
 .right_wrap .profile_like_container .profile_like_news .profile_like_news_content .profile_like_news_content_more .recommend_like_heart {
-    background-image: url("/static/images/empty_heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     object-fit: cover;
 }
@@ -689,22 +709,28 @@ body {
 .right_wrap .profile_like_container .profile_like_book {
     margin-top: 30px;
     width: 95%;
-    height: 88%;
+    /*height: 88%;*/
     position: relative;
     display: none;
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: 660px;
 }
 
 .right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box:last-child {
@@ -713,29 +739,30 @@ body {
 
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .book_img {
-    width: 15vw;
+    width: 200px;
     height: 240px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: contain;
+    background-size: cover;
+    margin-right: 40px;
 }
 
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box {
     position: relative;
-    width: 48vw;
-    height: 20vw;
-    background-position: left;
-    background-size: contain;
-    background-repeat: no-repeat;
+    width: 95%;
+    height: 200px;
+    /*background-position: left;*/
+    /*background-size: contain;*/
+    /*background-repeat: no-repeat;*/
     text-align: left;
-    margin: 5px 0 50px 35px;
-    font-weight: 700;
-    color: #7657CE;
+    margin-bottom: 60px;
+    /*font-weight: 700;*/
+    color: #5e5e5e;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
 
 }
 
@@ -745,81 +772,89 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: start;
+    margin-top: 32px;
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc p {
-    width: 20%;
-    font-size: 1vw;
+    /*width: 20%;*/
+    /*font-size: 1vw;*/
 }
 
 .profile_like_book_desc_title, .profile_like_book_desc_series, .profile_like_book_desc_company, .profile_like_book_desc_author, .profile_like_book_desc_price {
     width: 100%;
-    height: 4vw;
+    /*height: 4vw;*/
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    font-size: 18px;
+    margin-bottom: 12px;
 }
 
-.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_title {
-    height: 5vw
+.profile_like_book_desc_title .category,
+.profile_like_book_desc_series .category,
+.profile_like_book_desc_company .category,
+.profile_like_book_desc_author .category,
+.profile_like_book_desc_price .category {
+    width: 100px;
+    font-weight: 700;
+    color: #191919;
 }
+
+/*.right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_title {*/
+/*    height: 5vw*/
+/*}*/
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_title p:nth-child(2) {
-    width: 70%;
-    font-size: 1.5vw;
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_series p:nth-child(2) {
-    width: 70%;
-    font-size: 1.5vw;
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_company p:nth-child(2) {
-    width: 70%;
-    font-size: 1.5vw;
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_author p:nth-child(2) {
-    width: 70%;
-    font-size: 1.5vw;
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .profile_like_book_desc .profile_like_book_desc_price p:nth-child(2) {
-    width: 70%;
-    font-size: 1.5vw;
+    width: 100%;
+    /*font-size: 1.5vw;*/
     overflow: hidden;
 
 }
 
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle {
+    opacity: 0;
     position: absolute;
-    top: 0;
     width: 102%;
     height: 3vw;
-    background-color: rgb(79, 42, 186, 0.5);
+    background-color: rgb(250, 249, 255, 0.8);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
-    opacity: 0;
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle .profile_like_news_toggle {
     position: static;
-    width: 2vw;
-    height: 2vw;
+    width: 24px;
+    height: 24px;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
@@ -835,12 +870,12 @@ body {
 }
 
 .right_wrap .profile_like_container .profile_like_book .profile_like_book_content_box .recommend_toggle .recommend_like_heart {
-    background-image: url("/static/images/empty_heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     object-fit: cover;
 }
@@ -853,48 +888,54 @@ body {
 .right_wrap .profile_like_container .profile_like_shopping {
     margin-top: 30px;
     width: 95%;
-    height: 88%;
     position: relative;
     display: none;
-    overflow-x: auto;
-    max-height: 660px;
-    font-weight: 700;
-    color: #7657CE;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 680px;
+    /*font-weight: 700;*/
+    color: #5e5e5e;
 }
 
 .right_wrap .profile_like_container .profile_like_shopping::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .right_wrap .profile_like_container .profile_like_shopping::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.right_wrap .profile_like_container .profile_like_shopping::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid {
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
 }
 
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content {
     position: relative;
-    width: 18vw;
-    height: 25vw;
-    border: 0.5vw solid #7556CD;
-    margin: 1vw;
+    width: 200px;
+    height: 270px;
+    margin-right: 40px;
+    margin-bottom: 32px;
 }
 
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_img {
-    width: 15vw;
-    height: 15vw;
-    background-color: #ef1c1c;
-    margin: 1vw 1.5vw;
+    width: 200px;
+    height: 200px;
+    /*background-color: #ef1c1c;*/
+    /*margin: 1vw 1.5vw;*/
     object-fit: cover;
+    object-position: center;
 }
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_img img {
@@ -903,52 +944,52 @@ body {
 }
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc {
-    width: 90%;
-    height: 8vw;
+    width: 100%;
+    /*height: 8vw;*/
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1vw auto 0;
 }
 
-.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_bar {
-    margin-top: 1vw;
-    width: 90%;
-    height: 2px;
-    background-color: #7556CD;
-}
+/*.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_bar {*/
+/*    margin-top: 1vw;*/
+/*    width: 90%;*/
+/*    height: 2px;*/
+/*    background-color: #7556CD;*/
+/*}*/
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_title {
-    text-align: left;
     width: 100%;
-    height: 3.5vw;
+    height: 30px;
+    margin-top: 12px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
-.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_title p {
-    margin: 0 auto;
-}
+/*.right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_title p {*/
+/*    margin: 0 auto;*/
+/*}*/
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_price {
-    text-align: right;
+    text-align: left;
+    margin-top: 6px;
     width: 100%;
-    height: 3vw;
 
 }
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .profile_like_shopping_content_desc .profile_like_shopping_content_desc_price p {
-    font-size: 2vw;
-    color: #ae0000;
-    font-weight: 800;
-    margin: 0 auto;
+    font-size: 18px;
+    color: #191919;
+    font-weight: 700;
 }
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle {
     position: absolute;
     width: 102%;
     height: 3vw;
-    background-color: rgb(79, 42, 186, 0.5);
+    background-color: rgb(250, 249, 255, 0.8);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -959,8 +1000,8 @@ body {
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle .profile_like_news_toggle {
     position: static;
-    width: 2vw;
-    height: 2vw;
+    width: 24px;
+    height: 24px;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
@@ -976,12 +1017,12 @@ body {
 }
 
 .right_wrap .profile_like_container .profile_like_shopping .profile_like_shopping_grid .profile_like_shopping_content .recommend_toggle .recommend_like_heart {
-    background-image: url("/static/images/empty_heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     object-fit: cover;
 }

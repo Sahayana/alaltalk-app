@@ -119,11 +119,11 @@ function youtube_content_add(youtube_crawling_data_list, type) {
     for (let i = 0; i < youtube_crawling_data_list.length; i++) {
         let youtube_row = youtube_crawling_data_list[i]
         let content_id = 'youtube_' + content_type + '_' + i
-        let heart_image = '/static/images/empty_heart.png'
+        let heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png'
         if (youtube_row[4] === 'True') {
-            heart_image = '/static/images/heart.png'
+            heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
-        let temp_html = `<div class="content_box" id="${content_id}">
+        let temp_html_recommend = `<div class="content_box" id="${content_id}">
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
                                     <div class="video_count">${youtube_row[3]}</div>
@@ -131,10 +131,19 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                         <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
                                     </div>
                                 </div>`
+        let temp_html_search = `<div class="content_box" id="${content_id}">
+                                    <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
+                                    <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
+                                    <div class="video_count">${youtube_row[3]}</div>
+                                    <div>
+                                        <div class="recommend_like_heart search_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
+                                    </div>
+                                </div>`
+
         if (content_type === 'c') {
-            $('#youtube_recommend_content').append(temp_html)
+            $('#youtube_recommend_content').append(temp_html_recommend)
         } else if (content_type === 's') {
-            $('#youtube_search_content').append(temp_html)
+            $('#youtube_search_content').append(temp_html_search)
         }
     }
 }
@@ -153,9 +162,9 @@ function news_content_add(news_crawling_data_list, type) {
     for (let i = 0; i < news_crawling_data_list.length; i++) {
         let news_row = news_crawling_data_list[i]
         let content_id = 'news_' + content_type + '_' + i
-        let heart_image = '/static/images/empty_heart.png'
+        let heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png'
         if (news_row[6] === 'True') {
-            heart_image = '/static/images/heart.png'
+            heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
         let temp_html = `<div class="recommend_news_search_content" id="${content_id}">
                             <div class="recommend_news_search_content_image">
@@ -181,7 +190,7 @@ function news_content_add(news_crawling_data_list, type) {
                             </div>
                             <div class="recommend_news_search_content_more">
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${news_row[3]}')">
-                                    <img src="/static/images/share.png">
+                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart" style="background-image: url('${heart_image}')" onclick="click_like(event)">
                                     
@@ -215,14 +224,14 @@ function book_content_add(book_crawling_data_list, type) {
     for (let i = 0; i < book_crawling_data_list.length; i++) {
         let book_row = book_crawling_data_list[i]
         let content_id = 'book_' + content_type + '_' + i
-        let heart_image = '/static/images/empty_heart.png'
+        let heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png'
         if (book_row[7] === 'True') {
-            heart_image = '/static/images/heart.png'
+            heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
         let temp_html = `<div class="content_box" id="${content_id}"> 
                             <div class="recommend_toggle recommend_book_toggle" style="width: ${width}"  onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
                                 <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')" >
-                                    <img src="/static/images/share.png">
+                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
                                      style="background-image: url('${heart_image}')" onclick="click_like(event)">
@@ -276,14 +285,14 @@ function shopping_content_add(shopping_crawling_data_list, type) {
     for (let i = 0; i < shopping_crawling_data_list.length; i++) {
         let shopping_row = shopping_crawling_data_list[i]
         let content_id = 'shopping_' + content_type + '_' + i
-        let heart_image = '/static/images/empty_heart.png'
+        let heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png'
         if (shopping_row[4] === 'True') {
-            heart_image = '/static/images/heart.png'
+            heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
                                     <div class="recommend_toggle recommend_book_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
                                         <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
-                                            <img src="/static/images/share.png">
+                                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                         </div>
                                         <div class="recommend_like_heart"
                                              style="background-image: url('${heart_image}')" onclick="click_like(event)">
@@ -655,8 +664,8 @@ function content_do_share(str) {
 
 // 좋아요 눌렀을 때
 function click_like(event) {
-    let background_heart = 'url("/static/images/heart.png")'
-    let background_empty_heart = 'url("/static/images/empty_heart.png")'
+    let background_heart = 'url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png")'
+    let background_empty_heart = 'url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png")'
     let curr_backgroundImage = event.target.style.backgroundImage;
     let id = event.target.parentElement.parentElement.id
 

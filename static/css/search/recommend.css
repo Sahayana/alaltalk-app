@@ -80,7 +80,7 @@
     position: absolute;
     top: 45px;
     right: 55px;
-    background-image: url(../../images/x_gray.png);
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/x_gray.png");
     width: 32px;
     height: 32px;
     background-size: contain;
@@ -102,7 +102,7 @@
 }
 
 .recommend_youtube_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -238,7 +238,7 @@
 }
 
 .recommend_youtube_container .recommend_content .content_section .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -250,7 +250,7 @@
 }
 
 .recommend_youtube_container .recommend_content .content_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -287,7 +287,8 @@
 }
 
 .recommend_youtube_container .search_content {
-    margin-top: 60px;
+    margin-top: 30px;
+    /*height: 350px;*/
 }
 
 .recommend_youtube_container .search_content p {
@@ -299,11 +300,29 @@
 .recommend_youtube_container .search_content .content_section {
     display: flex;
     flex-wrap: wrap;
-    width: 99%;
+    width: 98%;
+    height: 310px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.recommend_youtube_container .search_content .content_section::-webkit-scrollbar {
+    height: 12px;
+}
+
+.recommend_youtube_container .search_content .content_section::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.recommend_youtube_container .search_content .content_section::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .recommend_youtube_container .search_content .content_box {
-    width: 310px;
+    width: 300px;
     height: 240px;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
@@ -340,7 +359,7 @@
 }
 
 .recommend_youtube_container .search_content .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -352,7 +371,7 @@
 }
 
 .recommend_youtube_container .search_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -409,7 +428,7 @@
 }
 
 .recommend_news_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -550,7 +569,7 @@
 }
 
 .recommend_news_container .recommend_news_content .content_news_section .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -562,7 +581,7 @@
 }
 
 .recommend_news_container .recommend_news_content .content_news_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -657,7 +676,7 @@
 }
 
 .recommend_news_container .search_news_content .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -669,7 +688,7 @@
 }
 
 .recommend_news_container .search_news_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -684,10 +703,10 @@
     position: absolute;
     top: 50px;
     left: 14.5vw;
-    background-image: url("../../images/heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png");
     background-size: contain;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
 }
 
 .profile_like_news {
@@ -739,31 +758,36 @@
 }
 
 .profile_like_news_setting {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     background-size: contain;
     width: 40px;
     height: 40px;
 }
 
 .recommend_like_heart {
-    background-image: url("/static/images/empty_heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     object-fit: cover;
 }
 
 .recommend_youtube_like_heart {
     position: absolute;
-    left: 240px;
-    top: 200px;
+    right: 4px;
+    bottom: 4px;
+}
+.search_youtube_like_heart {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
 }
 
 .profile_like_news_heart:hover {
-    background-image: url("/static/images/heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png");
 }
 
 .profile_like_news_toggle {
@@ -918,7 +942,7 @@
 }
 
 .recommend_book_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -1032,7 +1056,7 @@
     width: 12vw;
     height: 16vw;
     background-color: #ffffff;
-    background-image: url('../../images/book_sample1.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/book_sample1.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -1105,7 +1129,7 @@
 
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1194,7 +1218,7 @@
 }
 
 .recommend_book_container .search_book_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1270,7 +1294,7 @@
 }
 
 .recommend_shopping_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -1379,7 +1403,7 @@
     width: 100%;
     height: 100%;
     background-color: #d2d2d2;
-    background-image: url("../../images/shopping_sample1.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/shopping_sample1.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -1404,7 +1428,7 @@
 
 
 .recommend_shopping_container .recommend_content .content_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1517,7 +1541,7 @@
 .recommend_shopping_container .search_content .content_box {
     width: 400px;
     height: 240px;
-    background-image: url("../../images/shopping_sample2.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/shopping_sample2.png");
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
@@ -1528,7 +1552,7 @@
 }
 
 .recommend_shopping_container .search_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1593,7 +1617,7 @@
     height: 3vw;
     left: 15vw;
     position: absolute;
-    background-image: url('/static/images/list_black.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/list_black.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
