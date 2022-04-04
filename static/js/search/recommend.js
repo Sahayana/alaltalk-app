@@ -371,7 +371,8 @@ function like_check_hub(id, type) {
     if (checker === 'youtube') {
         // url 가져 오기
         let youtube = document.getElementById(id)
-        let url = youtube.firstElementChild.src
+        let url = youtube.children[0].src
+        console.log(url)
         let title = youtube.children[1].innerText
         let views = youtube.children[2].innerText
         let youtube_data = {}
@@ -379,7 +380,7 @@ function like_check_hub(id, type) {
         youtube_data['url'] = url
         youtube_data['title'] = title
         youtube_data['views'] = views
-
+        console.log(youtube_data)
         // youtube like function
         like_youtube_ajax(youtube_data, type)
     }

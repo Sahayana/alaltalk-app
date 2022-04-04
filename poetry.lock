@@ -255,6 +255,14 @@ python-versions = ">=3.5.0"
 unicode_backport = ["unicodedata2"]
 
 [[package]]
+name = "chromedriver-autoinstaller"
+version = "0.3.1"
+description = "Automatically install chromedriver that supports the currently installed version of chrome."
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[[package]]
 name = "click"
 version = "8.0.4"
 description = "Composable command line interface toolkit"
@@ -1041,7 +1049,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b0d95c24f965cd93e0e2f9cc21ae2c5067a11ea53a69b272e5e652d3622c3754"
+content-hash = "525ea0bbe892b511786c0e58e74a3757761be2864fdbc9b044a797e9df2973fe"
 
 [metadata.files]
 aioredis = [
@@ -1200,6 +1208,10 @@ channels-redis = [
 charset-normalizer = [
     {file = "charset-normalizer-2.0.12.tar.gz", hash = "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"},
     {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
+]
+chromedriver-autoinstaller = [
+    {file = "chromedriver-autoinstaller-0.3.1.tar.gz", hash = "sha256:7bafc2c1730fc044d078a9e2e31c59c8015077c7e4de3903f7f14693af03bfbe"},
+    {file = "chromedriver_autoinstaller-0.3.1-py3-none-any.whl", hash = "sha256:d2d934fed5a8c27352e279c8c398ecbc570f5aebb4a877add05dc4703ce91bc8"},
 ]
 click = [
     {file = "click-8.0.4-py3-none-any.whl", hash = "sha256:6a7a62563bbfabfda3a38f3023a1db4a35978c0abd76f6c9605ecd6554d6d9b1"},
