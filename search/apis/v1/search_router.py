@@ -80,6 +80,7 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
 def search_youtube(request, youtube_request: SearchRequest = Form(...)) -> Tuple[int, Dict]:
     content_count = 10
     youtube_list = []
+    print(youtube_request.search)
     try:
         youtube_list = crawling_youtube(youtube_request.search, content_count)
         for youtube_row in youtube_list:

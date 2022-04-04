@@ -9,7 +9,7 @@
     position: absolute;
     top: 30px;
     right: 45px;
-    background-image: url("../../images/x_gray.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/x_gray.png");
     width: 32px;
     height: 32px;
     background-size: contain;
@@ -48,7 +48,7 @@
 /*유튜브 친구 찜 목록*/
 .friends_like_youtube {
     margin-top: 30px;
-    width: 98%;
+    width: 95%;
     overflow-y: auto;
     overflow-x: hidden;
     height: 680px;
@@ -106,7 +106,7 @@
     height: 240px;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
-    margin-right: 14px;
+    margin-right: 18px;
     margin-bottom: 12px;
     position: relative;
 }
@@ -123,7 +123,7 @@
 
 .friends_like_youtube_content_box .video_title {
     width: 75%;
-    height: auto;
+    height: 25px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -150,14 +150,19 @@
 }
 
 .friends_like_news::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .friends_like_news::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.friends_like_news::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .friends_like_news_content {
@@ -224,7 +229,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
 }
 
@@ -257,22 +262,28 @@
 .friends_like_book {
     margin-top: 30px;
     width: 95%;
-    height: 88%;
+    /*height: 88%;*/
     position: relative;
     display: none;
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: 660px;
 }
 
 .friends_like_book::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .friends_like_book::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.friends_like_book::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .friends_like_book_content_box:last-child {
@@ -401,16 +412,20 @@
     /*font-weight: 700;*/
     color: #5e5e5e;
 }
-
 .friends_like_shopping::-webkit-scrollbar {
-    width: 10px;
-    height: 0;
+    height: 12px;
 }
 
 .friends_like_shopping::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 5px #a185f2;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.friends_like_shopping::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .friends_like_shopping_grid {
@@ -425,8 +440,8 @@
 .friends_like_shopping_content {
     position: relative;
     width: 200px;
-    height: 300px;
-    margin-right: 24px;
+    height: 270px;
+    margin-right: 40px;
     /*border: 0.5vw solid #7556CD;*/
     /*margin: 1vw;*/
 }

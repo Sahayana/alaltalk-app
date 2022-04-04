@@ -10,7 +10,7 @@ from search.apps import SearchConfig
 def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
     start = time.time()
     # 검색 단어 분리
-    search_word = search_word.replace(" ", "+")
+    # search_word = search_word.replace(" ", "+")
 
     # 클로링을 담을 배열
     crawling_data = []
@@ -18,8 +18,11 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
     driver = SearchConfig.driver
 
     # 유튜브 링크 들어 가기 ( 검색 결과한 결과 )
-    url = "https://www.youtube.com/results?search_query=" + search_word
+    # url = "https://www.youtube.com/results?search_query=" + search_word
+    url = "https://www.youtube.com/results?search_query=안녕"
+    print(url)
     driver.get(url)
+    driver.implicitly_wait(50)
     crawling_temp_data = []
 
     # 목표 량이 10개를 넘을 때까지 반복
