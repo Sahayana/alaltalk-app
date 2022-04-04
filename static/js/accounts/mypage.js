@@ -232,7 +232,7 @@ function  profileChange(){
     formData.append("nickname", nickName);       
     formData.append("img", profileImg);
     formData.append("bio", bio);
-    if (password === '' || !isPw(password)){
+    if (!isPw(password)){
         alert("비밀번호를 확인해주세요.");
         return;
     }else{
