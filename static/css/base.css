@@ -49,6 +49,7 @@ body {
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 .nav .icon_group .icon.user_icon {
   background-image: url('../images/user_outline.png');

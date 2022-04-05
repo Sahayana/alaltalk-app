@@ -92,7 +92,7 @@ body::-webkit-scrollbar-track {
 .landing_welcome_text {
     color: white;
     font-weight: 700;
-    width: 500px;
+    /*width: 500px;*/
     margin: 200px 0 30px 120px;
     line-height: 95px;
     font-size: 85px;
@@ -160,14 +160,13 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_see_our_page {
-    position: relative;
-    margin: -100px auto 0;
+    position: fixed;
+    bottom: 32px;
+    right: 50%;
     width: 4vw;
-    /*max-width: 200px;*/
     height: 4vw;
-    background-color: #7657CE;
+    background-color: #A185F2;
     border-radius: 100px;
-    /*border: 4px solid #a185f2;*/
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -183,20 +182,30 @@ body::-webkit-scrollbar-track {
     overflow: hidden;
 }
 
+/*.down_btn {*/
+/*    width: 80px;*/
+/*    height: 80px;*/
+/*    background-color: #a185f2;*/
+/*    border-radius: 100px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
 
 /* row 관련 설정 & 첫 번째 row */
 
 .landing_content_row {
+    box-sizing: border-box;
+    padding: 100px 120px;
+}
+
+.lading_content_row_1 {
+    /*margin: 50px auto 0;*/
     width: 100%;
     height: 100vh;
     display: flex;
     border-bottom: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    padding: 120px;
-}
-
-.lading_content_row_1 {
-    margin: 30px auto 0;
 }
 
 .landing_content_row_text_box {
@@ -206,7 +215,7 @@ body::-webkit-scrollbar-track {
     flex-direction: column;
     justify-content: center;
     align-items: end;
-    margin-left: 200px;
+    margin-left: 100px;
     /*padding-left: 50px;*/
 }
 
@@ -236,6 +245,7 @@ body::-webkit-scrollbar-track {
     /*font-size: min(3vw, 60px);*/
     font-size: 18px;
     color: #5e5e5e;
+    width: 240px;
     text-align: right;
     /*font-weight: 600;*/
     margin-top: 32px;
@@ -249,7 +259,7 @@ body::-webkit-scrollbar-track {
     width: 900px;
     height: 600px;
     box-shadow: 10px 10px 25px 1px rgba(0, 0, 0, .15);
-    margin-left: 120px;
+    margin-left: 80px;
 }
 
 
@@ -266,6 +276,7 @@ body::-webkit-scrollbar-track {
     position: relative;
     width: 100%;
     height: 100vh;
+    display: flex;
     /*margin: 150px auto 0;*/
     border-bottom: 1px solid #e5e5e5;
 }
@@ -290,14 +301,14 @@ body::-webkit-scrollbar-track {
     display: flex;
     align-items: center;
     object-fit: cover;
-    width: 1170px;
-    height: 600px;
+    width: 972px;
+    height: 500px;
     box-shadow: 10px 10px 25px 1px rgb(0 0 0 / 15%);
     margin: 0;
 }
 
 .landing_content_row_2_img > img {
-    width: 45%;
+    width: 38%;
     position: relative;
     left: 0;
 }
@@ -309,7 +320,7 @@ body::-webkit-scrollbar-track {
 
 .landing_slide_next_button {
     position: absolute;
-    top: 280px;
+    top: 240px;
     right: 14px;
     width: min(3vw, 100px);
     height: min(3vw, 100px);
@@ -336,7 +347,8 @@ body::-webkit-scrollbar-track {
     text-align: left;
     line-height: 30px;
     margin-left: 80px;
-    margin-bottom: 32px;
+    padding-bottom: 150px;
+    /*margin-bottom: 32px;*/
 }
 
 .landing_content_row_2_text_1, .landing_content_row_2_text_2 {
@@ -363,30 +375,41 @@ body::-webkit-scrollbar-track {
 }
 
 /* row3에 대한 설정 */
-.landing_content_row_3_wrapper {
-    position: relative;
-}
+/*.landing_content_row_3_wrapper {*/
+/*    position: relative;*/
+/*}*/
 
 
 .landing_content_row_3 {
     position: relative;
-    background-color: white;
     width: 100%;
-    height: 40vw;
-    margin: 250px auto 0;
-    overflow: hidden;
+    height: 100vh;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    /*margin: 250px auto 0;*/
+    /*overflow: hidden;*/
 }
 
 .landing_content_row_3_title {
-    font-size: min(2vw, 60px);
-    font-weight: 600;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 12vw;
-    margin-left: 10vw;
-    margin-top: 3vw;
+    font-size: 18px;
+    color: #5e5e5e;
+    margin-top: 140px;
+}
+
+.landing_content_row_3_title .strong {
+    font-size: 72px;
+    font-weight: 700;
+    color: #7657ce;
+    margin-bottom: 24px;
+}
+
+.landing_content_row_3_title .sub {
+    font-size: 24px;
+    color: #191919;
+}
+
+.landing_content_row_3_title p:last-child {
+    margin-top: 20px;
 }
 
 .landing_content_row_bar {
@@ -451,15 +474,17 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_content_row_4_left {
-    width: 40vw;
-    height: 25vw;
+    width: 800px;
+    height: 500px;
     background-color: white;
-    border: min(1vw, 3px) solid rgba(217, 217, 217, 1);
+    margin-top: 30px;
+    margin-left: 120px;
+    border: 2px solid rgba(217, 217, 217, 1);
 }
 
 .landing_content_row_4_left_mac_header {
     position: relative;
-    width: 40vw;
+    width: 100%;
     height: 3vw;
     background: linear-gradient(0deg, rgba(217, 217, 217, 1) 0%, rgba(234, 234, 235, 1) 100%);
 }
@@ -482,8 +507,8 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_content_row_4_left_mac_body {
-    width: 40vw;
-    height: 20vw;;
+    width: 100%;
+    height: 85%;
 
 }
 
@@ -506,8 +531,8 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_content_row_4_next_button {
-    left: 33vw;
-    top: calc(10vw - 2vw);
+    top: 42%;
+    right: 32px;
     z-index: 4;
     background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/landing_next_slide_button_2.png");
 }
@@ -516,9 +541,11 @@ body::-webkit-scrollbar-track {
 .landing_content_row_4_right {
     width: 25vw;
     height: 25vw;
+    margin-top: 30px;
+    margin-left: 80px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: start;
 }
 
@@ -765,20 +792,23 @@ body::-webkit-scrollbar-track {
 
 /* footer 관련 */
 .landing_footer {
-    margin: 200px auto 20px;
+    /*margin: 200px auto 20px;*/
     width: 100%;
-    height: 15vw;
+    height: 100vh;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /*justify-content: space-evenly;*/
     align-content: center;
-    color: white;
+    background-color: #a185f2;
+    color: #fff;
 }
 
 .landing_footer_about_us {
     width: 20vw;
     height: 100%;
+    margin-left: 120px;
     text-align: left;
+    margin-top: 160px;
 }
 
 .landing_footer_about_us img {
@@ -799,7 +829,7 @@ body::-webkit-scrollbar-track {
 
 .landing_footer_developer_container {
     width: 50vw;
-    height: 100%;
+    height: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -816,6 +846,8 @@ body::-webkit-scrollbar-track {
     position: absolute;
     top: -3vw;
     left: 0;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .landing_footer_developer_profile {
@@ -824,6 +856,7 @@ body::-webkit-scrollbar-track {
     background-color: #020167;
     border-radius: 50%;
     margin: 0 auto;
+    position: relative;
 }
 
 .landing_footer_developer_profile img {
@@ -836,14 +869,28 @@ body::-webkit-scrollbar-track {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /*justify-content: space-evenly;*/
     align-items: center;
     margin-top: 1vw;
 }
+.dev_info {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    margin-left: 8px;
+}
+
+.dev_info p:first-child {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
 
 .landing_footer_developer_profile_github {
-    width: 2vw;
-    height: 2vw;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 12px;
+    bottom: 20px;
 }
 
 .landing_footer_developer_name_box img {
