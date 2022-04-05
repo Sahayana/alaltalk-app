@@ -2,25 +2,35 @@ import time
 from typing import List
 
 import requests
+import os
 from bs4 import BeautifulSoup
-
+from selenium import webdriver
 from search.apps import SearchConfig
 
 
 def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
     start = time.time()
+
     # 검색 단어 분리
-    # search_word = search_word.replace(" ", "+")
+    search_word = search_word.replace(" ", "+")
 
-    # 클로링을 담을 배열
-    crawling_data = []
+    # 현재 폴더 + chromedriver 경로 붙이기
+    webdriver_path = os.getcwd() + '/search/chromedriver'
 
-    driver = SearchConfig.driver
+    # webdriver option 설정 - 창 안 보이기, 시크릿 모드
+    options = webdriver.ChromeOptions()
+    # options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    options.add_argument("headless")
+    options.add_argument("--incognito")
+
+    driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
+
+    # 쿠기 삭제
+    driver.delete_all_cookies()
 
     # 유튜브 링크 들어 가기 ( 검색 결과한 결과 )
-    # url = "https://www.youtube.com/results?search_query=" + search_word
-    url = "https://www.youtube.com/results?search_query=안녕"
-    print(url)
+    url = "https://www.youtube.com/results?search_query=" + search_word
+
     driver.get(url)
     driver.implicitly_wait(50)
     crawling_temp_data = []
@@ -54,59 +64,6 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
 
     print("youtube crawling function time is ", time.time() - start, "seconds")
     return crawling_data[0:content_count]
-
-
-# 최신 동영상, 관련 비디오
-# crawling_temp_data_latest_video = soup.select('#contents > ytd-shelf-renderer')
-# if crawling_temp_data_latest_video is not None:
-#     print('latest vidio!!')
-#     print('shelf length',  len(crawling_temp_data_latest_video))
-#     for k in crawling_temp_data_latest_video:
-#         print('############# shelf 구분선 #############')
-#         cnt = 0
-#         for j in k.select('ytd-video-renderer'):
-#
-#             print('############# render 구분선 #############')
-#             print(j.select('a')[1].attrs['aria-label'])
-#             cnt += 1
-#             print(cnt, '번째 비디오')
-#             print('#@$@#$@#$@#$@#$#@$@#$@')
-#
-# for i in range(1000):
-#     time.sleep(1)
-
-#
-# def crawling_shopping_selenium_use(search_word: str, count: int) -> List[List[str]]:
-#     start = time.time()
-#     answer = []
-#
-#     driver = SearchConfig.driver
-#
-#     url = 'https://www.coupang.com/np/search?component=&&channel=user' + '&q=' + search_word
-#
-#     driver.get(url)
-#
-#     driver.implicitly_wait(5)  # seconds
-#     driver.execute_script("window.scrollTo(0, window.scrollY + 10000);")
-#     driver.execute_script("window.scrollTo(0, window.scrollY + 10000);")
-#     html = driver.page_source
-#
-#     soup = BeautifulSoup(html, "html.parser")
-#
-#     product_list = soup.select('#productList > li')
-#     for row in product_list:
-#         shopping_product = []
-#         shopping_img_src = row.select_one('img').attrs['src']
-#
-#         shopping_name = row.select_one('.name').text
-#         shopping_price = row.select_one('.price-value').text
-#         # list 에 담기
-#         shopping_product.append(shopping_img_src)
-#         shopping_product.append(shopping_name)
-#         shopping_product.append(shopping_price)
-#         answer.append(shopping_product)
-#     print("shopping crawling function time is ", time.time() - start, "seconds")
-#     return answer[:count]
 
 
 def crawling_shopping_only_bs4(search_word: str, count: int) -> List[List[str]]:
