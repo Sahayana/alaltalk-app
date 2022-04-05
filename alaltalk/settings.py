@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["alaltalk.com"]
 
 # Application definition
 
@@ -77,7 +77,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
+            "hosts": [("alaltalk-001.6hgyaz.0001.apn2.cache.amazonaws.com", 6379)],
         },
     },
 }
