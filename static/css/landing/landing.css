@@ -92,7 +92,7 @@ body::-webkit-scrollbar-track {
 .landing_welcome_text {
     color: white;
     font-weight: 700;
-    width: 500px;
+    /*width: 500px;*/
     margin: 200px 0 30px 120px;
     line-height: 95px;
     font-size: 85px;
