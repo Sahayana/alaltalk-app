@@ -33,7 +33,7 @@
     </div>
 </div>
 <div class="landing_see_our_page" id="landing_see_our_page" onclick="see_our_page()">
-    <i class="fa-solid fa-angle-down fa-2x"></i>
+    <i class="fa-solid fa-angle-down fa-2x down_btn"></i>
 </div>
 
 <div class="landing_all_content_container">
@@ -74,263 +74,142 @@
             <p class="landing_content_row_text_2 landing_content_row_2_text_2">Then <br>we<br> Find <br>your</p>
             <p class="landing_content_row_text_1 landing_content_row_2_text_1">Interest!</p>
             <p class="landing_content_row_text_3 landing_content_row_2_text_3">채팅로그를 기반으로<br>알알톡이 맞춤 정보를 추천해줘요.</p>
-            <p class="landing_content_row_text_3 landing_content_row_2_text_3">다른 페이지로 이탈하지 않고도<br>원하는 정보를 검색할 수 있어요.</p>
+            <p class="landing_content_row_text_3 landing_content_row_2_text_3">다른 페이지로 이탈하지 않고도<br>원하는 정보를 검색할 수 있어요.
+            </p>
         </div>
     </div>
 
-    <div class="landing_content_row_3_wrapper" id="landing_row_3">
-        <div class="landing_whale_4">
-            <img src="{% static 'images/landing/whales/landing_whale_pattern_4.png' %}">
-        </div>
-        <div class="landing_content_row landing_content_row_3">
-            <div class="landing_whale_4">
-                <img src="{% static 'images/landing/whales/landing_whale_pattern_4.png' %}">
+    <div class="landing_content_row landing_content_row_3" id="landing_row_3">
+        <div class="landing_content_row_4_left">
+            <div class="landing_content_row_4_left_mac_header">
+                <div class="landing_content_row_4_mac_header_button_box">
+                    <div class="landing_content_row_4_mac_header_button" style="background-color:#FA8F4C "></div>
+                    <div class="landing_content_row_4_mac_header_button" style="background-color:#FA8F4C "></div>
+                    <div class="landing_content_row_4_mac_header_button" style="background-color:#2EC66B "></div>
+                </div>
             </div>
+            <div class="swiper landing_content_row_4_left_mac_body">
+                <div class="swiper-wrapper landing_content_row_4_mac_content_wrapper">
+                    <div class="swiper-slide landing_content_row_4_mac_content">
+                        <img src="{% static 'images/landing/logos/landing_info_youtube.png' %}">
+                    </div>
+                    <div class="swiper-slide landing_content_row_4_mac_content">
+                        <img src="{% static 'images/landing/logos/landing_info_naver.png' %}">
+                    </div>
+                    <div class="swiper-slide landing_content_row_4_mac_content">
+                        <img style="width: 20vw" src="{% static 'images/landing/logos/landing_info_kyobo.png' %} ">
+                    </div>
+                    <div class="swiper-slide landing_content_row_4_mac_content">
+                        <img style="width: 20vw" src="{% static 'images/landing/logos/landing_info_coupang.png' %}">
+                    </div>
+                </div>
+                <div class="landing_slide_next_button landing_content_row_4_next_button"></div>
+            </div>
+        </div>
+        <div class="landing_content_row_4_right">
             <div class="landing_content_row_3_title">
-                <div class="landing_content_row_bar"></div>
-                <p class="">Our</p>
-                <p class="" style="color:#7556CD">Feature</p>
-            </div>
-            <div class="landing_content_row_3_content">
-                <div class="landing_content_row_3_feature_box_row">
-                    <div class="landing_content_row_3_feature_box">
-                        <img src="{% static 'images/landing/icons/landing_chat.png' %}">
-                        <p class="landing_content_row_3_feature_box_desc">Chatting</p>
-                    </div>
-                    <div class="landing_content_row_3_feature_box">
-                        <img src="{% static 'images/landing/icons/landing_search.png' %}">
-                        <p class="landing_content_row_3_feature_box_desc">Searching</p>
-                    </div>
-                </div>
-                <div class="landing_content_row_3_feature_box_row">
-                    <div class="landing_content_row_3_feature_box">
-                        <img src="{% static 'images/landing/icons/landing_content.png' %}">
-                        <p class="landing_content_row_3_feature_box_desc">Content</p>
-                    </div>
-                    <div class="landing_content_row_3_feature_box">
-                        <img src="{% static 'images/landing/icons/landing_recommend.png' %}">
-                        <p class="landing_content_row_3_feature_box_desc">Recommend</p>
-                    </div>
-                </div>
-            </div>
-            <div class="landing_whale_5">
-                <img src="{% static 'images/landing/whales/landing_whale_pattern_5.png' %}">
-            </div>
-        </div>
-    </div>
-
-    <div class="landing_content_row_4_wrapper" id="landing_row_4">
-        <div class="landing_whale_6">
-            <img src="{% static 'images/landing/whales/landing_whale_pattern_6.png' %}">
-        </div>
-        <div class="landing_content_row landing_content_row_4">
-            <div class="landing_content_row_4_left">
-                <div class="landing_content_row_4_left_mac_header">
-                    <div class="landing_content_row_4_mac_header_button_box">
-                        <div class="landing_content_row_4_mac_header_button" style="background-color:#FA8F4C "></div>
-                        <div class="landing_content_row_4_mac_header_button" style="background-color:#FA8F4C "></div>
-                        <div class="landing_content_row_4_mac_header_button" style="background-color:#2EC66B "></div>
-                    </div>
-                </div>
-                <div class="swiper landing_content_row_4_left_mac_body">
-                    <div class="swiper-wrapper landing_content_row_4_mac_content_wrapper">
-                        <div class="swiper-slide landing_content_row_4_mac_content">
-                            <img src="{% static 'images/landing/logos/landing_info_youtube.png' %}">
-                        </div>
-                        <div class="swiper-slide landing_content_row_4_mac_content">
-                            <img src="{% static 'images/landing/logos/landing_info_naver.png' %}">
-                        </div>
-                        <div class="swiper-slide landing_content_row_4_mac_content">
-                            <img style="width: 20vw" src="{% static 'images/landing/logos/landing_info_kyobo.png' %} ">
-                        </div>
-                        <div class="swiper-slide landing_content_row_4_mac_content">
-                            <img style="width: 20vw" src="{% static 'images/landing/logos/landing_info_coupang.png' %}">
-                        </div>
-                    </div>
-                    <div class="landing_slide_next_button landing_content_row_4_next_button"></div>
-                </div>
-            </div>
-            <div class="landing_content_row_4_right">
-                <div class="landing_content_row_3_title landing_content_row_4_title">
-                    <div class="landing_content_row_bar" style="background-color:white"></div>
-                    <p class="" style="margin-left: 1vw">Info</p>
-                    <p class="" style="color:white">From</p>
-                </div>
-                <p>
-                    The information we provide is crawled
-                    and used on the following sites.
-                    If you have additional information sites,
-                    please let us know!!
+                <p class="strong">Info<br>From</p>
+                <p class="sub">
+                    The information we provide is crawled<br>
+                    and used on the following sites.<br>
                 </p>
-                <div class="landing_content_row_4_right_request_button">
-                    Request to add site
-                </div>
+                <p>
+                    사이트를 이탈해서 사용해야하는<br>
+                    유튜브, 네이버, 교보문고, 쿠팡의 정보를<br>
+                    알알톡이 제공해줘요.<br>
+                </p>
             </div>
         </div>
     </div>
 
-    {#    <div class="landing_content_row_5_wrapper" id="landing_row_5">#}
-    {#        <div class="landing_content_row landing_content_row_5">#}
-    {#            <div class="landing_content_row_5_col_1">#}
-    {#                <div class="landing_content_row_5_col_1_title">#}
-    {#                    <p>Our</p>#}
-    {#                    <p>Best</p>#}
-    {#                    <p>Team</p>#}
-    {#                    <p>&</p>#}
-    {#                    <p>Skills</p>#}
-    {#                </div>#}
-    {#                <div class="landing_content_row_5_col_1_profile_box" style="height:20vw">#}
-    {#                    <div class="landing_content_row_5_col_1_profile_img">#}
-    {#                        <img src="/static/images/landing/developer/landing_developer_앙금성.png">#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_name">#}
-    {#                        <p>앙금성</p>#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_function">#}
-    {#                        <img src="/static/images/landing/icons/landing_user.png">#}
-    {#                        <p>User</p>#}
-    {#                        <p>Function</p>#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_bio">#}
-    {#                        <p>S.A. 공지사항에 올렸습니다.</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="landing_content_row_5_bar"></div>#}
-    {#            <div class="landing_content_row_5_col_2">#}
-    {#                <div class="landing_content_row_5_col_1_profile_box">#}
-    {#                    <div class="landing_content_row_5_col_1_profile_img">#}
-    {#                        <img src="">#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_name">#}
-    {#                        <p>김진주</p>#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_function">#}
-    {#                        <img src="/static/images/landing/icons/landing_chat.png">#}
-    {#                        <p>Chat</p>#}
-    {#                        <p>Function</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                <div class="landing_content_row_5_col_1_profile_box">#}
-    {#                    <div class="landing_content_row_5_col_1_profile_img">#}
-    {#                        <img src="/static/images/landing/developer/landing_developer_김재성.png">#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_name">#}
-    {#                        <p>김재성</p>#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_function">#}
-    {#                        <img src="/static/images/landing/icons/landing_search.png">#}
-    {#                        <p>Search</p>#}
-    {#                        <p>Function</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#            <div class="landing_content_row_5_col_2">#}
-    {#                <div class="landing_content_row_5_col_1_profile_box">#}
-    {#                    <div class="landing_content_row_5_col_1_profile_img">#}
-    {#                        <img src="/static/images/landing/developer/landing_developer_윤소현.png">#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_name">#}
-    {#                        <p>윤소현</p>#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_function">#}
-    {#                        <img src="/static/images/landing/icons/landing_recommend.png">#}
-    {#                        <p>AI</p>#}
-    {#                        <p>Function</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#                <div class="landing_content_row_5_col_1_profile_box">#}
-    {#                    <div class="landing_content_row_5_col_1_profile_img">#}
-    {#                        <img src="/static/images/landing/developer/landing_developer_선하진.png">#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_name">#}
-    {#                        <p>선하진</p>#}
-    {#                    </div>#}
-    {#                    <div class="landing_content_row_5_col_1_profile_function">#}
-    {#                        <img src="/static/images/landing/icons/landing_search.png">#}
-    {#                        <p>Search</p>#}
-    {#                        <p>Function</p>#}
-    {#                    </div>#}
-    {#                </div>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
-    <div class="landing_whale_7">
-        <img src="{% static 'images/landing/whales/landing_whale_pattern_7.png' %}">
-    </div>
-</div>
+    <div class="landing_content_row landing_footer" id="landing_row_4">
+        <div class="landing_footer_about_us">
+            <img src="{% static 'images/landing/landing_logo.png' %}">
+            <p>알고리즘으로 알아보는 TALK</p>
+            <p>© 2022 밥4조</p>
+        </div>
+        <div class="landing_footer_developer_container">
+            <div class="landing_footer_developer_profile_box">
+                <div class="landing_footer_developer_profile_title">
+                    <p>Developers</p>
+                </div>
+                <div class="landing_footer_developer_profile">
+                    <img src="{% static 'images/landing/developer/landing_developer_앙금성.png' %}">
 
-<div class="landing_footer">
-    <div class="landing_footer_about_us">
-        <img src="{% static 'images/landing/landing_logo.png' %}">
-        <p>알고리즘으로 알아보는 TALK</p>
-        <p>© 2022 밥4조</p>
-    </div>
-    <div class="landing_footer_developer_container">
-        <div class="landing_footer_developer_profile_box">
-            <div class="landing_footer_developer_profile_title">
-                <p>Developers</p>
-            </div>
-            <div class="landing_footer_developer_profile">
-                <img src="{% static 'images/landing/developer/landing_developer_앙금성.png' %}">
-
-            </div>
-            <div class="landing_footer_developer_name_box">
-                <p><strong>앙금성</strong><br>user function</p>
+                </div>
                 <div class="landing_footer_developer_profile_github">
                     <img src="{% static 'images/landing/icons/landing_github.png' %}">
                 </div>
+                <div class="landing_footer_developer_name_box">
+                    <div class="dev_info">
+                        <p>앙금성</p>
+                        <p>user function</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="landing_footer_developer_profile_box">
-            <div class="landing_footer_developer_profile">
-                <img src="{% static 'images/landing/developer/landing_developer_김진주.png' %}">
-            </div>
-            <div class="landing_footer_developer_name_box">
-                <p><strong>김진주</strong><br>chat function</p>
+            <div class="landing_footer_developer_profile_box">
+                <div class="landing_footer_developer_profile">
+                    <img src="{% static 'images/landing/developer/landing_developer_김진주.png' %}">
+                </div>
                 <div class="landing_footer_developer_profile_github">
                     <img src=" {% static 'images/landing/icons/landing_github.png' %}">
                 </div>
+                <div class="landing_footer_developer_name_box">
+                    <div class="dev_info">
+                        <p>김진주</p>
+                        <p>chat function</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="landing_footer_developer_profile_box">
-            <div class="landing_footer_developer_profile">
-                <img src="{% static 'images/landing/developer/landing_developer_김재성.png' %}">
+            <div class="landing_footer_developer_profile_box">
+                <div class="landing_footer_developer_profile">
+                    <img src="{% static 'images/landing/developer/landing_developer_김재성.png' %}">
 
-            </div>
-            <div class="landing_footer_developer_name_box">
-                <p><strong>김재성</strong><br>search function</p>
+                </div>
                 <div class="landing_footer_developer_profile_github">
                     <img src="{% static 'images/landing/icons/landing_github.png' %}">
                 </div>
+                <div class="landing_footer_developer_name_box">
+                    <div class="dev_info">
+                        <p>김재성</p>
+                        <p>search function</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="landing_footer_developer_profile_box">
-            <div class="landing_footer_developer_profile">
-                <img src="{% static 'images/landing/developer/landing_developer_윤소현.png' %}">
+            <div class="landing_footer_developer_profile_box">
+                <div class="landing_footer_developer_profile">
+                    <img src="{% static 'images/landing/developer/landing_developer_윤소현.png' %}">
 
-            </div>
-            <div class="landing_footer_developer_name_box">
-                <p><strong>윤소현</strong><br>recommend function</p>
+                </div>
                 <div class="landing_footer_developer_profile_github">
                     <img src="{% static 'images/landing/icons/landing_github.png' %}">
                 </div>
+                <div class="landing_footer_developer_name_box">
+                    <div class="dev_info">
+                        <p>윤소현</p>
+                        <p>recommend function</p>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="landing_footer_developer_profile_box">
-            <div class="landing_footer_developer_profile">
-                <img src="{% static 'images/landing/developer/landing_developer_선하진.png' %}">
+            <div class="landing_footer_developer_profile_box">
+                <div class="landing_footer_developer_profile">
+                    <img src="{% static 'images/landing/developer/landing_developer_선하진.png' %}">
 
-            </div>
-            <div class="landing_footer_developer_name_box">
-                <p><strong>선하진</strong><br>search function</p>
+                </div>
                 <div class="landing_footer_developer_profile_github">
                     <img src="{% static 'images/landing/icons/landing_github.png' %}">
+                </div>
+                <div class="landing_footer_developer_name_box">
+                    <div class="dev_info">
+                        <p>선하진</p>
+                        <p>search function</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 <script src="{% static 'js/landing/landing.js' %}"></script>
 </body>
 

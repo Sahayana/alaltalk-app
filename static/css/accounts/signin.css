@@ -1,249 +1,249 @@
 * {
-  font-family: 'Noto Sans KR', 'Roboto';
-  font-size: 16px;
-  letter-spacing: -0.5px;
+    font-family: 'Noto Sans KR', 'Roboto';
+    font-size: 16px;
+    letter-spacing: -0.5px;
 }
 
 body {
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
 }
 
 .signin-container {
-  margin: 66px auto 0;
-  display: flex;
-  /*border: 1px solid transparent;*/
-  border-radius: 10px;
-  max-width: 100vw;
-  width: 1028px;
-  height: 720px;
+    margin: 66px auto 0;
+    display: flex;
+    /*border: 1px solid transparent;*/
+    border-radius: 10px;
+    max-width: 100vw;
+    width: 1028px;
+    height: 720px;
 }
 
 .signin-container .signin-left-wrapper {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .signin-container .signin-left-wrapper .logo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .signin-container .signin-left-wrapper .logo > img {
-  width: 50%;
+    width: 50%;
 }
 
 .signin-container .signin-left-wrapper .logo .logo-helper {
-  font-size: 80%;
-  color: #a185f2;
-  margin-top: 20px;
-  margin-left: -20px;
+    font-size: 80%;
+    color: #a185f2;
+    margin-top: 20px;
+    margin-left: -20px;
 }
 
 /* signin-right-wrapper */
 
 .signin-container .signin-right-wrapper {
-  width: 45%;
-  height: 720px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    width: 45%;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container {
-  width: 90%;
-  height: 90%;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  background-color: #a185f2;
-  box-shadow: 4px 0 10px 3px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    width: 90%;
+    height: 90%;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background-color: #a185f2;
+    box-shadow: 4px 0 10px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .intro {
-  width: 340px;
-  margin-top: -5%;
-  margin-bottom: 5%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+    width: 340px;
+    margin-top: -5%;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .intro p {
-  font-size: 100%;
-  color: white;
-  margin-top: -4%;
-  margin-left: 6px;
+    font-size: 100%;
+    color: white;
+    margin-top: -4%;
+    margin-left: 6px;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .email {
-  width: 340px;
-  height: 45px;
-  background: white;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  color: #4d4d4d;
-  margin-top: 2%;
-  position: relative;
+    width: 340px;
+    height: 45px;
+    background: white;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    color: #4d4d4d;
+    margin-top: 2%;
+    position: relative;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .email > input {
-  outline: none;
-  border: none;
-  width: 100%;
-  /*border-width: 0;*/
-  box-sizing: border-box;
-  padding: 0;
+    outline: none;
+    border: none;
+    width: 100%;
+    /*border-width: 0;*/
+    box-sizing: border-box;
+    padding: 0;
 }
 
 .signin-container
-  .signin-right-wrapper
-  .signin-form-container
-  .email
-  input::placeholder {
-  font-size: 60%;
-  text-align: start;
+.signin-right-wrapper
+.signin-form-container
+.email
+input::placeholder {
+    font-size: 60%;
+    text-align: start;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .password {
-  width: 340px;
-  height: 45px;
-  background: white;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  color: #4d4d4d;
-  margin-top: 2%;
-  position: relative;
+    width: 340px;
+    height: 45px;
+    background: white;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    color: #4d4d4d;
+    margin-top: 2%;
+    position: relative;
 }
 
 .signin-container
-  .signin-right-wrapper
-  .signin-form-container
-  .password
-  #current-password {
-  outline: none;
-  border: none;
-  width: 100%;
-  padding: 0;
-  /*border-width: 0;*/
-  box-sizing: border-box;
+.signin-right-wrapper
+.signin-form-container
+.password
+#current-password {
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 0;
+    /*border-width: 0;*/
+    box-sizing: border-box;
 }
 
 .signin-container
-  .signin-right-wrapper
-  .signin-form-container
-  .password
-  input::placeholder {
-  font-size: 60%;
-  text-align: start;
+.signin-right-wrapper
+.signin-form-container
+.password
+input::placeholder {
+    font-size: 60%;
+    text-align: start;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .btn-signin {
-  margin-top: 5%;
-  width: 340px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    margin-top: 5%;
+    width: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .signin-container
-  .signin-right-wrapper
-  .signin-form-container
-  .btn-signin
-  #signBtn {
-  width: 100%;
-  height: 40px;
-  padding: 0.3em;
-  background: transparent;
-  color: white;
-  border: 1px solid white;
-  border-radius: 5px;
-  font-weight: 600;
+.signin-right-wrapper
+.signin-form-container
+.btn-signin
+#signBtn {
+    width: 100%;
+    height: 40px;
+    padding: 0.3em;
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-weight: 600;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .forget-pw {
-  width: 220px;
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    width: 60%;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .signin-container .signin-right-wrapper .signin-form-container .forget-pw p {
-  font-size: 80%;
-  margin-top: 6%;
-  color: #ffffff;
+    font-size: 80%;
+    margin-top: 6%;
+    color: #ffffff;
 }
 
 .signin-container
-  .signin-right-wrapper
-  .signin-form-container
-  .forget-pw
-  .forget-pw-btn {
-  /*margin-top:-4px;*/
-  font-size: 90%;
-  border: none;
-  color: #7657ce;
-  background: transparent;
-  font-weight: 600;
+.signin-right-wrapper
+.signin-form-container
+.forget-pw
+.forget-pw-btn {
+    /*margin-top:-4px;*/
+    font-size: 90%;
+    border: none;
+    color: #7657ce;
+    background: transparent;
+    font-weight: 600;
 }
 
 .signin-container .signin-right-wrapper .move-to-signup {
-  margin-bottom: -10%;
-  width: 90%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+    margin-bottom: -10%;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .signin-container .signin-right-wrapper .move-to-signup p {
-  font-size: 80%;
-  color: #7657ce;
-  margin-top: 15px;
+    font-size: 80%;
+    color: #7657ce;
+    margin-top: 15px;
 }
 
 .signin-container .signin-right-wrapper .move-to-signup .signupBtn {
-  background: none;
-  border: none;
-  font-size: 80%;
-  font-weight: 600;
-  color: #7657ce;
+    background: none;
+    border: none;
+    font-size: 80%;
+    font-weight: 600;
+    color: #7657ce;
 }
 
 /* 비밀번호 찾기 Modal */
 
 .modal-body p {
-  font-size: 90%;
-  color: #7657ce;
-  margin-top: 15px;
+    font-size: 90%;
+    color: #7657ce;
+    margin-top: 15px;
 }
 
 .modal-body .email-find input {
-  outline: none;
-  border: none;
-  width: 100%;
-  padding: 0;
-  border-width: 0;
-  box-sizing: border-box;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 0;
+    border-width: 0;
+    box-sizing: border-box;
 }
 
 .modal-body .email-find input::placeholder {
-  font-size: 70%;
-  text-align: start;
+    font-size: 70%;
+    text-align: start;
 }

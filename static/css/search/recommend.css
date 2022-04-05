@@ -78,8 +78,8 @@
 
 .recommend_close_btn {
     position: absolute;
-    top: 45px;
-    right: 55px;
+    top: 20px;
+    right: 20px;
     background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/x_gray.png");
     width: 32px;
     height: 32px;
@@ -156,7 +156,7 @@
     height: 30px;
     background-color: #7556CD;
     color: white;
-    left: 80px;
+    left: 90px;
     top: -8px;
     text-align: center;
     border: none;
@@ -305,6 +305,7 @@
     overflow-y: auto;
     overflow-x: hidden;
 }
+
 .recommend_youtube_container .search_content .content_section::-webkit-scrollbar {
     height: 12px;
 }
@@ -780,6 +781,7 @@
     right: 4px;
     bottom: 4px;
 }
+
 .search_youtube_like_heart {
     position: absolute;
     right: 4px;
@@ -907,6 +909,7 @@
 
 .right_wrap {
     width: 60%;
+    position: relative;
 }
 
 .right_wrap .recommend_book_container {

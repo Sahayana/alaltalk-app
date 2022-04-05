@@ -7,8 +7,8 @@
 
 .friends_like_container .friends_like_close_btn {
     position: absolute;
-    top: 30px;
-    right: 45px;
+    top: 20px;
+    right: 40px;
     background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/x_gray.png");
     width: 32px;
     height: 32px;
