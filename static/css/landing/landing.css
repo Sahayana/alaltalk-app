@@ -215,7 +215,7 @@ body::-webkit-scrollbar-track {
     flex-direction: column;
     justify-content: center;
     align-items: end;
-    margin-left: 200px;
+    margin-left: 100px;
     /*padding-left: 50px;*/
 }
 
@@ -245,6 +245,7 @@ body::-webkit-scrollbar-track {
     /*font-size: min(3vw, 60px);*/
     font-size: 18px;
     color: #5e5e5e;
+    width: 240px;
     text-align: right;
     /*font-weight: 600;*/
     margin-top: 32px;
@@ -258,7 +259,7 @@ body::-webkit-scrollbar-track {
     width: 900px;
     height: 600px;
     box-shadow: 10px 10px 25px 1px rgba(0, 0, 0, .15);
-    margin-left: 120px;
+    margin-left: 80px;
 }
 
 
@@ -300,14 +301,14 @@ body::-webkit-scrollbar-track {
     display: flex;
     align-items: center;
     object-fit: cover;
-    width: 1170px;
-    height: 600px;
+    width: 972px;
+    height: 500px;
     box-shadow: 10px 10px 25px 1px rgb(0 0 0 / 15%);
     margin: 0;
 }
 
 .landing_content_row_2_img > img {
-    width: 45%;
+    width: 38%;
     position: relative;
     left: 0;
 }
@@ -319,7 +320,7 @@ body::-webkit-scrollbar-track {
 
 .landing_slide_next_button {
     position: absolute;
-    top: 280px;
+    top: 240px;
     right: 14px;
     width: min(3vw, 100px);
     height: min(3vw, 100px);
@@ -346,7 +347,8 @@ body::-webkit-scrollbar-track {
     text-align: left;
     line-height: 30px;
     margin-left: 80px;
-    margin-bottom: 32px;
+    padding-bottom: 150px;
+    /*margin-bottom: 32px;*/
 }
 
 .landing_content_row_2_text_1, .landing_content_row_2_text_2 {
