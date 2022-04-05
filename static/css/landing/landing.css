@@ -5,59 +5,64 @@
 }
 
 body {
-    background-color: #A185F2;
+    background-color: #FAF9FF;
     /*background:  rgba(161,133,242,1);*/
 }
 
 body::-webkit-scrollbar {
-    width: 1vw;
-    background-color: transparent;
+    height: 12px;
 }
 
 body::-webkit-scrollbar-thumb {
-    background-color: #7657CE;
-    border-radius: 1vw;
-    border: 2px solid transparent;
-    background-clip: padding-box;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #A185F2;
 }
 
 body::-webkit-scrollbar-track {
-    border-radius: 1.5vw;
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .landing_header {
     position: absolute;
     width: 100%;
     height: 4vw;
-    background-color: #7657CE;
+    /*background-color: rgba(0, 0, 0, .5);*/
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     z-index: 1;
     animation: appear_header 1s ease-out;
+    align-items: flex-end;
 }
 
-.landing_header_left {
-    margin-left: 24px;
-    width: 6.4vw;
-}
-
-.landing_header_left img {
+.landing_header img {
+    max-width: 6.4vw;
     width: 100%;
+    margin: 14px 18px;
 }
 
-.landing_header_right {
-    color: white;
-    margin-right: 24px;
-    cursor: pointer;
-}
+/*.landing_header_left {*/
+/*    margin-left: 24px;*/
+/*    width: 6.4vw;*/
+/*}*/
+
+/*.landing_header_left img {*/
+/*    width: 100%;*/
+/*}*/
+
+/*.landing_header_right {*/
+/*    color: white;*/
+/*    margin-right: 24px;*/
+/*    cursor: pointer;*/
+/*}*/
 
 .landing_banner {
     position: relative;
     width: 100%;
-    height: 90vh;
-    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/banner1.jpg");
+    height: 100vh;
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/algorithm_bg.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -65,44 +70,56 @@ body::-webkit-scrollbar-track {
     z-index: 0;
 }
 
-.landing_bottom_gradient_box {
-    width: 100%;
-    height: 45vh;
-    position: absolute;
-    top: calc(90vh - 45vh);
-    z-index: 2;
-    background: linear-gradient(0deg, rgba(161, 133, 242, 1) 1%, rgba(255, 255, 255, 0) 100%);
-}
+/*.landing_bottom_gradient_box {*/
+/*    width: 100%;*/
+/*    height: 45vh;*/
+/*    position: absolute;*/
+/*    top: calc(90vh - 45vh);*/
+/*    z-index: 2;*/
+/*    background: linear-gradient(0deg, rgba(161, 133, 242, 1) 1%, rgba(255, 255, 255, 0) 100%);*/
+/*}*/
 
+
+/*.landing_welcome_text {*/
+/*    font-weight: 700;*/
+/*    font-size: 50px;*/
+/*    color: white;*/
+/*    width: 100%;*/
+/*    text-align: center;*/
+/*    margin-top: 14px;*/
+/*}*/
 
 .landing_welcome_text {
-    font-weight: 700;
-    font-size: 50px;
     color: white;
-    width: 100%;
-    text-align: center;
-    margin-top: 14px;
+    font-weight: 700;
+    width: 500px;
+    margin: 200px 0 30px 120px;
+    line-height: 95px;
+    font-size: 85px;
+    text-align: left;
 }
 
-.landing_welcome_text_strong {
-    color: white;
-    font-weight: 700;
-    margin-top: 330px;
-    font-size: 62px;
-    text-align: center;
+.landing_login_container {
+    max-width: 200px;
+    width: 100%;
+    margin: 0 0 0 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }
 
 .landing_login_box {
     width: min(10vw, 300px);
     height: 2vw;
-    border: 4px solid white;
+    background-color: rgba(255, 255, 255, .2);
     border-radius: 80px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 140px auto 0;
-    position: relative;
+    /*margin: 140px auto 0;*/
+    /*position: relative;*/
     cursor: pointer;
     z-index: 10;
 }
@@ -114,21 +131,21 @@ body::-webkit-scrollbar-track {
 }
 
 
-.landing_login_allow {
-    width: 10%;
-    height: 10%;
-    position: absolute;
-    color: white;
-    top: 0;
-    left: 12.5vw;
-}
+/*.landing_login_allow {*/
+/*    width: 10%;*/
+/*    height: 10%;*/
+/*    position: absolute;*/
+/*    color: white;*/
+/*    top: 0;*/
+/*    left: 12.5vw;*/
+/*}*/
 
 .landing_sign_up_container {
-    width: 100%;
+    /*width: 100%;*/
     display: flex;
-    justify-content: center;
+    /*justify-content: center;*/
     margin: 20px auto;
-    text-align: center;
+    /*text-align: center;*/
     font-size: min(1vw, 20px);
     color: white;
 }
@@ -144,13 +161,13 @@ body::-webkit-scrollbar-track {
 
 .landing_see_our_page {
     position: relative;
-    margin: -75px auto 0;
-    width: 5vw;
-    max-width: 200px;
-    height: 5vw;
+    margin: -100px auto 0;
+    width: 4vw;
+    /*max-width: 200px;*/
+    height: 4vw;
     background-color: #7657CE;
     border-radius: 100px;
-    border: 4px solid #a185f2;
+    /*border: 4px solid #a185f2;*/
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -170,13 +187,16 @@ body::-webkit-scrollbar-track {
 /* row 관련 설정 & 첫 번째 row */
 
 .landing_content_row {
-    width: 80%;
-    height: 90vh;
+    width: 100%;
+    height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 150px auto 0;
+    border-bottom: 1px solid #e5e5e5;
+    box-sizing: border-box;
+    padding: 120px;
+}
 
+.lading_content_row_1 {
+    margin: 30px auto 0;
 }
 
 .landing_content_row_text_box {
@@ -186,16 +206,16 @@ body::-webkit-scrollbar-track {
     flex-direction: column;
     justify-content: center;
     align-items: end;
-    padding-left: 50px;
+    margin-left: 200px;
+    /*padding-left: 50px;*/
 }
 
 .landing_content_row_text_1 {
     /*font-size: min(5vw, 120px);*/
     font-size: 72px;
-    font-weight: 600;
-    color: white;
-    text-align: right;
-
+    font-weight: 700;
+    text-align: right;;
+    color: #7657ce;
     /*text-shadow: 10px 10px #474B50;*/
 
 }
@@ -206,17 +226,30 @@ body::-webkit-scrollbar-track {
     color: #191919;
     text-align: right;
     font-weight: 600;
-    margin-top: 10px;
-    line-height: 40px;
+    margin-top: 12px;
+    line-height: 45px;
+    /*text-shadow: 5px 5px 10px #474B50;*/
+
+}
+
+.landing_content_row_text_3 {
+    /*font-size: min(3vw, 60px);*/
+    font-size: 18px;
+    color: #5e5e5e;
+    text-align: right;
+    /*font-weight: 600;*/
+    margin-top: 32px;
+    line-height: 20px;
     /*text-shadow: 5px 5px 10px #474B50;*/
 
 }
 
 .landing_content_row_img {
     object-fit: cover;
-    width: 700px;
-    max-height: 700px;
+    width: 900px;
+    height: 600px;
     box-shadow: 10px 10px 25px 1px rgba(0, 0, 0, .15);
+    margin-left: 120px;
 }
 
 
@@ -231,9 +264,10 @@ body::-webkit-scrollbar-track {
 
 .lading_content_row_2 {
     position: relative;
-    width: 80%;
-    height: 90vh;
-    margin: 150px auto 0;
+    width: 100%;
+    height: 100vh;
+    /*margin: 150px auto 0;*/
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .landing_slide_name_bar {
@@ -251,29 +285,32 @@ body::-webkit-scrollbar-track {
 
 }
 
-.landing_content_row_2_img, .landing_content_row_2_img {
+.landing_content_row_2_img {
     position: relative;
     display: flex;
     align-items: center;
-    max-width: 800px;
-    width: auto;
+    object-fit: cover;
+    width: 1170px;
+    height: 600px;
+    box-shadow: 10px 10px 25px 1px rgb(0 0 0 / 15%);
+    margin: 0;
 }
 
 .landing_content_row_2_img > img {
     width: 45%;
     position: relative;
-    left:0;
+    left: 0;
 }
 
 .landing_interest_slide {
-    width: 65%;
+    width: 100%;
     position: relative;
 }
 
 .landing_slide_next_button {
     position: absolute;
-    top: 240px;
-    right: 20px;
+    top: 280px;
+    right: 14px;
     width: min(3vw, 100px);
     height: min(3vw, 100px);
     background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/landing_next_slide_button.png");
@@ -294,10 +331,12 @@ body::-webkit-scrollbar-track {
     flex-direction: column;
     justify-content: center;
     align-items: start;
-    width: 20%;
-    height: 20vw;
+    /*width: 20%;*/
+    /*height: 20vw;*/
     text-align: left;
     line-height: 30px;
+    margin-left: 80px;
+    margin-bottom: 32px;
 }
 
 .landing_content_row_2_text_1, .landing_content_row_2_text_2 {
@@ -305,8 +344,9 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_content_row_2_text_1 {
-    font-size: min(5vw, 80px);
+    /*font-size: min(5vw, 80px);*/
     margin-top: 40px;
+    margin-bottom: 40px;
 }
 
 
@@ -314,6 +354,13 @@ body::-webkit-scrollbar-track {
 
 }
 
+.landing_content_row_2_text_3 {
+    text-align: left;
+}
+
+.landing_content_row_2_text_3:first-child {
+    margin-bottom: 12px;
+}
 
 /* row3에 대한 설정 */
 .landing_content_row_3_wrapper {
@@ -745,6 +792,7 @@ body::-webkit-scrollbar-track {
 .landing_footer_about_us p {
     margin-bottom: 1vw;
 }
+
 .landing_footer_about_us p strong {
     font-weight: 700;
 }
