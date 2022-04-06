@@ -20,7 +20,7 @@ body {
 
 .nav {
     background-color: #fff;
-    width: 90px;
+    width: 8%;
     height: 100%;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -78,7 +78,7 @@ body {
 }
 
 .right_wrap {
-    width: 60%;
+    width: 100%;
 }
 
 .user_profile {

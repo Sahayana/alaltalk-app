@@ -17,7 +17,7 @@ body {
 }
 .nav {
     background-color: #fff;
-    width: 90px;
+    width: 8%;
     height: 100%;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -155,7 +155,7 @@ body {
     display: block;
 }
 .right_wrap {
-    width: 60%;
+    width: 100%;
 }
 
 .chat_start_msg .chat_start_img {
