@@ -42,9 +42,9 @@ body {
     align-items: center;
 }
 
-.signup-container,
-.signup-left-wrapper,
-.signup-form-container,
+.signup-container
+.signup-left-wrapper
+.signup-form-container
 .signup-profile-img {
     width: 180px;
     height: 180px;
@@ -58,19 +58,19 @@ body {
     cursor: pointer;
 }
 
-.signup-container,
-.signup-left-wrapper,
-.signup-form-container,
-.signup-profile-img,
+.signup-container
+.signup-left-wrapper
+.signup-form-container
+.signup-profile-img
 .profile-img-default {
     width: 30px;
     height: 30px;
 }
 
-.signup-container,
-.signup-left-wrapper,
-.signup-form-container,
-.signup-profile-img,
+.signup-container
+.signup-left-wrapper
+.signup-form-container
+.signup-profile-img
 p {
     font-size: 70%;
     color: #5e5e5e;
@@ -133,10 +133,10 @@ p {
     box-sizing: border-box;
 }
 
-.signup-container,
-.signup-left-wrapper,
-.signup-form-container,
-.btn-signup,
+.signup-container
+.signup-left-wrapper
+.signup-form-container
+.btn-signup
 .signBtn {
     width: 100%;
     background: transparent;
@@ -151,9 +151,9 @@ p {
     box-sizing: border-box;
 }
 
-.signup-container,
-.signup-left-wrapper,
-.signup-form-container,
+.signup-container
+.signup-left-wrapper
+.signup-form-container
 div input::placeholder {
     font-size: 80%;
     font-weight: 500;
@@ -236,10 +236,10 @@ div input::placeholder {
     margin-top: 15%;
 }
 
-.signup-container,
-.signup-right-wrapper,
-.agree-container,
-.agree-checkbox,
+.signup-container
+.signup-right-wrapper
+.agree-container
+.agree-checkbox
 > label {
     font-size: 90%;
     font-weight: 600;

@@ -29,37 +29,51 @@ document.addEventListener('scroll', function (){
 
 })
 
-function see_our_page(){
-    var start_scroll = $('html');
-    let row = document.getElementById('landing_row_1');
-    let scroll_position = row.offsetTop + row.offsetHeight
-    // window.scrollTo({top: scroll_position, behavior: 'smooth'});
-    var page = 2;
+window.addEventListener("scroll", function() {
+    let current_scroll = window.scrollY;
+    let row4 = window.document.getElementById('landing_row_4')
+    let scroll_position4 = row4.offsetTop + row4.offsetHeight
 
-    // $('#landing_row_1').animate({scrollTop:$(this.hash).offset().top}, 500);
-    start_scroll.animate({scrollTop :scroll_position},500);
-    $(window).on("wheel", function(e) {
-    if(start_scroll.is(":animated")) return;
-    if(e.originalEvent.deltaY > 0) {
-        if(page == 7) return;
-        page++;
-    } else if(e.originalEvent.deltaY < 0) {
-        if(page == 1) return;
-        page--;
-    }
-    if(page > 4) {
-        var posTop =(page-1) * (scroll_position+30);
+    let see_btn = window.document.getElementById('landing_see_our_page');
+
+    if (current_scroll >= scroll_position4-1) {
+        see_btn.style.display ="none"
     } else {
-        var posTop =(page-1) * scroll_position;
+        see_btn.style.display ="flex"
+    }
+});
+
+
+
+function see_our_page() {
+    let start_scroll = $('html');
+    let current_scroll = window.scrollY;
+
+    let row1 = window.document.getElementById('landing_row_1')
+    let row2 = window.document.getElementById('landing_row_2')
+    let row3 = window.document.getElementById('landing_row_3')
+    let row4 = window.document.getElementById('landing_row_4')
+
+    console.log(current_scroll);
+
+    let scroll_position1 = row1.offsetTop + row1.offsetHeight
+    let scroll_position2 = row2.offsetTop + row2.offsetHeight
+    let scroll_position3 = row3.offsetTop + row3.offsetHeight
+    let scroll_position4 = row4.offsetTop + row4.offsetHeight
+
+    let scroll_position = 0;
+    if (current_scroll < scroll_position1-1) {
+        scroll_position = scroll_position1;
+    } else if (current_scroll>= scroll_position1-1 && current_scroll < scroll_position2-1) {
+        scroll_position = scroll_position2;
+    } else if (current_scroll>= scroll_position2-1 && current_scroll < scroll_position3-1) {
+        scroll_position = scroll_position3;
+    } else {
+        scroll_position = scroll_position4;
+
     }
 
-    start_scroll.animate({scrollTop : posTop});
-})
+
+    start_scroll.animate({scrollTop :scroll_position},500);
 
 }
-
-
-
-
-
-
