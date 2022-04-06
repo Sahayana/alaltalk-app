@@ -84,7 +84,7 @@ body {
 }
 .left_wrap .chat_list {
     width: 100%;
-    height: 92%;
+    height: 84vh;
     box-sizing: border-box;
     overflow-y: auto;
 }
