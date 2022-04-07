@@ -358,22 +358,49 @@ function initialize_search_bar() {
 function recommend_switch_setting() {
     let switches = document.getElementsByClassName('recommend_container_total_toggle')
     for (let i = 0; i < switches.length; i++) {
+        console.log('inital toggle value!',switches[i].innerText.trim())
+        let now = switches[i].innerText.trim()
+        if (now === 'OFF') {
+                switches[i].innerText = 'OFF';
+                switches[i].nextElementSibling.style.display = 'none'
+
+            } else if (now === 'ON') {
+
+                switches[i].innerText = 'ON';
+                switches[i].nextElementSibling.style.display = 'flex'
+            }
+
         switches[i].addEventListener('click', (e) => {
             console.log('switch clicked!!!!')
             console.log(e.target.innerText)
             let state = e.target.innerText
 
             if (state === 'ON') {
-
                 e.target.innerText = 'OFF';
                 e.target.nextElementSibling.style.display = 'none'
+                recommend_switch_ajax(false)
+
             } else if (state === 'OFF') {
 
                 e.target.innerText = 'ON';
                 e.target.nextElementSibling.style.display = 'flex'
+                recommend_switch_ajax(true)
             }
         })
     }
+}
+
+function recommend_switch_ajax(value){
+    $.ajax({
+        type:'POST',
+        url: '/api/search/recommend_change',
+        data: {
+            'value': value
+        },
+        success: function(response){
+            console.log(response)
+        }
+    })
 }
 
 

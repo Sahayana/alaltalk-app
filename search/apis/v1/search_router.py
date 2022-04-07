@@ -1,13 +1,12 @@
 from typing import Dict, List, Tuple
-
+from django.http import JsonResponse
 from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
-
 from search.models import Book, News, Shopping, Youtube
 from search.service.search_service import crawling_book, crawling_news
-
+from accounts.models import CustomUser
 from ...functions import crawling_shopping_only_bs4, crawling_youtube
 from .schemas import CrawlingRequest, CrawlingResponse, SearchRequest, SearchResponse
 
@@ -24,7 +23,7 @@ def open_chat_room(request):
 @csrf_exempt
 @router.get("/recommend")
 def open_chat_room(request):
-    return render(request, "search/recommend_include_recommend.html")
+    return render(request, "search/recommend_include_recommend.html", {'user': request.user})
 
 
 @csrf_exempt
@@ -137,3 +136,24 @@ def search_shopping(request, shopping_request: SearchRequest = Form(...)) -> Tup
         print('shopping_crawling Error: ', e)
 
     return 201, {'result': shopping_list}
+
+
+@csrf_exempt
+@router.post('/recommend_change')
+def recommend_on_off_switch(request):
+    recommend_state = request.POST['value']
+
+    if recommend_state == 'false':
+        recommend_state = False
+    elif recommend_state == 'true':
+        recommend_state=True
+    else:
+        return JsonResponse({'result': 'Not boolean!'})
+    print('recommend_state: ', recommend_state)
+    user = CustomUser.objects.get(id=request.user.id)
+    user.is_recommend_on = recommend_state
+    user.save()
+    data = {
+        'result': 'save'
+    }
+    return JsonResponse(data)
