@@ -5,6 +5,7 @@ var chat_log = ["오늘 날씨 너무 좋다.", "맞아 춥지도 않고 딱 좋
 
 // 0. 추천 버튼 누르면 시작되는 함수 ( 함수 시작 )
 function click_recommend_function() {
+    $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
     // 1. 채팅 로그 불러오기!
     get_chat_log()
     // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )

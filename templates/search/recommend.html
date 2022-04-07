@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/search/recommend.css">
+    <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}">
 </head>
 <body>
     <div class="outline">
@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="chat_box">
+                <div class="chat_box" id="chat_box">
                     <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
                         52려 조하
                         오늘은 더 회의가 없지요..?ㅠㅠ잠깐 나가볼 일이 생겨서 혹시라도 모일 일이 생기면
@@ -755,5 +755,12 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            // 채팅 스크롤 하단 고정
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+        });
+
+    </script>
 </body>
 </html>

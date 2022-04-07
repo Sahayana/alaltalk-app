@@ -101,7 +101,7 @@
             </div>
 
             <div id="chat_box" class="chat_box">
-                <div class="more" style="cursor: pointer;" onclick=moreList()>더보기</div>
+                <div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>
                 {% for message in last_messages %}
                     {% if message.author.id == user.id %}
                         <div class='user_to_partner'>{{ message.message }}</div>
@@ -248,8 +248,7 @@
 <script>
     $(document).ready(function () {
         // 채팅 스크롤 하단 고정
-        var scrollDown = $('#chat_box').prop('scrollHeight');
-        $('#chat_box').scrollTop(scrollDown);
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
         // 친구 리스트 이동
         let friendListIcon = $(".user_icon");
@@ -287,8 +286,7 @@
     });
 
     $('#recommend_btn').on('click', function () {
-        var scrollDown = $('#chat_box').prop('scrollHeight');
-        $('#chat_box').scrollTop(scrollDown);
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
         $('.friends_like_container').hide();
         $('.chat_list_container').hide();
@@ -309,6 +307,8 @@
     });
 
     function close_recommend() {
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
         $('.right_wrap').empty();
         $('.chat_container').appendTo('.right_wrap');
         $('.friends_like_container').appendTo('.right_wrap');
@@ -319,8 +319,7 @@
 
 
     $('#freind_like_list').on('click', function () {
-        var scrollDown = $('#chat_box').prop('scrollHeight');
-        $('#chat_box').scrollTop(scrollDown);
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
         $('.chat_container').appendTo('.left_wrap');
         $('.friends_like_container').appendTo('.left_wrap');
@@ -340,6 +339,8 @@
     });
 
     $('#friend_like_close').on('click', function () {
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
         $('.friends_like_container').appendTo('.left_wrap');
         $('.friends_like_container').hide();
         $('.right_wrap').empty();
@@ -407,16 +408,8 @@
 
 
     {#채팅로그 더보기 버튼#}
-    var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
-    if (startNum < 40) {
-        $('.more').hide()
-    } else {
-        $('.more').show()
-    }
-
-    function moreList(user_id, startNum) {
-        $('.more').hide()
-
+    function moreList(user_id) {
+        var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
         //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
         console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
 
@@ -452,11 +445,14 @@
                     }
                 }
                 if (rows.length === 0) {
-                    let last_alert = `<div class="more">마지막 글입니다.</div>`
+                    $('.more').hide()
+                    let last_alert = `<div class="last_list">마지막 대화입니다.</div>`
                     $('#chat_box').prepend(last_alert)
                 } else {
-                    let morebtn = `<div class="more" style="cursor: pointer;" onclick=moreList()>더보기</div>`
+                    $('.more').hide()
+                    let morebtn = `<div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>`
                     $('#chat_box').prepend(morebtn)
+
                 }
 
             },
@@ -503,8 +499,7 @@
             } else if (data['command'] === 'new_message') {
                 {#messageCounter(data['message']);#}
                 createMessage(data['message']);
-                var scrollDown = $('#chat_box').prop('scrollHeight');
-                $('#chat_box').scrollTop(scrollDown);
+                $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
         };
 

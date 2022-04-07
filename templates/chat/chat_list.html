@@ -92,6 +92,9 @@
 <script>
 
     $(document).ready(function () {
+        // 채팅 스크롤 하단 고정
+        var scrollDown = $('#chat_box').prop('scrollHeight');
+        $('#chat_box').scrollTop(scrollDown);
 
         // 친구 리스트 이동
         let friendListIcon = $(".user_icon");
