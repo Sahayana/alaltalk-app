@@ -81,7 +81,7 @@ CHANNEL_LAYERS = {
         },
     },
 }
-SESSION_COOKIE_AGE = 600
+SESSION_COOKIE_AGE = 6000
 SESSION_SAVE_EVERY_REQUEST = True
 
 WSGI_APPLICATION = "alaltalk.wsgi.application"

@@ -106,6 +106,7 @@
             </div>
             <div class="input_bar">
                 {% csrf_token %}
+                {#                {% if user_id == %}#}
                 <div id="chat_message_submit" class="attach_icon"></div>
                 <input id="chat_message_input" type="text" placeholder="입력하세요." name="message">
             </div>
@@ -276,6 +277,9 @@
     });
 
     $('#recommend_btn').on('click', function () {
+        var scrollDown = $('#chat_box').prop('scrollHeight');
+        $('#chat_box').scrollTop(scrollDown);
+
         $('.friends_like_container').hide();
         $('.chat_list_container').hide();
         $('.close_btn').hide();
@@ -412,7 +416,7 @@
         {#ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다#}
         {#message를 created_at의 순서대로 보여준다.#}
         chatSocket.onmessage = function (e) {
-            $('#chat_message_input').val('');
+            {#$('#chat_message_input').val('');#}
             const data = JSON.parse(e.data);
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
@@ -491,6 +495,8 @@
             if (author === user_id) {
                 let temp_html1 = `<div class='user_to_partner'>${message}</div>`
                 $('#chat_box').append(temp_html1)
+                $('#chat_message_input').val('');
+                console.log("리셋!")
             } else {
                 let temp_html2 = `<div class='partner_to_user'>${message}</div>`
                 $('#chat_box').append(temp_html2)

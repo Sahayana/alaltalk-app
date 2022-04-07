@@ -232,15 +232,15 @@ function  profileChange(){
     formData.append("nickname", nickName);       
     formData.append("img", profileImg);
     formData.append("bio", bio);
-    if (!isPw(password)){
+    if (password.length > 0 && !isPw(password)){
         alert("비밀번호를 확인해주세요.");
         return;
     }else{
         formData.append("password", password);
     }
-    for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]);
+    // }
 
     $.ajaxSetup({
         headers: {
@@ -422,6 +422,27 @@ $(document).ready(function(){
             profileChangeBtn.disabled = false;
         }
 
+    })
+
+
+    // 회원탈퇴
+
+    let accoutDeleteBtn = document.querySelector("#profile_delete_btn");
+
+    accoutDeleteBtn.addEventListener('click', function(){
+        if(confirm("알알톡을 탈퇴하시겠어요?")){
+            
+            $.ajax({
+                type: 'GET',
+                url: `/accounts/mypage/delete`,         
+                success: function (response) {
+                    if (response['msg'] == "deleted"){
+                        alert("삭제되었습니다.");
+                    }                                                         
+                }
+            });   
+            
+        }
     })
     
 
