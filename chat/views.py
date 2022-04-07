@@ -113,13 +113,12 @@ def chat_log_send(request):
     print(room_id)
     chatroom = ChatRoom.objects.get(id = room_id)
     all_chat = ChatMessage.objects.filter(chatroom=chatroom)
-
-    if len(all_chat) > 50:
-        all_chat = all_chat[:50]
+    print(len(all_chat))
+    if len(all_chat) > 40:
+        all_chat = all_chat[len(all_chat)-40:]
 
     for chat in all_chat:
         chat_log.append(chat.message)
-        print('채팅 메세지: ',chat.message)
     print('채팅로그 담긴리스트',chat_log)
     context = {
         'chat_log' : chat_log
