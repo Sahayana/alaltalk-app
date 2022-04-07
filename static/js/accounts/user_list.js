@@ -110,6 +110,9 @@ function sendRequest(receiver_id){
 }
 
 
+
+
+
 $(document).ready(function(){       
 
     // 친구 리스트 이동
@@ -129,8 +132,33 @@ $(document).ready(function(){
     ChatIcon.on('click', function(){
         window.location.href = `/chat/`;
     })
-});
 
+    // 친구 삭제
+    let unFollow = $(".unfollow");
+
+    unFollow.on('click', function(event){
+        let unFollowId = event.target.id;    
+        
+        if(confirm("정말로 차단하시겠어요?")){
+
+            $.ajax({
+                type: 'GET',
+                url: `/accounts/friends/delete/${unFollowId}`,         
+                success: function (response) {                
+                    if (response["msg"] === "deleted"){                        
+                        window.location.reload();
+                    }else{
+                        return;
+                    }
+                                     
+                }
+            });         
+        }
+
+        
+    })
+    
+});
 
 function friend_chat(id){
     window.location.href= `/chat/`+ id;

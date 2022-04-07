@@ -447,3 +447,24 @@ class TestAccountsViews(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertNotIn(request.user.id, [user.id for user in all_users])
         self.assertEqual("deleted", response.json()["msg"])
+
+    
+    def test_view_remove_friend(self) -> None:
+
+        # Given
+        login_user = self.client.login(email=self.email, password=self.password)
+        request = self.factory.get(reverse("accounts:mypage"))
+        request.user = self.user
+        request.user.friends.add(self.user2)
+        self.user2.friends.add(request.user)
+
+        # When
+        response = self.client.get(
+            reverse("accounts:remove_friend", kwargs={"friend_id": self.user2.id})
+        )
+
+        # Then
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(0, request.user.friends.count())
+        self.assertEqual(0, self.user2.friends.count())
+        self.assertEqual("deleted", response.json()["msg"])

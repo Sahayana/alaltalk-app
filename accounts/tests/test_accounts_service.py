@@ -11,6 +11,7 @@ from accounts.services.accounts_service import (
     get_friend_list,
     send_friend_request,
     accounts_profile_delete,
+    accounts_delete_friend,
 )
 
 
@@ -161,4 +162,23 @@ class AccountsTest(TestCase):
 
         # Then        
         self.assertEqual(0, all_users.count())
+    
+    def test_service_friend_delete(self) -> None:
         
+        # Given
+        user = create_single_user(email="test@test.com", nickname="testuser1", password="testuser1", bio="testuser1")
+        friend = create_single_user(email="test2@test.com", nickname="testuser2", password="testuser2", bio="testuser2")
+        user.friends.add(friend)
+        friend.friends.add(user)
+
+        self.assertEqual(1, user.friends.count())
+        self.assertEqual(1, friend.friends.count())
+
+        # When
+        accounts_delete_friend(user_id=user.id, friend_id=friend.id)
+
+        # Then
+        self.assertEqual(0, user.friends.count())
+        self.assertEqual(0, friend.friends.count())
+        
+

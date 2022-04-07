@@ -21,6 +21,7 @@ from accounts.services.accounts_service import (
     get_friend_list,
     send_friend_request,
     accounts_profile_delete,
+    accounts_delete_friend,
 )
 
 # Create your views here.
@@ -221,4 +222,9 @@ def profile_delete(request):
     accounts_profile_delete(user_id=user_id)
     return JsonResponse({"msg":"deleted"})
 
+@login_required
+def remove_friend(request, friend_id):
+    user_id = request.user.id
+    accounts_delete_friend(user_id=user_id, friend_id=friend_id)
+    return JsonResponse({"msg":"deleted"})
     

@@ -76,3 +76,12 @@ def check_authentication(user_id: int, password: str) -> CustomUser:
 
 def accounts_profile_delete(user_id: int) -> None:
     CustomUser.objects.filter(id=user_id).delete()
+
+
+def accounts_delete_friend(user_id: int, friend_id: int) -> None:
+    user = CustomUser.objects.filter(id=user_id).get()
+    friend = CustomUser.objects.filter(id=friend_id).get()    
+    user.friends.remove(friend)
+    friend.friends.remove(user)
+    
+    
