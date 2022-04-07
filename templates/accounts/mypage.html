@@ -59,7 +59,7 @@
         </div>
 
         <div class="profile_auth_container" id="profile_auth_container">
-            <form class="profile_auth_form">
+            <form class="profile_auth_form" onsubmit="return false;">
                 {% csrf_token %}
                 <p id="password-again-helper">비밀번호를 입력해주세요</p>
                 <input type="password" id="password-again-input">
