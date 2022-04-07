@@ -32,7 +32,11 @@ pytest = "^7.1.1"
 pytest-django = "^4.5.2"
 supervisor = "^4.2.4"
 gunicorn = "20.0.4"
+<<<<<<< HEAD
 >>>>>>> 7aaf3b2567d2b177067861d46b0947f158cf2b73
+=======
+virtualenv = "^20.14.0"
+>>>>>>> 565c9cc231446816f7e4e6ddf4ad15a0f9bcbd26
 
 [tool.poetry.dev-dependencies]
 

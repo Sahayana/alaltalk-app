@@ -69,7 +69,6 @@ def post_data_to_chat_room(request, room_id):
         limit = len(last_messages) - 20
         if len(last_messages) > 20:
             last_messages = last_messages[limit:]
-
         # latest_created_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by('-created_at')[0]
 
         if chatroom.participant1.id == user.id:
@@ -111,16 +110,18 @@ def post_data_to_chat_room(request, room_id):
 def chat_log_send(request):
     room_id = json.loads(request.body.decode('utf-8'))['room_id']
     chat_log = []
+    sentence=''
     print(room_id)
     chatroom = ChatRoom.objects.get(id = room_id)
     all_chat = ChatMessage.objects.filter(chatroom=chatroom)
-
-    if len(all_chat) > 50:
-        all_chat = all_chat[:50]
+    print(len(all_chat))
+    if len(all_chat) > 40:
+        all_chat = all_chat[len(all_chat)-40:]
 
     for chat in all_chat:
-        chat_log.append(chat.message)
-        print('채팅 메세지: ',chat.message)
+        sentence = sentence + chat.message + ' '
+
+    chat_log.append(sentence)
     print('채팅로그 담긴리스트',chat_log)
     context = {
         'chat_log' : chat_log

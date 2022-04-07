@@ -9,8 +9,9 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
-from accounts.models import FriendRequest
+from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
     accept_friend_request,
     check_authentication,
@@ -19,6 +20,8 @@ from accounts.services.accounts_service import (
     decline_friend_request,
     get_friend_list,
     send_friend_request,
+    accounts_profile_delete,
+    accounts_delete_friend,
 )
 
 # Create your views here.
@@ -36,7 +39,7 @@ def signup(request):
         else:
             create_single_user(email=email, nickname=nickname, password=password, bio=bio)
         context = {"result": "회원가입이 완료되었습니다."}
-        return JsonResponse(context)
+        return JsonResponse(context, status=201)
 
     elif request.method == "GET":
         signed_user = request.user.is_authenticated
@@ -50,7 +53,7 @@ def duplicated_check(request):
     if request.method == "GET":
         email = request.GET.get("email")
         context = {"duplicated": check_email_duplication(email=email)}
-        return JsonResponse(context)
+        return JsonResponse(context, status=200)
 
 
 def login(request):
@@ -162,7 +165,7 @@ def send_request(request, receiver_id):
     receiver = get_user_model().objects.get(id=receiver_id)
     friend_request, created = send_friend_request(sender_id=sender.id, recevier_id=receiver.id)
     if created:
-        return JsonResponse({"msg": "sent"})
+        return JsonResponse({"msg": "sent"}, status=201)
     return JsonResponse({"msg": "already"})
 
 
@@ -182,11 +185,11 @@ def decline_request(request, request_id):
 def temporary_password(request):
 
     query = request.GET.get("q")
-    print(query)
-    user = get_user_model().objects.filter(email__iexact=query).get()
-    if user is None:
+    try:        
+        user = get_user_model().objects.get(email=query)
+    except CustomUser.DoesNotExist:    
         return JsonResponse({"msg": "none-user"})
-
+    
     alp_str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     alp_str_lower = alp_str.lower()
     num = "1234567890"
@@ -211,3 +214,17 @@ def auth_check(request):
         return JsonResponse({"msg": "ok"})
     else:
         return JsonResponse({"msg": "no"})
+
+
+@login_required
+def profile_delete(request):
+    user_id = request.user.id
+    accounts_profile_delete(user_id=user_id)
+    return JsonResponse({"msg":"deleted"})
+
+@login_required
+def remove_friend(request, friend_id):
+    user_id = request.user.id
+    accounts_delete_friend(user_id=user_id, friend_id=friend_id)
+    return JsonResponse({"msg":"deleted"})
+    

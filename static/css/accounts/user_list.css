@@ -17,7 +17,7 @@ body {
 }
 .nav {
   background-color: #fff;
-  width: 90px;
+  width: 8%;
   height: 100%;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -108,7 +108,7 @@ body {
 }
 .left_wrap .user_list {
   width: 100%;
-  height: 83%;
+  height: 87%;
   box-sizing: border-box;
   overflow-y: auto;
 }
@@ -177,6 +177,23 @@ body {
   background-color: #7657ce;
   color: #fff;
   border: none;
+  cursor: pointer;
+}
+
+.user_list .user_box .unfollow {
+  width: 80px;
+  height: 30px;
+  background-color: #fff;
+  color: #7657ce;
+  border: 1px solid #7657ce;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 115px;
+  cursor: pointer;
 }
 
 .user_list .user_box .btn.start_chat {
@@ -185,7 +202,7 @@ body {
   color: #5e5e5e;
 }
 .right_wrap {
-  width: 60%;
+  width: 100%;
 }
 .right_wrap .chat_start_msg {
   display: flex;

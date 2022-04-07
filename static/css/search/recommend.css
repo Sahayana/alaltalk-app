@@ -11,11 +11,11 @@
 }
 
 
-.recommend_toggle{
+.recommend_toggle {
     position: absolute;
     width: 102%;
     height: 3vw;
-    background-color: rgb(79, 42, 186, 0.5) ;
+    background-color: rgb(250, 249, 255, 0.5);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -23,22 +23,30 @@
     opacity: 0;
 }
 
+.recommend_search_toggle {
+    position: absolute;
+    width: 200px;
+    height: 3vw;
+    background-color: rgb(250, 249, 255, 0.5);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    opacity: 0;
+    margin-left: 30px;
+}
+
 @keyframes appear_toggle {
-    from{
+    from {
         opacity: 0;
     }
-    to{
+    to {
         opacity: 1;
     }
 }
 
 
-
 /*******************************youtube*******************************/
-
-
-
-
 
 
 .recommend_youtube_container {
@@ -46,7 +54,7 @@
 }
 
 .right_wrap .recommend_youtube_container {
-    width: 57vw;
+    width: 98%;
     height: 100%;
     box-sizing: border-box;
     padding: 30px 10px 20px 32px;
@@ -70,20 +78,19 @@
 
 .recommend_close_btn {
     position: absolute;
-    top: 50px;
-    left: 95%;
-    background-image: url("../../images/x_black.png");
-    width: 25px;
-    height: 25px;
+    top: 20px;
+    right: 20px;
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/x_gray.png");
+    width: 32px;
+    height: 32px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    opacity: .3;
 }
 
 .recommend_youtube_container .search_bar {
-    width: 95%;
+    width: 58vw;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -95,7 +102,7 @@
 }
 
 .recommend_youtube_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -138,25 +145,26 @@
 
 }
 
-.recommend_youtube_container .recommend_content{
+.recommend_youtube_container .recommend_content {
     position: relative;
     height: auto;
 }
 
-.recommend_container_total_toggle{
+.recommend_container_total_toggle {
     position: absolute;
     width: 60px;
     height: 30px;
     background-color: #7556CD;
     color: white;
-    left: 80px;
-    top: -10px;
+    left: 90px;
+    top: -8px;
     text-align: center;
     border: none;
     font-weight: 700;
     border-radius: 8px;
     padding-bottom: 3px;
     box-sizing: border-box;
+    /*z-index: 2;*/
 }
 
 .recommend_youtube_container .recommend_content p {
@@ -165,7 +173,7 @@
 }
 
 .recommend_youtube_container .recommend_content .content_section {
-    width: 96%;
+    width: 58vw;
     height: 260px;
     overflow-x: auto;
     /*overflow-y: hidden;*/
@@ -230,7 +238,7 @@
 }
 
 .recommend_youtube_container .recommend_content .content_section .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -242,7 +250,7 @@
 }
 
 .recommend_youtube_container .recommend_content .content_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -279,7 +287,8 @@
 }
 
 .recommend_youtube_container .search_content {
-    margin-top: 60px;
+    margin-top: 30px;
+    /*height: 350px;*/
 }
 
 .recommend_youtube_container .search_content p {
@@ -291,15 +300,34 @@
 .recommend_youtube_container .search_content .content_section {
     display: flex;
     flex-wrap: wrap;
-    width: 99%;
+    width: 100%;
+    height: 310px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.recommend_youtube_container .search_content .content_section::-webkit-scrollbar {
+    height: 12px;
+}
+
+.recommend_youtube_container .search_content .content_section::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px #A185F2;
+}
+
+.recommend_youtube_container .search_content .content_section::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+
 }
 
 .recommend_youtube_container .search_content .content_box {
-    width: 310px;
+    width: 18vw;
     height: 240px;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
-    margin-right: 14px;
+    margin-right: 10px;
     margin-bottom: 12px;
     position: relative;
 }
@@ -332,7 +360,7 @@
 }
 
 .recommend_youtube_container .search_content .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -344,7 +372,7 @@
 }
 
 .recommend_youtube_container .search_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -356,9 +384,7 @@
 }
 
 
-
 /*******************************news*******************************/
-
 
 
 .recommend_news_container {
@@ -368,11 +394,11 @@
 }
 
 .right_wrap {
-    width: 60%;
+    width: 100%;
 }
 
 .right_wrap .recommend_news_container {
-    width: 57vw;
+    width: 98%;
     height: 100%;
     box-sizing: border-box;
     padding: 30px 10px 20px 32px;
@@ -392,7 +418,7 @@
 }
 
 .recommend_news_container .search_bar {
-    width: 95%;
+    width: 58vw;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -404,7 +430,7 @@
 }
 
 .recommend_news_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -427,7 +453,7 @@
 
 .recommend_news_container .search_news_content {
     overflow-y: auto;
-    max-height: 300px;
+    max-height: 320px;
     height: 100%;
     width: 100%;
 }
@@ -448,7 +474,7 @@
 
 }
 
-.recommend_news_container .recommend_news_content{
+.recommend_news_container .recommend_news_content {
     position: relative;
 }
 
@@ -483,6 +509,7 @@
     border-radius: 10px;
     box-shadow: inset 0 0 5px #A185F2;
 }
+
 .recommend_news_container .recommend_news_content .content_news_section::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 10px;
@@ -498,13 +525,12 @@
     border-radius: 10px;
     box-shadow: inset 0 0 5px #A185F2;
 }
+
 .recommend_news_container .search_news_content .content_news_section::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 10px;
 
 }
-
-
 
 
 .recommend_news_container .recommend_news_content .content_news_section .content_box {
@@ -545,7 +571,7 @@
 }
 
 .recommend_news_container .recommend_news_content .content_news_section .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -557,7 +583,7 @@
 }
 
 .recommend_news_container .recommend_news_content .content_news_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -652,7 +678,7 @@
 }
 
 .recommend_news_container .search_news_content .content_box .play_icon {
-    background-image: url("../../images/play.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/play.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -664,7 +690,7 @@
 }
 
 .recommend_news_container .search_news_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -679,16 +705,16 @@
     position: absolute;
     top: 50px;
     left: 14.5vw;
-    background-image: url("../../images/heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png");
     background-size: contain;
-    width: 25px;
-    height: 25px;
+    width: 40px;
+    height: 40px;
 }
 
 .profile_like_news {
     margin-top: 40px;
     width: 53vw;
-    height: 100% ;
+    height: 100%;
     position: relative;
     /*display: none;*/
 }
@@ -706,7 +732,7 @@
 .profile_like_news_image {
     background-color: #B7B7B7;
     width: 11vw;
-    height:11vw;
+    height: 11vw;
 }
 
 .profile_like_news_info {
@@ -734,53 +760,59 @@
 }
 
 .profile_like_news_setting {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     background-size: contain;
     width: 40px;
     height: 40px;
 }
 
 .recommend_like_heart {
-    background-image: url("/static/images/empty_heart.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/empty_heart.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
     object-fit: cover;
 }
 
-.recommend_youtube_like_heart{
+.recommend_youtube_like_heart {
     position: absolute;
-    left: 240px;
-    top: 200px;
+    right: 4px;
+    bottom: 4px;
 }
 
-.profile_like_news_heart:hover{
-    background-image: url("/static/images/heart.png");
+.search_youtube_like_heart {
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+}
+
+.profile_like_news_heart:hover {
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png");
 }
 
 .profile_like_news_toggle {
     position: static;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
 }
 
-.profile_like_news_toggle:hover{
+.profile_like_news_toggle:hover {
     filter: opacity(0.7) drop-shadow(0 0 0 #ffffff);
 }
 
-.profile_like_news_toggle img{
+.profile_like_news_toggle img {
     width: 100%;
     height: 100%;
 }
 
 
-.recommend_news_search_content{
+.recommend_news_search_content {
     position: relative;
     width: 100%;
     height: 12vw;
@@ -791,7 +823,7 @@
     color: #5e5e5e;
 }
 
-.recommend_news_search_content_image{
+.recommend_news_search_content_image {
     width: 14vw;
     height: 10vw;
     background-color: #fafafa;
@@ -799,12 +831,12 @@
     object-position: center;
 }
 
-.recommend_news_search_content_image img{
+.recommend_news_search_content_image img {
     width: 100%;
     height: 100%;
 }
 
-.recommend_news_search_content_desc{
+.recommend_news_search_content_desc {
     width: 30vw;
     height: 12vw;
     display: flex;
@@ -814,7 +846,7 @@
     color: #5e5e5e;
 }
 
-.recommend_news_search_content_desc_title{
+.recommend_news_search_content_desc_title {
     width: 30vw;
     height: auto;
     overflow: hidden;
@@ -822,21 +854,21 @@
     margin-bottom: 30px;
 }
 
-.recommend_news_search_content_desc_title p{
+.recommend_news_search_content_desc_title p {
     width: 100%;
     height: 100%;
     overflow: hidden;
     font-size: 22px;
 }
 
-.recommend_news_search_content_desc_detail{
+.recommend_news_search_content_desc_detail {
     width: 30vw;
     height: auto;
     overflow: hidden;
     color: #191919;
 }
 
-.recommend_news_search_content_desc_footer{
+.recommend_news_search_content_desc_footer {
     width: 30vw;
     height: 2vw;
     display: flex;
@@ -847,19 +879,19 @@
     margin-top: 50px;
 }
 
-.recommend_news_search_content_desc_footer_newspaper{
+.recommend_news_search_content_desc_footer_newspaper {
     width: 30%;
     height: 100%;
     text-align: left;
 }
 
-.recommend_news_search_content_desc_footer_time{
+.recommend_news_search_content_desc_footer_time {
     width: 30%;
     height: 100%;
     text-align: right;
 }
 
-.recommend_news_search_content_more{
+.recommend_news_search_content_more {
     width: 4vw;
     height: 6vw;
     display: flex;
@@ -869,10 +901,7 @@
 }
 
 
-
 /*******************************book*******************************/
-
-
 
 
 .recommend_book_container {
@@ -881,10 +910,11 @@
 
 .right_wrap {
     width: 60%;
+    position: relative;
 }
 
 .right_wrap .recommend_book_container {
-    width: 57vw;
+    width: 98%;
     height: 100%;
     box-sizing: border-box;
     padding: 30px 10px 20px 32px;
@@ -904,7 +934,7 @@
 }
 
 .recommend_book_container .search_bar {
-    width: 95%;
+    width: 58vw;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -916,7 +946,7 @@
 }
 
 .recommend_book_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -959,7 +989,7 @@
 
 }
 
-.recommend_book_container .recommend_book_content{
+.recommend_book_container .recommend_book_content {
     position: relative;
 }
 
@@ -969,7 +999,7 @@
 }
 
 .recommend_book_container .recommend_book_content .content_book_section {
-    width: 100%;
+    width: 58vw;
     height: 300px;
     overflow-x: auto;
     overflow-y: scroll;
@@ -1012,9 +1042,14 @@
 
 }
 
-.recommend_book_toggle{
+.recommend_book_toggle {
     top: 0;
-    background-color: rgb(79 42 186 / 81%);
+    background-color: rgba(250, 249, 255, .8);
+}
+
+.recommend_search_book_toggle {
+    top: 0;
+    background-color: rgba(250, 249, 255, 1);
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box:last-child {
@@ -1025,7 +1060,7 @@
     width: 12vw;
     height: 16vw;
     background-color: #ffffff;
-    background-image: url('../../images/book_sample1.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/book_sample1.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -1041,7 +1076,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 6px 6px;
+    margin: 6px 8px;
     box-sizing: border-box;
     /*border: min(1vw, 3px) solid #7556CD;*/
     background-color: #eaeaea;
@@ -1054,7 +1089,7 @@
     margin-left: 6px;
 }
 
-.recommend_book_desc{
+.recommend_book_desc {
     width: 30vw;
     display: flex;
     flex-direction: column;
@@ -1062,38 +1097,43 @@
     align-items: start;
 }
 
-.recommend_book_desc .title{
+.recommend_book_desc .title {
 
 }
+
 .recommend_book_desc p {
     margin-bottom: 20px;
     font-weight: 700;
     font-size: 18px;
 }
 
-.recommend_book_desc_title, .recommend_book_desc_series, .recommend_book_desc_company, .recommend_book_desc_author, .recommend_book_desc_price{
+.recommend_book_desc_title, .recommend_book_desc_series, .recommend_book_desc_company, .recommend_book_desc_author, .recommend_book_desc_price {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: center;
 }
 
-.recommend_book_desc_title{
-    /*height: 5vw;*/
+.recommend_book_desc_title .category,
+.recommend_book_desc_series .category,
+.recommend_book_desc_company .category,
+.recommend_book_desc_author .category,
+.recommend_book_desc_price .category {
+    color: #191919;
+    margin-right: 30px;
+    width: 50px;
 }
-.recommend_book_desc p:nth-child(2){
+
+.recommend_book_desc p:nth-child(2) {
     width: 70%;
     font-weight: 400;
     overflow: hidden;
 }
 
 
-
-
-
 .recommend_book_container .recommend_book_content .content_book_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1157,18 +1197,18 @@
 
 .recommend_book_container .search_book_content .content_box .book_img {
     width: 200px;
-    height: 300px;
+    height: 240px;
     background-repeat: no-repeat;
     background-position: center;
-    background-size: contain;
-    margin-left: 30px;
+    background-size: cover;
+    margin-right: 40px;
 }
 
 
 .recommend_book_container .search_book_content .content_box {
     position: relative;
     width: 48vw;
-    height: 20vw;
+    height: 260px;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
@@ -1177,12 +1217,12 @@
     color: #5e5e5e;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
     align-items: center;
 }
 
 .recommend_book_container .search_book_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1214,10 +1254,7 @@
 }
 
 
-
-
 /*******************************shopping*******************************/
-
 
 
 .recommend_shopping_container {
@@ -1229,7 +1266,7 @@
 }
 
 .right_wrap .recommend_shopping_container {
-    width: 57vw;
+    width: 98%;
     height: 100%;
     box-sizing: border-box;
     padding: 30px 10px 20px 32px;
@@ -1249,7 +1286,7 @@
 }
 
 .recommend_shopping_container .search_bar {
-    width: 95%;
+    width: 58vw;
     height: 40px;
     border: 1px solid #A185F2;
     border-radius: 10px;
@@ -1261,7 +1298,7 @@
 }
 
 .recommend_shopping_container .search_bar .search_icon {
-    background-image: url("../../images/search_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
     width: 20px;
     height: 20px;
     background-position: center;
@@ -1283,7 +1320,7 @@
 }
 
 .recommend_shopping_container .content_wrap {
-    overflow-y: auto;
+    /*overflow-y: auto;*/
     max-height: 660px;
     height: 100%;
 }
@@ -1304,21 +1341,32 @@
 
 }
 
-.recommend_shopping_container .recommend_content{
+.recommend_shopping_container .recommend_content {
     position: relative;
 }
 
-.recommend_shopping_container .recommend_content p {
+.recommend_shopping_container .recommend_content .title {
     font-weight: 700;
     color: #7657CE;
     margin-bottom: 12px;
 }
 
+.recommend_shopping_search_content_desc_title .product {
+    color: #5e5e5e;
+    margin: 12px 0 20px;
+}
+
+.recommend_shopping_search_content_desc_price .price {
+    font-size: 18px;
+    color: #191919;
+    font-weight: 700;
+}
+
 .recommend_shopping_container .recommend_content .content_section {
-    width: 95%;
-    height: 30vw;
+    width: 58vw;
+    height: 290px;
     overflow-x: auto;
-    /*overflow-y: hidden;*/
+    overflow-y: hidden;
     box-sizing: border-box;
     margin-top: 24px;
     display: flex;
@@ -1359,7 +1407,7 @@
     width: 100%;
     height: 100%;
     background-color: #d2d2d2;
-    background-image: url("../../images/shopping_sample1.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/shopping_sample1.png");
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -1383,9 +1431,8 @@
 }
 
 
-
 .recommend_shopping_container .recommend_content .content_section .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1422,10 +1469,10 @@
 }
 
 .recommend_shopping_container .search_content {
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
-.recommend_shopping_container .search_content p {
+.recommend_shopping_container .search_content .title {
     font-weight: 700;
     color: #7657CE;
     margin-bottom: 12px;
@@ -1437,8 +1484,10 @@
     flex-direction: row;
     justify-content: start;
     align-items: start;
-    overflow: auto;
-    width: 98%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 58vw;
+    height: 290px;
 }
 
 .recommend_shopping_container .search_content .content_box {
@@ -1454,11 +1503,13 @@
 .recommend_shopping_container .search_content .content_section::-webkit-scrollbar {
     height: 12px;
 }
+
 .recommend_shopping_container .search_content .content_section::-webkit-scrollbar-thumb {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: inset 0 0 5px #A185F2;
 }
+
 .recommend_shopping_container .search_content .content_section::-webkit-scrollbar-track {
     background-color: #fff;
     border-radius: 10px;
@@ -1494,7 +1545,7 @@
 .recommend_shopping_container .search_content .content_box {
     width: 400px;
     height: 240px;
-    background-image: url("../../images/shopping_sample2.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/shopping_sample2.png");
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
@@ -1505,7 +1556,7 @@
 }
 
 .recommend_shopping_container .search_content .content_box .more_icon {
-    background-image: url("../../images/more_deep_purple.png");
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/more_deep_purple.png");
     width: 30px;
     height: 30px;
     background-position: center;
@@ -1547,7 +1598,7 @@
 
 /* shopping 컨텐츠 수정 - JS */
 
-.recommend_shopping_search_row{
+.recommend_shopping_search_row {
     width: 100%;
     height: 25vw;
     display: flex;
@@ -1556,20 +1607,21 @@
     align-items: center;
 }
 
-.recommend_shopping_search_content{
+.recommend_shopping_search_content {
     position: relative;
-    width: 18vw;
-    height : 25vw;
-    border:0.5vw solid #7556CD;
-    margin: 1vw;
+    width: 240px;
+    height: 340px;
+    margin-right: 24px;
+    /*border: 1px solid #e5e5e5;*/
+    /*margin: 1vw;*/
 }
 
-.recommend_shopping_search_content .more_icon{
+.recommend_shopping_search_content .more_icon {
     width: 3vw;
     height: 3vw;
     left: 15vw;
     position: absolute;
-    background-image: url('/static/images/list_black.png');
+    background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/list_black.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -1577,8 +1629,7 @@
 }
 
 
-
-.recommend_shopping_search_content .toggle{
+.recommend_shopping_search_content .toggle {
     position: absolute;
     left: 11vw;
     top: 3vw;
@@ -1588,7 +1639,7 @@
     text-align: center;
 }
 
-.recommend_shopping_search_content .toggle_row{
+.recommend_shopping_search_content .toggle_row {
     width: 100%;
     height: 3vw;
     background: white;
@@ -1601,60 +1652,64 @@
     cursor: pointer;
 }
 
-.recommend_shopping_search_content .toggle_row:hover{
+.recommend_shopping_search_content .toggle_row:hover {
     background-color: #dad2fa;
-    color:white;
+    color: white;
 }
 
-.recommend_shopping_search_content_img{
-    width: 15vw;
-    height: 15vw;
-    background-color: #ef1c1c;
-    margin: 1vw 1.5vw;
+.recommend_shopping_search_content_img {
+    width: 200px;
+    height: 200px;
     object-fit: cover;
+    object-position: center;
 }
 
-.recommend_shopping_search_content_img img{
+.recommend_shopping_search_content_img img {
     width: 100%;
     height: 100%;
 }
 
-.recommend_shopping_search_content_desc{
+.recommend_shopping_search_content_desc {
     width: 90%;
     height: 8vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1vw auto 0;
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+    /*margin: 1vw auto 0;*/
 }
 
-.recommend_shopping_search_content_desc_bar{
-    margin-top: 1vw;
-    width: 90%;
-    height: 2px;
-    background-color: #7556CD;
-}
+/*.recommend_shopping_search_content_desc_bar {*/
+/*    margin-top: 1vw;*/
+/*    width: 90%;*/
+/*    height: 2px;*/
+/*    background-color: #7556CD;*/
+/*}*/
 
 .recommend_shopping_search_content_desc_title {
     text-align: left;
     width: 100%;
-    height: 3.5vw;
+    height: 42px;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 6px;
 }
 
-.recommend_shopping_search_content_desc_title p{
+.recommend_shopping_search_content_desc_title p {
     margin: 0 auto;
 }
 
-.recommend_shopping_search_content_desc_price{
-    text-align: right;
+.recommend_shopping_search_content_desc_price {
+    text-align: left;
     width: 100%;
     height: 3vw;
 
 }
 
-.recommend_shopping_search_content_desc_price p{
+.recommend_shopping_search_content_desc_price p {
     font-size: 2vw;
     color: #ae0000;
     font-weight: 800;
@@ -1664,9 +1719,9 @@
 
 /******      spinner        ******/
 
-.recommend_spinner{
+.recommend_spinner {
     width: 50vw;
-    height: 20vw;
+    height: 240px;
     background-color: white;
     display: flex;
     flex-direction: row;
@@ -1674,7 +1729,7 @@
     align-items: center;
 }
 
-.recommend_spinner_lorder{
+.recommend_spinner_lorder {
     display: flex;
     width: 100px;
     height: 100px;
@@ -1687,6 +1742,10 @@
 }
 
 @keyframes rotation {
-    from {transform: rotate(0deg); }
-    to {transform: rotate(360deg);}
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

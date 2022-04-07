@@ -19,7 +19,7 @@
             {% csrf_token %}
             <div class="signup-profile-img">
                 <input type="file" id="profile-img" hidden >
-                <img class="profile-img-default" src="/static/images/picture_gray.png" alt="">
+                <img class="profile-img-default" src="{% static 'images/picture_gray.png' %}" alt="">
                 <p class="profile-img-p">프로필 이미지</p>
             </div>
             <div class="email">
@@ -51,7 +51,7 @@
     </div>
     <div class="signup-right-wrapper">
         <div class="logo">
-            <img src="/static/images/logo_horizon.png" alt="logo_horizon">
+            <img src="{% static 'images/logo_horizon.png' %}" alt="logo_horizon">
             <p class="agree-info">개인정보활용동의</p>
         </div>
         <div class="agree-container">

@@ -59,7 +59,7 @@
         </div>
 
         <div class="profile_auth_container" id="profile_auth_container">
-            <form class="profile_auth_form">
+            <form class="profile_auth_form" onsubmit="return false;">
                 {% csrf_token %}
                 <p id="password-again-helper">비밀번호를 입력해주세요</p>
                 <input type="password" id="password-again-input">
@@ -98,6 +98,11 @@
                     적용하기
                 </button>
             </form>
+
+            <div class="profile_delete_account">                
+                <button id="profile_delete_btn">회원 탈퇴</button>                
+            </div>
+
         </div>
         <div class="profile_follow_container" id="profile_follow_container">
             <div class="profile_follow_title">팔로우 관리</div>
@@ -117,9 +122,9 @@
                                     </div>
 
                                     <div class="profile_follow_add" id="{{ request.id }}"
-                                         onclick=acceptRequest(this.id)></div>
+                                         onclick=acceptRequest(this.id)><p>친구추가</p></div>
                                     <div class="profile_follow_decline" id="{{ request.id }}"
-                                         onclick=declineRequest(this.id)></div>
+                                         onclick=declineRequest(this.id)><p>친구거절</p></div>
 
                                 </div>
                             </li>
@@ -146,12 +151,14 @@
                                 <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
                                         frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen>ㅇ
+                                        allowfullscreen>
                                 </iframe>
                                 <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
                                 <div class="video_count">{{ youtube.views }}</div>
-                                <div class="profile_like_heart profile_youtube_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                <div class="my_page_like_parents">
+                                    <div class="profile_like_heart profile_youtube_like_heart"
+                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -193,7 +200,7 @@
                                     <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
 
                                 </div>
                             </div>
@@ -210,12 +217,12 @@
                 {% if books %}
                     {% for book in books %}
                         <div class="profile_like_book_content_box" id="book_s_{{ book.id }}">
-                            <div class="recommend_toggle" style="width: 15vw">
+                            <div class="recommend_toggle" style="width: 200px">
                                 <div class="profile_like_news_toggle" onclick="content_do_share({{ book.link }})">
                                     <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
                                 </div>
                             </div>
                             <a href="{{ book.link }}" target="_blank">
@@ -223,23 +230,23 @@
                             </a>
                             <div class="profile_like_book_desc" style="display: flex">
                                 <div class="profile_like_book_desc_title">
-                                    <p>제목</p>
+                                    <p class="category">제목</p>
                                     <p>{{ book.title }}</p>
                                 </div>
                                 <div class="profile_like_book_desc_series">
-                                    <p>시리즈</p>
+                                    <p class="category">시리즈</p>
                                     <p>{{ book.series }}</p>
                                 </div>
                                 <div class="profile_like_book_desc_company">
-                                    <p>출판사</p>
+                                    <p class="category">출판사</p>
                                     <p>{{ book.company }}</p>
                                 </div>
                                 <div class="profile_like_book_desc_author">
-                                    <p>작가</p>
+                                    <p class="category">작가</p>
                                     <p>{{ book.author }}}</p>
                                 </div>
                                 <div class="profile_like_book_desc_price">
-                                    <p>가격</p>
+                                    <p class="category">가격</p>
                                     <p>{{ book.price }}원</p>
                                 </div>
                             </div>
@@ -262,7 +269,7 @@
                                         <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                     </div>
                                     <div class="recommend_like_heart"
-                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
                                     </div>
                                 </div>
                                 <a href="{{ shopping.link }}" target="_blank">
