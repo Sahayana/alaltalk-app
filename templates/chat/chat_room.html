@@ -6,6 +6,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:url" content="https://alaltalk.com">
+    <meta property="og:title" content="알알톡">
+    <meta property="og:image"
+          content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
+    <title>알알톡</title>
     <!-- reset css cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
@@ -92,7 +101,7 @@
             </div>
 
             <div id="chat_box" class="chat_box">
-                <div class="more" style="cursor: pointer;" onclick=moreList(user_id)>더보기</div>
+                <div class="more" style="cursor: pointer;" onclick=moreList()>더보기</div>
                 {% for message in last_messages %}
                     {% if message.author.id == user.id %}
                         <div class='user_to_partner'>{{ message.message }}</div>
@@ -398,12 +407,19 @@
 
 
     {#채팅로그 더보기 버튼#}
+    var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
+    if (startNum < 40) {
+        $('.more').hide()
+    } else {
+        $('.more').show()
+    }
 
-    function moreList(user_id) {
+    function moreList(user_id, startNum) {
         $('.more').hide()
 
-        var startNum = $('.user_to_partner').length + $('.partner_to_user').length;  //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
+        //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
         console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
+
         var link = document.location.href;
         console.log(link);
         let room_id = link.split('/');
@@ -439,7 +455,7 @@
                     let last_alert = `<div class="more">마지막 글입니다.</div>`
                     $('#chat_box').prepend(last_alert)
                 } else {
-                    let morebtn = `<div class="more" style="cursor: pointer;" onclick=moreList(user_id)>더보기</div>`
+                    let morebtn = `<div class="more" style="cursor: pointer;" onclick=moreList()>더보기</div>`
                     $('#chat_box').prepend(morebtn)
                 }
 
@@ -516,12 +532,9 @@
         {#document.querySelector('#chat_message_input').focus();#}
         document.querySelector('#chat_message_input').onkeyup = function (e) {
             if (e.keyCode === 13) {  // enter, return
-                // if ($('#chat_message_input').val().length === 0) {
-                //    return false;
-                // }
                 const messageInputDom = document.querySelector('#chat_message_input');
                 const message = messageInputDom.value
-                if (message === '') {
+                if (message === '' || message === null || message.trim().length === 0 || message.includes('alert') === true) {
                     console.log('websocket load message')
                     return true;
                 } else {
@@ -554,13 +567,23 @@
         const chatroom_id = data['chatroom_id'];
         if (chatroom_id === room_id) {
             if (author === user_id) {
-                let temp_html1 = `<div class='user_to_partner'>${message}</div>`
-                $('#chat_box').append(temp_html1)
-                $('#chat_message_input').val('');
-                console.log("리셋!")
+                if (message.includes('http') === true) {
+                    let temp_html1 = `<div onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>`
+                    $('#chat_box').append(temp_html1)
+                    $('#chat_message_input').val('');
+                } else {
+                    let temp_html1 = `<div class='user_to_partner'>${message}</div>`
+                    $('#chat_box').append(temp_html1)
+                    $('#chat_message_input').val('');
+                }
             } else {
-                let temp_html2 = `<div class='partner_to_user'>${message}</div>`
+                if (message.includes('http') === true) {
+                    let temp_html2 = `<div onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>`
+                    $('#chat_box').append(temp_html2)
+                } else {
+                    let temp_html2 = `<div class='partner_to_user'>${message}</div>`
                 $('#chat_box').append(temp_html2)
+                }
             }
         } else {
             console.log('해당하는 메세지가 없습니다');

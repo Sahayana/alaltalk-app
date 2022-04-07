@@ -60,6 +60,7 @@ class ChatConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         # 그룹에서 나오기
         async_to_sync(self.channel_layer.group_discard)(self.room_group_id, self.channel_name)
+        print('websocket closed')
 
     # commands 를 통해 데이터 받아오기
     def receive(self, text_data):
