@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -77,11 +77,11 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("alaltalk-001.6hgyaz.0001.apn2.cache.amazonaws.com", 6379)],
+            "hosts": [("127.0.0.1", 6379)],
         },
     },
 }
-SESSION_COOKIE_AGE = 600
+SESSION_COOKIE_AGE = 6000
 SESSION_SAVE_EVERY_REQUEST = True
 
 WSGI_APPLICATION = "alaltalk.wsgi.application"
