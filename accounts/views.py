@@ -20,6 +20,7 @@ from accounts.services.accounts_service import (
     decline_friend_request,
     get_friend_list,
     send_friend_request,
+    accounts_profile_delete,
 )
 
 # Create your views here.
@@ -212,3 +213,12 @@ def auth_check(request):
         return JsonResponse({"msg": "ok"})
     else:
         return JsonResponse({"msg": "no"})
+
+
+@login_required
+def profile_delete(request):
+    user_id = request.user.id
+    accounts_profile_delete(user_id=user_id)
+    return JsonResponse({"msg":"deleted"})
+
+    

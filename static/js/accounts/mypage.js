@@ -423,6 +423,27 @@ $(document).ready(function(){
         }
 
     })
+
+
+    // 회원탈퇴
+
+    let accoutDeleteBtn = document.querySelector("#profile_delete_btn");
+
+    accoutDeleteBtn.addEventListener('click', function(){
+        if(confirm("알알톡을 탈퇴하시겠어요?")){
+            
+            $.ajax({
+                type: 'GET',
+                url: `/accounts/mypage/delete`,         
+                success: function (response) {
+                    if (response['msg'] == "deleted"){
+                        alert("삭제되었습니다.");
+                    }                                                         
+                }
+            });   
+            
+        }
+    })
     
 
 });
