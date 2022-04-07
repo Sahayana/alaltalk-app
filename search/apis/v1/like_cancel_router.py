@@ -7,6 +7,7 @@ from accounts.models import CustomUser
 from search.apis.v1.schemas import YoutubeLikeRequest, YoutubeLikeResponse, BookLikeResponse, BookLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest, NewsLikeRequest, NewsLikeResponse
 from search.models import Book, News, Shopping, Youtube
 from search.service.like_cancel_service import like_cancel_youtube
+from django.http import JsonResponse
 
 router = Router(tags=["like_cancel"])
 
