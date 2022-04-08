@@ -149,7 +149,8 @@ $(document).ready(function(){
             alert("개인정보활용에 동의하지 않을 시 회원가입이 불가능합니다.");
         } else {
             agreeBox.attr('checked',true);
-            signBtn.disabled = false;            
+            signBtn.disabled = false;
+            signBtn.style.cursor = "pointer";            
         }        
     })
     
