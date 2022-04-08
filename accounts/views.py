@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
@@ -231,4 +232,28 @@ def remove_friend(request, friend_id):
     user_id = request.user.id
     accounts_delete_friend(user_id=user_id, friend_id=friend_id)
     return JsonResponse({"msg":"deleted"})
-    
+
+
+@csrf_exempt
+@login_required
+def like_public_setting(request):
+    value = request.POST['value']
+    print(value)
+    if value == 'ON':
+        change_value = True
+    elif value == 'OFF':
+        change_value = False
+    else:
+        return JsonResponse({
+            'result': 'value is Wrong'
+        })
+
+    user = CustomUser.objects.get(pk=request.user.id)
+    user.is_like_public = change_value
+    user.save()
+
+    result = 'success'
+    data = {
+        'result': result
+    }
+    return JsonResponse(data)

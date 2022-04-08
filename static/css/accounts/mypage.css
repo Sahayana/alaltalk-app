@@ -448,6 +448,7 @@ body {
 }
 
 .profile_like_container {
+    position: relative;
     width: 100%;
     padding-top: 25px;
     padding-left: 25px;
@@ -1065,4 +1066,39 @@ body {
     to {
         opacity: 1;
     }
+}
+
+
+/* 나만 보기 관련 기능 */
+
+.profile_privacy_settings{
+    display: flex;
+    flex-direction: row;
+    width: 133px;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    right: 63px;
+    top: 27px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.profile_privacy_settings_title{
+    width: 79px;
+    height: 18px;
+
+}
+
+.profile_privacy_settings_button{
+    width: 50px;
+    height: 25px;
+    background-color: #7556CD;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    outline: none;
+    border-radius: 8px;
 }

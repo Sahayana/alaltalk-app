@@ -111,126 +111,7 @@
                 <input id="chat_message_input" type="text" placeholder="입력하세요." name="message">
             </div>
         </div>
-
-
-        <div class="friends_like_container" id="friends_like_container">
-            <div class="friends_like_close_btn" id="friend_like_close" onclick="close_friend_like_list()"></div>
-
-            <div class="friends_like_info_group">
-                <div class="friends_like_name">{{ participant.nickname }}</div>
-                <div class="friends_like_bio">님의 찜 목록</div>
-            </div>
-
-            <div class="friends_like_category">
-                <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
-                <span id="news" onclick="news_like()">NEWS</span>
-                <span id="book" onclick="book_like()">BOOK</span>
-                <span id="shopping" onclick="shopping_like()">SHOPPING</span>
-            </div>
-            <div class="friends_like_youtube" id="friends_like_youtube">
-                <div class="friends_like_youtube_grid">
-                    {% for youtube in participant_like_youtube %}
-                        <div class="friends_like_youtube_content_box">
-                            <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>ㅇ
-                            </iframe>
-                            <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
-                            <div class="video_count">{{ youtube.views }}</div>
-                        </div>
-                    {% endfor %}
-
-
-                </div>
-            </div>
-
-            <div class="friends_like_news" id="friends_like_news">
-                {% for news in participant_like_news %}
-                    <div class="friends_like_news_content">
-                        <div class="friends_like_news_content_image">
-                            <a href="{{ news.link }}" target="_blank">
-                                <img src="{{ news.thumbnail }}">
-                            </a>
-                        </div>
-                        <div class="friends_like_news_content_desc">
-                            <div class="friends_like_news_content_desc_title">
-                                <p>{{ news.title }}</p>
-                            </div>
-                            <div class="friends_like_news_content_desc_detail">
-                                <p>{{ news.content }}</p>
-                            </div>
-                            <div class="friends_like_news_content_desc_footer">
-                                <div class="friends_like_news_content_desc_footer_newspaper">
-                                    <p>{{ news.company }}</p>
-                                </div>
-                                <div class="friends_like_news_content_desc_footer_time">
-                                    <p>{{ news.date }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-
-            <div class="friends_like_book" id="friends_like_book">
-                {% for book in participant_like_book %}
-                    <div class="friends_like_book_content_box">
-                        <a href="{{ book.link }}" target="_blank">
-                            <div class="book_img" style="background-image: url('{{ book.thumbnail }}')"></div>
-                        </a>
-                        <div class="friends_like_book_desc">
-                            <div class="friends_like_book_desc_title">
-                                <p class="category">제목</p>
-                                <p>{{ book.title }}</p>
-                            </div>
-                            <div class="friends_like_book_desc_series">
-                                <p class="category">시리즈</p>
-                                <p>{{ book.series }}</p>
-                            </div>
-                            <div class="friends_like_book_desc_company">
-                                <p class="category">출판사</p>
-                                <p>{{ book.company }}</p>
-                            </div>
-                            <div class="friends_like_book_desc_author">
-                                <p class="category">작가</p>
-                                <p>{{ book.author }}</p>
-                            </div>
-                            <div class="friends_like_book_desc_price">
-                                <p class="category">가격</p>
-                                <p>{{ book.price }}</p>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
-
-            <div class="friends_like_shopping" id="friends_like_shopping">
-                <div class="friends_like_shopping_grid">
-                    {% for shopping in participant_like_shopping %}
-                        <div class="friends_like_shopping_content">
-                            <a href="{{ shopping.link }}" target="_blank">
-                                <div class="friends_like_shopping_content_img">
-                                    <img src="{{ shopping.thumbnail }}">
-                                </div>
-                            </a>
-                            <div class="friends_like_shopping_content_desc">
-                                <div class="friends_like_shopping_content_desc_bar"></div>
-                                <div class="friends_like_shopping_content_desc_title">
-                                    <p>{{ shopping.title }}</p>
-                                </div>
-                                <div class="friends_like_shopping_content_desc_price">
-                                    <p>{{ shopping.price }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-        </div>
-
-
+        {% include 'chat/freind_like.html' %}
     </div>
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
@@ -735,5 +616,6 @@
 
 
 </script>
+<script src="{% static 'js/chat/friend_like.js' %}"></script>
 </body>
 </html>
