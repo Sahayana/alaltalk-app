@@ -243,6 +243,14 @@ body {
   background-color: #faf9ff;
   border-radius: 2px;
 }
+
+.left_wrap .search_result .result_helper{
+  text-align: center;
+  color: #a185f2;
+  font-weight: 600;
+}
+
+
 .left_wrap .search_result .user_box {
   width: 100%;
   display: flex;
