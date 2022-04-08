@@ -135,6 +135,18 @@
         </div>
         <div class="profile_like_container" id="profile_like_container">
             <div class="profile_like_title">찜 목록</div>
+            <div class="profile_privacy_settings">
+                <div class="profile_privacy_settings_title">
+                    <p>공개 설정</p>
+                </div>
+                <button class="profile_privacy_settings_button" id="profile_privacy_setting_button" onclick="like_change_public_setting(this.id)">
+                    {% if user.is_like_public %}
+                        ON
+                    {% else %}
+                        OFF
+                    {% endif %}
+                </button>
+            </div>
             <div class="profile_like_category">
                 <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
                 <span id="news" onclick="news_like()">NEWS</span>

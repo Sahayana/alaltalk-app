@@ -556,3 +556,8 @@
     background-size: cover;
     cursor: pointer;
 }
+
+.friends_content_public_setting_off{
+    width: 60%;
+    margin: 60px 0;
+}

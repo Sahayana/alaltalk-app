@@ -20,4 +20,5 @@ urlpatterns = [
     path("friends/accept/<int:request_id>/", views.accept_request, name="accept_request"),
     path("friends/decline/<int:request_id>/", views.decline_request, name="decline_request"),
     path("friends/delete/<int:friend_id>/", views.remove_friend, name="remove_friend"),
+    path("mypage/public/setting/", views.like_public_setting, name='public_change')
 ]
