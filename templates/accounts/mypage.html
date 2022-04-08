@@ -49,7 +49,10 @@
             </div>
             <div class="profile_buttons">
                 <button class="profile_change" id="profile_change" onclick="profile_change_check()">프로필 변경</button>
-                <button class="profile_follow" id="profile_follow" onclick="profile_follow()">팔로우 관리</button>
+                <button class="profile_follow" id="profile_follow" onclick="profile_follow()">
+                    팔로우 관리
+                    {% if friend_requests.count > 0 %}<span class="friend_request_badge">{{friend_requests.count}}</span>{% endif %}
+                </button>                
                 <button class="profile_like" id="profile_like" onclick="profile_like()">찜 목록</button>
             </div>
             <div class="profile_logout">
