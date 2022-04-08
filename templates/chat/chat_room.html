@@ -408,9 +408,10 @@
 
 
     {#채팅로그 더보기 버튼#}
+
     function moreList(user_id) {
         var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
-        //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
+        //마지막 리스트 번호를 알아내기 위해서 length를 구함.
         console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
 
         var link = document.location.href;
@@ -529,20 +530,37 @@
             if (e.keyCode === 13) {  // enter, return
                 const messageInputDom = document.querySelector('#chat_message_input');
                 const message = messageInputDom.value
-                if (message === '' || message === null || message.trim().length === 0 || message.includes('alert') === true) {
+                if (message === '' || message === null || message.trim().length === 0) {
                     console.log('websocket load message')
                     return true;
+                } if (message.includes('alert') === true || message.includes('ALERT') === true) {
+                    console.log('XSS attack defenced!')
+                } if (message.includes('script') === true || message.includes('SCRIPT') === true) {
+                    console.log('XSS attack defenced!')
                 } else {
-                    chatSocket.send(JSON.stringify({
-                        'command': 'new_messages',
-                        'message': message,
-                        'from': user_id,
-                        'room_id': room_id,
-                    }));
+                    if (message.includes('href') === true) {
+                        console.log('XSS attack defenced!')
+                        const replace_msg = message.replace('href', '')
+                        chatSocket.send(JSON.stringify({
+                            'command': 'new_messages',
+                            'message': replace_msg,
+                            'from': user_id,
+                            'room_id': room_id,
+                        }));
+                    } else {
+                        chatSocket.send(JSON.stringify({
+                            'command': 'new_messages',
+                            'message': message,
+                            'from': user_id,
+                            'room_id': room_id,
+                        }));
+                    }
+
                 }
                 messageInputDom.value = '';
             }
-        };
+        }
+        ;
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {
@@ -577,7 +595,7 @@
                     $('#chat_box').append(temp_html2)
                 } else {
                     let temp_html2 = `<div class='partner_to_user'>${message}</div>`
-                $('#chat_box').append(temp_html2)
+                    $('#chat_box').append(temp_html2)
                 }
             }
         } else {
