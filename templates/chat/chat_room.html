@@ -6,6 +6,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:url" content="https://alaltalk.com">
+    <meta property="og:title" content="알알톡">
+    <meta property="og:image"
+          content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화"/>
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
+    <title>알알톡</title>
     <!-- reset css cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
@@ -92,6 +101,7 @@
             </div>
 
             <div id="chat_box" class="chat_box">
+                <div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>
                 {% for message in last_messages %}
                     {% if message.author.id == user.id %}
                         <div class='user_to_partner'>{{ message.message }}</div>
@@ -238,8 +248,7 @@
 <script>
     $(document).ready(function () {
         // 채팅 스크롤 하단 고정
-        var scrollDown = $('#chat_box').prop('scrollHeight');
-        $('#chat_box').scrollTop(scrollDown);
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
         // 친구 리스트 이동
         let friendListIcon = $(".user_icon");
@@ -277,8 +286,7 @@
     });
 
     $('#recommend_btn').on('click', function () {
-        var scrollDown = $('#chat_box').prop('scrollHeight');
-        $('#chat_box').scrollTop(scrollDown);
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
         $('.friends_like_container').hide();
         $('.chat_list_container').hide();
@@ -299,6 +307,8 @@
     });
 
     function close_recommend() {
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
         $('.right_wrap').empty();
         $('.chat_container').appendTo('.right_wrap');
         $('.friends_like_container').appendTo('.right_wrap');
@@ -309,6 +319,8 @@
 
 
     $('#freind_like_list').on('click', function () {
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
         $('.chat_container').appendTo('.left_wrap');
         $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
@@ -327,6 +339,8 @@
     });
 
     $('#friend_like_close').on('click', function () {
+        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
         $('.friends_like_container').appendTo('.left_wrap');
         $('.friends_like_container').hide();
         $('.right_wrap').empty();
@@ -392,6 +406,65 @@
     const participant1 = {{ participant1.id }};
     const participant2 = {{ participant2.id }};
 
+
+    {#채팅로그 더보기 버튼#}
+    function moreList(user_id) {
+        var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
+        //마지막 리스트 번호를 알아내기 위해서 tr태그의 length를 구함.
+        console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
+
+        var link = document.location.href;
+        console.log(link);
+        let room_id = link.split('/');
+        room_id = parseInt(room_id[5]);
+
+        let form_data = new FormData();
+        form_data.append('startNum', startNum)
+        form_data.append('room_id', room_id)
+        form_data.append('user_id', user_id)
+
+
+        $.ajax({
+            url: "/chat/morelist/",
+            type: "post",
+            data: JSON.stringify({"room_id": room_id, 'startNum': startNum, 'user_id': user_id}),
+            enctype: 'multipart/form-data',
+            async: false,
+            success: function (data) {
+                console.log(data['chat_list'])
+                let rows = data['chat_list']
+                for (let i = 0; i < rows.length; i++) {
+                    let author_id = rows[i]['author_id']
+                    let message = rows[i]['message']
+                    if (author_id === user_id) {
+                        let temp_html1 = `<div class='user_to_partner'>${message}</div>`
+                        $('#chat_box').prepend(temp_html1)
+                    } else {
+                        let temp_html2 = `<div class='partner_to_user'>${message}</div>`
+                        $('#chat_box').prepend(temp_html2)
+                    }
+                }
+                if (rows.length === 0) {
+                    $('.more').hide()
+                    let last_alert = `<div class="last_list">마지막 대화입니다.</div>`
+                    $('#chat_box').prepend(last_alert)
+                } else {
+                    $('.more').hide()
+                    let morebtn = `<div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>`
+                    $('#chat_box').prepend(morebtn)
+
+                }
+
+            },
+            error: function (request, status, error) {
+                alert('error')
+
+                console.log(request, status, error)
+            }
+        })
+    }
+
+
     {#웹소켓 연결 JS#}
     if (participant1 === user_id || participant2 === user_id) {
         const chatSocket = new ReconnectingWebSocket(
@@ -426,8 +499,7 @@
             } else if (data['command'] === 'new_message') {
                 {#messageCounter(data['message']);#}
                 createMessage(data['message']);
-                var scrollDown = $('#chat_box').prop('scrollHeight');
-                $('#chat_box').scrollTop(scrollDown);
+                $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
         };
 
@@ -455,12 +527,9 @@
         {#document.querySelector('#chat_message_input').focus();#}
         document.querySelector('#chat_message_input').onkeyup = function (e) {
             if (e.keyCode === 13) {  // enter, return
-                // if ($('#chat_message_input').val().length === 0) {
-                //    return false;
-                // }
                 const messageInputDom = document.querySelector('#chat_message_input');
                 const message = messageInputDom.value
-                if (message === '') {
+                if (message === '' || message === null || message.trim().length === 0 || message.includes('alert') === true) {
                     console.log('websocket load message')
                     return true;
                 } else {
@@ -493,13 +562,23 @@
         const chatroom_id = data['chatroom_id'];
         if (chatroom_id === room_id) {
             if (author === user_id) {
-                let temp_html1 = `<div class='user_to_partner'>${message}</div>`
-                $('#chat_box').append(temp_html1)
-                $('#chat_message_input').val('');
-                console.log("리셋!")
+                if (message.includes('http') === true) {
+                    let temp_html1 = `<div onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>`
+                    $('#chat_box').append(temp_html1)
+                    $('#chat_message_input').val('');
+                } else {
+                    let temp_html1 = `<div class='user_to_partner'>${message}</div>`
+                    $('#chat_box').append(temp_html1)
+                    $('#chat_message_input').val('');
+                }
             } else {
-                let temp_html2 = `<div class='partner_to_user'>${message}</div>`
+                if (message.includes('http') === true) {
+                    let temp_html2 = `<div onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>`
+                    $('#chat_box').append(temp_html2)
+                } else {
+                    let temp_html2 = `<div class='partner_to_user'>${message}</div>`
                 $('#chat_box').append(temp_html2)
+                }
             }
         } else {
             console.log('해당하는 메세지가 없습니다');
