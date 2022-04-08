@@ -144,9 +144,30 @@ def more_list(request):
 
     chat_list = []
     for chat in all_chat:
-        chat_list.append({'message': chat.message, 'author_id': chat.author_id})
+        chat_list.append({'message': chat.message, 'author_id': chat.author_id, 'created_at': str(chat.created_at)})
+
     context = {
         'chat_list': chat_list
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@csrf_exempt
+@login_required
+def message_loader(request):
+    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
+    limit = len(last_messages) - 40
+    if len(last_messages) > 40:
+        last_messages = last_messages[limit:]
+
+    last_messages_list = []
+    for chat in last_messages:
+        last_messages_list.append({'message': chat.message, 'author_id': chat.author_id, 'created_at': str(chat.created_at)})
+
+    context = {
+        'last_messages_list': last_messages_list
     }
 
     return HttpResponse(json.dumps(context), content_type="application/json")
