@@ -66,8 +66,8 @@ def post_data_to_chat_room(request, room_id):
         all_message = ChatMessage.objects.all()
 
         last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
-        limit = len(last_messages) - 20
-        if len(last_messages) > 20:
+        limit = len(last_messages) - 40
+        if len(last_messages) > 40:
             last_messages = last_messages[limit:]
         # latest_created_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by('-created_at')[0]
 
@@ -110,6 +110,7 @@ def post_data_to_chat_room(request, room_id):
 def chat_log_send(request):
     room_id = json.loads(request.body.decode('utf-8'))['room_id']
     chat_log = []
+    sentence=''
     print(room_id)
     chatroom = ChatRoom.objects.get(id = room_id)
     all_chat = ChatMessage.objects.filter(chatroom=chatroom)
@@ -118,9 +119,57 @@ def chat_log_send(request):
         all_chat = all_chat[len(all_chat)-40:]
 
     for chat in all_chat:
-        chat_log.append(chat.message)
-    print('채팅로그 담긴리스트', chat_log)
+        sentence = sentence + chat.message + ' '
+
+    chat_log.append(sentence)
+    print('채팅로그 담긴리스트',chat_log)
     context = {
         'chat_log' : chat_log
     }
     return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@csrf_exempt
+@login_required
+def more_list(request):
+    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    num = json.loads(request.body.decode('utf-8'))['startNum']
+    user_id = json.loads(request.body.decode('utf-8'))['user_id']
+    print(room_id, num, user_id)
+    all_chat = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
+    if all_chat is not None:
+        all_chat = all_chat[num:num+10]
+        if all_chat is None:
+            all_chat = all_chat[num:]
+
+    chat_list = []
+    for chat in all_chat:
+        chat_list.append({'message': chat.message, 'author_id': chat.author_id, 'created_at': str(chat.created_at)})
+
+    context = {
+        'chat_list': chat_list
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@csrf_exempt
+@login_required
+def message_loader(request):
+    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
+    limit = len(last_messages) - 40
+    if len(last_messages) > 40:
+        last_messages = last_messages[limit:]
+
+    last_messages_list = []
+    for chat in last_messages:
+        last_messages_list.append({'message': chat.message, 'author_id': chat.author_id, 'created_at': str(chat.created_at)})
+
+    context = {
+        'last_messages_list': last_messages_list
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+

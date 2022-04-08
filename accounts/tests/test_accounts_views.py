@@ -273,6 +273,23 @@ class TestAccountsViews(TestCase):
         self.assertEqual(1, response.json()['result'][0][1])
         self.assertEqual(current_user.id, response.json()['result'][0][0]['id'])
 
+    def test_view_search_friend_returns_none(self) -> None:
+
+        # Given
+        login_user = self.client.login(email=self.email, password=self.password)
+        request = self.factory.get(reverse("accounts:search_friend"))
+        request.user = self.user
+        invalid_query = "nobody"
+
+        # When
+        response = self.client.get(
+            reverse("accounts:search_friend") + f'?q={invalid_query}'
+        )        
+        
+        # Then
+        self.assertEqual(200, response.status_code)
+        self.assertEqual("none", response.json()["msg"])
+
 
     def test_send_friend_request(self) -> None:
 

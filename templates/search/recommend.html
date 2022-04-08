@@ -5,11 +5,20 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta property="og:url" content="https://alaltalk.com">
+    <meta property="og:title" content="알알톡">
+    <meta property="og:image" content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화" />
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
+    <title>알알톡</title>
+
     <!-- reset css cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../../static/css/search/recommend.css">
+    <link rel="stylesheet" href="{% static 'css/search/recommend.css' %}">
 </head>
 <body>
     <div class="outline">
@@ -42,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="chat_box">
+                <div class="chat_box" id="chat_box">
                     <div class="user_to_partner"><p>ㅋㅋㅋㅋㅋㅋ
                         52려 조하
                         오늘은 더 회의가 없지요..?ㅠㅠ잠깐 나가볼 일이 생겨서 혹시라도 모일 일이 생기면
@@ -746,5 +755,12 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            // 채팅 스크롤 하단 고정
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+        });
+
+    </script>
 </body>
 </html>

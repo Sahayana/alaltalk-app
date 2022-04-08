@@ -198,6 +198,16 @@ body {
     color: #b7b7b7;
 }
 
+.friend_request_badge {
+    margin-left: 5px;
+    border-radius: 50%;
+    background-color: #7657ce;
+    color: #fff;
+    font-size: 15px;
+    padding: 0.5% 1.5% 0.5% 1.5%;
+    
+}
+
 /* 비밀번호 재입력 폼 */
 
 .profile_auth_container {

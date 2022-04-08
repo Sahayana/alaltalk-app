@@ -3,9 +3,11 @@
     font-size: 16px;
     letter-spacing: -0.5px;
 }
+
 body {
     margin: 0 auto;
 }
+
 .outline {
     margin: 20px auto 0;
     display: flex;
@@ -15,6 +17,7 @@ body {
     width: 96%;
     height: 820px;
 }
+
 .nav {
     background-color: #fff;
     width: 8%;
@@ -24,10 +27,12 @@ body {
     box-shadow: 4px 0px 10px 3px rgba(0, 0, 0, .1);
     z-index: 1;
 }
+
 .nav .logo {
     height: 70px;
     padding-top: 20px;
 }
+
 .nav .logo .logo_img {
     height: 100%;
     background-image: url("../../images/logo_vertical.png");
@@ -35,6 +40,7 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
 }
+
 .nav .icon_group {
     height: 80%;
     display: flex;
@@ -42,6 +48,7 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 .nav .icon_group .icon {
     width: 36px;
     height: 36px;
@@ -50,15 +57,19 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
 }
+
 .nav .icon_group .icon.user_icon {
     background-image: url("../../images/user_outline.png");
 }
+
 .nav .icon_group .icon.chat_icon {
     background-image: url("../../images/chat.png");
 }
+
 .nav .icon_group .icon.mypage_icon {
     background-image: url("../../images/mypage_outline.png");
 }
+
 .left_wrap {
     max-width: 600px;
     width: 100%;
@@ -66,6 +77,7 @@ body {
     background-color: #FAF9FF;
     border-right: 1px solid #efefef;
 }
+
 /*.left_wrap p{*/
 /*    font-size: 18px;*/
 /*    color: #5e5e5e;*/
@@ -82,12 +94,14 @@ body {
     font-weight: 500;
 
 }
+
 .left_wrap .chat_list {
     width: 100%;
     height: 84vh;
     box-sizing: border-box;
     overflow-y: auto;
 }
+
 .left_wrap .chat_list::-webkit-scrollbar {
     width: 10px;
 }
@@ -103,9 +117,11 @@ body {
     border-radius: 2px;
 
 }
+
 .left_wrap .chat_list a {
     text-decoration: none;
 }
+
 .left_wrap .chat_list .chat_partner {
     width: 100%;
     display: flex;
@@ -114,6 +130,7 @@ body {
     border-bottom: 1px solid #e5e5e5;
     box-sizing: border-box;
 }
+
 .left_wrap .chat_list .chat_partner:link {
     color: #5e5e5e;
 }
@@ -128,15 +145,19 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 .chat_list .chat_partner .info_group {
     margin-left: 12px;
 }
+
 .chat_list .chat_partner .info_group .partner_name {
     font-weight: 500;
 }
+
 .chat_list .chat_partner .info_group .partner_name:link {
     color: #5e5e5e;
 }
+
 .chat_list .chat_partner .info_group .partner_last_msg {
     font-size: 14px;
     color: #5e5e5e;
@@ -151,9 +172,11 @@ body {
     -webkit-box-orient: vertical;
     display: none;
 }
+
 .chat_list .chat_partner .info_group .partner_last_msg:last-child {
     display: block;
 }
+
 .right_wrap {
     width: 100%;
 }
@@ -167,6 +190,7 @@ body {
     background-size: contain;
     opacity: .5;
 }
+
 .chat_container {
     position: static;
 }
@@ -183,6 +207,7 @@ body {
     border-top-right-radius: 14px;
 
 }
+
 .left_wrap .chat_container .top_bar {
     border-top-right-radius: 0;
 }
@@ -240,12 +265,13 @@ body {
     cursor: pointer;
 }
 
-.chat_container .top_bar .right_icon{
+.chat_container .top_bar .right_icon {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
+
 /*#toggle_content {*/
 /*    display: none;*/
 /*    font-size: 14px;*/
@@ -275,6 +301,7 @@ body {
     top: 60px;
     cursor: pointer;
 }
+
 .left_wrap .chat_container .top_bar .toggle_content {
     display: none;
     font-size: 14px;
@@ -293,6 +320,7 @@ body {
 .chat_container .top_bar .toggle_content p {
     margin: 12px 0px 6px 10px;
 }
+
 .left_wrap .chat_container .top_bar .toggle_content p {
     margin: 12px 0px 6px 10px;
 }
@@ -302,6 +330,7 @@ body {
     width: 100%;
     height: 1px;
 }
+
 .left_wrap .chat_container .top_bar .toggle_content .line {
     background-color: #e5e5e5;
     width: 100%;
@@ -318,6 +347,7 @@ body {
     align-items: center;
     border-bottom-right-radius: 16px;
 }
+
 .left_wrap .chat_container .input_bar {
     border-bottom-right-radius: 0;
 }
@@ -370,6 +400,61 @@ body {
 
 }
 
+.chat_container .chat_box .more {
+    margin: 0 auto;
+    width: 8vw;
+    font-size: 14px;
+    color: #5e5e5e;
+    text-align: center;
+    padding: 8px 4px;
+    box-sizing: border-box;
+    background-color: #e5e5e5;
+    border-radius: 12px;
+}
+
+.chat_container .chat_box .last_list {
+    width: 10vw;
+    text-align: center;
+    margin: 0 auto;
+    padding: 8px 4px 12px;
+    box-sizing: border-box;
+    color: #5e5e5e;
+    font-size: 14px;
+    position: relative;
+}
+
+.chat_container .chat_box .user_chat {
+    align-self: flex-end;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.left_wrap .chat_container .chat_box .partner_chat .partner_to_user {
+    max-width: 400px;
+}
+.left_wrap .chat_container .chat_box .user_chat .user_to_partner {
+    max-width: 400px;
+}
+.chat_container .chat_box .user_chat .user_to_partner {
+    max-width: 520px;
+    width: auto;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    background-color: #A185F2;
+    color: #fff;
+    border-radius: 10px 0 10px 10px;
+    margin-bottom: 6px;
+    margin-right: -6px;
+}
+
+.chat_container .chat_box .user_chat .timestamp_user {
+    color: #5e5e5e;
+    font-size: 14px;
+    margin-right: 6px;
+    transition: 2s;
+    display: none;
+}
+
 .chat_container .chat_box .user_to_partner {
     align-self: flex-end;
     max-width: 520px;
@@ -381,6 +466,32 @@ body {
     border-radius: 10px 0 10px 10px;
     margin-bottom: 6px;
     margin-right: -6px;
+}
+
+.chat_container .chat_box .partner_chat {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.chat_container .chat_box .partner_chat .timestamp_partner {
+    color: #5e5e5e;
+    font-size: 14px;
+    margin-left: 6px;
+    transition: 2s;
+    display: none;
+}
+
+.chat_container .chat_box .partner_chat .partner_to_user {
+    max-width: 520px;
+    width: auto;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    background-color: #fafafa;
+    color: #5e5e5e;
+    border-radius: 0 10px 10px 10px;
+    margin-bottom: 6px;
 }
 
 .chat_container .chat_box .partner_to_user {
