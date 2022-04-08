@@ -110,6 +110,7 @@ def post_data_to_chat_room(request, room_id):
 def chat_log_send(request):
     room_id = json.loads(request.body.decode('utf-8'))['room_id']
     chat_log = []
+    sentence=''
     print(room_id)
     chatroom = ChatRoom.objects.get(id = room_id)
     all_chat = ChatMessage.objects.filter(chatroom=chatroom)
@@ -118,7 +119,9 @@ def chat_log_send(request):
         all_chat = all_chat[len(all_chat)-40:]
 
     for chat in all_chat:
-        chat_log.append(chat.message)
+        sentence = sentence + chat.message + ' '
+
+    chat_log.append(sentence)
     print('채팅로그 담긴리스트',chat_log)
     context = {
         'chat_log' : chat_log

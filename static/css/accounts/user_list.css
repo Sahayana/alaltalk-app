@@ -177,6 +177,23 @@ body {
   background-color: #7657ce;
   color: #fff;
   border: none;
+  cursor: pointer;
+}
+
+.user_list .user_box .unfollow {
+  width: 80px;
+  height: 30px;
+  background-color: #fff;
+  color: #7657ce;
+  border: 1px solid #7657ce;
+  box-sizing: border-box;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 115px;
+  cursor: pointer;
 }
 
 .user_list .user_box .btn.start_chat {

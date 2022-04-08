@@ -68,7 +68,7 @@
         </div>
 
         <div class="profile_auth_container" id="profile_auth_container">
-            <form class="profile_auth_form">
+            <form class="profile_auth_form" onsubmit="return false;">
                 {% csrf_token %}
                 <p id="password-again-helper">비밀번호를 입력해주세요</p>
                 <input type="password" id="password-again-input">
@@ -107,6 +107,11 @@
                     적용하기
                 </button>
             </form>
+
+            <div class="profile_delete_account">                
+                <button id="profile_delete_btn">회원 탈퇴</button>                
+            </div>
+
         </div>
         <div class="profile_follow_container" id="profile_follow_container">
             <div class="profile_follow_title">팔로우 관리</div>
@@ -155,12 +160,14 @@
                                 <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
                                         frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen>ㅇ
+                                        allowfullscreen>
                                 </iframe>
                                 <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
                                 <div class="video_count">{{ youtube.views }}</div>
-                                <div class="profile_like_heart profile_youtube_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                <div class="my_page_like_parents">
+                                    <div class="profile_like_heart profile_youtube_like_heart"
+                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
@@ -202,7 +209,7 @@
                                     <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
 
                                 </div>
                             </div>
@@ -224,7 +231,7 @@
                                     <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
                                 </div>
                             </div>
                             <a href="{{ book.link }}" target="_blank">
@@ -271,7 +278,7 @@
                                         <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                     </div>
                                     <div class="recommend_like_heart"
-                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')">
+                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
                                     </div>
                                 </div>
                                 <a href="{{ shopping.link }}" target="_blank">
