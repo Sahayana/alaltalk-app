@@ -59,6 +59,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_recommend_on = models.BooleanField(default=True)
+    is_like_public = models.BooleanField(default=True)
 
     # https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#django.contrib.auth.models.CustomUser
     USERNAME_FIELD = "email"  # 이메일 로그인

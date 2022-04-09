@@ -10,7 +10,7 @@ function searchUser(){
         return;
     }
 
-    if (query.length < 3){
+    if (query.length < 2){
         alert("2글자 이상 입력해주세요.");
         return;
     }
@@ -21,15 +21,20 @@ function searchUser(){
         type: 'GET',
         url: `${userListUri}?q=${query}`,         
         success: function (response) {
-            // console.log(response["result"]);
-            let friends = response["result"];
-            friends.forEach(friend => {
-                console.log(friend);
-                appendResult(friend);
-            });
+
+            if (response["msg"] == 'none'){
+                appendNoResult();
+            }else{
+                let friends = response["result"];
+                friends.forEach(friend => {
+                    // console.log(friend);
+                    appendResult(friend);
+                });                 
+            }
 
             $(".user_list").css('display', 'none');
-            $(".search_result").css('display', 'block');                             
+            $(".search_result").css('display', 'block');  
+                                       
         }
     });    
 
@@ -85,6 +90,19 @@ function appendResult(friend){
     
     $(".search_result").append(tempHtml);
 }
+
+// 친구 검색 결과가 없는 경우
+
+function appendNoResult(){
+    let tempHtml =''
+    tempHtml = `
+    <p class="result_helper"> 검색 결과가 존재하지 않습니다. </p>    `
+    
+    $(".search_result").append(tempHtml);
+
+}
+
+
 
 
 // 친구신청

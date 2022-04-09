@@ -447,3 +447,35 @@ $(document).ready(function(){
     
 
 });
+
+
+// 찜목록 공개 설정 관련
+
+function like_change_public_setting(status){
+    let button = document.getElementById(status)
+    let now = button.innerText
+    let value = ''
+
+    if(now==='ON'){
+        value = 'OFF'
+        button.innerText = value
+
+
+    } else if(now==='OFF'){
+        value = 'ON'
+        button.innerText = value
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/accounts/mypage/public/setting/',
+        dataType: 'json',
+        data: {
+            'value': value
+        },
+        success: function(response){
+            console.log(response['result'])
+        }
+
+    })
+}

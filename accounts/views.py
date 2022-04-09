@@ -10,8 +10,11 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+
 from search.models import Youtube,News,Book,Shopping
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
@@ -144,6 +147,10 @@ def search_friend(request):
         query = request.GET.get("q")
         result = get_user_model().objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct()  # 중복 제거를 위한 distinct()
 
+        if result.count() == 0:
+            return JsonResponse({"msg":"none"})
+
+
         # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
         result_json = list(result.values())
         for i, friend in enumerate(result_json):
@@ -231,7 +238,10 @@ def remove_friend(request, friend_id):
     return JsonResponse({"msg":"deleted"})
 
 
+
 ##################### 추천친구 관련 #####################################
+@csrf_exempt
+@login_required
 def get_user(request):
     user = request.user
     like_sentence = []
@@ -263,10 +273,36 @@ def get_user(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 # 키워드 받아서 저장
-
+@csrf_exempt
+@login_required
 def save_like_keyword(request):
     like_sentence = json.loads(request.body.decode('utf-8'))['like_sentence']
 
+##################################################################################################################
 
 
+
+@csrf_exempt
+@login_required
+def like_public_setting(request):
+    value = request.POST['value']
+    print(value)
+    if value == 'ON':
+        change_value = True
+    elif value == 'OFF':
+        change_value = False
+    else:
+        return JsonResponse({
+            'result': 'value is Wrong'
+        })
+
+    user = CustomUser.objects.get(pk=request.user.id)
+    user.is_like_public = change_value
+    user.save()
+
+    result = 'success'
+    data = {
+        'result': result
+    }
+    return JsonResponse(data)
 

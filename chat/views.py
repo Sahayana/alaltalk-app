@@ -52,7 +52,7 @@ def create_chat_room(request, id):
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
     else:
-        return render(request, "chat/chat_room.html")
+        return render(request, "chat/chat_room.html", {'user': user})
 
 
 # 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
