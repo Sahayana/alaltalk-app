@@ -21,7 +21,7 @@ urlpatterns = [
     path("friends/decline/<int:request_id>/", views.decline_request, name="decline_request"),
     path("friends/delete/<int:friend_id>/", views.remove_friend, name="remove_friend"),
     path("friends/like", views.get_user, name="user_like"),
-    path("friends/like/keyword", views.save_like_keyword, name="save_like_keyword"),
+    path("friend/keyword", views.save_like_keyword, name="save_like_keyword"),
     path("mypage/public/setting/", views.like_public_setting, name='public_change')
 
 ]

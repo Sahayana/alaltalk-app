@@ -754,7 +754,7 @@ var like_keyowrd = []
 // 찜 제목 받아 오기
 function get_like() {
     $.ajax({
-        url: "/friends/like",
+        url: "/accounts/friends/like",
         type: 'POST',
         enctype: 'multipart/form-data',
         async: false,
@@ -799,11 +799,11 @@ function get_like_keywords(like_sentence) {
 function get_recommend_keyword() {
     get_like()
     get_like_keywords(like_sentence)
-
+    console.log(like_keyowrd)
     $.ajax({
-        url: "/friends/like/keyword/",
+        url: "/accounts/friend/keyword",
         type: 'POST',
-        data: JSON.stringify({"like_sentence": like_sentence}),
+        data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {

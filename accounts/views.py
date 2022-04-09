@@ -267,6 +267,7 @@ def get_user(request):
             sentence = sentence + s.title + ' '
 
     like_sentence.append(sentence)
+    print("찜 기반 제목들",sentence)
     context = {
         'like_sentence': like_sentence
     }
@@ -276,8 +277,13 @@ def get_user(request):
 @csrf_exempt
 @login_required
 def save_like_keyword(request):
-    like_sentence = json.loads(request.body.decode('utf-8'))['like_sentence']
-
+    user = request.user
+    print("찜 기반 유저", user.email)
+    like_keyowrd = json.loads(request.body.decode('utf-8'))['like_keyowrd']
+    print("찜 기반 키워드",like_keyowrd )
+    user.like_keyword = like_keyowrd
+    user.save()
+    return JsonResponse({"msg":"add like"})
 ##################################################################################################################
 
 
