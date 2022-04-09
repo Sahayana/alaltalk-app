@@ -8,8 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:url" content="https://alaltalk.com">
     <meta property="og:title" content="알알톡">
-    <meta property="og:image" content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
-    <meta property="og:description" content="알고리즘으로 알아보는 대화" />
+    <meta property="og:image"
+          content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화"/>
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
@@ -50,33 +51,35 @@
         <p class="title">채팅</p>
         <div class="chat_list">
             {% for chatroom in chatroom_list %}
-                    {% if chatroom.participant1.id == user.id %}
-                        <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
-                            <div class="partner_img" style="background-image: url({{ chatroom.participant2.img.url }})"></div>
-                            <div class="info_group">
-                                <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
-                                {#chatroom.id로 필터링 된 메세지의 맨 마지막 메세지 가져오기#}
-                                {% for message in all_message %}
-                                    {% if chatroom.id == message.chatroom_id %}
-                                        <div class="partner_last_msg">{{ message.message}}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </a>
-                    {% else %}
-                        <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
-                            <div class="partner_img" style="background-image: url({{ chatroom.participant1.img.url }})"></div>
-                            <div class="info_group">
-                                <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
-                                {% for message in all_message %}
-                                    {% if chatroom.id == message.chatroom_id %}
-                                        <div class="partner_last_msg">{{ message.message }}</div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                        </a>
-                    {% endif %}
-{#                {% endfor %}#}
+                {% if chatroom.participant1.id == user.id %}
+                    <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner chat_partner_{{ chatroom.id }}">
+                        <div class="partner_img"
+                             style="background-image: url({{ chatroom.participant2.img.url }})"></div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
+                            {#chatroom.id로 필터링 된 메세지의 맨 마지막 메세지 가져오기#}
+                            {#                                {% for message in all_message %}#}
+                            {#                                    {% if chatroom.id == message.chatroom_id %}#}
+                            {#                                        <div class="partner_last_msg">{{ message.message}}</div>#}
+                            {#                                    {% endif %}#}
+                            {#                                {% endfor %}#}
+                        </div>
+                    </a>
+                {% else %}
+                    <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner chat_partner_{{ chatroom.id }}">
+                        <div class="partner_img"
+                             style="background-image: url({{ chatroom.participant1.img.url }})"></div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
+                            {#                                {% for message in all_message %}#}
+                            {#                                    {% if chatroom.id == message.chatroom_id %}#}
+                            {#                                        <div class="partner_last_msg">{{ message.message }}</div>#}
+                            {#                                    {% endif %}#}
+                            {#                                {% endfor %}#}
+                        </div>
+                    </a>
+                {% endif %}
+                {#                {% endfor %}#}
             {% endfor %}
         </div>
 
@@ -92,6 +95,8 @@
 <script>
 
     $(document).ready(function () {
+        lastMessageList();
+
         // 채팅 스크롤 하단 고정
         var scrollDown = $('#chat_box').prop('scrollHeight');
         $('#chat_box').scrollTop(scrollDown);
@@ -119,102 +124,7 @@
         location.replace("/accounts/logout");
     })
 
-    /*
-        var room_id = {{ room_id }};
-    var user_id = {{ user_id }};
-    var participant1 = {{ participant1 }};
-    var participant2 = {{ participant2 }};
-
-    웹소켓 연결 JS
-    if (participant1 === user_id || participant2 === user_id) {
-        const chatSocket = new ReconnectingWebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/room/'
-            + room_id
-            + '/'
-        );
-
-        최근메세지 가져오기
-        기존에 열려있던 웹소켓에서는 가져오지 않도록 설정
-        불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정
-        chatSocket.onopen = function (e) {
-
-            fetchMessages();
-        }
-
-        consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐
-        fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고
-        new_message를 통해 나온 현재 작성한 메세지는 그대로 돌려준다.
-        ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다
-        message를 created_at의 순서대로 보여준다.
-        chatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            if (data['command'] === 'messages') {
-                const n = data['messages'].length
-                for (let i=n-1; i >=0; i--) {
-                    createMessage(data['messages'][i]);
-                }
-            } else if (data['command'] === 'new_message') {
-                createMessage(data['message']);
-            }
-        };
-
-        consumer에게 fetch_messages가 실행되도록 명령
-
-        function fetchMessages() {
-            chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
-        }
-
-        해당 input에 메세지를 작성하고 버튼을 클릭하면
-        consumer에게 key:value 형태로 메세지를 넘겨준다.
-        document.querySelector('#chat_message_submit').onclick = function (e) {
-            const messageInputDom = document.querySelector('#chat_message_input');
-            const message = messageInputDom.value
-            if (message === '') {
-                alert('메세지를 입력해주세요.')
-            } else {
-                chatSocket.send(JSON.stringify({
-                    'command': 'new_messages',
-                    'message': message,
-                    'from': user_id,
-                    'room_id': room_id,
-                }));
-            }
-            messageInputDom.value = '';
-        };
-
-        웹소켓 연결이 끊어졌을 때의 JS
-        chatSocket.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-    } else {
-        location.replace("/chat");
-    }
-
-
-    html에서 작성된 메세지를 보여주는 JS
-
-    function createMessage(data) {
-        const message = data['message'];
-        const author = data['author'];
-        const chatroom_id = data['chatroom_id'];
-        if (chatroom_id === room_id) {
-            if (author === user_id) {
-                let temp_html1 = `<div class='user_to_partner'>${message}</div>`
-                $('#chat_box').append(temp_html1)
-            } else {
-                let temp_html2 = `<div class='partner_to_user'>${message}</div>`
-                $('#chat_box').append(temp_html2)
-            }
-        } else {
-            console.log('해당하는 메세지가 없습니다');
-        }
-
-    }
-*/
-
 </script>
+<script src="{% static 'js/chat/chat_room.js' %}?after"></script>
 </body>
 </html>

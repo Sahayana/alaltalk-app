@@ -54,7 +54,7 @@
 }
 
 .right_wrap .recommend_youtube_container {
-    width: 98%;
+    width: 100%;
     height: 100%;
     box-sizing: border-box;
     padding: 30px 10px 20px 32px;
@@ -91,12 +91,12 @@
 
 .recommend_youtube_container .search_bar {
     width: 58vw;
-    height: 40px;
+    height: 4.5vh;
     border: 1px solid #A185F2;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin: 24px 0;
+    margin: 3vh 0;
     box-sizing: border-box;
     padding: 0 12px;
 }
@@ -124,9 +124,7 @@
 }
 
 .recommend_youtube_container .content_wrap {
-    /*overflow-y: auto;*/
-    max-height: 660px;
-    height: 100%;
+    width: 100%;
 }
 
 .recommend_youtube_container .content_wrap::-webkit-scrollbar {
@@ -174,13 +172,11 @@
 
 .recommend_youtube_container .recommend_content .content_section {
     width: 58vw;
-    height: 260px;
+    height: 29vh;
     overflow-x: auto;
-    /*overflow-y: hidden;*/
+    overflow-y: hidden;
     box-sizing: border-box;
-    margin-top: 24px;
-    display: flex;
-    /*background-color: gray;*/
+    margin-top: 2.4vh;
 }
 
 .recommend_youtube_container .recommend_content .content_section::-webkit-scrollbar {
@@ -287,7 +283,7 @@
 }
 
 .recommend_youtube_container .search_content {
-    margin-top: 30px;
+    margin-top: 3vh;
     /*height: 350px;*/
 }
 
@@ -301,7 +297,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: 310px;
+    height: 38.5vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -397,7 +393,7 @@
 }
 
 .right_wrap .recommend_news_container {
-    width: 98%;
+    width: 100%;
     height: 100%;
     box-sizing: border-box;
     padding: 30px 10px 20px 32px;
@@ -418,12 +414,12 @@
 
 .recommend_news_container .search_bar {
     width: 58vw;
-    height: 40px;
+    height: 4.5vh;
     border: 1px solid #A185F2;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin: 24px 0;
+    margin: 3vh 0;
     box-sizing: border-box;
     padding: 0 12px;
 }
@@ -934,12 +930,12 @@
 
 .recommend_book_container .search_bar {
     width: 58vw;
-    height: 40px;
+    height: 4.5vh;
     border: 1px solid #A185F2;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin: 24px 0;
+    margin: 3vh 0;
     box-sizing: border-box;
     padding: 0 12px;
 }
@@ -1286,12 +1282,12 @@
 
 .recommend_shopping_container .search_bar {
     width: 58vw;
-    height: 40px;
+    height: 4.5vh;
     border: 1px solid #A185F2;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin: 24px 0;
+    margin: 3vh 0;
     box-sizing: border-box;
     padding: 0 12px;
 }
