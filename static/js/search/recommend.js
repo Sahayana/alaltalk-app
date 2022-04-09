@@ -211,13 +211,17 @@ function news_content_add(news_crawling_data_list, type) {
 function book_content_add(book_crawling_data_list, type) {
     let content_type = ''
     let display_value = 'none'
+    let flex_direction = 'row'
+    let height = '3vw'
     let width = '102%'
     if (type === 'crawling') {
         content_type = 'c';
     } else if (type === 'search') {
-        width = '200px'
+        width = '50px'
+        height = '80%'
         content_type = 's';
         display_value = 'flex'
+        flex_direction = 'column'
     } else {
         return console.log('type is not define!!')
     }
@@ -230,17 +234,11 @@ function book_content_add(book_crawling_data_list, type) {
             heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
         let temp_html = `<div class="content_box" id="${content_id}"> 
-                            <div class="recommend_toggle recommend_book_toggle" style="width: ${width}"  onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
-                                <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')" >
-                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
-                                </div>
-                                <div class="recommend_like_heart"
-                                     style="background-image: url('${heart_image}')" onclick="click_like(event)">
-                                </div>
-                            </div>
+                            
                             <a href="${book_row[5]}" target="_blank">
                                 <div class="book_img" style="background-image: url('${book_row[6]}')"></div>
                             </a>
+                            
                             <div class="recommend_book_desc" style="display: ${display_value}">
                                 <div class="recommend_book_desc_title">
                                     <p class="category">제목</p>
@@ -263,6 +261,15 @@ function book_content_add(book_crawling_data_list, type) {
                                     <p>${book_row[4]}</p>
                                 </div>
                             </div>
+                            <div class="recommend_toggle recommend_book_toggle" style="width: ${width}; flex-direction: ${flex_direction}; height:${height}" >
+                                <div class="profile_like_news_toggle" onclick="content_do_share('${book_row[5]}')" >
+                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                                </div>
+                                <div class="recommend_like_heart"
+                                     style="background-image: url('${heart_image}')" onclick="click_like(event)">
+                                </div>
+                            </div>
+                            
                         </div>`
         if (content_type === 'c') {
             $('#book_recommend_content').append(temp_html)
@@ -291,26 +298,28 @@ function shopping_content_add(shopping_crawling_data_list, type) {
             heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
         let temp_html = `<div class="recommend_shopping_search_content" id="${content_id}">
-                                    <div class="recommend_toggle recommend_book_toggle" onmouseover="appear_toggle('${content_id}')" onmouseout="disappear_toggle('${content_id}')" >
-                                        <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
-                                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
-                                        </div>
-                                        <div class="recommend_like_heart"
-                                             style="background-image: url('${heart_image}')" onclick="click_like(event)">
-                                        </div>
-                                    </div>
+                        
                                     <a href="${shopping_row[3]}" target="_blank">
                                         <div class="recommend_shopping_search_content_img">
                                             <img src="${shopping_row[0]}">
                                         </div>
                                     </a>
-                                    <div class="recommend_shopping_search_content_desc">
-                                        <div class="recommend_shopping_search_content_desc_bar"></div>
+                                    
+                                    
+                                    <div class="recommend_shopping_search_content_desc" style="flex-direction: #">
                                         <div class="recommend_shopping_search_content_desc_title">
                                             <p class="product">${shopping_row[1]}</p>
                                         </div>
                                         <div class="recommend_shopping_search_content_desc_price">
                                             <p class="price">${shopping_row[2]} 원</p>
+                                        </div>
+                                    </div>
+                                    <div class="recommend_toggle recommend_book_toggle">
+                                        <div class="profile_like_news_toggle" onclick="content_do_share('${shopping_row[3]}')">
+                                            <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                                        </div>
+                                        <div class="recommend_like_heart"
+                                             style="background-image: url('${heart_image}')" onclick="click_like(event)">
                                         </div>
                                     </div>
                                 </div>`
@@ -448,13 +457,13 @@ function like_check_hub(id, type) {
     // book data 가져 오기
     else if (checker === 'book') {
         let book = document.getElementById(id)
-        let title = book.children[2].children[0].children[1].innerText
-        let author = book.children[2].children[3].children[1].innerText
-        let company = book.children[2].children[2].children[1].innerText
-        let price = book.children[2].children[4].children[1].innerText
-        let link = book.children[1].href
-        let thumbnail = book.children[1].children[0].style.backgroundImage.split('url("')[1].split('")')[0]
-        let series = book.children[2].children[1].children[1].innerText
+        let title = book.children[1].children[0].children[1].innerText
+        let author = book.children[1].children[3].children[1].innerText
+        let company = book.children[1].children[2].children[1].innerText
+        let price = book.children[1].children[4].children[1].innerText
+        let link = book.children[0].href
+        let thumbnail = book.children[0].children[0].style.backgroundImage.split('url("')[1].split('")')[0]
+        let series = book.children[1].children[1].children[1].innerText
 
         let book_data = {}
         book_data['title'] = title
@@ -470,10 +479,10 @@ function like_check_hub(id, type) {
     // shopping data 가져 오기
     else if (checker === 'shopping') {
         let shopping = document.getElementById(id)
-        let link = shopping.children[1].href
-        let price = shopping.children[2].children[2].children[0].innerText
-        let title = shopping.children[2].children[1].children[0].innerText
-        let thumbnail = shopping.children[1].children[0].children[0].src
+        let link = shopping.children[0].href
+        let price = shopping.children[1].children[1].children[0].innerText
+        let title = shopping.children[1].children[0].children[0].innerText
+        let thumbnail = shopping.children[0].children[0].children[0].src
 
         let shopping_data = {}
         shopping_data['price'] = price
@@ -498,7 +507,7 @@ function like_youtube_ajax(data, type) {
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
-                alert(result)
+                console.log(result)
             }
         })
     } // like 취소
@@ -511,7 +520,7 @@ function like_youtube_ajax(data, type) {
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
-                alert(result)
+                console.log(result)
             }
         })
     }
@@ -527,7 +536,7 @@ function like_news_ajax(data, type) {
             url: '/api/like/news',
             data: data,
             success: function (response) {
-                alert(response['result'])
+                console.log(response['result'])
             }
         })
     }
@@ -538,7 +547,7 @@ function like_news_ajax(data, type) {
             url: '/api/like_cancel/news',
             data: data,
             success: function (response) {
-                alert(response['result'])
+                console.log(response['result'])
             }
         })
     }
@@ -553,7 +562,7 @@ function like_book_ajax(data, type) {
             url: '/api/like/book',
             data: data,
             success: function (response) {
-                alert(response['result'])
+                console.log(response['result'])
             }
         })
     }
@@ -564,7 +573,7 @@ function like_book_ajax(data, type) {
             url: '/api/like_cancel/book',
             data: data,
             success: function (response) {
-                alert(response['result'])
+                console.log(response['result'])
             }
         })
     }
@@ -579,7 +588,7 @@ function like_shopping_ajax(data, type) {
             url: '/api/like/shopping',
             data: data,
             success: function (response) {
-                alert(response['result'])
+                console.log(response['result'])
             }
         })
     }
@@ -590,7 +599,7 @@ function like_shopping_ajax(data, type) {
             url: '/api/like_cancel/shopping',
             data: data,
             success: function (response) {
-                alert(response['result'])
+                console.log(response['result'])
             }
         })
     }
@@ -708,18 +717,6 @@ function click_like(event) {
     }
 }
 
-// book, shopping 나타나기 애니메이션 효과
-function appear_toggle(id) {
-    let toggle = document.getElementById(id)
-    toggle.children[0].style.animation = 'appear_toggle 1s ease-out forwards'
-}
-
-// book, shopping 사라지기 애니메이션 효과
-function disappear_toggle(id) {
-    let toggle = document.getElementById(id)
-    toggle.children[0].style.animation = ''
-    toggle.children[0].style.opacity = '0'
-}
 
 // 검색시 이전의 검색 내용 지우는 함수
 function clear_content() {
