@@ -163,3 +163,79 @@ $(document).ready(function(){
 function friend_chat(id){
     window.location.href= `/chat/`+ id;
 }
+
+
+//추천친구
+
+var like_sentence = []
+var like_keyowrd = []
+// 찜 제목 받아 오기
+function get_like() {
+    $.ajax({
+        url: "/friends/like",
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        async: false,
+        success: function (response) {
+            like_sentence = response.like_sentence;
+
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+}
+
+function get_like_keywords(like_sentence) {
+    let form_data = new FormData()
+    form_data.append('chat_log', like_sentence);
+    $.ajax({
+        type: "POST",
+        url: "http://13.125.250.182:8000/api/v1/textrank/",
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        async: false,
+        enctype: 'multipart/form-data',
+        success: function (response) {
+            console.log(response.keyword)
+            like_keyowrd = response.keyword;
+            // 3. 키워드 내용을 기반으로 크롤링
+        },
+        error: function (request, status, error) {
+            alert('error')
+            console.log(request, status, error)
+        }
+
+    });
+}
+
+function get_recommend_keyword() {
+    get_like()
+    get_like_keywords(like_sentence)
+
+    $.ajax({
+        url: "/friends/like/keyword/",
+        type: 'POST',
+        data: JSON.stringify({"like_sentence": like_sentence}),
+        enctype: 'multipart/form-data',
+        async: false,
+        success: function (response) {
+            console.log('찜 키워드 success!')
+
+        },
+        error: function (request, status, error) {
+            alert('error')
+
+            console.log(request, status, error)
+        }
+
+    });
+
+}
+
+export {get_like, get_like_keywords, get_recommend_keyword}
