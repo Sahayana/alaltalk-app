@@ -5,15 +5,13 @@ var chat_log = ["오늘 날씨 너무 좋다.", "맞아 춥지도 않고 딱 좋
 
 // 0. 추천 버튼 누르면 시작되는 함수 ( 함수 시작 )
 function click_recommend_function() {
+
     $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
     // 1. 채팅 로그 불러오기!
     get_chat_log()
     // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
     get_keyword(chat_log)
-    console.log(document.getElementById('recommend_toggle'))
-    if (document.getElementById('recommend_toggle').innerText === 'ON') {
-        recommend_crawling_on(keyowrd[0])
-    }
+
 }
 
 
@@ -64,6 +62,10 @@ function get_keyword(chat_log) {
             console.log(response.keyword)
             keyowrd = response.keyword;
 
+            // if (document.getElementById('recommend_toggle').innerText === 'ON') {
+            //     recommend_crawling_on(keyowrd[0])
+            // }
+
         },
         error: function (request, status, error) {
             alert('error')
@@ -71,6 +73,7 @@ function get_keyword(chat_log) {
         }
 
     });
+
 }
 
 // 크롤링 시작 함수
@@ -80,7 +83,7 @@ function recommend_crawling_on(data) {
         url: '/api/search/crawling',
         data: {"target": data},
         datatype: 'form',
-        async: false,
+        async: true,
         success: function (response) {
             console.log(response['all_response'])
 
@@ -360,22 +363,32 @@ function recommend_switch() {
     console.log('inital toggle value!', toggle.innerText.trim())
     let now = toggle.innerText.trim()
     if (now === 'OFF') {
+        let spinner = `<div class="recommend_spinner spinner_search" style="display: flex;">\n
+                            <div class="recommend_spinner_lorder"></div>\n
+                        </div>`
         toggle.innerText = 'ON';
         document.getElementById('youtube_recommend_content').style.display = 'flex'
+        document.getElementById('youtube_recommend_content').innerHTML = spinner
         document.getElementById('news_recommend_content').style.display = 'flex'
+        document.getElementById('news_recommend_content').innerHTML = spinner
         document.getElementById('book_recommend_content').style.display = 'flex'
+        document.getElementById('book_recommend_content').innerHTML = spinner
         document.getElementById('shopping_recommend_content').style.display = 'flex'
+        document.getElementById('shopping_recommend_content').innerHTML = spinner
         recommend_switch_ajax(true)
 
         recommend_crawling_on(keyowrd[0])
 
     } else if (now === 'ON') {
 
+
         toggle.innerText = 'OFF';
+
         document.getElementById('youtube_recommend_content').style.display = 'none'
         document.getElementById('news_recommend_content').style.display = 'none'
         document.getElementById('book_recommend_content').style.display = 'none'
         document.getElementById('shopping_recommend_content').style.display = 'none'
+
         recommend_switch_ajax(false)
     }
 }
@@ -760,10 +773,28 @@ function current_tab() {
     return now_tab
 }
 
+function reload(){
+    let spinner = `<div class="recommend_spinner spinner_search" style="display: flex;">
+                            <div class="recommend_spinner_lorder"></div>
+                        </div>`
+    document.getElementById('youtube_recommend_content').style.display = 'flex'
+    document.getElementById('youtube_recommend_content').innerHTML = spinner
+    document.getElementById('news_recommend_content').style.display = 'flex'
+    document.getElementById('news_recommend_content').innerHTML = spinner
+    document.getElementById('book_recommend_content').style.display = 'flex'
+    document.getElementById('book_recommend_content').innerHTML = spinner
+    document.getElementById('shopping_recommend_content').style.display = 'flex'
+    document.getElementById('shopping_recommend_content').innerHTML = spinner
+    click_recommend_function()
+    recommend_crawling_on(keyowrd[0])
+
+}
+
 ////////////////////////////////////////////////////////추천친구 관련///////////////////////////////////////////////////////
 
 var like_sentence = []
 var like_keyowrd = []
+
 // 찜 제목 받아 오기
 function get_like() {
     $.ajax({

@@ -147,7 +147,7 @@
 }
 
 .recommend_toggle_wrapper{
-    width: 170px;
+    width: 210px;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -187,6 +187,22 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    cursor: pointer;
+
+}
+
+.recommend_reload_button:hover{
+    animation: spinning_reload 1s ease-in-out infinite;
+}
+
+@keyframes spinning_reload {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(180deg);
+    }
+
 }
 
 .recommend_youtube_container .recommend_content p {
