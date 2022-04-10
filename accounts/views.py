@@ -10,7 +10,11 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+
+from search.models import Youtube,News,Book,Shopping
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
@@ -234,6 +238,56 @@ def remove_friend(request, friend_id):
     return JsonResponse({"msg":"deleted"})
 
 
+
+##################### 추천친구 관련 #####################################
+@csrf_exempt
+@login_required
+def get_user(request):
+    user = request.user
+    like_sentence = []
+    sentence=''
+    youtube = Youtube.objects.filter(user_id= user.id)
+    news = News.objects.filter(user_id= user.id)
+    book = Book.objects.filter(user_id= user.id)
+    shopping = Shopping.objects.filter(user_id = user.id)
+
+    if youtube:
+        for y in youtube:
+            sentence = sentence + y.title + ' '
+    if news:
+        for n in news:
+            sentence = sentence + n.title + ' '
+
+    if book:
+        for b in book:
+            sentence = sentence + b.title + ' '
+
+    if shopping:
+        for s in shopping:
+            sentence = sentence + s.title + ' '
+
+    like_sentence.append(sentence)
+    print("찜 기반 제목들",sentence)
+    context = {
+        'like_sentence': like_sentence
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+# 키워드 받아서 저장
+@csrf_exempt
+@login_required
+def save_like_keyword(request):
+    user = request.user
+    print("찜 기반 유저", user.email)
+    like_keyowrd = json.loads(request.body.decode('utf-8'))['like_keyowrd']
+    print("찜 기반 키워드",like_keyowrd )
+    user.like_keyword = like_keyowrd
+    user.save()
+    return JsonResponse({"msg":"add like"})
+##################################################################################################################
+
+
+
 @csrf_exempt
 @login_required
 def like_public_setting(request):
@@ -257,3 +311,4 @@ def like_public_setting(request):
         'result': result
     }
     return JsonResponse(data)
+
