@@ -329,10 +329,12 @@ def recommend_friend(me):
             recommend_friends = random.sample(not_friends,5)
         else:
             for friendx in not_friends:
-                if friendx.like_keyword != '':
+                try:
                     similarity = W2V.model.wv.similarity(user_keyword,friendx.like_keyword)
                     simil_user[friendx.id] = int(similarity * 100)
-                else: continue
+                except:
+                    simil_user[friendx.id] = 0
+
             print('키워드 유사도',simil_user)
             sorted_friend = sorted(simil_user.items(), key=lambda x:-x[1])
             print('오름차순으로 나열된 친구', sorted_friend)
@@ -347,6 +349,34 @@ def recommend_friend(me):
 
     print('추천친구 목록',recommend_friends)
     return recommend_friends
+
+
+#친구 관심키워드
+@csrf_exempt
+@login_required
+def friend_like_recommend(request):
+    friend_id = request.GET.get('friend_id')
+    print('친구아이디',friend_id)
+    friend = CustomUser.objects.get(id=friend_id)
+    friend_keyword = friend.like_keyword
+    friend_like_keywords = []
+    if friend_keyword == '':
+        friend_like_keywords.append('찜 없음')
+
+    else:
+        friend_like_keywords.append(friend_keyword)
+        try:
+            similar_word = W2V.model.wv.most_similar(friend_keyword)
+            for word in similar_word[:4]:
+                friend_like_keywords.append(word[0])
+        except:
+            print('친구 키워드',friend_like_keywords)
+    print('친구 키워드', friend_like_keywords)
+
+    context = {
+        'friend_keywords': friend_like_keywords
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 ##################################################################################################################
