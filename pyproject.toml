@@ -29,6 +29,7 @@ supervisor = "^4.2.4"
 gunicorn = "20.0.4"
 virtualenv = "^20.14.0"
 six = "^1.16.0"
+gensim = "^4.1.2"
 
 [tool.poetry.dev-dependencies]
 

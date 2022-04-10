@@ -107,9 +107,11 @@ def logout(request):
 def friend_list(request):
     user = request.user
     friends = get_friend_list(user_id=user.id)
+    total_recommend_friend = recommend_friend(user)
     context = {
         "user": user,
         "friends": friends,
+        "recommend_friend": total_recommend_friend,
     }
     return render(request, "accounts/user_list.html", context)
 
@@ -300,6 +302,53 @@ def save_like_keyword(request):
     user.like_keyword = like_keyowrd
     user.save()
     return JsonResponse({"msg":"add like"})
+
+import random
+from accounts.apps import W2V
+
+
+def recommend_friend(me):
+    user = me
+    all_user = CustomUser.objects.all().exclude(id=user.id)
+    print('나빼고 전체 유저', all_user)
+    friends = user.friends.all()
+    print('친구들', friends)
+    not_friends = []
+    recommend_friends = []
+    for x in all_user :
+        if x not in friends:
+            not_friends.append(x)
+
+    print('친구아닌 애들', not_friends)
+    simil_user = {}
+    user_keyword = user.like_keyword
+    if len(not_friends) < 6:
+        recommend_friends = not_friends
+    else :
+        if user_keyword == '':
+            recommend_friends = random.sample(not_friends,5)
+        else:
+            for friendx in not_friends:
+                if friendx.like_keyword != '':
+                    similarity = W2V.model.wv.similarity(user_keyword,friendx.like_keyword)
+                    simil_user[friendx.id] = int(similarity * 100)
+                else: continue
+            print('키워드 유사도',simil_user)
+            sorted_friend = sorted(simil_user.items(), key=lambda x:-x[1])
+            print('오름차순으로 나열된 친구', sorted_friend)
+            if len(sorted_friend) > 4:
+                for i in sorted_friend[:5]:
+                    recommend = CustomUser.objects.get(id=i[0])
+                    recommend_friends.append(recommend)
+            else:
+                for i in sorted_friend:
+                    recommend = CustomUser.objects.get(id=i[0])
+                    recommend_friends.append(recommend)
+
+    print('추천친구 목록',recommend_friends)
+    return recommend_friends
+
+
 ##################################################################################################################
 
 
