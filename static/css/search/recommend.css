@@ -150,17 +150,17 @@
 
 .recommend_container_total_toggle {
     position: absolute;
-    width: 60px;
-    height: 30px;
+    width: 3.2vw;
+    height: 3.2vh;
     background-color: #7556CD;
     color: white;
-    left: 90px;
-    top: -8px;
+    left: 4.5vw;
+    top: -1vh;
     text-align: center;
     border: none;
     font-weight: 700;
     border-radius: 8px;
-    padding-bottom: 3px;
+    padding-bottom: 0.5vh;
     box-sizing: border-box;
     /*z-index: 2;*/
 }
@@ -448,8 +448,7 @@
 
 .recommend_news_container .search_news_content {
     overflow-y: auto;
-    max-height: 320px;
-    height: 100%;
+    height: 35.5vh;
     width: 100%;
 }
 
@@ -480,11 +479,11 @@
 
 .recommend_news_container .recommend_news_content .content_news_section {
     width: 100%;
-    height: 260px;
+    height: 35vh;
     overflow-x: auto;
     /*overflow-y: hidden;*/
     box-sizing: border-box;
-    margin-top: 24px;
+    margin-top: 2.4vh;
     display: flex;
     /*background-color: gray;*/
     /*border-radius: 11px;*/
@@ -616,7 +615,7 @@
 
 .recommend_news_container .search_news_content {
     width: 100%;
-    margin-top: 40px;
+    margin-top: 3vh;
 }
 
 .recommend_news_container .search_news_content .title {
@@ -995,11 +994,11 @@
 
 .recommend_book_container .recommend_book_content .content_book_section {
     width: 58vw;
-    height: 300px;
+    height: 32vh;
     overflow-x: auto;
-    overflow-y: scroll;
+    overflow-y: hidden;
     box-sizing: border-box;
-    margin-top: 24px;
+    margin-top: 2.4vh;
     display: flex;
     /*background-color: gray;*/
 }
@@ -1165,24 +1164,24 @@
 }
 
 .recommend_book_container .search_book_content {
-    margin-top: 30px;
+    margin-top: 3vh;
 }
 
 .recommend_book_container .search_book_content .title {
     font-weight: 700;
     color: #7657CE;
-    margin-bottom: 12px;
+    margin-bottom: 1.2vh;
 }
 
 .recommend_book_container .search_book_content .content_book_section {
     display: block;
     flex-wrap: wrap;
     width: 100%;
-    height: 260px;
-    overflow-x: auto;
-    overflow-y: scroll;
+    height: 34vh;
+    overflow-x: hidden;
+    overflow-y: auto;
     box-sizing: border-box;
-    margin-top: 24px;
+    margin-top: 2.4vh;
 }
 
 
@@ -1203,7 +1202,7 @@
 .recommend_book_container .search_book_content .content_box {
     position: relative;
     width: 48vw;
-    height: 260px;
+    height: 30vh;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
@@ -1359,11 +1358,11 @@
 
 .recommend_shopping_container .recommend_content .content_section {
     width: 58vw;
-    height: 290px;
+    height: 34vh;
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
-    margin-top: 24px;
+    margin-top: 2.4vh;
     display: flex;
     /*background-color: gray;*/
 }
@@ -1464,13 +1463,13 @@
 }
 
 .recommend_shopping_container .search_content {
-    margin-top: 30px;
+    margin-top: 3vh;
 }
 
 .recommend_shopping_container .search_content .title {
     font-weight: 700;
     color: #7657CE;
-    margin-bottom: 12px;
+    margin-bottom: 1.2vh;
 }
 
 
@@ -1482,7 +1481,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     width: 58vw;
-    height: 290px;
+    height: 34vh;
 }
 
 .recommend_shopping_container .search_content .content_box {
@@ -1654,7 +1653,7 @@
 
 .recommend_shopping_search_content_img {
     width: 200px;
-    height: 200px;
+    height: 24.5vh;
     object-fit: cover;
     object-position: center;
 }

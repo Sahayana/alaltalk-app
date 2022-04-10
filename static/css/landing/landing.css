@@ -40,7 +40,7 @@ body::-webkit-scrollbar-track {
 .landing_header img {
     max-width: 6.4vw;
     width: 100%;
-    margin: 14px 18px;
+    margin: 1.4vh 1.8vh;
 }
 
 /*.landing_header_left {*/
@@ -92,17 +92,15 @@ body::-webkit-scrollbar-track {
 .landing_welcome_text {
     color: white;
     font-weight: 700;
-    /*width: 500px;*/
-    margin: 200px 0 30px 120px;
-    line-height: 95px;
-    font-size: 85px;
+    margin: 20vh 0 3vh 12vh;
+    line-height: 9.5vh;
+    font-size: 8.5vh;
     text-align: left;
 }
 
 .landing_login_container {
-    max-width: 200px;
-    width: 100%;
-    margin: 0 0 0 120px;
+    width: 22vh;
+    margin: 0 0 0 12vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -144,7 +142,7 @@ body::-webkit-scrollbar-track {
     /*width: 100%;*/
     display: flex;
     /*justify-content: center;*/
-    margin: 20px auto;
+    margin: 2vh auto;
     /*text-align: center;*/
     font-size: min(1vw, 20px);
     color: white;
@@ -161,7 +159,7 @@ body::-webkit-scrollbar-track {
 
 .landing_see_our_page {
     position: fixed;
-    bottom: 32px;
+    bottom: 3.2vh;
     right: 50%;
     width: 4vw;
     height: 4vw;
@@ -197,7 +195,7 @@ body::-webkit-scrollbar-track {
 
 .landing_content_row {
     box-sizing: border-box;
-    padding: 100px 120px;
+    padding: 10vh 12vh;
 }
 
 .lading_content_row_1 {
@@ -223,35 +221,32 @@ body::-webkit-scrollbar-track {
 
 .landing_content_row_text_1 {
     /*font-size: min(5vw, 120px);*/
-    font-size: 72px;
+    font-size: 8vh;
     font-weight: 700;
-    text-align: right;;
+    text-align: right;
     color: #7657ce;
     /*text-shadow: 10px 10px #474B50;*/
 
 }
 
 .landing_content_row_text_2 {
-    /*font-size: min(3vw, 60px);*/
-    font-size: 40px;
+    font-size: 4.5vh;
     color: #191919;
     text-align: right;
     font-weight: 600;
-    margin-top: 12px;
-    line-height: 45px;
-    /*text-shadow: 5px 5px 10px #474B50;*/
+    margin-top: 1.2vh;
+    line-height: 5vh;
 
 }
 
 .landing_content_row_text_3 {
     /*font-size: min(3vw, 60px);*/
-    font-size: 18px;
+    font-size: 2vh;
     color: #5e5e5e;
     width: 16vw;
     text-align: right;
-    /*font-weight: 600;*/
-    margin-top: 32px;
-    line-height: 20px;
+    margin-top: 3vh;
+    line-height: 2.4vh;
     /*text-shadow: 5px 5px 10px #474B50;*/
 
 }
@@ -261,7 +256,7 @@ body::-webkit-scrollbar-track {
     width: 40vw;
     height: 25vw;
     box-shadow: 10px 10px 25px 1px rgba(0, 0, 0, .15);
-    margin-left: 80px;
+    margin-left: 8vh;
 }
 
 
@@ -324,8 +319,8 @@ body::-webkit-scrollbar-track {
 
 .landing_slide_next_button {
     position: absolute;
-    top: 200px;
-    right: 14px;
+    top: 20vh;
+    right: 1.4vh;
     width: min(3vw, 100px);
     height: min(3vw, 100px);
     background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/landing/landing_next_slide_button.png");
@@ -349,7 +344,7 @@ body::-webkit-scrollbar-track {
     /*width: 20%;*/
     /*height: 20vw;*/
     text-align: left;
-    line-height: 30px;
+    line-height: 3vh;
     /*margin-left: 80px;*/
     /*padding-bottom: 150px;*/
     /*margin-bottom: 32px;*/
@@ -361,8 +356,7 @@ body::-webkit-scrollbar-track {
 
 .landing_content_row_2_text_1 {
     /*font-size: min(5vw, 80px);*/
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin: 4vh 0;
 }
 
 
@@ -397,25 +391,25 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_content_row_3_title {
-    font-size: 18px;
+    font-size: 2vh;
     color: #5e5e5e;
-    margin-top: 140px;
+    margin-top: 14vh;
 }
 
 .landing_content_row_3_title .strong {
-    font-size: 72px;
+    font-size: 8vh;
     font-weight: 700;
     color: #7657ce;
-    margin-bottom: 24px;
+    margin-bottom: 2.4vh;
 }
 
 .landing_content_row_3_title .sub {
-    font-size: 24px;
+    font-size: 3vh;
     color: #191919;
 }
 
 .landing_content_row_3_title p:last-child {
-    margin-top: 20px;
+    margin-top: 2vh;
 }
 
 .landing_content_row_bar {
@@ -483,8 +477,8 @@ body::-webkit-scrollbar-track {
     width: 38vw;
     height: 24vw;
     background-color: white;
-    margin-top: 30px;
-    margin-left: 120px;
+    /*margin-top: 30px;*/
+    margin-left: 12vh;
     border: 2px solid rgba(217, 217, 217, 1);
 }
 
@@ -812,9 +806,9 @@ body::-webkit-scrollbar-track {
 .landing_footer_about_us {
     width: 20vw;
     height: 100%;
-    margin-left: 120px;
+    margin-left: 12vh;
     text-align: left;
-    margin-top: 160px;
+    margin-top: 16vh;
 }
 
 .landing_footer_about_us img {
@@ -852,7 +846,7 @@ body::-webkit-scrollbar-track {
     position: absolute;
     top: -3vw;
     left: 0;
-    font-size: 20px;
+    font-size: 2.4vh;
     font-weight: 500;
 }
 
@@ -883,8 +877,8 @@ body::-webkit-scrollbar-track {
 .dev_info {
     display: flex;
     flex-direction: column;
-    width: 120px;
-    margin-left: 8px;
+    width: 6vw;
+    margin-left: 1vh;
 }
 
 .dev_info p:first-child {
@@ -893,11 +887,11 @@ body::-webkit-scrollbar-track {
 }
 
 .landing_footer_developer_profile_github {
-    width: 40px;
-    height: 40px;
+    width: 4vh;
+    height: 4vh;
     position: absolute;
-    right: 12px;
-    bottom: 12px;
+    right: 1.2vh;
+    bottom: 1.6vh;
     z-index: 5;
 }
 
