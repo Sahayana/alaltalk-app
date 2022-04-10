@@ -1,5 +1,11 @@
 from django.contrib.auth.hashers import check_password
 from django.test import TestCase
+from django.core import mail
+
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from accounts.utils import accounts_verify_token
+
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
@@ -12,6 +18,8 @@ from accounts.services.accounts_service import (
     send_friend_request,
     accounts_profile_delete,
     accounts_delete_friend,
+    send_email_verification,
+    verified_email_activation
 )
 
 
@@ -181,4 +189,38 @@ class AccountsTest(TestCase):
         self.assertEqual(0, user.friends.count())
         self.assertEqual(0, friend.friends.count())
         
+
+    def test_service_send_email_verification(self) -> None:
+
+        # Given
+        user = create_single_user(email="didrmatjd@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")
+        current_domain = "127.0.0.1"
+        mail_title = "[alaltalk] 이메일 인증 링크입니다."
+
+        # When
+        result = send_email_verification(user=user, current_domain=current_domain)
+
+        # Then
+        self.assertEqual(1, result)
+        self.assertEqual(1, len(mail.outbox))
+        self.assertEqual(mail_title, mail.outbox[0].subject)
+    
+
+    def test_service_verified_email_activation(self) -> None:
+
+        # Given
+        user = create_single_user(email="didrmatjd@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")
+        current_domain = "127.0.0.1"
+        uidb64 = urlsafe_base64_encode(force_bytes(user.id)).encode().decode()
+        token = accounts_verify_token.make_token(user)
+        send_email_verification(user=user, current_domain=current_domain)
+        self.assertFalse(user.is_active)
+
+        # When
+        verified_email_activation(uidb64=uidb64, token=token)
+        current_user = CustomUser.objects.get(email="didrmatjd@gmail.com")
+
+        # Then
+        self.assertTrue(current_user.is_active)
+
 

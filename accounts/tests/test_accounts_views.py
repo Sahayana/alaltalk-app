@@ -48,8 +48,8 @@ class TestAccountsViews(TestCase):
         users = get_user_model().objects.all()
 
         # Then
-        self.assertEqual(201, response.status_code)
-        self.assertIsNotNone(response.json()["result"])        
+        self.assertEqual(200, response.status_code)
+        self.assertIsNotNone(response.json()["msg"])        
         self.assertEqual(3, users.count())
         self.assertIsNotNone(users[1].img)
         

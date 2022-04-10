@@ -2,6 +2,7 @@ import json
 import random
 from datetime import datetime
 
+
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -14,6 +15,7 @@ from django.urls import reverse
 from search.models import Youtube,News,Book,Shopping
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.sites.shortcuts import get_current_site
 
 
 from accounts.models import CustomUser, FriendRequest
@@ -27,6 +29,8 @@ from accounts.services.accounts_service import (
     send_friend_request,
     accounts_profile_delete,
     accounts_delete_friend,
+    send_email_verification,
+    verified_email_activation,
 )
 
 # Create your views here.
@@ -40,15 +44,22 @@ def signup(request):
         bio = request.POST.get("bio")
         if request.FILES.get("img"):
             img = request.FILES.get("img")
-            create_single_user(email=email, nickname=nickname, password=password, bio=bio, img=img)
+            user = create_single_user(email=email, nickname=nickname, password=password, bio=bio, img=img)
         else:
-            create_single_user(email=email, nickname=nickname, password=password, bio=bio)
-        context = {"result": "회원가입이 완료되었습니다."}
-        return JsonResponse(context, status=201)
+            user = create_single_user(email=email, nickname=nickname, password=password, bio=bio)
+
+        current_site = get_current_site(request)
+        current_site_domain = current_site.domain
+        result = send_email_verification(user=user, current_domain=current_site_domain)        
+        if result == 1:
+            return JsonResponse({"msg": "sent"}, status=200)
+        else:
+            return JsonResponse({"msg": "error"}, status=200)        
+        
 
     elif request.method == "GET":
         signed_user = request.user.is_authenticated
-        if signed_user:
+        if signed_user and signed_user.is_active:
             return redirect("accounts:mypage")
 
         return render(request, "accounts/signup.html")
@@ -61,21 +72,26 @@ def duplicated_check(request):
         return JsonResponse(context, status=200)
 
 
+def account_activation(request, uidb64, token):
+    verified_email_activation(uidb64=uidb64, token=token)
+    return redirect("accounts:login")
+
+
 def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
         me = auth.authenticate(email=email, password=password)
         # print(me, email, password)
-        if not me:
-            return JsonResponse({"msg": "error"})
-
-        auth.login(request, me)
-        return JsonResponse({"msg": "ok"})
+        if me and me.is_active:
+            auth.login(request, me)
+            return JsonResponse({"msg": "ok"})
+        else:
+            return JsonResponse({"msg": "error"})  
 
     else:
         signed_user = request.user.is_authenticated
-        if signed_user:
+        if signed_user and signed_user.is_active:
             return redirect("accounts:mypage")
 
         return render(request, "accounts/login.html")
