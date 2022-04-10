@@ -1,27 +1,27 @@
 <div class="recommend_close_btn" onclick="close_recommend()"></div>
-<div class="recommend_nav">
-        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
-        <span onclick="move_category('recommend_news_container')">NEWS</span>
-        <span onclick="move_category('recommend_book_container')">BOOK</span>
-        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
+<div class="recommend_nav" id="recommend_nav">
+    <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
+    <span onclick="move_category('recommend_news_container')">NEWS</span>
+    <span onclick="move_category('recommend_book_container')">BOOK</span>
+    <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
 </div>
-
+<div class="search_bar" id="recommend_search_bar" onkeyup="initialize_search_bar(event)">
+    <div class="search_icon"></div>
+    <input type="text" placeholder="Search">
+</div>
+<div class="recommend_toggle_wrapper">
+    <p>추천 컨텐츠</p>
+    <button class="recommend_container_total_toggle" id="recommend_toggle" onclick="recommend_switch()">
+        {% if user.is_recommend_on %}
+            ON
+        {% else %}
+            OFF
+        {% endif %}
+    </button>
+</div>
 <div class="recommend_youtube_container" id="recommend_youtube_container" style="display: block">
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_content">
-            <p>추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
-
             <div class="content_section" id="youtube_recommend_content">
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
@@ -48,20 +48,8 @@
     </div>
 </div>
 <div class="recommend_news_container" id="recommend_news_container" style="display: none">
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_news_content">
-            <p class="title">추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
             <div class="content_news_section" id="news_recommend_content" style="display: flex">
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
@@ -89,20 +77,8 @@
 
 </div>
 <div class="recommend_book_container" id="recommend_book_container" style="display: none">
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_book_content">
-            <p class="title">추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
             <div class="content_book_section" id="book_recommend_content" style="display: flex">
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
@@ -128,20 +104,8 @@
 
 </div>
 <div class="recommend_shopping_container" id="recommend_shopping_container" style="display: none">
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_content">
-            <p class="title">추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
             <div class="recommend_reload_button"></div>
             <div class="content_section" id="shopping_recommend_content" style="display: flex">
 

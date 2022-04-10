@@ -15,6 +15,8 @@
     color: #d2d2d2;
     cursor: pointer;
     width: 50%;
+    position: static;
+    margin: 30px;
 }
 .recommend_nav span {
     margin-right: 12px;
@@ -22,6 +24,36 @@
 
 .recommend_nav span:first-child {
     color: #7657CE;
+}
+
+.search_bar {
+    width: 58vw;
+    height: 40px;
+    border: 1px solid #A185F2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin: 30px;
+    box-sizing: border-box;
+    padding: 0 12px;
+}
+
+.search_bar .search_icon {
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.search_bar input {
+    border: none;
+    font-size: 14px;
+    -webkit-text-fill-color: #A185F2;
+    margin-left: 6px;
+    width: 100%;
 }
 
 
@@ -81,37 +113,9 @@
     cursor: pointer;
 }
 
-.recommend_youtube_container .search_bar {
-    width: 58vw;
-    height: 40px;
-    border: 1px solid #A185F2;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    margin: 24px 0;
-    box-sizing: border-box;
-    padding: 0 12px;
-}
 
-.recommend_youtube_container .search_bar .search_icon {
-    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
-    width: 20px;
-    height: 20px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
 
-}
-
-.recommend_youtube_container .search_bar input {
-    border: none;
-    font-size: 14px;
-    -webkit-text-fill-color: #A185F2;
-    margin-left: 6px;
-    width: 100%;
-}
-
-.recommend_youtube_container .search_bar input:focus {
+.search_bar input:focus {
     outline: none;
 }
 
@@ -142,8 +146,25 @@
     height: auto;
 }
 
+.recommend_toggle_wrapper{
+    width: 170px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    margin-left: 28px;
+}
+
+.recommend_toggle_wrapper p{
+    width: 92px;
+    height: 100%;
+    line-height: 30px;
+
+}
+
 .recommend_container_total_toggle {
-    position: absolute;
     width: 60px;
     height: 30px;
     background-color: #7556CD;
