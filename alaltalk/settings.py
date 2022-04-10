@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "accounts",
     "search",
     "storages",
+    "six",
 ]
 
 MIDDLEWARE = [
@@ -151,10 +152,10 @@ AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
 
 # local_setting을 위한 설정
-try:
-    from alaltalk.local_settings import *
-except ImportError:
-    pass
+# try:
+#     from alaltalk.local_settings import *
+# except ImportError:
+#     pass
 
 
 # Email 전송을 위한 설정
@@ -214,3 +215,5 @@ try:
 
 except FileNotFoundError:
     pass
+
+

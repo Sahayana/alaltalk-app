@@ -53,9 +53,17 @@ function signUp(){
         mimeType: "multipart/form-data",
         data: formData, 
         success: function (response) {
-            console.log(response)
-            alert("회원가입이 완료되었습니다.")
-            window.location.replace('/')            
+            let data = JSON.parse(response);
+            console.log(data);            
+            console.log(data.msg);
+            if (data.msg == "sent"){
+                alert("회원 가입 인증 메일을 확인해주세요!");
+                window.location.replace('/'); 
+            }else{
+                alert("비정상적인 접근입니다.");
+                return;
+            }
+                       
         }
     })
 }

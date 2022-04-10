@@ -7,6 +7,7 @@ app_name = "accounts"
 urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path("signup/check/", views.duplicated_check, name="duplicated_check"),
+    path("signup/verification/<str:uidb64>/<str:token>/", views.account_activation, name="account_activation"),
     path("login/", views.login, name="login"),
     path("logout/", views.logout, name="logout"),
     path("login/temp/", views.temporary_password, name="temporary_password"),
@@ -20,5 +21,8 @@ urlpatterns = [
     path("friends/accept/<int:request_id>/", views.accept_request, name="accept_request"),
     path("friends/decline/<int:request_id>/", views.decline_request, name="decline_request"),
     path("friends/delete/<int:friend_id>/", views.remove_friend, name="remove_friend"),
+    path("friends/like", views.get_user, name="user_like"),
+    path("friend/keyword", views.save_like_keyword, name="save_like_keyword"),
     path("mypage/public/setting/", views.like_public_setting, name='public_change')
+
 ]
