@@ -684,7 +684,6 @@ function move_category(target_id) {
     document.getElementById('recommend_book_container').style.display = 'none'
     document.getElementById('recommend_shopping_container').style.display = 'none'
     document.getElementById(target_id).style.display = 'block'
-    document.getElementById(target_id).children[2].children[1].style.display = 'none'
 }
 
 // 공유하기 버튼

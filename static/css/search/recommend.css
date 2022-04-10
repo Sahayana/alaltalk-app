@@ -10,6 +10,20 @@
     width: 60%;
 }
 
+.recommend_nav {
+    font-weight: 700;
+    color: #d2d2d2;
+    cursor: pointer;
+    width: 50%;
+}
+.recommend_nav span {
+    margin-right: 12px;
+}
+
+.recommend_nav span:first-child {
+    color: #7657CE;
+}
+
 
 .recommend_toggle {
     position: relative;
@@ -52,20 +66,7 @@
 }
 
 
-.recommend_youtube_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-    cursor: pointer;
-    width: 50%;
-}
 
-.recommend_youtube_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_youtube_container .recommend_nav span:first-child {
-    color: #7657CE;
-}
 
 .recommend_close_btn {
     position: absolute;
@@ -403,18 +404,6 @@
     padding: 30px 10px 20px 32px;
 }
 
-.recommend_news_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-}
-
-.recommend_news_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_news_container .recommend_nav span:nth-child(2) {
-    color: #7657CE;
-}
 
 .recommend_news_container .search_bar {
     width: 58vw;
@@ -919,19 +908,6 @@
     padding: 30px 10px 20px 32px;
 }
 
-.recommend_book_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-}
-
-.recommend_book_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_book_container .recommend_nav span:nth-child(3) {
-    color: #7657CE;
-}
-
 .recommend_book_container .search_bar {
     width: 58vw;
     height: 40px;
@@ -1274,18 +1250,6 @@
     padding: 30px 10px 20px 32px;
 }
 
-.recommend_shopping_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-}
-
-.recommend_shopping_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_shopping_container .recommend_nav span:last-child {
-    color: #7657CE;
-}
 
 .recommend_shopping_container .search_bar {
     width: 58vw;
