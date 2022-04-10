@@ -158,6 +158,15 @@
     /*z-index: 2;*/
 }
 
+.recommend_reload_button{
+    width: 30px;
+    height: 30px;
+    background-image: url("/static/images/reload.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
 .recommend_youtube_container .recommend_content p {
     color: #7657CE;
     font-weight: 700;
