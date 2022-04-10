@@ -52,7 +52,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     bio = models.CharField(max_length=150, blank=True)
     img = models.ImageField(default="profile_img/testuser1testusercom-2022-03-28.png", upload_to="profile_img")
     friends = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-    like_keyword = models.CharField(max_length=100, default= '')
+    like_keyword = models.CharField(max_length=100, default= '', blank=True)
 
     # Boolean field
     is_admin = models.BooleanField(default=False)
