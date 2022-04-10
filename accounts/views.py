@@ -143,6 +143,10 @@ def search_friend(request):
         query = request.GET.get("q")
         result = get_user_model().objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct()  # 중복 제거를 위한 distinct()
 
+        if result.count() == 0:
+            return JsonResponse({"msg":"none"})
+
+
         # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
         result_json = list(result.values())
         for i, friend in enumerate(result_json):
