@@ -21,7 +21,10 @@ class TestAccountsViews(TestCase):
         self.bio = 'dj@coplsd@'
         self.user = create_single_user(email=self.email, nickname=self.nickname, password=self.password, bio=self.bio)
         self.user2 = create_single_user(email='friend@friend.com', nickname='friend', password=self.password, bio='test2')
-
+        self.user.is_active = True
+        self.user2.is_active = True
+        self.user.save()
+        self.user2.save()
 
     def test_get_sign_up_page(self) -> None:
 

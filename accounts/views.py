@@ -91,7 +91,7 @@ def login(request):
 
     else:
         signed_user = request.user.is_authenticated
-        if signed_user and signed_user.is_active:
+        if signed_user:
             return redirect("accounts:mypage")
 
         return render(request, "accounts/login.html")
