@@ -177,8 +177,8 @@ except FileNotFoundError:
 
 
 # # # AWS S3 connet
-# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
 with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
