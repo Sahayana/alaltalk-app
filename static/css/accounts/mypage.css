@@ -56,6 +56,7 @@ body {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .nav .icon_group .icon.user_icon {
@@ -141,6 +142,7 @@ body {
     border: 2px solid #a185f2;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profile_follow {
@@ -151,6 +153,7 @@ body {
     border: 2px solid #a185f2;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profile_like {
@@ -161,6 +164,7 @@ body {
     border: 2px solid #a185f2;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profile_logout {
@@ -169,6 +173,7 @@ body {
     font-size: 24px;
     color: #7657ce;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .profile_logout > a > button {
@@ -374,7 +379,7 @@ body {
     /*margin-top: 32px;*/
 }
 .follow_list_section {
-    height: 85.8vh;
+    height: 85vh;
     width: 100%;
     overflow-y:auto;
     overflow-x: hidden;
@@ -421,6 +426,7 @@ body {
     margin-left: auto;
     position: relative;
     margin-right: 66px;
+    cursor: pointer;
 }
 
 .profile_follow_add p {
@@ -437,6 +443,7 @@ body {
     width: 30px;
     height: 30px;
     position: relative;
+    cursor: pointer;
 }
 
 .profile_follow_decline p {
@@ -488,7 +495,7 @@ body {
     width: 98%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 81vh;
+    height: 80vh;
     /*display: none;*/
 }
 
@@ -596,7 +603,7 @@ body {
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 81vh;
+    height: 80vh;
 }
 
 .right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar {
@@ -755,7 +762,7 @@ body {
     display: none;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 81vh;
+    height: 80vh;
 }
 
 .right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar {
@@ -933,7 +940,7 @@ body {
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 81vh;
+    height: 80vh;
     /*font-weight: 700;*/
     color: #5e5e5e;
 }

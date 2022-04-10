@@ -57,7 +57,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 10px 20px 32px;
+    padding: 3vh 1vh 2vh 3vh;
 }
 
 
@@ -172,7 +172,7 @@
 
 .recommend_youtube_container .recommend_content .content_section {
     width: 58vw;
-    height: 29vh;
+    height: 32vh;
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
@@ -198,7 +198,7 @@
 .recommend_youtube_container .recommend_content .content_section .content_box {
     min-width: 280px;
     width: 100%;
-    height: 240px;
+    height: 30vh;
     border: 1px solid #e5e5e5;
     box-sizing: border-box;
     margin-right: 10px;
@@ -297,7 +297,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: 38.5vh;
+    height: 35vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -396,7 +396,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 10px 20px 32px;
+    padding: 3vh 1vh 2vh 3vh;
 }
 
 .recommend_news_container .recommend_nav {
@@ -911,7 +911,7 @@
     width: 98%;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 10px 20px 32px;
+    padding: 3vh 1vh 2vh 3vh;
 }
 
 .recommend_book_container .recommend_nav {
@@ -1263,7 +1263,7 @@
     width: 98%;
     height: 100%;
     box-sizing: border-box;
-    padding: 30px 10px 20px 32px;
+    padding: 3vh 1vh 2vh 3vh;
 }
 
 .recommend_shopping_container .recommend_nav {
@@ -1653,7 +1653,7 @@
 
 .recommend_shopping_search_content_img {
     width: 200px;
-    height: 24.5vh;
+    height: 24vh;
     object-fit: cover;
     object-position: center;
 }
