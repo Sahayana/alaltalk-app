@@ -337,8 +337,8 @@ function shopping_content_add(shopping_crawling_data_list, type) {
 function initialize_search_bar(e) {
     if (e.keyCode === 13) {
         let now_tab = current_tab()
-        let search_word = e.target.innerText
-        console.log(e.target.innerText)
+        let search_word = e.target.value
+        console.log(search_word)
 
 
         // 이전 데이터 지우기
