@@ -11,7 +11,7 @@ function click_recommend_function() {
     get_chat_log()
     // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
     get_keyword(chat_log)
-
+    console.log('recommend_toggle!! -> ', document.getElementById('recommend_toggle'))
 }
 
 

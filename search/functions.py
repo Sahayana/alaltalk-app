@@ -23,7 +23,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
     options.add_argument("headless")
     options.add_argument("--incognito")
 
-    driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
+    driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
 
     # 쿠기 삭제
     driver.delete_all_cookies()
@@ -63,6 +63,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
         crawling_data.append([crawling_url, youtube_base_url + video_url, video_title, video_views, video_already])
 
     print("youtube crawling function time is ", time.time() - start, "seconds")
+    driver.close()
     return crawling_data[0:content_count]
 
 
