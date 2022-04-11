@@ -602,12 +602,10 @@
                             'room_id': room_id,
                         }));
                     }
-
                 }
                 messageInputDom.value = '';
             }
-        }
-        ;
+        };
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {
