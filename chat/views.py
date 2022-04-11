@@ -18,9 +18,9 @@ from search.models import Youtube,News,Book,Shopping
 @login_required
 def show_chat_list(request):
     user = request.user
-    chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all()
+    chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by('-created_at')
     all_message = ChatMessage.objects.all()
-    return render(request, "chat/chat_list.html", {"chatroom_list": chatroom_list, "all_message": all_message})
+    return render(request, "chat/chat_list.html", {'user_id': user.id, "chatroom_list": chatroom_list, "all_message": all_message})
 
 
 # 채팅하기 버튼 클릭 시 채팅방 생성
@@ -44,15 +44,28 @@ def create_chat_room(request, id):
             room_id = room.id
             return redirect("/chat/room/" + str(room_id) + "/")
         else:
-            chat_room = ChatRoom.objects.create(participant1=user, participant2=partner)
-            chat_room.save()
+            try:
+                chat_room = ChatRoom.objects.create(participant1=user, participant2=partner)
+                chat_room.save()
 
-            # ChatRoom에 있는 room id 로 redirect
-            room = ChatRoom.objects.get(participant1=user, participant2=partner)
-            room_id = room.id
-            return redirect("/chat/room/" + str(room_id) + "/")
+                # ChatRoom에 있는 room id 로 redirect
+                room = ChatRoom.objects.get(participant1=user, participant2=partner)
+                room_id = room.id
+                return redirect("/chat/room/" + str(room_id) + "/")
+            except exist_room1.DoesNotExist or exist_room1.DoesNotExist:
+                return render(request, "chat/chat_room.html", {'error': '존재하지 않거나 사라진 채팅방입니다.'})
+
     else:
-        return render(request, "chat/chat_room.html", {'user': user})
+        return render(request, "chat/chat_room.html", {'error': '접근 불가한 채팅방 입니다.'})
+
+
+# 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
+@csrf_exempt
+@login_required
+def delete_chat_room(request, room_id):
+    target_room = ChatRoom.objects.get(id=room_id)
+    target_room.delete()
+    return redirect('/chat')
 
 
 # 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
@@ -62,14 +75,10 @@ def post_data_to_chat_room(request, room_id):
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
-        chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all()
+        chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by('-created_at')
         all_message = ChatMessage.objects.all()
 
-        last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
-        limit = len(last_messages) - 40
-        if len(last_messages) > 40:
-            last_messages = last_messages[limit:]
-        # latest_created_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by('-created_at')[0]
+        # latest_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("-created_at")[0]
 
         if chatroom.participant1.id == user.id:
             participant = chatroom.participant2
@@ -95,8 +104,7 @@ def post_data_to_chat_room(request, room_id):
                 "participant2": chatroom.participant2,
                 "participant": participant,
                 "all_message": all_message,
-                "last_messages": last_messages,
-                # "latest_created_message": latest_created_message,
+                # "latest_messages": latest_messages,
                 "participant_like_youtube": participant_like_youtube,
                 "participant_like_news": participant_like_news,
                 "participant_like_book": participant_like_book,
@@ -173,3 +181,64 @@ def message_loader(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
+@csrf_exempt
+@login_required
+def latest_message(request):
+    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    latest_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by("-created_at")[0]
+    chatroom = ChatRoom.objects.get(id=room_id)
+    if request.user.id == chatroom.participant1_id:
+        partner_id = chatroom.participant2_id
+    else :
+        partner_id = chatroom.participant1_id
+    print(partner_id)
+    context = {
+        'message': latest_message.message,
+        'chatroom_id': latest_message.chatroom_id,
+        'author_id': latest_message.author_id,
+        'partner_id': partner_id,
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@csrf_exempt
+@login_required
+def last_message_list(request):
+    # chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
+    last_messages = ChatMessage.objects.all().order_by('created_at')
+
+    last_message_list = []
+    for message in last_messages:
+        last_message_list.append({'message': message.message, 'author_id': message.author_id, 'chatroom_id': message.chatroom_id})
+
+    context = {
+        'last_message_list': last_message_list
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@csrf_exempt
+@login_required
+def latest_message_not_connected(request):
+    partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
+    print(partner_list)
+
+    latest_chat_list = []
+    for partner in partner_list:
+        print(partner)
+        chatter = CustomUser.objects.get(id=partner)
+        chatroom = ChatRoom.objects.get(Q(participant1=request.user, participant2_id=chatter) | Q(participant2=request.user, participant1=chatter))
+        print(chatroom)
+        latest_message_each_chatroom = ChatMessage.objects.filter(chatroom=chatroom).order_by("-created_at")
+        for message in latest_message_each_chatroom:
+            if message is latest_message_each_chatroom[0]:
+                print(message.message)
+                latest_chat_list.append({'partner': chatter.id, 'author_message': message.author_id ,'latest_message_each_chatroom': message.message})
+
+    context = {
+        'latest_chat_list': latest_chat_list,
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
