@@ -24,15 +24,20 @@ def youtube_crawling(search_word: str, count: int) -> Union[List[List[str]], str
                     'gl': 'KR',
                     'clientName': 'WEB',
                     'clientVersion': '2.20220406.09.00',
+
                 },
+
             },
             'query': search_word,
         }
 
+
+
         response = requests.post('https://www.youtube.com/youtubei/v1/search', params=params, cookies=cookies,
                                  json=json_data, timeout=2)
         json_res = json.loads(response.text)
-        results = json_res['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0][
+        results = \
+        json_res['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0][
             'itemSectionRenderer']['contents']
 
         answer = []
@@ -45,11 +50,15 @@ def youtube_crawling(search_word: str, count: int) -> Union[List[List[str]], str
                 video_already = 'False'
                 answer.append([youtube_base_url + video_id, title, views, video_already])
         print("youtube crawling function time is ", time.time() - start, "seconds")
+        print(len(answer))
         if len(answer) < count:
             count = len(answer)
         return answer[0:count]
     except TimeoutError:
         return 'TimeOut'
+
+
+youtube_crawling('아이유', 20)
 
 
 def shopping_crawling(search_word: str, count: int) -> Union[List[List[str]], str]:
@@ -79,4 +88,3 @@ def shopping_crawling(search_word: str, count: int) -> Union[List[List[str]], st
 
     except TimeoutError:
         return 'TimeOut'
-

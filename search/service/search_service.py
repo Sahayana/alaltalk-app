@@ -14,7 +14,7 @@ def crawling_news(search: str) -> List[List[str]]:
     url = "https://search.naver.com/search.naver?where=news&query="
     newUrl = url + parse.quote(search)
 
-    html = urllib.request.urlopen(newUrl).read()
+    html = urllib.request.urlopen(newUrl, timeout=2).read()
     soup = BeautifulSoup(html, "html.parser")
     name = soup.select("#main_pack > section > div > div.group_news > ul > li > div > div > a")
     content = soup.select("#main_pack > section > div > div.group_news > ul > li > div > div > div.news_dsc > div > a")
@@ -45,7 +45,7 @@ def crawling_book(search: str) -> List[List[str]]:
     url = "https://search.kyobobook.co.kr/web/search?vPstrKeyWord="
     newUrl = url + parse.quote(search)
 
-    html = urllib.request.urlopen(newUrl).read()
+    html = urllib.request.urlopen(newUrl, timeout=2).read()
     soup = BeautifulSoup(html, "html.parser")
 
     title = soup.select("div.title > a > strong")
