@@ -7,7 +7,7 @@ from ninja import Form, Router
 from search.models import Book, News, Shopping, Youtube
 from search.service.search_service import crawling_book, crawling_news
 from accounts.models import CustomUser
-from ...functions import crawling_shopping_only_bs4, crawling_youtube
+from ...functions import crawling_shopping_only_bs4, crawling_youtube_bs4
 from .schemas import CrawlingRequest, CrawlingResponse, SearchRequest, SearchResponse
 
 router = Router(tags=["search"])
@@ -39,10 +39,10 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
     all_response = {}
     content_count = 10
     try:
-        all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
+        all_response["youtube"] = crawling_youtube_bs4(crawling_request.target, content_count)
         for youtube_row in all_response['youtube']:
             if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
-                youtube_row[4] = 'True'
+                youtube_row[3] = 'True'
     except Exception as e:
         print('youtube_crawling Error: ', e)
         all_response["youtube"] = []
@@ -81,7 +81,7 @@ def search_youtube(request, youtube_request: SearchRequest = Form(...)) -> Tuple
     youtube_list = []
     print(youtube_request.search)
     try:
-        youtube_list = crawling_youtube(youtube_request.search, content_count)
+        youtube_list = crawling_youtube_bs4(youtube_request.search, content_count)
         for youtube_row in youtube_list:
             if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
                 youtube_row[4] = 'True'
