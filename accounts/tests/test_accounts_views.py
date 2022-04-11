@@ -21,7 +21,10 @@ class TestAccountsViews(TestCase):
         self.bio = 'dj@coplsd@'
         self.user = create_single_user(email=self.email, nickname=self.nickname, password=self.password, bio=self.bio)
         self.user2 = create_single_user(email='friend@friend.com', nickname='friend', password=self.password, bio='test2')
-
+        self.user.is_active = True
+        self.user2.is_active = True
+        self.user.save()
+        self.user2.save()
 
     def test_get_sign_up_page(self) -> None:
 
@@ -48,8 +51,8 @@ class TestAccountsViews(TestCase):
         users = get_user_model().objects.all()
 
         # Then
-        self.assertEqual(201, response.status_code)
-        self.assertIsNotNone(response.json()["result"])        
+        self.assertEqual(200, response.status_code)
+        self.assertIsNotNone(response.json()["msg"])        
         self.assertEqual(3, users.count())
         self.assertIsNotNone(users[1].img)
         
@@ -272,6 +275,23 @@ class TestAccountsViews(TestCase):
         self.assertEqual(1, len(response.json()['result']))
         self.assertEqual(1, response.json()['result'][0][1])
         self.assertEqual(current_user.id, response.json()['result'][0][0]['id'])
+
+    def test_view_search_friend_returns_none(self) -> None:
+
+        # Given
+        login_user = self.client.login(email=self.email, password=self.password)
+        request = self.factory.get(reverse("accounts:search_friend"))
+        request.user = self.user
+        invalid_query = "nobody"
+
+        # When
+        response = self.client.get(
+            reverse("accounts:search_friend") + f'?q={invalid_query}'
+        )        
+        
+        # Then
+        self.assertEqual(200, response.status_code)
+        self.assertEqual("none", response.json()["msg"])
 
 
     def test_send_friend_request(self) -> None:

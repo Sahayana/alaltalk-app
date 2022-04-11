@@ -203,6 +203,16 @@ body {
     color: #b7b7b7;
 }
 
+.friend_request_badge {
+    margin-left: 5px;
+    border-radius: 50%;
+    background-color: #7657ce;
+    color: #fff;
+    font-size: 15px;
+    padding: 0.5% 1.5% 0.5% 1.5%;
+    
+}
+
 /* 비밀번호 재입력 폼 */
 
 .profile_auth_container {
@@ -465,8 +475,9 @@ body {
 }
 
 .profile_like_container {
-    width: 98%;
     height: 91.5vh;
+    position: relative;
+    width: 100%;
     padding-top: 25px;
     padding-left: 25px;
     display: none;
@@ -1083,4 +1094,39 @@ body {
     to {
         opacity: 1;
     }
+}
+
+
+/* 나만 보기 관련 기능 */
+
+.profile_privacy_settings{
+    display: flex;
+    flex-direction: row;
+    width: 133px;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    right: 63px;
+    top: 27px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.profile_privacy_settings_title{
+    width: 79px;
+    height: 18px;
+
+}
+
+.profile_privacy_settings_button{
+    width: 50px;
+    height: 25px;
+    background-color: #7556CD;
+    color: white;
+    text-align: center;
+    line-height: 20px;
+    outline: none;
+    border-radius: 8px;
 }

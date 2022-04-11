@@ -2,8 +2,8 @@
 function login(){
     let email = document.getElementById("current-email").value
     let password = document.getElementById("current-password").value
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
 
     let formData = new FormData();
     formData.append("email", email);
@@ -23,7 +23,7 @@ function login(){
         processData: false,          
         data: formData, 
         success: function (response) {
-            console.log(response)
+            // console.log(response)
             if (response["msg"] == "error" ){
                 alert("이메일 혹은 비밀번호를 확인해주세요");
                 return;
@@ -41,7 +41,7 @@ function login(){
 function tempPw(){
     let userEmail = ""; 
     userEmail = $("#email-find").val();
-    console.log(userEmail);
+    // console.log(userEmail);
     
     $.ajax({
         type: 'GET',

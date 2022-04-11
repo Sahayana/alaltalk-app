@@ -1,0 +1,7 @@
+{% autoescape off %}    
+
+    아래 링크를 클릭하면 회원가입이 완료됩니다.
+
+    회원가입 링크 : http://{{ domain }}{% url 'accounts:account_activation' uidb64=uid token=token %}
+
+{% endautoescape %}
