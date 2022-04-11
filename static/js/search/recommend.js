@@ -62,10 +62,6 @@ function get_keyword(chat_log) {
             console.log(response.keyword)
             keyowrd = response.keyword;
 
-            // if (document.getElementById('recommend_toggle').innerText === 'ON') {
-            //     recommend_crawling_on(keyowrd[0])
-            // }
-
         },
         error: function (request, status, error) {
             alert('error')
@@ -99,6 +95,22 @@ function recommend_crawling_on(data) {
             news_content_add(response['all_response']['news'], 'crawling')
             book_content_add(response['all_response']['book'], 'crawling')
             shopping_content_add(response['all_response']['shopping'], 'crawling')
+        },
+        error: function (request, status, error) {
+
+            // 스피너 멈추기
+            let spinners = document.getElementsByClassName('recommend_spinner')
+
+            for (let k = 0; k < spinners.length; k++) {
+                spinners[k].style.display = 'none';
+            }
+            let temp_html = '<div>Keyword 불러오기 실패! <br><br> 새로 고침을 눌러 주세요!</div>'
+
+            $('#youtube_recommend_content').append(temp_html)
+            $('#news_recommend_content').append(temp_html)
+            $('#book_recommend_content').append(temp_html)
+            $('#shopping_recommend_content').append(temp_html)
+
         }
     })
 }
@@ -124,7 +136,7 @@ function youtube_content_add(youtube_crawling_data_list, type) {
             heart_image = 'https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png'
         }
         let temp_html_recommend = `<div class="content_box" id="${content_id}">
-                                    <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
+                                    <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[1]}</div>
                                     <div class="video_count">${youtube_row[2]}</div>
                                     <div>
@@ -132,7 +144,7 @@ function youtube_content_add(youtube_crawling_data_list, type) {
                                     </div>
                                 </div>`
         let temp_html_search = `<div class="content_box" id="${content_id}">
-                                    <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
+                                    <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                     <div class="video_title" style="font-size: 13px">${youtube_row[1]}</div>
                                     <div class="video_count">${youtube_row[2]}</div>
                                     <div>
@@ -340,17 +352,9 @@ function initialize_search_bar(e) {
         let search_word = e.target.value
         console.log(search_word)
 
-
         // 이전 데이터 지우기
-        clear_content()
-
-        // search_창 보이기
-        let search_contents = document.getElementsByClassName('search_content')
-        for (let k = 0; k < search_contents.length; k++) {
-            search_contents[k].style.display = 'block'
-        }
-        document.getElementsByClassName('search_news_content')[0].style.display = 'block'
-        document.getElementsByClassName('search_book_content')[0].style.display = 'block'
+        clear_content(now_tab.split('_')[1])
+        document.getElementById(now_tab).children[0].children[1].style.display = 'block'
 
         search_hub(now_tab.split('_')[1], search_word)
 
@@ -369,12 +373,25 @@ function recommend_switch() {
         toggle.innerText = 'ON';
         document.getElementById('youtube_recommend_content').style.display = 'flex'
         document.getElementById('youtube_recommend_content').innerHTML = spinner
+        document.getElementById('youtube_search_content').style.height = 'calc(56vh - 260px)'
+
         document.getElementById('news_recommend_content').style.display = 'flex'
         document.getElementById('news_recommend_content').innerHTML = spinner
+        document.getElementById('news_search_content').parentElement.style.maxHeight = '320px'
+        document.getElementById('news_search_content').parentElement.style.Height = 'calc(56vh - 260px)'
+
         document.getElementById('book_recommend_content').style.display = 'flex'
         document.getElementById('book_recommend_content').innerHTML = spinner
+        document.getElementById('book_search_content').style.height = 'calc(56vh - 260px)'
+
         document.getElementById('shopping_recommend_content').style.display = 'flex'
         document.getElementById('shopping_recommend_content').innerHTML = spinner
+        document.getElementById('shopping_search_content').style.height = 'calc(56vh - 260px)'
+
+
+        document.getElementById('recommend_reload_button').style.display = 'block'
+
+
         recommend_switch_ajax(true)
 
         recommend_crawling_on(keyowrd[0])
@@ -388,6 +405,15 @@ function recommend_switch() {
         document.getElementById('news_recommend_content').style.display = 'none'
         document.getElementById('book_recommend_content').style.display = 'none'
         document.getElementById('shopping_recommend_content').style.display = 'none'
+
+        document.getElementById('youtube_search_content').style.height = 'calc(96vh - 350px)'
+        document.getElementById('news_search_content').parentElement.style.height = 'calc(96vh - 350px)'
+        document.getElementById('news_search_content').parentElement.style.maxHeight = 'none'
+        document.getElementById('book_search_content').style.height = 'calc(96vh - 350px)'
+        document.getElementById('shopping_search_content').style.height = 'calc(96vh - 350px)'
+
+
+        document.getElementById('recommend_reload_button').style.display = 'none'
 
         recommend_switch_ajax(false)
     }
@@ -627,6 +653,9 @@ function search_to_youtube(word) {
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
+            if(response['result'].length === 0){
+                document.getElementById('youtube_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
+            }
             youtube_content_add(response['result'], 'search')
         }
     })
@@ -641,6 +670,9 @@ function search_to_news(word) {
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
+            if(response['result'].length === 0){
+                document.getElementById('news_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
+            }
             news_content_add(response['result'], 'search')
         }
     })
@@ -655,6 +687,9 @@ function search_to_book(word) {
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
+            if(response['result'].length === 0){
+                document.getElementById('book_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
+            }
             book_content_add(response['result'], 'search')
         }
     })
@@ -669,6 +704,9 @@ function search_to_shopping(word) {
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
+            if(response['result'].length === 0){
+                document.getElementById('shopping_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
+            }
             shopping_content_add(response['result'], 'search')
 
         }
@@ -683,6 +721,12 @@ function move_category(target_id) {
     for (let i = 0; i < nav_list.length; i++) {
         nav_list[i].style.color = '#d2d2d2'
     }
+
+    // let no_result_html = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
+    // document.getElementById('youtube_search_content').innerHTML = no_result_html
+    // document.getElementById('news_search_content').innerHTML = no_result_html
+    // document.getElementById('book_search_content').innerHTML = no_result_html
+    // document.getElementById('shopping_search_content').innerHTML = no_result_html
 
     document.getElementById('recommend_youtube_container').style.display = 'none'
     document.getElementById('recommend_news_container').style.display = 'none'
@@ -736,22 +780,26 @@ function click_like(event) {
 
 
 // 검색시 이전의 검색 내용 지우는 함수
-function clear_content() {
+function clear_content(category) {
     let spinner_html = `<div class="recommend_spinner spinner_search" style="display: flex;">
                             <div class="recommend_spinner_lorder"></div>
                         </div>`
+    if(category==='youtube'){
+        $('#youtube_search_content').empty();
+        $('#youtube_search_content').append(spinner_html);
+    } else if(category === 'news'){
+        $('#news_search_content').empty();
+        $('#news_search_content').append(spinner_html);
+    }
+    else if(category === 'book'){
+        $('#book_search_content').empty();
+        $('#book_search_content').append(spinner_html);
+    }
+    else if(category === 'shopping'){
+        $('#shopping_search_content').empty();
+        $('#shopping_search_content').append(spinner_html);
+    }
 
-    $('#youtube_search_content').empty();
-    $('#youtube_search_content').append(spinner_html);
-
-    $('#news_search_content').empty();
-    $('#news_search_content').append(spinner_html);
-
-    $('#book_search_content').empty();
-    $('#book_search_content').append(spinner_html);
-
-    $('#shopping_search_content').empty();
-    $('#shopping_search_content').append(spinner_html);
 }
 
 // 스피너 검색 스피너 삭제
@@ -894,3 +942,12 @@ function get_recommend_keyword() {
 
 }
 
+function search_container_height_change(){
+
+    document.getElementById('youtube_search_content').style.height = 'calc(96vh - 350px)'
+    document.getElementById('news_search_content').parentElement.style.height = 'calc(96vh - 350px)'
+    document.getElementById('news_search_content').parentElement.style.maxHeight = 'none'
+    document.getElementById('book_search_content').style.height = 'calc(96vh - 350px)'
+    document.getElementById('shopping_search_content').style.height = 'calc(96vh - 350px)'
+
+}

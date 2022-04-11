@@ -24,22 +24,27 @@ def youtube_crawling(search_word: str, count: int) -> Union[List[List[str]], str
                     'gl': 'KR',
                     'clientName': 'WEB',
                     'clientVersion': '2.20220406.09.00',
+
                 },
+
             },
             'query': search_word,
         }
 
+
+
         response = requests.post('https://www.youtube.com/youtubei/v1/search', params=params, cookies=cookies,
                                  json=json_data, timeout=2)
         json_res = json.loads(response.text)
-        results = json_res['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0][
+        results = \
+        json_res['contents']['twoColumnSearchResultsRenderer']['primaryContents']['sectionListRenderer']['contents'][0][
             'itemSectionRenderer']['contents']
 
         answer = []
         for row in results:
             if 'videoRenderer' in row:
                 title = row['videoRenderer']['title']['runs'][0]['text']
-                views = row['videoRenderer']['viewCountText']['simpleText']
+                views = row['videoRenderer']['shortViewCountText']['accessibility']['accessibilityData']['label']
                 youtube_base_url = "https://www.youtube.com/embed/"
                 video_id = row['videoRenderer']['videoId']
                 video_already = 'False'
@@ -79,4 +84,3 @@ def shopping_crawling(search_word: str, count: int) -> Union[List[List[str]], st
 
     except TimeoutError:
         return 'TimeOut'
-

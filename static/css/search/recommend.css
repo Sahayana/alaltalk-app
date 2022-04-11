@@ -67,6 +67,7 @@
     justify-content: space-evenly;
     align-items: center;
     opacity: 1;
+    cursor: pointer;
 }
 
 .recommend_search_toggle {
@@ -161,7 +162,7 @@
     height: 30px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     text-align: left;
     margin-left: 28px;
@@ -177,7 +178,6 @@
 .recommend_container_total_toggle {
     width: 60px;
     height: 30px;
-
     background-color: #7556CD;
     color: white;
     left: 4.5vw;
@@ -188,7 +188,7 @@
     border-radius: 8px;
     padding-bottom: 0.5vh;
     box-sizing: border-box;
-    /*z-index: 2;*/
+    margin: 0 14px 0 14px;
 }
 
 .recommend_reload_button{
@@ -341,14 +341,14 @@
 .recommend_youtube_container .search_content p {
     font-weight: 700;
     color: #7657CE;
-    margin-bottom: 12px;
+    margin-bottom: 1.2vh;
 }
 
 .recommend_youtube_container .search_content .content_section {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: 35vh;
+    height: calc(56vh - 260px);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -487,8 +487,7 @@
 
 .recommend_news_container .search_news_content {
     overflow-y: auto;
-    max-height: 320px;
-    height: 35.5vh;
+    height: calc(56vh - 260px);
     width: 100%;
 }
 
@@ -661,7 +660,7 @@
 .recommend_news_container .search_news_content .title {
     font-weight: 700;
     color: #7657CE;
-    margin-top: 10px;
+    margin-bottom: 1.2vh;
 }
 
 .recommend_news_container .search_news_content .search_news_section {
@@ -1021,7 +1020,7 @@
 
 .recommend_book_container .recommend_book_content .content_book_section {
     width: 58vw;
-    height: 32vh;
+    height: 27vh;
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
@@ -1088,6 +1087,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    margin-top: 10px;
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
@@ -1098,7 +1098,7 @@
     text-overflow: ellipsis;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     margin: 6px 8px;
     box-sizing: border-box;
@@ -1207,12 +1207,11 @@
     display: block;
     flex-wrap: wrap;
     width: 100%;
-    height: 34vh;
+    height: calc(56vh - 260px);
     overflow-x: hidden;
     overflow-y: auto;
-
     box-sizing: border-box;
-    margin-top: 2.4vh;
+    margin-top: 1.2vh;
 }
 
 
@@ -1232,17 +1231,17 @@
 
 .recommend_book_container .search_book_content .content_box {
     position: relative;
-    width: 48vw;
+    width: 56vw;
     height: 30vh;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
     text-align: left;
-    /*margin: 5px 0 50px 35px;*/
+    /* margin: 5px 0 50px 35px; */
     color: #5e5e5e;
     display: flex;
     flex-direction: row;
-    /*justify-content: space-between;*/
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -1500,8 +1499,8 @@
     overflow-x: auto;
     overflow-y: scroll;
     width: 58vw;
-    height: 34vh;
-
+    height: calc(56vh - 260px);
+    flex-wrap: wrap;
 }
 
 .recommend_shopping_container .search_content .content_box {
@@ -1626,6 +1625,7 @@
     width: 200px;
     height: 260px;
     margin-right: 24px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
