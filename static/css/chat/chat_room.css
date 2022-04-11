@@ -150,6 +150,15 @@ body {
 .chat_list .chat_partner .info_group {
     margin-left: 12px;
 }
+.chat_list .chat_partner .info_group .count .count_new {
+    display: none;
+}
+.chat_list .chat_partner .info_group .count .count_new_sum {
+    display: none;
+}
+.chat_list .chat_partner .info_group .count .count_new_sum:last-child {
+    display: block;
+}
 
 .chat_list .chat_partner .info_group .partner_name {
     font-weight: 500;
@@ -172,6 +181,9 @@ body {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     display: none;
+}
+.chat_list .chat_partner .info_group .partner_last_msg.new {
+    font-weight: 700;
 }
 
 .chat_list .chat_partner .info_group .partner_last_msg:last-child {

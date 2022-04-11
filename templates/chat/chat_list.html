@@ -52,7 +52,7 @@
         <div class="chat_list">
             {% for chatroom in chatroom_list %}
                 {% if chatroom.participant1.id == user.id %}
-                    <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner chat_partner_{{ chatroom.id }}">
+                    <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                         <div class="info_group">
@@ -66,7 +66,7 @@
                         </div>
                     </a>
                 {% else %}
-                    <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner chat_partner_{{ chatroom.id }}">
+                    <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                         <div class="info_group">
@@ -95,7 +95,8 @@
 <script>
 
     $(document).ready(function () {
-        lastMessageList();
+        {#lastMessageList();#}
+        latestMessageNotConnected();
 
         // 채팅 스크롤 하단 고정
         var scrollDown = $('#chat_box').prop('scrollHeight');
@@ -123,6 +124,7 @@
     $(".logout").click(function () {
         location.replace("/accounts/logout");
     })
+
 
 </script>
 <script src="{% static 'js/chat/chat_room.js' %}?after"></script>

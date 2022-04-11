@@ -211,13 +211,13 @@
 
 .recommend_youtube_container .recommend_content .content_section .content_box .video_img {
     width: 100%;
-    height: 170px;
+    height: 23vh;
     background-color: #d2d2d2;
 }
 
 .recommend_youtube_container .recommend_content .content_section .content_box .video_title {
     width: 75%;
-    height: auto;
+    height: 2.8vh;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -340,7 +340,7 @@
 
 .recommend_youtube_container .search_content .content_box .video_title {
     width: 75%;
-    height: auto;
+    height: 2.8vh;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

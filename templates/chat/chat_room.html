@@ -46,7 +46,7 @@
                 {% for chatroom in chatroom_list %}
                     {% if chatroom.participant1.id == user.id %}
                         <a href="/chat/{{ chatroom.participant2.id }}/"
-                           class="chat_partner chat_partner_{{ chatroom.id }}">
+                           class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
                             <div class="partner_img"
                                  style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                             <div class="info_group">
@@ -56,11 +56,14 @@
                                 {#                                        <div class="partner_last_msg partner_last_msg_{{ message.author_id }}">{{ message.message }}</div>#}
                                 {#                                    {% endif %}#}
                                 {#                                {% endfor %}#}
+                                <div class="count">
+{#                                    카운트 들어갈 자리#}
+                                </div>
                             </div>
                         </a>
                     {% else %}
                         <a href="/chat/{{ chatroom.participant1.id }}/"
-                           class="chat_partner chat_partner_{{ chatroom.id }}">
+                           class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
                             <div class="partner_img"
                                  style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                             <div class="info_group">
@@ -70,6 +73,9 @@
                                 {#                                        <div class="partner_last_msg partner_last_msg_{{ message.author_id }}">{{ message.message }}</div>#}
                                 {#                                    {% endif %}#}
                                 {#                                {% endfor %}#}
+                                <div class="count">
+{#                                    카운트 들어갈 자리#}
+                                </div>
                             </div>
                         </a>
                     {% endif %}
@@ -241,7 +247,7 @@
 <script src="{% static 'js/search/recommend.js' %}?after"></script>
 <script>
     $(document).ready(function () {
-        lastMessageList();
+        latestMessageNotConnected();
 
         // 채팅 스크롤 하단 고정
         $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
@@ -430,7 +436,6 @@
     }
 
 
-
     {#이전메세지 불러오기#}
 
     function messageLoader() {
@@ -589,39 +594,6 @@
         })
     }
 
-    {#최근메세지 채팅 리스트에 업데이트하기#}
-
-    function latestMessage() {
-        var link = document.location.href;
-        console.log(link);
-        let room_id = link.split('/');
-        room_id = parseInt(room_id[5]);
-
-        let form_data = new FormData();
-        form_data.append('room_id', room_id)
-
-        $.ajax({
-            url: "/chat/latestmessage/",
-            type: "post",
-            data: JSON.stringify({"room_id": room_id}),
-            enctype: 'multipart/form-data',
-            async: false,
-            success: function (data) {
-                let message = data['message']
-                let partner_id = data['partner_id']
-                let author_id = data['author_id']
-                console.log(message, partner_id, author_id)
-                let temp_html = `<div class="partner_last_msg partner_last_msg_${author_id}">${message}</div>`
-                $('.chat_partner_' + room_id).children('.info_group').append(temp_html)
-            },
-            error: function (request, status, error) {
-                alert('error')
-
-                console.log(request, status, error)
-            }
-        })
-    }
-
 
     {#웹소켓 연결 JS#}
     if (participant1 === user_id || participant2 === user_id) {
@@ -642,7 +614,6 @@
             messageLoader();
         }
 
-
         {#consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐#}
         {#fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고#}
         {#new_message를 통해 나온 현재 작성한 메세지는 그대로 돌려준다.#}
@@ -661,7 +632,8 @@
                 console.log('current_num', current_num + 1)
                 // 1부터 카운트 하기 위해 +1 처리
                 createMessage(data['message'], current_num + 1);
-                latestMessage()
+                {#latestMessage()#}
+                latestMessageNotConnected();
                 $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
         };
@@ -678,9 +650,39 @@
 
         }
 
+        function latestMessage() {
+            var link = document.location.href;
+            console.log(link);
+            let room_id = link.split('/');
+            room_id = parseInt(room_id[5]);
+
+            let form_data = new FormData();
+            form_data.append('room_id', room_id)
+
+            $.ajax({
+                url: "/chat/latestmessage/",
+                type: "post",
+                data: JSON.stringify({"room_id": room_id}),
+                enctype: 'multipart/form-data',
+                async: false,
+                success: function (data) {
+                    let message = data['message']
+                    let partner_id = data['partner_id']
+                    let author_id = data['author_id']
+                    // console.log(message, partner_id, author_id)
+                    let temp_html = `<div class="partner_last_msg partner_last_msg_${author_id}">${message}</div>`
+                    $('.chat_partner_' + partner_id).children('.info_group').append(temp_html)
+                },
+                error: function (request, status, error) {
+                    alert('error')
+
+                    console.log(request, status, error)
+                }
+            })
+        }
+
 
         {#consumer에게 fetch_messages가 실행되도록 명령#}
-
         function fetchMessages() {
             chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
         }
@@ -729,12 +731,21 @@
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
+            {#latestMessageNotConnected();#}
         };
 
     } else {
         location.replace("/chat");
     }
 
+    function countNew() {
+        let message_count = $('.user_count').length;
+        console.log('유저카운트?', message_count)
+
+        let count_html = `<div class="count_new">${message_count}</div>`
+        $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
+
+    }
 
     {#새로 작성된 메세지를 html에 보여주는 JS#}
 
@@ -742,6 +753,7 @@
         const message = data['message'];
         const author = data['author'];
         const created_at = data['created_at'];
+        const chatroom_id = data['chatroom_id'];
         console.log(created_at.trim())
         {#12시 기준으로 오전 오후 구분#}
         const timestamp = created_at.split('')
@@ -750,9 +762,24 @@
         } else {
             var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
         }
-
         console.log(am_or_pm)
-        const chatroom_id = data['chatroom_id'];
+        latestMessageNotConnected();
+        console.log('미접속시 작동할까?')
+
+
+        if (chatroom_id === room_id) {
+            if (author === user_id) {
+                let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`
+                $('.chat_partner_' + room_id).children('.info_group').append(temp_html)
+                console.log('consumer에서 메세지 바로 출력')
+            } else {
+                countNew();
+                let updateNew = $('.count_new').length;
+                let count_html = `<div class="count_new_sum">${updateNew}</div>`
+                $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
+            }
+        }
+
         if (chatroom_id === room_id) {
             if (author === user_id) {
                 if (message.includes('http') === true) {
