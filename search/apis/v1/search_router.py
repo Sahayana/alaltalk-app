@@ -7,7 +7,7 @@ from ninja import Form, Router
 from search.models import Book, News, Shopping, Youtube
 from search.service.search_service import crawling_book, crawling_news
 from accounts.models import CustomUser
-from ...functions import crawling_shopping_only_bs4, crawling_youtube_bs4
+from ...functions import shopping_crawling, youtube_crawling
 from .schemas import CrawlingRequest, CrawlingResponse, SearchRequest, SearchResponse
 
 router = Router(tags=["search"])
@@ -39,7 +39,7 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
     all_response = {}
     content_count = 10
     try:
-        all_response["youtube"] = crawling_youtube_bs4(crawling_request.target, content_count)
+        all_response["youtube"] = youtube_crawling(crawling_request.target, content_count)
         for youtube_row in all_response['youtube']:
             if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
                 youtube_row[3] = 'True'
@@ -55,7 +55,7 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
         print('news_crawling Error: ', e)
         all_response["news"] = []
     try:
-        all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
+        all_response["shopping"] = shopping_crawling(crawling_request.target, content_count)
         for shopping_row in all_response['shopping']:
             if Shopping.objects.filter(user=request.user.id, link=shopping_row[3]).exists():
                 shopping_row[4] = 'True'

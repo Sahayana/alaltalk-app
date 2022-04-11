@@ -19,7 +19,7 @@ json_data = {
             'clientVersion': '2.20220406.09.00',
         },
     },
-    'query': '얄땅 쇼츠',
+    'query': '아이유',
 }
 
 response = requests.post('https://www.youtube.com/youtubei/v1/search', params=params, cookies=cookies, json=json_data)
