@@ -23,7 +23,7 @@ def crawling_youtube(search_word: str, content_count: int) -> List[List[str]]:
     options.add_argument("headless")
     options.add_argument("--incognito")
 
-    driver = webdriver.Chrome(executable_path=webdriver_path, options=options)
+    driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', options=options)
 
     # 쿠기 삭제
     driver.delete_all_cookies()

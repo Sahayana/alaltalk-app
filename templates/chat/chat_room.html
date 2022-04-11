@@ -45,29 +45,37 @@
             <div class="chat_list">
                 {% for chatroom in chatroom_list %}
                     {% if chatroom.participant1.id == user.id %}
-                        <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner">
+                        <a href="/chat/{{ chatroom.participant2.id }}/"
+                           class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
                             <div class="partner_img"
                                  style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
-                                {% for message in all_message %}
-                                    {% if chatroom.id == message.chatroom_id %}
-                                        <div class="partner_last_msg">{{ message.message }}</div>
-                                    {% endif %}
-                                {% endfor %}
+                                {#                                {% for message in all_message %}#}
+                                {#                                    {% if chatroom.id == message.chatroom_id %}#}
+                                {#                                        <div class="partner_last_msg partner_last_msg_{{ message.author_id }}">{{ message.message }}</div>#}
+                                {#                                    {% endif %}#}
+                                {#                                {% endfor %}#}
+                                <div class="count">
+{#                                    카운트 들어갈 자리#}
+                                </div>
                             </div>
                         </a>
                     {% else %}
-                        <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner">
+                        <a href="/chat/{{ chatroom.participant1.id }}/"
+                           class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
                             <div class="partner_img"
                                  style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
-                                {% for message in all_message %}
-                                    {% if chatroom.id == message.chatroom_id %}
-                                        <div class="partner_last_msg">{{ message.message }}</div>
-                                    {% endif %}
-                                {% endfor %}
+                                {#                                {% for message in all_message %}#}
+                                {#                                    {% if chatroom.id == message.chatroom_id %}#}
+                                {#                                        <div class="partner_last_msg partner_last_msg_{{ message.author_id }}">{{ message.message }}</div>#}
+                                {#                                    {% endif %}#}
+                                {#                                {% endfor %}#}
+                                <div class="count">
+{#                                    카운트 들어갈 자리#}
+                                </div>
                             </div>
                         </a>
                     {% endif %}
@@ -97,6 +105,8 @@
                     <p id="freind_like_list">친구 찜 목록 보기</p>
                     <div class="line"></div>
                     <p id="close_chat_room" onclick="location.href='/chat'">닫기</p>
+                    <div class="line"></div>
+                    <p id="delete_chat_room" onclick="deleteChatroom()">채팅방 나가기</p>
                 </div>
             </div>
 
@@ -118,6 +128,8 @@
 <script src="{% static 'js/search/recommend.js' %}?after"></script>
 <script>
     $(document).ready(function () {
+        latestMessageNotConnected();
+
         // 채팅 스크롤 하단 고정
         $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
@@ -273,16 +285,19 @@
     }
 
     function show_user_timestamp(num) {
-        $('.timestamp_user_'+num).show();
+        $('.timestamp_user_' + num).show();
     }
+
     function hide_user_timestamp(num) {
-        $('.timestamp_user_'+num).hide();
+        $('.timestamp_user_' + num).hide();
     }
+
     function show_partner_timestamp(num) {
-        $('.timestamp_partner_'+num).show();
+        $('.timestamp_partner_' + num).show();
     }
+
     function hide_partner_timestamp(num) {
-        $('.timestamp_partner_'+num).hide();
+        $('.timestamp_partner_' + num).hide();
     }
 
 
@@ -291,7 +306,19 @@
     const participant1 = {{ participant1.id }};
     const participant2 = {{ participant2.id }};
 
+    {#채팅방 삭제하기#}
+
+    function deleteChatroom() {
+        if (!confirm("삭제하시면 대화내용을 복구할수 없습니다. \n정말로 삭제하시겠습니까?")) {
+            return false;
+        } else {
+            location.href = '/chat/delete/{{ room_id }}'
+        }
+    }
+
+
     {#이전메세지 불러오기#}
+
     function messageLoader() {
         var link = document.location.href;
         console.log(link);
@@ -316,9 +343,9 @@
                     let timestamp = rows[i]['created_at'].split('')
                     console.log(timestamp[11], timestamp[12])
                     if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
-                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] +'월'+ timestamp[8] + timestamp[9] +'일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                     } else {
-                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] +'월'+ timestamp[8] + timestamp[9] +'일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                     }
                     console.log(timestamp)
                     if (author_id === user_id) {
@@ -361,6 +388,7 @@
     }
 
     {#채팅로그 더보기 버튼#}
+
     function moreList(user_id) {
         var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
         //마지막 리스트 번호를 알아내기 위해서 length를 구함.
@@ -392,36 +420,36 @@
                     let timestamp = rows[i]['created_at'].split('')
                     console.log(timestamp[11], timestamp[12])
                     if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
-                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] +'월'+ timestamp[8] + timestamp[9] +'일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                     } else {
-                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] +'월'+ timestamp[8] + timestamp[9] +'일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+                        var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                     }
                     console.log(timestamp)
                     if (author_id === user_id) {
                         if (message.includes('http') === true) {
                             let temp_html1 = `<div class="user_chat">
-                                                  <div onmouseover="show_user_timestamp(${startNum+i})" onmouseout="hide_user_timestamp(${startNum+i})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>
-                                                  <div class="timestamp_user timestamp_user_${startNum+i}">${am_or_pm}</div>
+                                                  <div onmouseover="show_user_timestamp(${startNum + i})" onmouseout="hide_user_timestamp(${startNum + i})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>
+                                                  <div class="timestamp_user timestamp_user_${startNum + i}">${am_or_pm}</div>
                                               </div>`
                             $('#chat_box').prepend(temp_html1)
                         } else {
                             let temp_html1 = `<div class="user_chat">
-                                                  <div onmouseover="show_user_timestamp(${startNum+i})" onmouseout="hide_user_timestamp(${startNum+i})" class='user_to_partner'>${message}</div>
-                                                  <div class="timestamp_user timestamp_user_${startNum+i}">${am_or_pm}</div>
+                                                  <div onmouseover="show_user_timestamp(${startNum + i})" onmouseout="hide_user_timestamp(${startNum + i})" class='user_to_partner'>${message}</div>
+                                                  <div class="timestamp_user timestamp_user_${startNum + i}">${am_or_pm}</div>
                                               </div>`
                             $('#chat_box').prepend(temp_html1)
                         }
                     } else {
                         if (message.includes('http') === true) {
                             let temp_html2 = `<div class="partner_chat">
-                                                  <div onmouseover="show_partner_timestamp(${startNum+i})" onmouseout="hide_partner_timestamp(${startNum+i})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>
-                                                  <div class="timestamp_partner timestamp_partner_${startNum+i}">${am_or_pm}</div>
+                                                  <div onmouseover="show_partner_timestamp(${startNum + i})" onmouseout="hide_partner_timestamp(${startNum + i})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>
+                                                  <div class="timestamp_partner timestamp_partner_${startNum + i}">${am_or_pm}</div>
                                               </div>`
                             $('#chat_box').prepend(temp_html2)
                         } else {
                             let temp_html2 = `<div class="partner_chat">
-                                                  <div onmouseover="show_partner_timestamp(${startNum+i})" onmouseout="hide_partner_timestamp(${startNum+i})" class='partner_to_user'>${message}</div>
-                                                  <div class="timestamp_partner timestamp_partner_${startNum+i}">${am_or_pm}</div>
+                                                  <div onmouseover="show_partner_timestamp(${startNum + i})" onmouseout="hide_partner_timestamp(${startNum + i})" class='partner_to_user'>${message}</div>
+                                                  <div class="timestamp_partner timestamp_partner_${startNum + i}">${am_or_pm}</div>
                                               </div>`
                             $('#chat_box').prepend(temp_html2)
                         }
@@ -463,9 +491,9 @@
         {#불가능하다면, 기존에 가져왔던 데이터를 지우고 새로 가져오도록 설정#}
         chatSocket.onopen = function (e) {
             console.log('Chat socket open');
+            //lastMessageList();
             messageLoader();
         }
-
 
         {#consumer를 통해 나온 데이터의 형태에 따라 출력값이 달라짐#}
         {#fetch_messages를 통해 나온 이전 메세지는 반복문을 돌려주고#}
@@ -473,7 +501,6 @@
         {#ChatMessage의 chatroom_id와 room_id가 일치하는 메세지만 보여준다#}
         {#message를 created_at의 순서대로 보여준다.#}
         chatSocket.onmessage = function (e) {
-            {#$('#chat_message_input').val('');#}
             const data = JSON.parse(e.data);
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
@@ -482,9 +509,12 @@
                 }
             } else if (data['command'] === 'new_message') {
                 {#messageCounter(data['message']);#}
-                let current_num = $('.partner_to_user').length + $('.user_to_partner').length;
-                console.log('current_num', current_num)
-                createMessage(data['message'], current_num);
+                let current_num = $('.user_count').length + $('.partner_count').length;
+                console.log('current_num', current_num + 1)
+                // 1부터 카운트 하기 위해 +1 처리
+                createMessage(data['message'], current_num + 1);
+                {#latestMessage()#}
+                latestMessageNotConnected();
                 $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
         };
@@ -501,9 +531,39 @@
 
         }
 
+        function latestMessage() {
+            var link = document.location.href;
+            console.log(link);
+            let room_id = link.split('/');
+            room_id = parseInt(room_id[5]);
+
+            let form_data = new FormData();
+            form_data.append('room_id', room_id)
+
+            $.ajax({
+                url: "/chat/latestmessage/",
+                type: "post",
+                data: JSON.stringify({"room_id": room_id}),
+                enctype: 'multipart/form-data',
+                async: false,
+                success: function (data) {
+                    let message = data['message']
+                    let partner_id = data['partner_id']
+                    let author_id = data['author_id']
+                    // console.log(message, partner_id, author_id)
+                    let temp_html = `<div class="partner_last_msg partner_last_msg_${author_id}">${message}</div>`
+                    $('.chat_partner_' + partner_id).children('.info_group').append(temp_html)
+                },
+                error: function (request, status, error) {
+                    alert('error')
+
+                    console.log(request, status, error)
+                }
+            })
+        }
+
 
         {#consumer에게 fetch_messages가 실행되도록 명령#}
-
         function fetchMessages() {
             chatSocket.send(JSON.stringify({'command': 'fetch_messages'}));
         }
@@ -550,58 +610,83 @@
         {#웹소켓 연결이 끊어졌을 때의 JS#}
         chatSocket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
+            {#latestMessageNotConnected();#}
         };
 
     } else {
         location.replace("/chat");
     }
 
+    function countNew() {
+        let message_count = $('.user_count').length;
+        console.log('유저카운트?', message_count)
 
-    {#html에서 작성된 메세지를 보여주는 JS#}
+        let count_html = `<div class="count_new">${message_count}</div>`
+        $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
+
+    }
+
+    {#새로 작성된 메세지를 html에 보여주는 JS#}
 
     function createMessage(data, num) {
         const message = data['message'];
         const author = data['author'];
         const created_at = data['created_at'];
+        const chatroom_id = data['chatroom_id'];
         console.log(created_at.trim())
         {#12시 기준으로 오전 오후 구분#}
         const timestamp = created_at.split('')
         if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
-            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] +'월'+ timestamp[8] + timestamp[9] +'일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
         } else {
-            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] +'월'+ timestamp[8] + timestamp[9] +'일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+        }
+        console.log(am_or_pm)
+        latestMessageNotConnected();
+        console.log('미접속시 작동할까?')
+
+
+        if (chatroom_id === room_id) {
+            if (author === user_id) {
+                let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`
+                $('.chat_partner_' + room_id).children('.info_group').append(temp_html)
+                console.log('consumer에서 메세지 바로 출력')
+            } else {
+                countNew();
+                let updateNew = $('.count_new').length;
+                let count_html = `<div class="count_new_sum">${updateNew}</div>`
+                $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
+            }
         }
 
-        console.log(am_or_pm)
-        const chatroom_id = data['chatroom_id'];
         if (chatroom_id === room_id) {
             if (author === user_id) {
                 if (message.includes('http') === true) {
-                    let temp_html1 = `<div class="user_chat">
-                                          <div onmouseover="show_user_timestamp(${num})" onmouseout="hide_user_timestamp(${num})"onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>
-                                          <div class="timestamp_user timestamp_user_${num}">${am_or_pm}</div>
+                    let temp_html1 = `<div class="user_chat user_count">
+                                          <div onmouseover="show_user_timestamp(${-num})" onmouseout="hide_user_timestamp(${-num})"onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>
+                                          <div class="timestamp_user timestamp_user_${-num}">${am_or_pm}</div>
                                       </div>`
                     $('#chat_box').append(temp_html1)
                     $('#chat_message_input').val('');
                 } else {
-                    let temp_html1 = `<div class="user_chat">
-                                          <div onmouseover="show_user_timestamp(${num})" onmouseout="hide_user_timestamp(${num})" class='user_to_partner'>${message}</div>
-                                          <div class="timestamp_user timestamp_user_${num}">${am_or_pm}</div>
+                    let temp_html1 = `<div class="user_chat user_count">
+                                          <div onmouseover="show_user_timestamp(${-num})" onmouseout="hide_user_timestamp(${-num})" class='user_to_partner'>${message}</div>
+                                          <div class="timestamp_user timestamp_user_${-num}">${am_or_pm}</div>
                                       </div>`
                     $('#chat_box').append(temp_html1)
                     $('#chat_message_input').val('');
                 }
             } else {
                 if (message.includes('http') === true) {
-                    let temp_html2 = `<div class="partner_chat">
-                                          <div onmouseover="show_partner_timestamp(${num})" onmouseout="hide_partner_timestamp(${num})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>
-                                          <div class="timestamp_partner timestamp_partner_${num}">${am_or_pm}</div>
+                    let temp_html2 = `<div class="partner_chat partner_count">
+                                          <div onmouseover="show_partner_timestamp(${-num})" onmouseout="hide_partner_timestamp(${-num})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>
+                                          <div class="timestamp_partner timestamp_partner_${-num}">${am_or_pm}</div>
                                       </div>`
                     $('#chat_box').append(temp_html2)
                 } else {
-                    let temp_html2 = `<div class="partner_chat">
-                                          <div onmouseover="show_partner_timestamp(${num})" onmouseout="hide_partner_timestamp(${num})" class='partner_to_user'>${message}</div>
-                                          <div class="timestamp_partner timestamp_partner_${num}">${am_or_pm}</div>
+                    let temp_html2 = `<div class="partner_chat partner_count">
+                                          <div onmouseover="show_partner_timestamp(${-num})" onmouseout="hide_partner_timestamp(${-num})" class='partner_to_user'>${message}</div>
+                                          <div class="timestamp_partner timestamp_partner_${-num}">${am_or_pm}</div>
                                       </div>`
                     $('#chat_box').append(temp_html2)
                 }
@@ -614,6 +699,7 @@
 
 
 </script>
+<script src="{% static 'js/chat/chat_room.js' %}?after"></script>
 <script src="{% static 'js/chat/friend_like.js' %}"></script>
 </body>
 </html>

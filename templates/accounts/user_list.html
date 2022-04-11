@@ -67,11 +67,28 @@
         </div>
     </div>
 
-        <div class="right_wrap">
-            <div class="chat_start_msg">
-                <div class="chat_start_img"></div>
-                <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
-            </div>
+    <div class="right_wrap">
+        <div class="chat_start_msg">
+            <div class="chat_start_img"></div>
+            <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
+        </div>
+        <div class="recommend_friends_container">
+            <P class="recommend_freind_title">추천친구</P>
+            {% if recommend_friend %}
+                {% for friends in recommend_friend %}
+                    <div class="user_box">
+                        <div class="user_img">
+                            <img src="{{ friends.img.url }}"
+                                 alt="friend_p_img" srcset="">
+                        </div>
+                        <div class="info_group">
+                            <div class="user_name">{{ friends.nickname }}</div>
+                            <div class="user_id">{{ friends.email }}</div>
+                        </div>
+                        <div class="btn apply_follow" onclick=sendRequest({{ friends.id }})>친구신청</div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

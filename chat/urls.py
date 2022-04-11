@@ -11,4 +11,8 @@ urlpatterns = [
     path("chatlog/", views.chat_log_send, name="chat_log_send"),
     path("morelist/", views.more_list, name="more_list"),
     path("messageloader/", views.message_loader, name="massage_loader"),
+    path("latestmessage/", views.latest_message, name="latest_message"),
+    path("lastmessagelist/", views.last_message_list, name="last_message_list"),
+    path("latestmessagenotconnected/", views.latest_message_not_connected, name="latest_message_not_connected"),
+    path("delete/<int:room_id>/", views.delete_chat_room, name="delete_chat_room"),
 ]

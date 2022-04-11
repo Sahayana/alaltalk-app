@@ -8,8 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:url" content="https://alaltalk.com">
     <meta property="og:title" content="알알톡">
-    <meta property="og:image" content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
-    <meta property="og:description" content="알고리즘으로 알아보는 대화" />
+    <meta property="og:image"
+          content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화"/>
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
@@ -111,39 +112,41 @@
                 </button>
             </form>
 
-            <div class="profile_delete_account">                
-                <button id="profile_delete_btn">회원 탈퇴</button>                
+            <div class="profile_delete_account">
+                <button id="profile_delete_btn">회원 탈퇴</button>
             </div>
 
         </div>
         <div class="profile_follow_container" id="profile_follow_container">
             <div class="profile_follow_title">팔로우 관리</div>
-            {% if friend_requests %}
-                {% for request in friend_requests %}
-                    {% with sender=request.sender %}
+            <div class="follow_list_section">
+                {% if friend_requests %}
+                    {% for request in friend_requests %}
+                        {% with sender=request.sender %}
 
-                        <div class="profile_follow_list">
-                            <li>
-                                <div class="profile_chat_avatar">
-                                    <img src="{{ sender.img.url }}" alt="friend_p_img" srcset="">
-                                </div>
-                                <div class="profile_follow_list_body">
-                                    <div class="profile_follow_list_info">
-                                        <div class="profile_follow_user">{{ sender.nickname }}</div>
-                                        <div class="profile_follow_user_bio">{{ sender.bio }}</div>
+                            <div class="profile_follow_list">
+                                <li>
+                                    <div class="profile_chat_avatar">
+                                        <img src="{{ sender.img.url }}" alt="friend_p_img" srcset="">
                                     </div>
+                                    <div class="profile_follow_list_body">
+                                        <div class="profile_follow_list_info">
+                                            <div class="profile_follow_user">{{ sender.nickname }}</div>
+                                            <div class="profile_follow_user_bio">{{ sender.bio }}</div>
+                                        </div>
 
-                                    <div class="profile_follow_add" id="{{ request.id }}"
-                                         onclick=acceptRequest(this.id)><p>친구추가</p></div>
-                                    <div class="profile_follow_decline" id="{{ request.id }}"
-                                         onclick=declineRequest(this.id)><p>친구거절</p></div>
+                                        <div class="profile_follow_add" id="{{ request.id }}"
+                                             onclick=acceptRequest(this.id)><p>친구추가</p></div>
+                                        <div class="profile_follow_decline" id="{{ request.id }}"
+                                             onclick=declineRequest(this.id)><p>친구거절</p></div>
 
-                                </div>
-                            </li>
-                        </div>
-                    {% endwith %}
-                {% endfor %}
-            {% endif %}
+                                    </div>
+                                </li>
+                            </div>
+                        {% endwith %}
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
         <div class="profile_like_container" id="profile_like_container">
             <div class="profile_like_title">찜 목록</div>
@@ -181,7 +184,8 @@
                                 <div class="video_count">{{ youtube.views }}</div>
                                 <div class="my_page_like_parents">
                                     <div class="profile_like_heart profile_youtube_like_heart"
-                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
+                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                         onclick="click_like(event)">
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +228,8 @@
                                     <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
+                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                     onclick="click_like(event)">
 
                                 </div>
                             </div>
@@ -246,7 +251,8 @@
                                     <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                 </div>
                                 <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
+                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                     onclick="click_like(event)">
                                 </div>
                             </div>
                             <a href="{{ book.link }}" target="_blank">
@@ -293,7 +299,8 @@
                                         <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                                     </div>
                                     <div class="recommend_like_heart"
-                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')" onclick="click_like(event)">
+                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                         onclick="click_like(event)">
                                     </div>
                                 </div>
                                 <a href="{{ shopping.link }}" target="_blank">

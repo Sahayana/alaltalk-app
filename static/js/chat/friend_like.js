@@ -77,3 +77,37 @@ function shopping_take_me(id){
         }
     })
 }
+
+/////////////////////////////////친구 관심 키워드///////////////////////////////////////////
+
+function get_friend_recommend() {
+    let friend_id = document.getElementById('friend_id').innerText;
+    console.log(friend_id);
+    $.ajax({
+            url: "/accounts/friend/recommend/keyword/",
+            type: 'GET',
+            data: {"friend_id": friend_id},
+            enctype: 'multipart/form-data',
+            async: false,
+            success: function (response) {
+                console.log(response.friend_keywords);
+                let friend_keyword = response.friend_keywords;
+                for (let i=0; i < friend_keyword.length; i++) {
+                    let temp_html = `<div class="friend_keyword">${friend_keyword[i]}</div>`
+
+                    $('.friend_like_recommend_container').append(temp_html)
+                }
+
+            },
+            error: function (request, status, error) {
+                console.log('친구 추천키워드 에러')
+
+                console.log(request, status, error)
+            }
+
+        });
+}
+
+$(document).ready(function(){
+    get_friend_recommend()
+});
