@@ -367,7 +367,7 @@ def friend_like_recommend(request):
         friend_like_keywords.append(friend_keyword)
         try:
             similar_word = W2V.model.wv.most_similar(friend_keyword)
-            for word in similar_word[:4]:
+            for word in similar_word[:3]:
                 friend_like_keywords.append(word[0])
         except:
             print('친구 키워드',friend_like_keywords)
