@@ -47,11 +47,11 @@
 
 /*유튜브 친구 찜 목록*/
 .friends_like_youtube {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 680px;
+    height: 81.5vh;
     /*display: none;*/
 }
 
@@ -79,15 +79,16 @@
 
 .friends_like_container {
     position: relative;
-    width: 100%;
-    padding-top: 25px;
+    width: 98%;
+    height: 91.5vh;
+    padding-top: 2.5vh;
     padding-left: 25px;
     display: none;
 }
 
 
 .friends_like_category {
-    margin-top: 25px;
+    margin-top: 2.5vh;
     font-weight: 700;
     color: #d2d2d2;
 }
@@ -141,12 +142,12 @@
 
 /*뉴스 친구 찜 목록*/
 .friends_like_news {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 680px;
+    height: 81.5vh;
 }
 
 .friends_like_news::-webkit-scrollbar {
@@ -260,14 +261,13 @@
 /*책 찜목록*/
 
 .friends_like_book {
-    margin-top: 30px;
-    width: 95%;
-    /*height: 88%;*/
+    margin-top: 3vh;
+    width: 98%;
     position: relative;
     display: none;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 660px;
+    height: 81.5vh;
 }
 
 .friends_like_book::-webkit-scrollbar {
@@ -402,16 +402,16 @@
 /*친구 찜 목록 쇼핑*/
 
 .friends_like_shopping {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     position: relative;
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 680px;
-    /*font-weight: 700;*/
+    height: 81.5vh;
     color: #5e5e5e;
 }
+
 .friends_like_shopping::-webkit-scrollbar {
     height: 12px;
 }
@@ -561,3 +561,35 @@
     width: 60%;
     margin: 60px 0;
 }
+
+/*--------------------친구찜 기반 관련키워드-----------------------------*/
+
+.friend_like_recommend_container {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.friend_keyword {
+    display: flex;
+    width: 75px;
+    height: 28px;
+    margin-left: 12px;
+    border-radius: 14px;
+    color: white;
+    background-color: #a185f2;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.friend_id {
+    display: none;
+}
+
+
+

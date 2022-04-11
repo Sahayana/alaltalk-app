@@ -497,6 +497,7 @@ function like_youtube_ajax(data, type) {
             type: 'POST',
             url: '/api/like/youtube',
             data: data,
+            async: false,
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
@@ -510,6 +511,7 @@ function like_youtube_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/youtube',
             data: data,
+            async: false,
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
@@ -527,6 +529,7 @@ function like_news_ajax(data, type) {
             type: 'POST',
             url: '/api/like/news',
             data: data,
+            async: false,
             success: function (response) {
                 console.log(response['result'])
             }
@@ -538,6 +541,7 @@ function like_news_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/news',
             data: data,
+            async: false,
             success: function (response) {
                 console.log(response['result'])
             }
@@ -553,6 +557,7 @@ function like_book_ajax(data, type) {
             type: 'POST',
             url: '/api/like/book',
             data: data,
+            async: false,
             success: function (response) {
                 console.log(response['result'])
             }
@@ -564,6 +569,7 @@ function like_book_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/book',
             data: data,
+            async: false,
             success: function (response) {
                 console.log(response['result'])
             }
@@ -579,6 +585,7 @@ function like_shopping_ajax(data, type) {
             type: 'POST',
             url: '/api/like/shopping',
             data: data,
+            async: false,
             success: function (response) {
                 console.log(response['result'])
             }
@@ -590,6 +597,7 @@ function like_shopping_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/shopping',
             data: data,
+            async: false,
             success: function (response) {
                 console.log(response['result'])
             }
@@ -833,7 +841,6 @@ function get_like_keywords(like_sentence) {
             // 3. 키워드 내용을 기반으로 크롤링
         },
         error: function (request, status, error) {
-            alert('error')
             console.log(request, status, error)
         }
 
@@ -842,25 +849,48 @@ function get_like_keywords(like_sentence) {
 
 function get_recommend_keyword() {
     get_like()
-    get_like_keywords(like_sentence)
-    console.log(like_keyowrd)
-    $.ajax({
-        url: "/accounts/friend/keyword",
-        type: 'POST',
-        data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
-        enctype: 'multipart/form-data',
-        async: false,
-        success: function (response) {
-            console.log('찜 키워드 success!')
+    console.log(like_sentence)
+    if (like_sentence[0] == '') {
+        like_keyowrd = ['']
+        $.ajax({
+            url: "/accounts/friend/keyword",
+            type: 'POST',
+            data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
+            enctype: 'multipart/form-data',
+            async: false,
+            success: function (response) {
+                console.log('찜 키워드 success!')
 
-        },
-        error: function (request, status, error) {
-            alert('error')
+            },
+            error: function (request, status, error) {
+                alert('error')
 
-            console.log(request, status, error)
-        }
+                console.log(request, status, error)
+            }
 
-    });
+        });
+    } else {
+        get_like_keywords(like_sentence)
+        console.log(like_keyowrd)
+        $.ajax({
+            url: "/accounts/friend/keyword",
+            type: 'POST',
+            data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
+            enctype: 'multipart/form-data',
+            async: false,
+            success: function (response) {
+                console.log('찜 키워드 success!')
+
+            },
+            error: function (request, status, error) {
+                alert('error')
+
+                console.log(request, status, error)
+            }
+
+        });
+    }
+
 
 }
 

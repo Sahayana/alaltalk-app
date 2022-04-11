@@ -7,6 +7,11 @@
                 <div class="friends_like_name">{{ participant.nickname }}</div>
                 <div class="friends_like_bio">님의 찜 목록</div>
             </div>
+
+            <div class="friend_like_recommend_container">
+                <div class="friend_id" id="friend_id">{{ participant.id }}</div>
+                <p>추천 키워드 : </p>
+            </div>
             {% if participant.is_like_public %}
 
             <div class="friends_like_category">

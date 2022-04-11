@@ -15,7 +15,7 @@ body {
     border-radius: 20px;
     max-width: 100vw;
     width: 96%;
-    height: 820px;
+    height: 94vh;
 }
 
 .nav {
@@ -56,6 +56,7 @@ body {
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
 }
 
 .nav .icon_group .icon.user_icon {
@@ -141,6 +142,7 @@ body {
     border: 2px solid #a185f2;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profile_follow {
@@ -151,6 +153,7 @@ body {
     border: 2px solid #a185f2;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profile_like {
@@ -161,6 +164,7 @@ body {
     border: 2px solid #a185f2;
     border-radius: 10px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .profile_logout {
@@ -169,6 +173,7 @@ body {
     font-size: 24px;
     color: #7657ce;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .profile_logout > a > button {
@@ -363,7 +368,7 @@ body {
     padding-left: 25px;
     font-size: 23px;
     font-weight: bold;
-    margin-bottom: 32px;
+    margin-bottom: 3vh;
 }
 
 .profile_chat_avatar {
@@ -382,6 +387,26 @@ body {
 
 .profile_follow_list {
     /*margin-top: 32px;*/
+}
+.follow_list_section {
+    height: 85vh;
+    width: 100%;
+    overflow-y:auto;
+    overflow-x: hidden;
+}
+.follow_list_section::-webkit-scrollbar {
+  width: 10px;
+}
+
+.follow_list_section::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px #a185f2;
+}
+
+.follow_list_section::-webkit-scrollbar-track {
+  background-color: #faf9ff;
+  border-radius: 2px;
 }
 
 .profile_follow_list li {
@@ -411,6 +436,7 @@ body {
     margin-left: auto;
     position: relative;
     margin-right: 66px;
+    cursor: pointer;
 }
 
 .profile_follow_add p {
@@ -427,6 +453,7 @@ body {
     width: 30px;
     height: 30px;
     position: relative;
+    cursor: pointer;
 }
 
 .profile_follow_decline p {
@@ -448,6 +475,7 @@ body {
 }
 
 .profile_like_container {
+    height: 91.5vh;
     position: relative;
     width: 100%;
     padding-top: 25px;
@@ -461,7 +489,7 @@ body {
 }
 
 .profile_like_category {
-    margin-top: 25px;
+    margin-top: 2.5vh;
     font-weight: 700;
     color: #d2d2d2;
 }
@@ -474,11 +502,11 @@ body {
 /* --------------profile_like_youtube------------ */
 
 .right_wrap .profile_like_container .profile_like_youtube {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 680px;
+    height: 80vh;
     /*display: none;*/
 }
 
@@ -581,12 +609,12 @@ body {
 /* --------------profile_like_news------------ */
 
 .right_wrap .profile_like_container .profile_like_news {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 680px;
+    height: 80vh;
 }
 
 .right_wrap .profile_like_container .profile_like_news::-webkit-scrollbar {
@@ -738,14 +766,14 @@ body {
 /* -------------- profile_like_book ------------ */
 
 .right_wrap .profile_like_container .profile_like_book {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     /*height: 88%;*/
     position: relative;
     display: none;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 660px;
+    height: 80vh;
 }
 
 .right_wrap .profile_like_container .profile_like_book::-webkit-scrollbar {
@@ -917,13 +945,13 @@ body {
 /* -------------- profile_like_shopping  ------------ */
 
 .right_wrap .profile_like_container .profile_like_shopping {
-    margin-top: 30px;
-    width: 95%;
+    margin-top: 3vh;
+    width: 98%;
     position: relative;
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 680px;
+    height: 80vh;
     /*font-weight: 700;*/
     color: #5e5e5e;
 }
