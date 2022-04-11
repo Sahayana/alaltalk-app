@@ -27,6 +27,7 @@ function youtube_take_me(id){
         },
         success: function(response){
             console.log('youtube_take_funcstion result:', response['result'])
+            alert('저장!')
         }
     })
 }
@@ -41,6 +42,7 @@ function news_take_me(id){
         },
         success: function(response){
             console.log('youtube_take_funcstion result:', response['result'])
+            alert('저장!')
         }
     })
 }
@@ -55,6 +57,7 @@ function book_take_me(id){
         },
         success: function(response){
             console.log('youtube_take_funcstion result:', response['result'])
+            alert('저장!')
         }
     })
 }
@@ -70,6 +73,7 @@ function shopping_take_me(id){
         },
         success: function(response){
             console.log('youtube_take_funcstion result:', response['result'])
+            alert('저장!')
         }
     })
 }
