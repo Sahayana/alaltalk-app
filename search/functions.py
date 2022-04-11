@@ -44,21 +44,17 @@ def youtube_crawling(search_word: str, count: int) -> Union[List[List[str]], str
         for row in results:
             if 'videoRenderer' in row:
                 title = row['videoRenderer']['title']['runs'][0]['text']
-                views = row['videoRenderer']['viewCountText']['simpleText']
+                views = row['videoRenderer']['shortViewCountText']['accessibility']['accessibilityData']['label']
                 youtube_base_url = "https://www.youtube.com/embed/"
                 video_id = row['videoRenderer']['videoId']
                 video_already = 'False'
                 answer.append([youtube_base_url + video_id, title, views, video_already])
         print("youtube crawling function time is ", time.time() - start, "seconds")
-        print(len(answer))
         if len(answer) < count:
             count = len(answer)
         return answer[0:count]
     except TimeoutError:
         return 'TimeOut'
-
-
-youtube_crawling('아이유', 20)
 
 
 def shopping_crawling(search_word: str, count: int) -> Union[List[List[str]], str]:
