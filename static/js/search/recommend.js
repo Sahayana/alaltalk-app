@@ -11,7 +11,7 @@ function click_recommend_function() {
     get_chat_log()
     // 2. 키워드 추출 하기 ( KeyWordAPI 로 ajax 전송 )
     get_keyword(chat_log)
-    console.log('recommend_toggle!! -> ', document.getElementById('recommend_toggle'))
+
 }
 
 
@@ -125,16 +125,16 @@ function youtube_content_add(youtube_crawling_data_list, type) {
         }
         let temp_html_recommend = `<div class="content_box" id="${content_id}">
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
-                                    <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
-                                    <div class="video_count">${youtube_row[3]}</div>
+                                    <div class="video_title" style="font-size: 13px">${youtube_row[1]}</div>
+                                    <div class="video_count">${youtube_row[2]}</div>
                                     <div>
                                         <div class="recommend_like_heart recommend_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
                                     </div>
                                 </div>`
         let temp_html_search = `<div class="content_box" id="${content_id}">
                                     <iframe class="video_img" src="${youtube_row[0]}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>ㅇ</iframe>
-                                    <div class="video_title" style="font-size: 13px">${youtube_row[2]}</div>
-                                    <div class="video_count">${youtube_row[3]}</div>
+                                    <div class="video_title" style="font-size: 13px">${youtube_row[1]}</div>
+                                    <div class="video_count">${youtube_row[2]}</div>
                                     <div>
                                         <div class="recommend_like_heart search_youtube_like_heart" style="background-image: url(${heart_image})" onclick="click_like(event)">
                                     </div>

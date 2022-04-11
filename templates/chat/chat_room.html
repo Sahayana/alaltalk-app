@@ -184,9 +184,12 @@
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
         setTimeout(function () {
-            click_recommend_function();
-            {#give_event()#}
-        }, 100)
+            let status = document.getElementById('recommend_toggle').innerText
+            if(status === 'ON'){
+                reload();
+            }
+        }, 500)
+
     });
 
     function close_recommend() {
