@@ -22,7 +22,7 @@ class ChatConsumer(WebsocketConsumer):
         chatroom_id = data["room_id"]
         author = CustomUser.objects.filter(id=user_id)[0]
         author_id = author.id
-        print(author_id)
+        print("컨슈머가 DB 저장", author_id)
         message = ChatMessage.objects.create(author_id=author_id, message=data["message"], chatroom_id=chatroom_id)
         content = {"command": "new_message", "message": self.message_to_json(message)}
         return self.send_chat_message(content)

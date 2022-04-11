@@ -52,7 +52,8 @@
         <div class="chat_list">
             {% for chatroom in chatroom_list %}
                 {% if chatroom.participant1.id == user.id %}
-                    <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
+                    <a href="/chat/{{ chatroom.participant2.id }}/"
+                       class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                         <div class="info_group">
@@ -66,7 +67,8 @@
                         </div>
                     </a>
                 {% else %}
-                    <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
+                    <a href="/chat/{{ chatroom.participant1.id }}/"
+                       class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                         <div class="info_group">
@@ -92,10 +94,12 @@
     </div>
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
-<script>
+<script type="module">
 
     $(document).ready(function () {
-        {#lastMessageList();#}
+        {#import room_id from 'templates/chat/chat_room.html'#}
+        {#alert(room_id);#}
+        getRoomid();
         latestMessageNotConnected();
 
         // 채팅 스크롤 하단 고정
@@ -124,6 +128,182 @@
     $(".logout").click(function () {
         location.replace("/accounts/logout");
     })
+
+    var user_id = {{ user_id }};
+    var room_id = 140;
+
+    function getRoomid() {
+        let all_partner = document.getElementsByClassName('chat_partner')
+        console.log(all_partner)
+
+        var partner_list = []
+        for (let i = 0; i < all_partner.length; i++) {
+            let partner = all_partner[i]['href'].split('/')
+            partner = parseInt(partner[4]);
+            console.log(i, partner, typeof (partner))
+            partner_list.push(partner)
+        }
+        console.log(partner_list)
+
+
+        $.ajax({
+            url: "/chat/getroomid/",
+            type: "post",
+            traditional: true,
+            data: JSON.stringify({"partner_list": partner_list}),
+            async: false,
+            success: function (data) {
+                console.log('룸리스트', data['room_list'])
+                let roomlist = data['room_list']
+                for (let i = 0; i < roomlist.length; i++) {
+                    let roomid = roomlist[i]
+                    let socketname = window['chatSocket' + roomid]
+                    WebSocketConnetion(socketname, roomid);
+                    console.log('룸아이디', roomid, socketname)
+                }
+            },
+            error: function (request, status, error) {
+                alert('error')
+
+                console.log(request, status, error)
+            }
+        })
+    }
+
+    function WebSocketConnetion(socket, id) {
+        var socket = new ReconnectingWebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/room/'
+            + id
+            + '/'
+        );
+
+        socket.onopen = function (e) {
+            console.log('Chat socket open');
+        }
+
+        socket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            // 이전메세지 로드(웹소켓 내부에서 반복적으로 로드되는 문제로 사용하지 않음)
+            if (data['command'] === 'messages') {
+                const n = data['messages'].length
+                for (let i = n - 1; i >= 0; i--) {
+                    createMessage(data['messages'][i]);
+                }
+                // 새로운 메세지 컨트롤
+            } else if (data['command'] === 'new_message') {
+                let current_num = $('.user_count').length + $('.partner_count').length;
+                console.log('current_num', current_num + 1)
+                // 1부터 카운트 하기 위해 +1 처리
+                createMessage(data['message'], current_num + 1);
+                latestMessageNotConnected();
+                console.log('DB에서 마지막 메세지 ajax 출력!')
+                $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+            }
+        };
+
+        document.querySelector('#chat_message_input').onkeyup = function (e) {
+            if (e.keyCode === 13) {
+                let messageInputDom = document.querySelector('#chat_message_input');
+                let message = messageInputDom.value
+                message = message.replaceAll(/(\n|\r\n)/g, "<br>");
+                if (message === '' || message === null || message.trim().length === 0) {
+                    console.log('websocket load message')
+                    return true;
+                }
+                if (message.includes('alert') === true || message.includes('ALERT') === true) {
+                    console.log('XSS attack defenced!')
+                }
+                if (message.includes('script') === true || message.includes('SCRIPT') === true) {
+                    console.log('XSS attack defenced!')
+                } else {
+                    if (message.includes('href') === true) {
+                        console.log('XSS attack defenced!')
+                        const replace_msg = message.replace('href', '')
+                        socket.send(JSON.stringify({
+                            'command': 'new_messages',
+                            'message': replace_msg,
+                            'from': user_id,
+                            'room_id': room_id,
+                        }));
+                    } else {
+                        socket.send(JSON.stringify({
+                            'command': 'new_messages',
+                            'message': message,
+                            'from': user_id,
+                            'room_id': room_id,
+                        }));
+                    }
+
+                }
+                messageInputDom.value = '';
+
+            }
+            ;
+        }
+
+        {#웹소켓 연결이 끊어졌을 때의 JS#}
+        socket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+    }
+
+    {#새로 작성된 메세지를 html에 보여주는 JS#}
+
+    function createMessage(data, num) {
+        const message = data['message'];
+        const author = data['author'];
+        const created_at = data['created_at'];
+        const chatroom_id = data['chatroom_id'];
+
+        {#12시 기준으로 오전 오후 구분#}
+        const timestamp = created_at.split('')
+        if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
+            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+        } else {
+            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+        }
+
+
+        let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`
+        $('.chat_partner_' + chatroom_id).children('.info_group').append(temp_html)
+        console.log('consumer에서 메세지 바로 출력')
+
+
+        if (author === user_id) {
+            if (message.includes('http') === true) {
+                let temp_html1 = `<div class="user_chat user_count">
+                                          <div onmouseover="show_user_timestamp(${-num})" onmouseout="hide_user_timestamp(${-num})"onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>
+                                          <div class="timestamp_user timestamp_user_${-num}">${am_or_pm}</div>
+                                      </div>`
+                $('#chat_box').append(temp_html1)
+                $('#chat_message_input').val('');
+            } else {
+                let temp_html1 = `<div class="user_chat user_count">
+                                          <div onmouseover="show_user_timestamp(${-num})" onmouseout="hide_user_timestamp(${-num})" class='user_to_partner'>${message}</div>
+                                          <div class="timestamp_user timestamp_user_${-num}">${am_or_pm}</div>
+                                      </div>`
+                $('#chat_box').append(temp_html1)
+                $('#chat_message_input').val('');
+            }
+        } else {
+            if (message.includes('http') === true) {
+                let temp_html2 = `<div class="partner_chat partner_count">
+                                          <div onmouseover="show_partner_timestamp(${-num})" onmouseout="hide_partner_timestamp(${-num})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>
+                                          <div class="timestamp_partner timestamp_partner_${-num}">${am_or_pm}</div>
+                                      </div>`
+                $('#chat_box').append(temp_html2)
+            } else {
+                let temp_html2 = `<div class="partner_chat partner_count">
+                                          <div onmouseover="show_partner_timestamp(${-num})" onmouseout="hide_partner_timestamp(${-num})" class='partner_to_user'>${message}</div>
+                                          <div class="timestamp_partner timestamp_partner_${-num}">${am_or_pm}</div>
+                                      </div>`
+                $('#chat_box').append(temp_html2)
+            }
+        }
+    }
 
 
 </script>

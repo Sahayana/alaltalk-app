@@ -223,22 +223,44 @@ def last_message_list(request):
 @login_required
 def latest_message_not_connected(request):
     partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
-    print(partner_list)
+
 
     latest_chat_list = []
     for partner in partner_list:
-        print(partner)
+
         chatter = CustomUser.objects.get(id=partner)
         chatroom = ChatRoom.objects.get(Q(participant1=request.user, participant2_id=chatter) | Q(participant2=request.user, participant1=chatter))
-        print(chatroom)
+
         latest_message_each_chatroom = ChatMessage.objects.filter(chatroom=chatroom).order_by("-created_at")
         for message in latest_message_each_chatroom:
             if message is latest_message_each_chatroom[0]:
-                print(message.message)
+
                 latest_chat_list.append({'partner': chatter.id, 'author_message': message.author_id ,'latest_message_each_chatroom': message.message})
 
     context = {
         'latest_chat_list': latest_chat_list,
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
+@csrf_exempt
+@login_required
+def get_room_id(request):
+    partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
+    print(partner_list)
+
+    room_list = []
+    for partner in partner_list:
+        chatter = CustomUser.objects.get(id=partner)
+        chatroom = ChatRoom.objects.filter(Q(participant1=request.user, participant2_id=chatter) | Q(participant2=request.user, participant1=chatter))
+        print('getroom', chatroom)
+        for room in chatroom:
+            print(room, room.id)
+            room_list.append(room.id)
+
+    context = {
+        'room_list': room_list,
     }
 
     return HttpResponse(json.dumps(context), content_type="application/json")
