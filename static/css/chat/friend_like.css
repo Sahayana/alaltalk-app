@@ -561,3 +561,35 @@
     width: 60%;
     margin: 60px 0;
 }
+
+/*--------------------친구찜 기반 관련키워드-----------------------------*/
+
+.friend_like_recommend_container {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    font-size: 15px;
+    overflow: hidden;
+}
+
+.friend_keyword {
+    display: flex;
+    width: 75px;
+    height: 28px;
+    margin-left: 12px;
+    border-radius: 14px;
+    color: white;
+    background-color: #a185f2;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.friend_id {
+    display: none;
+}
+
+
+
