@@ -10,6 +10,52 @@
     width: 60%;
 }
 
+.recommend_nav {
+    font-weight: 700;
+    color: #d2d2d2;
+    cursor: pointer;
+    width: 50%;
+    position: static;
+    margin: 30px;
+}
+.recommend_nav span {
+    margin-right: 12px;
+}
+
+.recommend_nav span:first-child {
+    color: #7657CE;
+}
+
+.search_bar {
+    width: 58vw;
+    height: 40px;
+    border: 1px solid #A185F2;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    margin: 30px;
+    box-sizing: border-box;
+    padding: 0 12px;
+}
+
+.search_bar .search_icon {
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
+    width: 20px;
+    height: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.search_bar input {
+    border: none;
+    font-size: 14px;
+    -webkit-text-fill-color: #A185F2;
+    margin-left: 6px;
+    width: 100%;
+}
+
 
 .recommend_toggle {
     position: relative;
@@ -21,6 +67,7 @@
     justify-content: space-evenly;
     align-items: center;
     opacity: 1;
+    cursor: pointer;
 }
 
 .recommend_search_toggle {
@@ -52,20 +99,7 @@
 }
 
 
-.recommend_youtube_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-    cursor: pointer;
-    width: 50%;
-}
 
-.recommend_youtube_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_youtube_container .recommend_nav span:first-child {
-    color: #7657CE;
-}
 
 .recommend_close_btn {
     position: absolute;
@@ -92,25 +126,9 @@
     padding: 0 12px;
 }
 
-.recommend_youtube_container .search_bar .search_icon {
-    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/search_purple.png");
-    width: 20px;
-    height: 20px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
 
-}
 
-.recommend_youtube_container .search_bar input {
-    border: none;
-    font-size: 14px;
-    -webkit-text-fill-color: #A185F2;
-    margin-left: 6px;
-    width: 100%;
-}
-
-.recommend_youtube_container .search_bar input:focus {
+.search_bar input:focus {
     outline: none;
 }
 
@@ -139,10 +157,27 @@
     height: auto;
 }
 
+.recommend_toggle_wrapper{
+    width: 210px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    text-align: left;
+    margin-left: 28px;
+}
+
+.recommend_toggle_wrapper p{
+    width: 92px;
+    height: 100%;
+    line-height: 30px;
+
+}
+
 .recommend_container_total_toggle {
-    position: absolute;
-    width: 3.2vw;
-    height: 3.2vh;
+    width: 60px;
+    height: 30px;
     background-color: #7556CD;
     color: white;
     left: 4.5vw;
@@ -153,7 +188,32 @@
     border-radius: 8px;
     padding-bottom: 0.5vh;
     box-sizing: border-box;
-    /*z-index: 2;*/
+    margin: 0 14px 0 14px;
+}
+
+.recommend_reload_button{
+    width: 30px;
+    height: 30px;
+    background-image: url("/static/images/reload.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+
+}
+
+.recommend_reload_button:hover{
+    animation: spinning_reload 1s ease-in-out infinite;
+}
+
+@keyframes spinning_reload {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(180deg);
+    }
+
 }
 
 .recommend_youtube_container .recommend_content p {
@@ -281,14 +341,14 @@
 .recommend_youtube_container .search_content p {
     font-weight: 700;
     color: #7657CE;
-    margin-bottom: 12px;
+    margin-bottom: 1.2vh;
 }
 
 .recommend_youtube_container .search_content .content_section {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: 35vh;
+    height: calc(56vh - 260px);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -390,18 +450,6 @@
     padding: 3vh 1vh 2vh 3vh;
 }
 
-.recommend_news_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-}
-
-.recommend_news_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_news_container .recommend_nav span:nth-child(2) {
-    color: #7657CE;
-}
 
 .recommend_news_container .search_bar {
     width: 58vw;
@@ -439,7 +487,7 @@
 
 .recommend_news_container .search_news_content {
     overflow-y: auto;
-    height: 35.5vh;
+    height: calc(56vh - 260px);
     width: 100%;
 }
 
@@ -612,7 +660,7 @@
 .recommend_news_container .search_news_content .title {
     font-weight: 700;
     color: #7657CE;
-    margin-top: 10px;
+    margin-bottom: 1.2vh;
 }
 
 .recommend_news_container .search_news_content .search_news_section {
@@ -823,11 +871,11 @@
 
 .recommend_news_search_content_desc {
     width: 30vw;
-    height: 12vw;
+    height: 10vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 25px;
     color: #5e5e5e;
 }
 
@@ -905,19 +953,6 @@
     padding: 3vh 1vh 2vh 3vh;
 }
 
-.recommend_book_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-}
-
-.recommend_book_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_book_container .recommend_nav span:nth-child(3) {
-    color: #7657CE;
-}
-
 .recommend_book_container .search_bar {
     width: 58vw;
     height: 4.5vh;
@@ -985,7 +1020,7 @@
 
 .recommend_book_container .recommend_book_content .content_book_section {
     width: 58vw;
-    height: 32vh;
+    height: 27vh;
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
@@ -1052,6 +1087,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    margin-top: 10px;
 }
 
 .recommend_book_container .recommend_book_content .content_book_section .content_box {
@@ -1062,7 +1098,7 @@
     text-overflow: ellipsis;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     margin: 6px 8px;
     box-sizing: border-box;
@@ -1171,11 +1207,11 @@
     display: block;
     flex-wrap: wrap;
     width: 100%;
-    height: 34vh;
+    height: calc(56vh - 260px);
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
-    margin-top: 2.4vh;
+    margin-top: 1.2vh;
 }
 
 
@@ -1195,17 +1231,17 @@
 
 .recommend_book_container .search_book_content .content_box {
     position: relative;
-    width: 48vw;
+    width: 56vw;
     height: 30vh;
     background-position: left;
     background-size: contain;
     background-repeat: no-repeat;
     text-align: left;
-    /*margin: 5px 0 50px 35px;*/
+    /* margin: 5px 0 50px 35px; */
     color: #5e5e5e;
     display: flex;
     flex-direction: row;
-    /*justify-content: space-between;*/
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -1260,18 +1296,6 @@
     padding: 3vh 1vh 2vh 3vh;
 }
 
-.recommend_shopping_container .recommend_nav {
-    font-weight: 700;
-    color: #d2d2d2;
-}
-
-.recommend_shopping_container .recommend_nav span {
-    margin-right: 12px;
-}
-
-.recommend_shopping_container .recommend_nav span:last-child {
-    color: #7657CE;
-}
 
 .recommend_shopping_container .search_bar {
     width: 58vw;
@@ -1473,9 +1497,10 @@
     justify-content: start;
     align-items: start;
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: scroll;
     width: 58vw;
-    height: 34vh;
+    height: calc(56vh - 260px);
+    flex-wrap: wrap;
 }
 
 .recommend_shopping_container .search_content .content_box {
@@ -1600,6 +1625,7 @@
     width: 200px;
     height: 260px;
     margin-right: 24px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

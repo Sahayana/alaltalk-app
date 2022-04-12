@@ -1,27 +1,31 @@
+{% load static %}
+
 <div class="recommend_close_btn" onclick="close_recommend()"></div>
+<div class="recommend_nav" id="recommend_nav">
+    <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
+    <span onclick="move_category('recommend_news_container')">NEWS</span>
+    <span onclick="move_category('recommend_book_container')">BOOK</span>
+    <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
+</div>
+<div class="search_bar" id="recommend_search_bar" onkeyup="initialize_search_bar(event)">
+    <div class="search_icon"></div>
+    <input type="text" placeholder="Search">
+</div>
+<div class="recommend_toggle_wrapper">
+    <p>추천 컨텐츠</p>
+    <button class="recommend_container_total_toggle" id="recommend_toggle" onclick="recommend_switch()">
+        {% if user.is_recommend_on %}
+            ON
+        {% else %}
+            OFF
+        {% endif %}
+    </button>
+    <div class="recommend_reload_button" id="recommend_reload_button" onclick="reload()" style="display: none"></div>
+</div>
 <div class="recommend_youtube_container" id="recommend_youtube_container" style="display: block">
-    <div class="recommend_nav">
-        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
-        <span onclick="move_category('recommend_news_container')">NEWS</span>
-        <span onclick="move_category('recommend_book_container')">BOOK</span>
-        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
-    </div>
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_content">
-            <p>추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
-
-            <div class="content_section" id="youtube_recommend_content">
+            <div class="content_section" id="youtube_recommend_content" style="display: none">
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
                         <div class="recommend_spinner_lorder"></div>
@@ -34,12 +38,10 @@
                 <!-- youtube 클롤링 결과 -->
             </div>
         </div>
-        <div class="search_content" style="display: none">
+        <div class="search_content" style="display: block">
             <p>검색</p>
             <div class="content_section" id="youtube_search_content" style="display: flex">
-                <div class="recommend_spinner spinner_search" style="display: none;">
-                    <div class="recommend_spinner_lorder"></div>
-                </div>
+                <div class="recommend_search_no_result">검색결과가 없습니다!</div>
 
                 <!-- youtube 검색 클롤링 결과 -->
             </div>
@@ -47,27 +49,9 @@
     </div>
 </div>
 <div class="recommend_news_container" id="recommend_news_container" style="display: none">
-    <div class="recommend_nav">
-        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
-        <span onclick="move_category('recommend_news_container')">NEWS</span>
-        <span onclick="move_category('recommend_book_container')">BOOK</span>
-        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
-    </div>
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_news_content">
-            <p class="title">추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
-            <div class="content_news_section" id="news_recommend_content" style="display: flex">
+            <div class="content_news_section" id="news_recommend_content" style="display: none">
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
                         <div class="recommend_spinner_lorder"></div>
@@ -81,12 +65,11 @@
             </div>
 
         </div>
-        <div class="search_news_content" id="test" style="display: none">
+
+        <div class="search_news_content" style="display: block">
             <p class="title">검색</p>
             <div class="search_section" id="news_search_content">
-                <div class="recommend_spinner spinner_search" style="display: flex;">
-                    <div class="recommend_spinner_lorder"></div>
-                </div>
+                <div class="recommend_search_no_result">검색결과가 없습니다!</div>
                 <!-- news 검색 크롤링 결과 -->
             </div>
         </div>
@@ -94,27 +77,9 @@
 
 </div>
 <div class="recommend_book_container" id="recommend_book_container" style="display: none">
-    <div class="recommend_nav">
-        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
-        <span onclick="move_category('recommend_news_container')">NEWS</span>
-        <span onclick="move_category('recommend_book_container')">BOOK</span>
-        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
-    </div>
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_book_content">
-            <p class="title">추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
-            <div class="content_book_section" id="book_recommend_content" style="display: flex">
+            <div class="content_book_section" id="book_recommend_content" style="display: none">
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
                         <div class="recommend_spinner_lorder"></div>
@@ -128,9 +93,10 @@
 
             </div>
         </div>
-        <div class="search_book_content" style="display:block;">
+        <div class="search_book_content" style="display: block;">
             <p class="title">검색</p>
             <div class="content_book_section" id="book_search_content">
+                <div class="recommend_search_no_result">검색결과가 없습니다!</div>
                 <!-- book 검색 결과 -->
             </div>
         </div>
@@ -139,27 +105,10 @@
 
 </div>
 <div class="recommend_shopping_container" id="recommend_shopping_container" style="display: none">
-    <div class="recommend_nav">
-        <span onclick="move_category('recommend_youtube_container')">YOUTUBE</span>
-        <span onclick="move_category('recommend_news_container')">NEWS</span>
-        <span onclick="move_category('recommend_book_container')">BOOK</span>
-        <span onclick="move_category('recommend_shopping_container')">SHOPPING</span>
-    </div>
-    <div class="search_bar">
-        <div class="search_icon"></div>
-        <input type="text" placeholder="Search">
-    </div>
     <div class="content_wrap">
         <div class="recommend_content">
-            <p class="title">추천 컨텐츠</p>
-            <button class="recommend_container_total_toggle">
-                {% if user.is_recommend_on %}
-                    ON
-                {% else %}
-                    OFF
-                {% endif %}
-            </button>
-            <div class="content_section" id="shopping_recommend_content" style="display: flex">
+
+            <div class="content_section" id="shopping_recommend_content" style="display: none">
 
                 {% if user.is_recommend_on %}
                     <div class="recommend_spinner" style="display: flex;">
@@ -174,18 +123,15 @@
                 <!-- Shopping 크롤링 결과-->
             </div>
         </div>
-        <div class="search_content" style="display:none;">
+        <div class="search_content" style="display:block;">
             <p class="title">검색</p>
 
 
             <div class="content_section" id="shopping_search_content">
-                <div class="recommend_spinner spinner_search" style="display: flex;">
-                    <div class="recommend_spinner_lorder"></div>
-                </div>
+                <div class="recommend_search_no_result">검색결과가 없습니다!</div>
                 <!-- Shopping 검색 결과  -->
 
             </div>
         </div>
     </div>
 </div>
-

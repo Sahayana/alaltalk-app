@@ -28,8 +28,10 @@ function switch_chat() {
     $('#left_wrap').load("/api/search/chat");
     $('#right_wrap').load("/api/search/recommend");
     setTimeout(function(){
-        click_recommend_function();
-    }, 100)
+        reload();
+        console.log('recommend_toggle!! -> ', document.getElementById('recommend_toggle'))
+    }, 500)
+    console.log('switch_chat()!')
 }
 
 function toggle_recommend(){

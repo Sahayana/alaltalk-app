@@ -72,12 +72,9 @@ sortedcontainers==2.4.0
 soupsieve==2.3.1
 sqlparse==0.4.2
 supervisor==4.2.4
-toml==0.10.2
-tomli==2.0.1
 trio==0.20.0
 trio-websocket==0.9.2
 Twisted==22.2.0
-twisted-iocpsupport==1.0.2
 txaio==22.2.1
 types-PyMySQL==1.0.6
 types-pytz==2021.3.6

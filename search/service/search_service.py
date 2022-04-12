@@ -2,18 +2,19 @@ import ssl
 import urllib.request
 from typing import List
 from urllib import parse
-
+import time
 from bs4 import BeautifulSoup
 
 
 def crawling_news(search: str) -> List[List[str]]:
-    context = ssl._create_unverified_context()
+    start = time.time()
+    # context = ssl._create_unverified_context()
 
     # search = input("검색어를 입력하세요:")
     url = "https://search.naver.com/search.naver?where=news&query="
     newUrl = url + parse.quote(search)
 
-    html = urllib.request.urlopen(newUrl, context=context).read()
+    html = urllib.request.urlopen(newUrl, timeout=2).read()
     soup = BeautifulSoup(html, "html.parser")
     name = soup.select("#main_pack > section > div > div.group_news > ul > li > div > div > a")
     content = soup.select("#main_pack > section > div > div.group_news > ul > li > div > div > div.news_dsc > div > a")
@@ -32,19 +33,19 @@ def crawling_news(search: str) -> List[List[str]]:
         test_title.append(image[i]["src"])
         test_title.append('False')
         answer.append(test_title)
-
+    print("news crawling function time is ", time.time() - start, "seconds")
     return answer
 
 
 def crawling_book(search: str) -> List[List[str]]:
-
-    context = ssl._create_unverified_context()
+    start = time.time()
+    # context = ssl._create_unverified_context()
 
     # search = input("검색어를 입력하세요:")
     url = "https://search.kyobobook.co.kr/web/search?vPstrKeyWord="
     newUrl = url + parse.quote(search)
 
-    html = urllib.request.urlopen(newUrl, context=context).read()
+    html = urllib.request.urlopen(newUrl, timeout=2).read()
     soup = BeautifulSoup(html, "html.parser")
 
     title = soup.select("div.title > a > strong")
@@ -56,11 +57,6 @@ def crawling_book(search: str) -> List[List[str]]:
     company = soup.select("td.detail > div.author > a:last-of-type")
     search_list = soup.select("#search_list tr")
     answer = []
-
-    # for row in search_list:
-    #     print('#####################')
-    #     print(row)
-    #     print(row.select_one('detail'))
 
     for i in range(len(author)):
         test_title = []
@@ -77,5 +73,6 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(image[i]["src"])
         test_title.append('False')
         answer.append(test_title)
+    print("book crawling function time is ", time.time() - start, "seconds")
     return answer
 
