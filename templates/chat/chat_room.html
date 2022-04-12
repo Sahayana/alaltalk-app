@@ -96,6 +96,11 @@
                     </div>
                 </div>
                 <div class="right_icon">
+                    <div class="hidden talk-bubble tri-right round right-in" id="guide_bubble">
+                        <div class="talktext">
+                            <p>추천 컨텐츠도 <br>이용해보세요!</p>
+                        </div>
+                    </div>
                     {#                    <div class="close_btn" onclick="location.href='/chat'"></div>#}
                     <div class="toggle_icon"></div>
                 </div>
@@ -118,7 +123,7 @@
                 {% csrf_token %}
                 {#                {% if user_id == %}#}
                 <div id="chat_message_submit" class="attach_icon"></div>
-                <input id="chat_message_input" type="text" placeholder="입력하세요." name="message">
+                <textarea id="chat_message_input" type="text" placeholder="입력하세요." name="message"></textarea>
             </div>
         </div>
         {% include 'chat/freind_like.html' %}
@@ -517,6 +522,18 @@
                 latestMessageNotConnected();
                 $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
+///////////////////////////내가한부분/////////////////////////////////////////////////
+            if (data['chat_count'] >8 && data['chat_count'] <15){
+                document.querySelector('.hidden').classList.remove('disappear');
+                document.querySelector('.hidden').classList.add('appear');
+            } else {
+                if (document.querySelector('.hidden').classList.contains('appear')) {
+                    document.querySelector('.hidden').classList.add('disappear');
+                    setTimeout(function () {
+                        document.querySelector('.hidden').classList.remove('appear')
+                    }, 1001);
+                }
+            }
         };
 
         function messageCounter(data) {
@@ -572,38 +589,45 @@
         {#consumer에게 key:value 형태로 메세지를 넘겨준다.#}
         {#메세지 관련 예외처리(공란, null, 스페이스바, xss 공격대비)#}
         document.querySelector('#chat_message_input').onkeyup = function (e) {
+            const messageInputDom = document.querySelector('#chat_message_input');
+            let message = messageInputDom.value;
+            message = message.replaceAll(/(\n|\r\n)/g, "<br>");
+
             if (e.keyCode === 13) {  // enter, return
-                const messageInputDom = document.querySelector('#chat_message_input');
-                const message = messageInputDom.value
-                if (message === '' || message === null || message.trim().length === 0) {
-                    console.log('websocket load message')
-                    return true;
-                }
-                if (message.includes('alert') === true || message.includes('ALERT') === true) {
-                    console.log('XSS attack defenced!')
-                }
-                if (message.includes('script') === true || message.includes('SCRIPT') === true) {
-                    console.log('XSS attack defenced!')
+                if (e.shiftKey) {
+                    message.replaceAll(/(\n|\r\n)/g, "<br>");
                 } else {
-                    if (message.includes('href') === true) {
-                        console.log('XSS attack defenced!')
-                        const replace_msg = message.replace('href', '')
-                        chatSocket.send(JSON.stringify({
-                            'command': 'new_messages',
-                            'message': replace_msg,
-                            'from': user_id,
-                            'room_id': room_id,
-                        }));
-                    } else {
-                        chatSocket.send(JSON.stringify({
-                            'command': 'new_messages',
-                            'message': message,
-                            'from': user_id,
-                            'room_id': room_id,
-                        }));
+                    if (message === '' || message === null || message.trim().length === 0) {
+                        console.log('websocket load message')
+                        return true;
                     }
+                    if (message.includes('alert') === true || message.includes('ALERT') === true) {
+                        console.log('XSS attack defenced!')
+                    }
+                    if (message.includes('script') === true || message.includes('SCRIPT') === true) {
+                        console.log('XSS attack defenced!')
+                    } else {
+                        if (message.includes('href') === true) {
+                            console.log('XSS attack defenced!')
+                            const replace_msg = message.replace('href', '')
+                            chatSocket.send(JSON.stringify({
+                                'command': 'new_messages',
+                                'message': replace_msg,
+                                'from': user_id,
+                                'room_id': room_id,
+                            }));
+                        } else {
+                            chatSocket.send(JSON.stringify({
+                                'command': 'new_messages',
+                                'message': message,
+                                'from': user_id,
+                                'room_id': room_id,
+                            }));
+                        }
+                    }
+                    messageInputDom.value = '';
                 }
-                messageInputDom.value = '';
+
             }
         };
 
