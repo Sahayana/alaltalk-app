@@ -97,10 +97,9 @@
 <script>
 
     $(document).ready(function () {
-        {#import room_id from 'templates/chat/chat_room.html'#}
-        {#alert(room_id);#}
-        getRoomid();
         latestMessageNotConnected();
+        getRoomid();
+
 
         // 채팅 스크롤 하단 고정
         var scrollDown = $('#chat_box').prop('scrollHeight');
@@ -198,8 +197,6 @@
                 console.log('current_num', current_num + 1)
                 // 1부터 카운트 하기 위해 +1 처리
                 createMessage(data['message'], current_num + 1);
-                latestMessageNotConnected();
-                console.log('DB에서 마지막 메세지 ajax 출력!')
                 $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
         };
@@ -230,11 +227,13 @@
             var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
         }
 
-
-        let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`
-        $('.chat_partner_' + chatroom_id).children('.info_group').append(temp_html)
-        console.log('consumer에서 메세지 바로 출력')
-
+        {#let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`#}
+        {#$('.chat_partner_' + chatroom_id).children('.info_group').append(temp_html)#}
+        {#console.log('consumer에서 메세지 바로 출력')#}
+        $('.chat_partner_' + chatroom_id).children('.info_group').children('.partner_last_msg').addClass('new')
+        let new_message = message.replace(/<br>/ig, "");
+        $('.chat_partner_' + chatroom_id).children('.info_group').children('.partner_last_msg').text(new_message)
+        console.log('text 체인지!')
 
         if (author === user_id) {
             if (message.includes('http') === true) {
