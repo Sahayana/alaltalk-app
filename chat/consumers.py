@@ -20,11 +20,13 @@ class ChatConsumer(WebsocketConsumer):
     def new_message(self, data):
         user_id = data["from"]
         chatroom_id = data["room_id"]
+        chat_count = ChatMessage.objects.filter(chatroom_id=chatroom_id)
         author = CustomUser.objects.filter(id=user_id)[0]
         author_id = author.id
-        print(author_id)
+        print('작가아이디',author_id)
+        print('채팅로그 갯수',len(chat_count))
         message = ChatMessage.objects.create(author_id=author_id, message=data["message"], chatroom_id=chatroom_id)
-        content = {"command": "new_message", "message": self.message_to_json(message)}
+        content = {"command": "new_message", "message": self.message_to_json(message), "chat_count" : len(chat_count) }
         return self.send_chat_message(content)
 
     # DB에서 불러온 이전 메세지를 리스트 형태로 변환
