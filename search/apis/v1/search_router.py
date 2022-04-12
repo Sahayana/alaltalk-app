@@ -7,7 +7,7 @@ from ninja import Form, Router
 from search.models import Book, News, Shopping, Youtube
 from search.service.search_service import crawling_book, crawling_news
 from accounts.models import CustomUser
-from ...functions import crawling_shopping_only_bs4, crawling_youtube
+from ...functions import shopping_crawling, youtube_crawling
 from .schemas import CrawlingRequest, CrawlingResponse, SearchRequest, SearchResponse
 
 router = Router(tags=["search"])
@@ -37,12 +37,12 @@ def open_chat_room(request):
 @router.post("/crawling", response={201: CrawlingResponse})
 def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest = Form(...)) -> Tuple[int, Dict]:
     all_response = {}
-    content_count = 10
+    content_count = 20
     try:
-        all_response["youtube"] = crawling_youtube(crawling_request.target, content_count)
+        all_response["youtube"] = youtube_crawling(crawling_request.target, content_count)
         for youtube_row in all_response['youtube']:
             if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
-                youtube_row[4] = 'True'
+                youtube_row[3] = 'True'
     except Exception as e:
         print('youtube_crawling Error: ', e)
         all_response["youtube"] = []
@@ -55,7 +55,7 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
         print('news_crawling Error: ', e)
         all_response["news"] = []
     try:
-        all_response["shopping"] = crawling_shopping_only_bs4(crawling_request.target, content_count)
+        all_response["shopping"] = shopping_crawling(crawling_request.target, content_count)
         for shopping_row in all_response['shopping']:
             if Shopping.objects.filter(user=request.user.id, link=shopping_row[3]).exists():
                 shopping_row[4] = 'True'
@@ -81,7 +81,7 @@ def search_youtube(request, youtube_request: SearchRequest = Form(...)) -> Tuple
     youtube_list = []
     print(youtube_request.search)
     try:
-        youtube_list = crawling_youtube(youtube_request.search, content_count)
+        youtube_list = youtube_crawling(youtube_request.search, content_count)
         for youtube_row in youtube_list:
             if Youtube.objects.filter(user=request.user.id, url=youtube_row[0]).exists():
                 youtube_row[4] = 'True'
@@ -128,7 +128,7 @@ def search_shopping(request, shopping_request: SearchRequest = Form(...)) -> Tup
     content_count = 10
     shopping_list = []
     try:
-        shopping_list = crawling_shopping_only_bs4(shopping_request.search, content_count)
+        shopping_list = shopping_crawling(shopping_request.search, content_count)
         for shopping_row in shopping_list:
             if Shopping.objects.filter(user=request.user.id, link=shopping_row[3]).exists():
                 shopping_row[4] = 'True'
@@ -146,7 +146,7 @@ def recommend_on_off_switch(request):
     if recommend_state == 'false':
         recommend_state = False
     elif recommend_state == 'true':
-        recommend_state=True
+        recommend_state =True
     else:
         return JsonResponse({'result': 'Not boolean!'})
     print('recommend_state: ', recommend_state)

@@ -183,15 +183,26 @@
         $('.chat_container').appendTo('.left_wrap');
         $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
-        $('.right_wrap').load("/api/search/recommend");
+        $('.right_wrap').load("/api/search/recommend", function (){
+            let status = document.getElementById('recommend_toggle').innerText
+            if(status === 'ON'){
+                document.getElementById('youtube_recommend_content').style.display = 'flex'
+                document.getElementById('news_recommend_content').style.display = 'flex'
+                document.getElementById('book_recommend_content').style.display = 'flex'
+                document.getElementById('shopping_recommend_content').style.display = 'flex'
+                document.getElementById('recommend_reload_button').style.display = 'block'
+                reload();
+            }else{
+                document.getElementById('recommend_reload_button').style.display = 'none'
+                search_container_height_change()
+            }
+        });
 
         //$("#recommend_btn").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
-        setTimeout(function () {
-            click_recommend_function();
-            {#give_event()#}
-        }, 100)
+
+
     });
 
     function close_recommend() {

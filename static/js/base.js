@@ -29,8 +29,9 @@ function switch_chat() {
     $('#right_wrap').load("/api/search/recommend");
     setTimeout(function(){
         reload();
+        console.log('recommend_toggle!! -> ', document.getElementById('recommend_toggle'))
     }, 500)
-
+    console.log('switch_chat()!')
 }
 
 function toggle_recommend(){
