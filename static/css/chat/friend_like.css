@@ -51,7 +51,7 @@
     width: 98%;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 81.5vh;
+    height: 75.5vh;
     /*display: none;*/
 }
 
@@ -147,7 +147,7 @@
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 81.5vh;
+    height: 75.5vh;
 }
 
 .friends_like_news::-webkit-scrollbar {
@@ -267,7 +267,7 @@
     display: none;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 81.5vh;
+    height: 75.5vh;
 }
 
 .friends_like_book::-webkit-scrollbar {
@@ -408,7 +408,7 @@
     display: none;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 81.5vh;
+    height: 75.5vh;
     color: #5e5e5e;
 }
 
@@ -576,8 +576,8 @@
 
 .friend_keyword {
     display: flex;
-    width: 75px;
-    height: 28px;
+    width: 12vh;
+    height: 3vh;
     margin-left: 12px;
     border-radius: 14px;
     color: white;
