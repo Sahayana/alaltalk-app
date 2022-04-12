@@ -14,5 +14,6 @@ urlpatterns = [
     path("latestmessage/", views.latest_message, name="latest_message"),
     path("lastmessagelist/", views.last_message_list, name="last_message_list"),
     path("latestmessagenotconnected/", views.latest_message_not_connected, name="latest_message_not_connected"),
+    path("getroomid/", views.get_room_id, name="get_room_id"),
     path("delete/<int:room_id>/", views.delete_chat_room, name="delete_chat_room"),
 ]
