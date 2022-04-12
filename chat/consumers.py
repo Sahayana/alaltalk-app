@@ -50,6 +50,7 @@ class ChatConsumer(WebsocketConsumer):
     def connect(self):
         self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.room_group_id = "chat_%s" % self.room_id
+        print(self.room_group_id)
 
         # room_id를 통해 그룹에 들어가기
         async_to_sync(self.channel_layer.group_add)(self.room_group_id, self.channel_name)
@@ -69,6 +70,7 @@ class ChatConsumer(WebsocketConsumer):
 
     # room_id로 묶인 그룹에 메세지 보내주기
     def send_chat_message(self, message):
+        print('메세지!!!!!', self.room_group_id)
         async_to_sync(self.channel_layer.group_send)(self.room_group_id, {"type": "chat_message", "message": message})
 
     # 메세지는 json이나 바이너리 형태로 전송

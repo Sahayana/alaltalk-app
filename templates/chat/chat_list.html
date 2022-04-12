@@ -52,7 +52,7 @@
         <div class="chat_list">
             {% for chatroom in chatroom_list %}
                 {% if chatroom.participant1.id == user.id %}
-                    <a href="/chat/{{ chatroom.participant2.id }}/"
+                    <a onclick="getRoomid()" href="/chat/{{ chatroom.participant2.id }}/"
                        class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant2.img.url }})"></div>
@@ -67,7 +67,7 @@
                         </div>
                     </a>
                 {% else %}
-                    <a href="/chat/{{ chatroom.participant1.id }}/"
+                    <a onclick="getRoomid();" href="/chat/{{ chatroom.participant1.id }}/"
                        class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant1.img.url }})"></div>
@@ -93,8 +93,8 @@
         </div>
     </div>
 </div>
-<script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
-<script type="module">
+<script defer src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
+<script>
 
     $(document).ready(function () {
         {#import room_id from 'templates/chat/chat_room.html'#}
@@ -118,7 +118,7 @@
             window.location.href = `/accounts/mypage/`;
         });
 
-        // 채팅 이동
+        {#// 채팅 이동#}
         let ChatIcon = $(".chat_icon");
         ChatIcon.on('click', function () {
             window.location.href = `/chat/`;
@@ -130,7 +130,7 @@
     })
 
     var user_id = {{ user_id }};
-    var room_id = 140;
+    {#var room_id = 15;#}
 
     function getRoomid() {
         let all_partner = document.getElementsByClassName('chat_partner')
@@ -159,7 +159,7 @@
                     let roomid = roomlist[i]
                     let socketname = window['chatSocket' + roomid]
                     WebSocketConnetion(socketname, roomid);
-                    console.log('룸아이디', roomid, socketname)
+                    console.log('연결 이후의 룸아이디', roomid, socketname)
                 }
             },
             error: function (request, status, error) {
@@ -171,7 +171,7 @@
     }
 
     function WebSocketConnetion(socket, id) {
-        var socket = new ReconnectingWebSocket(
+        const socket_var = new ReconnectingWebSocket(
             'ws://'
             + window.location.host
             + '/ws/chat/room/'
@@ -179,12 +179,13 @@
             + '/'
         );
 
-        socket.onopen = function (e) {
-            console.log('Chat socket open');
+        socket_var.onopen = function (e) {
+            console.log('Chat socket open fo', id);
         }
 
-        socket.onmessage = function (e) {
+        socket_var.onmessage = function (e) {
             const data = JSON.parse(e.data);
+            console.log('chatlist 데이터', data)
             // 이전메세지 로드(웹소켓 내부에서 반복적으로 로드되는 문제로 사용하지 않음)
             if (data['command'] === 'messages') {
                 const n = data['messages'].length
@@ -203,48 +204,10 @@
             }
         };
 
-        document.querySelector('#chat_message_input').onkeyup = function (e) {
-            if (e.keyCode === 13) {
-                let messageInputDom = document.querySelector('#chat_message_input');
-                let message = messageInputDom.value
-                message = message.replaceAll(/(\n|\r\n)/g, "<br>");
-                if (message === '' || message === null || message.trim().length === 0) {
-                    console.log('websocket load message')
-                    return true;
-                }
-                if (message.includes('alert') === true || message.includes('ALERT') === true) {
-                    console.log('XSS attack defenced!')
-                }
-                if (message.includes('script') === true || message.includes('SCRIPT') === true) {
-                    console.log('XSS attack defenced!')
-                } else {
-                    if (message.includes('href') === true) {
-                        console.log('XSS attack defenced!')
-                        const replace_msg = message.replace('href', '')
-                        socket.send(JSON.stringify({
-                            'command': 'new_messages',
-                            'message': replace_msg,
-                            'from': user_id,
-                            'room_id': room_id,
-                        }));
-                    } else {
-                        socket.send(JSON.stringify({
-                            'command': 'new_messages',
-                            'message': message,
-                            'from': user_id,
-                            'room_id': room_id,
-                        }));
-                    }
 
-                }
-                messageInputDom.value = '';
-
-            }
-            ;
-        }
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
-        socket.onclose = function (e) {
+        socket_var.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
         };
 
@@ -257,6 +220,7 @@
         const author = data['author'];
         const created_at = data['created_at'];
         const chatroom_id = data['chatroom_id'];
+        console.log(chatroom_id)
 
         {#12시 기준으로 오전 오후 구분#}
         const timestamp = created_at.split('')

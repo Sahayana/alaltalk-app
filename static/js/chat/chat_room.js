@@ -117,7 +117,7 @@ function moreList(user_id) {
 
     var link = document.location.href;
     console.log(link);
-    let room_id = link.split('/');
+    var room_id = link.split('/');
     room_id = parseInt(room_id[5]);
 
     let form_data = new FormData();
