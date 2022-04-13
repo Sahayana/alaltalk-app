@@ -3,9 +3,24 @@ from typing import Dict, Tuple
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from ninja.errors import HttpError
+
 from accounts.models import CustomUser
-from search.apis.v1.schemas import YoutubeLikeResponse, YoutubeLikeRequest, ShoppingLikeResponse, ShoppingLikeRequest, NewsLikeResponse, NewsLikeRequest, BookLikeResponse, BookLikeRequest
-from search.service.like_service import do_like_youtube_service, do_like_shopping_service, do_like_news_service, do_like_book_service
+from search.apis.v1.schemas import (
+    BookLikeRequest,
+    BookLikeResponse,
+    NewsLikeRequest,
+    NewsLikeResponse,
+    ShoppingLikeRequest,
+    ShoppingLikeResponse,
+    YoutubeLikeRequest,
+    YoutubeLikeResponse,
+)
+from search.service.like_service import (
+    do_like_book_service,
+    do_like_news_service,
+    do_like_shopping_service,
+    do_like_youtube_service,
+)
 
 router = Router(tags=["like"])
 
@@ -30,11 +45,11 @@ def do_like_news(request, News_request: NewsLikeRequest = Form(...)) -> Tuple[in
             company=News_request.company,
             content=News_request.content,
             thumbnail_url=News_request.thumbnail,
-            link_url=News_request.link
+            link_url=News_request.link,
         )
     except CustomUser.DoesNotExist:
-        raise HttpError(404, 'User does not exist!!!')
-    return 201, {'result': result}
+        raise HttpError(404, "User does not exist!!!")
+    return 201, {"result": result}
 
 
 @router.post("/book", response={201: BookLikeResponse})
@@ -48,24 +63,19 @@ def do_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[in
             company=book_request.company,
             thumbnail=book_request.thumbnail,
             link=book_request.link,
-            series = book_request.series
+            series=book_request.series,
         )
     except CustomUser.DoesNotExist:
-        raise HttpError(404, 'User does not exist!')
-    return 201, {'result': result}
+        raise HttpError(404, "User does not exist!")
+    return 201, {"result": result}
 
 
 @router.post("/shopping", response={201: ShoppingLikeResponse})
 def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
         result = do_like_shopping_service(
-            user_id=request.user.id,
-            title=shopping_request.title,
-            price=shopping_request.price,
-            thumbnail_url=shopping_request.thumbnail,
-            link_url=shopping_request.link
+            user_id=request.user.id, title=shopping_request.title, price=shopping_request.price, thumbnail_url=shopping_request.thumbnail, link_url=shopping_request.link
         )
     except CustomUser.DoesNotExist:
-        raise HttpError(404, 'User does not exist!!!')
-    return 201, {'result': result}
-
+        raise HttpError(404, "User does not exist!!!")
+    return 201, {"result": result}

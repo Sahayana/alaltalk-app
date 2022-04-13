@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["http://zhqmfkvsqurta.shop/"]
 
 # Application definition
 
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
 ]
 
 ROOT_URLCONF = "alaltalk.urls"
@@ -134,7 +134,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_DIR = os.path.join(BASE_DIR, "static")
-print(STATIC_DIR)
+
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
@@ -207,12 +207,10 @@ try:
             "HOST": sql["RDS"]["HOST"],
             "PORT": sql["RDS"]["PORT"],
             "OPTIONS": {
-            "init_command" : "SET sql_mode='STRICT_TRANS_TABLES'",
-            }
+                "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
         }
     }
 
 except FileNotFoundError:
     pass
-
-

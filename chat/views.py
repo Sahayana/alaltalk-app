@@ -1,22 +1,24 @@
 import json
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
+
 from accounts.models import CustomUser
 from chat.models import ChatMessage, ChatRoom
-from search.models import Youtube,News,Book,Shopping
+from search.models import Book, News, Shopping, Youtube
 
 
 # ChatRoom 모델에서 유저가 속해있는 채팅방 리스트 불러오기
 @login_required
 def show_chat_list(request):
     user = request.user
-    chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by('-created_at')
+    chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by("-created_at")
     all_message = ChatMessage.objects.all()
-    return render(request, "chat/chat_list.html", {'user_id': user.id, "chatroom_list": chatroom_list, "all_message": all_message})
+    return render(request, "chat/chat_list.html", {"user_id": user.id, "chatroom_list": chatroom_list, "all_message": all_message})
 
 
 # 채팅하기 버튼 클릭 시 채팅방 생성
@@ -47,10 +49,10 @@ def create_chat_room(request, id):
                 room_id = room.id
                 return redirect("/chat/room/" + str(room_id) + "/")
             except exist_room1.DoesNotExist or exist_room1.DoesNotExist:
-                return render(request, "chat/chat_room.html", {'error': '존재하지 않거나 사라진 채팅방입니다.'})
+                return render(request, "chat/chat_room.html", {"error": "존재하지 않거나 사라진 채팅방입니다."})
 
     else:
-        return render(request, "chat/chat_room.html", {'error': '접근 불가한 채팅방 입니다.'})
+        return render(request, "chat/chat_room.html", {"error": "접근 불가한 채팅방 입니다."})
 
 
 # room_id로 채팅방 삭제
@@ -59,7 +61,7 @@ def create_chat_room(request, id):
 def delete_chat_room(request, room_id):
     target_room = ChatRoom.objects.get(id=room_id)
     target_room.delete()
-    return redirect('/chat')
+    return redirect("/chat")
 
 
 # 웹소켓이 실행되면서 열린 html로 데이터 전달
@@ -69,7 +71,7 @@ def post_data_to_chat_room(request, room_id):
     if request.method == "GET":
         user = request.user
         chatroom = ChatRoom.objects.get(id=room_id)
-        chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by('-created_at')
+        chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by("-created_at")
         all_message = ChatMessage.objects.all()
 
         if chatroom.participant1.id == user.id:
@@ -78,7 +80,7 @@ def post_data_to_chat_room(request, room_id):
             participant_like_news = News.objects.filter(user=chatroom.participant2)
             participant_like_book = Book.objects.filter(user=chatroom.participant2)
             participant_like_shopping = Shopping.objects.filter(user=chatroom.participant2)
-        else :
+        else:
             participant = chatroom.participant1
             participant_like_youtube = Youtube.objects.filter(user=chatroom.participant1)
             participant_like_news = News.objects.filter(user=chatroom.participant1)
@@ -108,23 +110,21 @@ def post_data_to_chat_room(request, room_id):
 @csrf_exempt
 @login_required
 def chat_log_send(request):
-    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    room_id = json.loads(request.body.decode("utf-8"))["room_id"]
     chat_log = []
-    sentence = ''
-    chatroom = ChatRoom.objects.get(id = room_id)
+    sentence = ""
+    chatroom = ChatRoom.objects.get(id=room_id)
     all_chat = ChatMessage.objects.filter(chatroom=chatroom)
 
     if len(all_chat) > 40:
-        all_chat = all_chat[len(all_chat)-40:]
+        all_chat = all_chat[len(all_chat) - 40 :]
 
     for chat in all_chat:
-        sentence = sentence + chat.message + ' '
+        sentence = sentence + chat.message + " "
 
     chat_log.append(sentence)
 
-    context = {
-        'chat_log' : chat_log
-    }
+    context = {"chat_log": chat_log}
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
@@ -132,23 +132,21 @@ def chat_log_send(request):
 @csrf_exempt
 @login_required
 def more_list(request):
-    room_id = json.loads(request.body.decode('utf-8'))['room_id']
-    num = json.loads(request.body.decode('utf-8'))['startNum']
-    user_id = json.loads(request.body.decode('utf-8'))['user_id']
+    room_id = json.loads(request.body.decode("utf-8"))["room_id"]
+    num = json.loads(request.body.decode("utf-8"))["startNum"]
+    user_id = json.loads(request.body.decode("utf-8"))["user_id"]
 
     all_chat = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
     if all_chat is not None:
-        all_chat = all_chat[num:num+10]
+        all_chat = all_chat[num : num + 10]
         if all_chat is None:
             all_chat = all_chat[num:]
 
     chat_list = []
     for chat in all_chat:
-        chat_list.append({'message': chat.message, 'author_id': chat.author_id, 'created_at': str(chat.created_at)})
+        chat_list.append({"message": chat.message, "author_id": chat.author_id, "created_at": str(chat.created_at)})
 
-    context = {
-        'chat_list': chat_list
-    }
+    context = {"chat_list": chat_list}
 
     return HttpResponse(json.dumps(context), content_type="application/json")
 
@@ -157,7 +155,7 @@ def more_list(request):
 @csrf_exempt
 @login_required
 def message_loader(request):
-    room_id = json.loads(request.body.decode('utf-8'))['room_id']
+    room_id = json.loads(request.body.decode("utf-8"))["room_id"]
     last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
     limit = len(last_messages) - 40
     if len(last_messages) > 40:
@@ -165,11 +163,9 @@ def message_loader(request):
 
     last_messages_list = []
     for chat in last_messages:
-        last_messages_list.append({'message': chat.message, 'author_id': chat.author_id, 'created_at': str(chat.created_at)})
+        last_messages_list.append({"message": chat.message, "author_id": chat.author_id, "created_at": str(chat.created_at)})
 
-    context = {
-        'last_messages_list': last_messages_list
-    }
+    context = {"last_messages_list": last_messages_list}
 
     return HttpResponse(json.dumps(context), content_type="application/json")
 
@@ -178,7 +174,7 @@ def message_loader(request):
 @csrf_exempt
 @login_required
 def latest_message_not_connected(request):
-    partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
+    partner_list = json.loads(request.body.decode("utf-8"))["partner_list"]
 
     latest_chat_list = []
     for partner in partner_list:
@@ -190,10 +186,10 @@ def latest_message_not_connected(request):
         for message in latest_message_each_chatroom:
             if message is latest_message_each_chatroom[0]:
 
-                latest_chat_list.append({'partner': chatter.id, 'author_message': message.author_id ,'latest_message_each_chatroom': message.message})
+                latest_chat_list.append({"partner": chatter.id, "author_message": message.author_id, "latest_message_each_chatroom": message.message})
 
     context = {
-        'latest_chat_list': latest_chat_list,
+        "latest_chat_list": latest_chat_list,
     }
 
     return HttpResponse(json.dumps(context), content_type="application/json")
@@ -203,7 +199,7 @@ def latest_message_not_connected(request):
 @csrf_exempt
 @login_required
 def get_room_id(request):
-    partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
+    partner_list = json.loads(request.body.decode("utf-8"))["partner_list"]
 
     room_list = []
     for partner in partner_list:
@@ -214,7 +210,7 @@ def get_room_id(request):
             room_list.append(room.id)
 
     context = {
-        'room_list': room_list,
+        "room_list": room_list,
     }
 
     return HttpResponse(json.dumps(context), content_type="application/json")

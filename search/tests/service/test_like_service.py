@@ -1,6 +1,13 @@
 from django.test import TestCase
-from search.service.like_service import do_like_youtube_service,do_like_news_service,do_like_book_service,do_like_shopping_service
+
 from accounts.models import CustomUser
+from search.service.like_service import (
+    do_like_book_service,
+    do_like_news_service,
+    do_like_shopping_service,
+    do_like_youtube_service,
+)
+
 
 class TestLikeService(TestCase):
     def test_do_like_youtube_service(self) -> None:
@@ -17,7 +24,7 @@ class TestLikeService(TestCase):
         views = "test_youtube_view"
 
         # When
-        like_youtube = do_like_youtube_service(user_id, youtube_url,title,views)
+        like_youtube = do_like_youtube_service(user_id, youtube_url, title, views)
 
         # Then
         self.assertEqual("success", like_youtube)
@@ -41,7 +48,6 @@ class TestLikeService(TestCase):
         # Then
         self.assertEqual("success", like_shopping)
 
-
     def test_do_like_book_service(self) -> None:
         # Given
         email = "test@test.com"
@@ -60,11 +66,10 @@ class TestLikeService(TestCase):
         series = "test_book_series"
 
         # When
-        like_book = do_like_book_service(user_id, title, price,author,company, thumbnail, link, series)
+        like_book = do_like_book_service(user_id, title, price, author, company, thumbnail, link, series)
 
         # Then
         self.assertEqual("success", like_book)
-
 
     def test_do_like_news_service(self) -> None:
         # Given
@@ -87,5 +92,3 @@ class TestLikeService(TestCase):
 
         # Then
         self.assertEqual("success", like_news)
-
-

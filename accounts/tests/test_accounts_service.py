@@ -1,26 +1,24 @@
 from django.contrib.auth.hashers import check_password
-from django.test import TestCase
 from django.core import mail
-
-from django.utils.http import urlsafe_base64_encode
+from django.test import TestCase
 from django.utils.encoding import force_bytes
-from accounts.utils import accounts_verify_token
-
+from django.utils.http import urlsafe_base64_encode
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
     accept_friend_request,
+    accounts_delete_friend,
+    accounts_profile_delete,
     check_authentication,
     check_email_duplication,
     create_single_user,
     decline_friend_request,
     get_friend_list,
-    send_friend_request,
-    accounts_profile_delete,
-    accounts_delete_friend,
     send_email_verification,
-    verified_email_activation
+    send_friend_request,
+    verified_email_activation,
 )
+from accounts.utils import accounts_verify_token
 
 
 class AccountsTest(TestCase):
@@ -157,9 +155,9 @@ class AccountsTest(TestCase):
         # Then
         self.assertIsNotNone(me)
         self.assertEqual(me.id, user.id)
-    
+
     def test_service_profile_delete(self) -> None:
-        
+
         # Given
         user = create_single_user(email="test@test.com", nickname="testuser1", password="testuser1", bio="testuser1")
 
@@ -168,11 +166,11 @@ class AccountsTest(TestCase):
 
         all_users = CustomUser.objects.all()
 
-        # Then        
+        # Then
         self.assertEqual(0, all_users.count())
-    
+
     def test_service_friend_delete(self) -> None:
-        
+
         # Given
         user = create_single_user(email="test@test.com", nickname="testuser1", password="testuser1", bio="testuser1")
         friend = create_single_user(email="test2@test.com", nickname="testuser2", password="testuser2", bio="testuser2")
@@ -188,7 +186,6 @@ class AccountsTest(TestCase):
         # Then
         self.assertEqual(0, user.friends.count())
         self.assertEqual(0, friend.friends.count())
-        
 
     def test_service_send_email_verification(self) -> None:
 
@@ -204,7 +201,6 @@ class AccountsTest(TestCase):
         self.assertEqual(1, result)
         self.assertEqual(1, len(mail.outbox))
         self.assertEqual(mail_title, mail.outbox[0].subject)
-    
 
     def test_service_verified_email_activation(self) -> None:
 
@@ -222,5 +218,3 @@ class AccountsTest(TestCase):
 
         # Then
         self.assertTrue(current_user.is_active)
-
-

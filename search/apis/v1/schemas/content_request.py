@@ -30,5 +30,4 @@ class BookLikeRequest(Schema):
     company: str
     author: str
     thumbnail: str
-    series : str
-
+    series: str

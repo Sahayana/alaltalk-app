@@ -2,7 +2,9 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+
 from accounts.models import CustomUser
+
 from .models import ChatMessage
 
 
@@ -10,10 +12,7 @@ class ChatConsumer(WebsocketConsumer):
     # 이전 메세지 불러오기(소켓시 진입자 구별 불가로 미사용)
     def fetch_messages(self, data):
         messages = ChatMessage.last_10_messages()
-        content = {
-            "command": "messages",
-            "messages": self.messages_to_json(messages)
-        }
+        content = {"command": "messages", "messages": self.messages_to_json(messages)}
         self.send_chat_message(content)
 
     # 새로운 메세지 DB에 저장하기

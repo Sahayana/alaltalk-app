@@ -1,7 +1,5 @@
-
-from search.models import Shopping, Book, News
 from accounts.models import CustomUser
-from search.models import Youtube
+from search.models import Book, News, Shopping, Youtube
 
 
 def like_cancel_youtube(user_id: int, youtube_url: str) -> None:
@@ -22,4 +20,3 @@ def like_cancel_book(user_id: int, book_url: str) -> None:
 def like_cancel_shopping(user_id: int, shopping_url: str) -> None:
     user = CustomUser.objects.get(pk=user_id)
     Shopping.objects.get(user=user, link=shopping_url).delete()
-
