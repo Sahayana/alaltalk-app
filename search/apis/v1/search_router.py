@@ -14,26 +14,22 @@ router = Router(tags=["search"])
 
 
 # Page Load API
-@csrf_exempt
 @router.get("/chat")
 def open_chat_room(request):
     return render(request, "search/recommend_include_chatroom.html")
 
 
-@csrf_exempt
 @router.get("/recommend")
 def open_chat_room(request):
     return render(request, "search/recommend_include_recommend.html", {'user': request.user})
 
 
-@csrf_exempt
 @router.get("/chat_list")
 def open_chat_room(request):
     return render(request, "search/recommend_include_chat_list.html")
 
 
 # Crawling  API
-@csrf_exempt
 @router.post("/crawling", response={201: CrawlingResponse})
 def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest = Form(...)) -> Tuple[int, Dict]:
     all_response = {}
@@ -74,7 +70,6 @@ def recommend_contents(request: HttpRequest, crawling_request: CrawlingRequest =
 
 
 # Search API
-@csrf_exempt
 @router.post('/youtube', response={201: SearchResponse})
 def search_youtube(request, youtube_request: SearchRequest = Form(...)) -> Tuple[int, Dict]:
     content_count = 10
@@ -92,7 +87,6 @@ def search_youtube(request, youtube_request: SearchRequest = Form(...)) -> Tuple
     return 201, {'result': youtube_list}
 
 
-@csrf_exempt
 @router.post('/news', response={201: SearchResponse})
 def search_news(request, news_request: SearchRequest = Form(...)) -> Tuple[int, Dict]:
     news_list = []
@@ -107,7 +101,6 @@ def search_news(request, news_request: SearchRequest = Form(...)) -> Tuple[int, 
     return 201, {'result': news_list}
 
 
-@csrf_exempt
 @router.post('/book', response={201: SearchResponse})
 def search_book(request, book_request: SearchRequest = Form(...)) -> Tuple[int, Dict]:
     book_list = []
@@ -122,7 +115,6 @@ def search_book(request, book_request: SearchRequest = Form(...)) -> Tuple[int, 
     return 201, {'result': book_list}
 
 
-@csrf_exempt
 @router.post('/shopping', response={201: SearchResponse})
 def search_shopping(request, shopping_request: SearchRequest = Form(...)) -> Tuple[int, Dict]:
     content_count = 10
@@ -138,7 +130,7 @@ def search_shopping(request, shopping_request: SearchRequest = Form(...)) -> Tup
     return 201, {'result': shopping_list}
 
 
-@csrf_exempt
+
 @router.post('/recommend_change')
 def recommend_on_off_switch(request):
     recommend_state = request.POST['value']

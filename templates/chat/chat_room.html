@@ -130,8 +130,9 @@
     </div>
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
-<script src="{% static 'js/search/recommend.js' %}?after"></script>
+
 <script>
+    var CSRF_TOKEN = '{{ csrf_token }}';
     $(document).ready(function () {
         latestMessageNotConnected();
 
@@ -734,6 +735,7 @@
 
 
 </script>
+<script src="{% static 'js/search/recommend.js' %}?after"></script>
 <script src="{% static 'js/chat/chat_room.js' %}?after"></script>
 <script src="{% static 'js/chat/friend_like.js' %}"></script>
 </body>

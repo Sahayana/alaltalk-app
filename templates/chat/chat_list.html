@@ -52,7 +52,8 @@
         <div class="chat_list">
             {% for chatroom in chatroom_list %}
                 {% if chatroom.participant1.id == user.id %}
-                    <a href="/chat/{{ chatroom.participant2.id }}/" class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
+                    <a href="/chat/{{ chatroom.participant2.id }}/"
+                       class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                         <div class="info_group">
@@ -66,7 +67,8 @@
                         </div>
                     </a>
                 {% else %}
-                    <a href="/chat/{{ chatroom.participant1.id }}/" class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
+                    <a href="/chat/{{ chatroom.participant1.id }}/"
+                       class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
                         <div class="partner_img"
                              style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                         <div class="info_group">
@@ -93,7 +95,7 @@
 </div>
 <script src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
 <script>
-
+    var CSRF_TOKEN = '{{ csrf_token }}';
     $(document).ready(function () {
         {#lastMessageList();#}
         latestMessageNotConnected();
@@ -119,6 +121,8 @@
         ChatIcon.on('click', function () {
             window.location.href = `/chat/`;
         })
+
+
     });
 
     $(".logout").click(function () {
