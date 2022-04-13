@@ -374,8 +374,6 @@ def friend_like_recommend(request):
 
 ##################################################################################################################
 
-
-@csrf_exempt
 @login_required
 def like_public_setting(request):
     value = request.POST["value"]
