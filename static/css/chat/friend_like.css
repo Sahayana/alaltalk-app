@@ -572,6 +572,8 @@
     flex-direction: row;
     font-size: 15px;
     overflow: hidden;
+    color: #a185f2;
+    font-weight: 700;
 }
 
 .friend_keyword {

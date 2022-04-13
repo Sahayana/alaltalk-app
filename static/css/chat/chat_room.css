@@ -150,12 +150,15 @@ body {
 .chat_list .chat_partner .info_group {
     margin-left: 12px;
 }
+
 .chat_list .chat_partner .info_group .count .count_new {
     display: none;
 }
+
 .chat_list .chat_partner .info_group .count .count_new_sum {
     display: none;
 }
+
 .chat_list .chat_partner .info_group .count .count_new_sum:last-child {
     display: block;
 }
@@ -182,8 +185,10 @@ body {
     -webkit-box-orient: vertical;
     display: none;
 }
+
 .chat_list .chat_partner .info_group .partner_last_msg.new {
     font-weight: 700;
+    color: #191919;
 }
 
 .chat_list .chat_partner .info_group .partner_last_msg:last-child {
@@ -386,6 +391,7 @@ body {
     box-sizing: border-box;
     color: #5e5e5e;
     font-size: 14px;
+    resize: none;
 }
 
 .chat_container .chat_box {
@@ -527,92 +533,98 @@ body {
 /*말풍선 관련 css*/
 
 .talk-bubble {
-	margin: 40px;
-  display: none;
-  position: relative;
-	width: 120px;
-	height: auto;
-	background-color: #e5e5e5;
+    margin: 40px;
+    display: none;
+    position: relative;
+    width: 120px;
+    height: auto;
+    background-color: #7657ce;
 }
-.border{
-  border: 6px solid #e5e5e5;
+
+.border {
+    border: 6px solid #e5e5e5;
 }
-.round{
-  border-radius: 30px;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
+
+.round {
+    border-radius: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
 
 }
+
 .tri-right.border.right-in:before {
-	content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-  left: auto;
-	right: -40px;
-  top: 30px;
-	bottom: auto;
-	border: 20px solid;
-	border-color: #e5e5e5 transparent transparent #e5e5e5;
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -40px;
+    top: 30px;
+    bottom: auto;
+    border: 20px solid;
+    border-color: #7657ce transparent transparent #7657ce;
 }
-.tri-right.right-in:after{
-	content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-  left: auto;
-	right: -20px;
-  top: 38px;
-	bottom: auto;
-	border: 12px solid;
-	border-color: #e5e5e5 transparent transparent #e5e5e5;
+
+.tri-right.right-in:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: -20px;
+    top: 38px;
+    bottom: auto;
+    border: 12px solid;
+    border-color: #7657ce transparent transparent #7657ce;
 }
 
 /* talk bubble contents */
-.talktext{
-  padding: 1em;
-	text-align: left;
-  line-height: 1.5em;
+.talktext {
+    padding: 1em;
+    text-align: left;
+    line-height: 1.5em;
 }
-.talktext p{
+
+.talktext p {
     font-size: 14px;
-    color: #5e5e5e;
-  /* remove webkit p margins */
-  -webkit-margin-before: 0em;
-  -webkit-margin-after: 0em;
+    color: #fff;
+    font-weight: 700;
+    /* remove webkit p margins */
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
 }
 
 .hidden {
-  display: none;
-  opacity: 0;
+    display: none;
+    opacity: 0;
 }
 
 .appear {
-  animation: fade-in 1s;
-  animation-fill-mode: forwards;
-  display: flex;
+    animation: fade-in 1s;
+    animation-fill-mode: forwards;
+    display: flex;
 }
 
 .disappear {
-  animation: fade-out 1s;
-  animation-fill-mode: forwards;
+    animation: fade-out 1s;
+    animation-fill-mode: forwards;
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fade-out {
-  from {
-    opacity: 1;
+    from {
+        opacity: 1;
 
-  }
-  to {
-    opacity: 0;
-  }
+    }
+    to {
+        opacity: 0;
+    }
 }

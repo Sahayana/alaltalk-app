@@ -133,9 +133,9 @@
 <script src="{% static 'js/search/recommend.js' %}?after"></script>
 <script>
     $(document).ready(function () {
+        latestMessageNotConnected();
         getRoomid();
         messageLoader(user_id);
-        latestMessageNotConnected();
 
         // 채팅 스크롤 하단 고정
         $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
@@ -185,16 +185,16 @@
         $('.chat_container').appendTo('.left_wrap');
         $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
-        $('.right_wrap').load("/api/search/recommend", function (){
+        $('.right_wrap').load("/api/search/recommend", function () {
             let status = document.getElementById('recommend_toggle').innerText
-            if(status === 'ON'){
+            if (status === 'ON') {
                 document.getElementById('youtube_recommend_content').style.display = 'flex'
                 document.getElementById('news_recommend_content').style.display = 'flex'
                 document.getElementById('book_recommend_content').style.display = 'flex'
                 document.getElementById('shopping_recommend_content').style.display = 'flex'
                 document.getElementById('recommend_reload_button').style.display = 'block'
                 reload();
-            }else{
+            } else {
                 document.getElementById('recommend_reload_button').style.display = 'none'
                 search_container_height_change()
             }
@@ -325,6 +325,7 @@
     var participant2 = {{ participant2.id }};
 
     {#채팅방 삭제하기#}
+
     function deleteChatroom() {
         if (!confirm("삭제하시면 대화내용을 복구할수 없습니다. \n정말로 삭제하시겠습니까?")) {
             return false;
@@ -356,10 +357,10 @@
             success: function (data) {
                 console.log('룸리스트', data['room_list'])
                 let roomlist = data['room_list']
-                for(let i=0; i<roomlist.length; i++) {
+                for (let i = 0; i < roomlist.length; i++) {
                     let roomid = roomlist[i]
-                    let socketname = window['chatSocket'+roomid]
-                    WebSocketConnetion(socketname ,roomid);
+                    let socketname = window['chatSocket' + roomid]
+                    WebSocketConnetion(socketname, roomid);
                     {#console.log('룸아이디', id, socketname)#}
                 }
             },
@@ -371,7 +372,7 @@
         })
     }
 
-    function WebSocketConnetion(socket ,id) {
+    function WebSocketConnetion(socket, id) {
         const socket_var = new ReconnectingWebSocket(
             'ws://'
             + window.location.host
@@ -392,17 +393,16 @@
                 for (let i = n - 1; i >= 0; i--) {
                     createMessage(data['messages'][i]);
                 }
-            // 새로운 메세지 컨트롤
+                // 새로운 메세지 컨트롤
             } else if (data['command'] === 'new_message') {
                 let current_num = $('.user_count').length + $('.partner_count').length;
                 console.log('current_num', current_num + 1)
                 // 1부터 카운트 하기 위해 +1 처리
                 createMessage(data['message'], current_num + 1);
-                latestMessageNotConnected();
-                console.log('DB에서 마지막 메세지 ajax 출력!')
                 $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
-            if (data['chat_count'] >8 && data['chat_count'] <15){
+            let current_num = $('.user_count').length + $('.partner_count').length;
+            if (current_num > 8 && current_num < 15) {
                 document.querySelector('.hidden').classList.remove('disappear');
                 document.querySelector('.hidden').classList.add('appear');
             } else {
@@ -417,47 +417,49 @@
 
         if (room_id == id) {
             document.querySelector('#chat_message_input').onkeyup = function (e) {
-            const messageInputDom = document.querySelector('#chat_message_input');
-            let message = messageInputDom.value;
-            message = message.replaceAll(/(\n|\r\n)/g, "<br>");
+                const messageInputDom = document.querySelector('#chat_message_input');
+                let message = messageInputDom.value;
 
-            if (e.keyCode === 13) {  // enter, return
-                if (e.shiftKey) {
-                    message.replaceAll(/(\n|\r\n)/g, "<br>");
-                } else {
-                    if (message === '' || message === null || message.trim().length === 0) {
-                        console.log('websocket load message')
-                        return true;
-                    }
-                    if (message.includes('alert') === true || message.includes('ALERT') === true) {
-                        console.log('XSS attack defenced!')
-                    }
-                    if (message.includes('script') === true || message.includes('SCRIPT') === true) {
-                        console.log('XSS attack defenced!')
+                if (e.keyCode === 13) {  // enter, return
+                    if (e.shiftKey) {
+                        message.replace(/(\r\n)/g, "<br>");
+
                     } else {
-                        if (message.includes('href') === true) {
-                            console.log('XSS attack defenced!')
-                            const replace_msg = message.replace('href', '')
-                            socket_var.send(JSON.stringify({
-                                'command': 'new_messages',
-                                'message': replace_msg,
-                                'from': user_id,
-                                'room_id': room_id,
-                            }));
-                        } else {
-                            socket_var.send(JSON.stringify({
-                                'command': 'new_messages',
-                                'message': message,
-                                'from': user_id,
-                                'room_id': room_id,
-                            }));
+                        message = message.replace(/(\n|\r\n)/g, "<br>");
+                        console.log(message)
+                        if (message === '' || message === null || message.trim().length === 0) {
+                            console.log('websocket load message')
+                            return true;
                         }
+                        if (message.includes('alert') === true || message.includes('ALERT') === true) {
+                            console.log('XSS attack defenced!')
+                        }
+                        if (message.includes('script') === true || message.includes('SCRIPT') === true) {
+                            console.log('XSS attack defenced!')
+                        } else {
+                            if (message.includes('href') === true) {
+                                console.log('XSS attack defenced!')
+                                const replace_msg = message.replace('href', '')
+                                socket_var.send(JSON.stringify({
+                                    'command': 'new_messages',
+                                    'message': replace_msg,
+                                    'from': user_id,
+                                    'room_id': room_id,
+                                }));
+                            } else {
+                                socket_var.send(JSON.stringify({
+                                    'command': 'new_messages',
+                                    'message': message,
+                                    'from': user_id,
+                                    'room_id': room_id,
+                                }));
+                            }
+                        }
+                        messageInputDom.value = '';
                     }
-                    messageInputDom.value = '';
-                }
 
+                }
             }
-        }
         }
 
         {#웹소켓 연결이 끊어졌을 때의 JS#}
@@ -478,6 +480,7 @@
     }
 
     {#새로 작성된 메세지를 html에 보여주는 JS#}
+
     function createMessage(data, num) {
         const message = data['message'];
         const author = data['author'];
@@ -493,9 +496,13 @@
         }
 
 
-        let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`
-        $('.chat_partner_' + room_id).children('.info_group').append(temp_html)
-        console.log('consumer에서 메세지 바로 출력')
+        {#let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`#}
+        {#$('.chat_partner_' + room_id).children('.info_group').append(temp_html)#}
+        {#console.log('consumer에서 메세지 바로 출력')#}
+        $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').addClass('new')
+        let new_message = message.replace(/<br>/ig, "");
+        $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').text(new_message)
+        console.log('text 체인지!')
 
 
         if (chatroom_id === room_id) {
