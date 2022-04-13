@@ -6,6 +6,10 @@
     letter-spacing: -0.5px;
 }
 
+body {
+    overflow-y: hidden;
+}
+
 .right_wrap {
     width: 60%;
 }
@@ -16,8 +20,9 @@
     cursor: pointer;
     width: 50%;
     position: static;
-    margin: 30px;
+    margin: 3vh;
 }
+
 .recommend_nav span {
     margin-right: 12px;
 }
@@ -28,12 +33,12 @@
 
 .search_bar {
     width: 58vw;
-    height: 40px;
+    height: 5vh;
     border: 1px solid #A185F2;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    margin: 30px;
+    margin: 3vh;
     box-sizing: border-box;
     padding: 0 12px;
 }
@@ -95,10 +100,8 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding: 3vh 1vh 2vh 3vh;
+    padding: 0 1vh 2vh 3vh;
 }
-
-
 
 
 .recommend_close_btn {
@@ -125,7 +128,6 @@
     box-sizing: border-box;
     padding: 0 12px;
 }
-
 
 
 .search_bar input:focus {
@@ -157,7 +159,7 @@
     height: auto;
 }
 
-.recommend_toggle_wrapper{
+.recommend_toggle_wrapper {
     width: 210px;
     height: 30px;
     display: flex;
@@ -166,9 +168,11 @@
     align-items: center;
     text-align: left;
     margin-left: 28px;
+    color: #7657ce;
+    font-weight: 700;
 }
 
-.recommend_toggle_wrapper p{
+.recommend_toggle_wrapper p {
     width: 92px;
     height: 100%;
     line-height: 30px;
@@ -191,26 +195,27 @@
     margin: 0 14px 0 14px;
 }
 
-.recommend_reload_button{
-    width: 30px;
-    height: 30px;
-    background-image: url("/static/images/reload.png");
+.recommend_reload_button {
+    width: 24px;
+    height: 24px;
+    background-image: url("https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/reload.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     cursor: pointer;
+    opacity: .7;
 
 }
 
-.recommend_reload_button:hover{
+.recommend_reload_button:hover {
     animation: spinning_reload 1s ease-in-out infinite;
 }
 
 @keyframes spinning_reload {
-    from{
+    from {
         transform: rotate(0deg);
     }
-    to{
+    to {
         transform: rotate(180deg);
     }
 
@@ -348,7 +353,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: calc(56vh - 260px);
+    height: 32vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -447,7 +452,7 @@
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    padding: 3vh 1vh 2vh 3vh;
+    padding: 0 1vh 2vh 3vh;
 }
 
 
@@ -487,7 +492,7 @@
 
 .recommend_news_container .search_news_content {
     overflow-y: auto;
-    height: calc(56vh - 260px);
+    height: 32vh;
     width: 100%;
 }
 
@@ -881,7 +886,7 @@
 
 .recommend_news_search_content_desc_title {
     width: 30vw;
-    height: auto;
+    /*height: auto;*/
     overflow: hidden;
     font-weight: 700;
     margin-bottom: 30px;
@@ -889,16 +894,24 @@
 
 .recommend_news_search_content_desc_title p {
     width: 100%;
-    height: 100%;
+    height: 2.4vh;
     overflow: hidden;
     font-size: 22px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .recommend_news_search_content_desc_detail {
     width: 30vw;
-    height: auto;
+    height: 50px;
     overflow: hidden;
     color: #191919;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .recommend_news_search_content_desc_footer {
@@ -950,7 +963,7 @@
     width: 98%;
     height: 100%;
     box-sizing: border-box;
-    padding: 3vh 1vh 2vh 3vh;
+    padding: 0 1vh 2vh 3vh;
 }
 
 .recommend_book_container .search_bar {
@@ -1020,7 +1033,7 @@
 
 .recommend_book_container .recommend_book_content .content_book_section {
     width: 58vw;
-    height: 27vh;
+    height: 36vh;
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
@@ -1207,7 +1220,7 @@
     display: block;
     flex-wrap: wrap;
     width: 100%;
-    height: calc(56vh - 260px);
+    height: 28vh;
     overflow-x: hidden;
     overflow-y: auto;
     box-sizing: border-box;
@@ -1293,7 +1306,7 @@
     width: 98%;
     height: 100%;
     box-sizing: border-box;
-    padding: 3vh 1vh 2vh 3vh;
+    padding: 0 1vh 2vh 3vh;
 }
 
 
@@ -1376,7 +1389,7 @@
 
 .recommend_shopping_container .recommend_content .content_section {
     width: 58vw;
-    height: 34vh;
+    height: 32vh;
     overflow-x: auto;
     overflow-y: hidden;
     box-sizing: border-box;
@@ -1499,7 +1512,7 @@
     overflow-x: auto;
     overflow-y: scroll;
     width: 58vw;
-    height: calc(56vh - 260px);
+    height: 32vh;
     flex-wrap: wrap;
 }
 

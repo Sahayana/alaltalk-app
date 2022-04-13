@@ -7,7 +7,7 @@ from .models import ChatMessage
 
 
 class ChatConsumer(WebsocketConsumer):
-    # 이전 메세지 불러오기
+    # 이전 메세지 불러오기(소켓시 진입자 구별 불가로 미사용)
     def fetch_messages(self, data):
         messages = ChatMessage.last_10_messages()
         content = {
@@ -23,10 +23,8 @@ class ChatConsumer(WebsocketConsumer):
         chat_count = ChatMessage.objects.filter(chatroom_id=chatroom_id)
         author = CustomUser.objects.filter(id=user_id)[0]
         author_id = author.id
-        print('작가아이디',author_id)
-        print('채팅로그 갯수',len(chat_count))
         message = ChatMessage.objects.create(author_id=author_id, message=data["message"], chatroom_id=chatroom_id)
-        content = {"command": "new_message", "message": self.message_to_json(message), "chat_count" : len(chat_count) }
+        content = {"command": "new_message", "message": self.message_to_json(message), "chat_count": len(chat_count)}
         return self.send_chat_message(content)
 
     # DB에서 불러온 이전 메세지를 리스트 형태로 변환
@@ -62,7 +60,6 @@ class ChatConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         # 그룹에서 나오기
         async_to_sync(self.channel_layer.group_discard)(self.room_group_id, self.channel_name)
-        print('websocket closed')
 
     # commands 를 통해 데이터 받아오기
     def receive(self, text_data):
