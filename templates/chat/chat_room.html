@@ -402,10 +402,10 @@
                 if (e.keyCode === 13) {  // enter, return
                     if (e.shiftKey) {
                         message.replace(/(\r\n)/g, "<br>");
-
                     } else {
                         message = message.replace(/(\n|\r\n)/g, "<br>");
-                        if (message === '' || message === null || message.trim().length === 0) {
+                        let enter_message = message.replace(/<br>/ig, "");
+                        if (enter_message === '' || enter_message === null || enter_message.trim().length === 0) {
                             alert('메세지를 입력해주세요.')
                             return true;
                         }
