@@ -285,13 +285,10 @@ def get_user(request):
 
 
 # 키워드 받아서 저장
-@csrf_exempt
 @login_required
 def save_like_keyword(request):
     user = request.user
-    print("찜 기반 유저", user.email)
     like_keyowrd = json.loads(request.body.decode("utf-8"))["like_keyowrd"]
-    print("찜 기반 키워드", like_keyowrd)
     user.like_keyword = like_keyowrd
     user.save()
     return JsonResponse({"msg": "add like"})
@@ -305,16 +302,13 @@ from accounts.apps import W2V
 def recommend_friend(me):
     user = me
     all_user = CustomUser.objects.all().exclude(id=user.id)
-    print("나빼고 전체 유저", all_user)
     friends = user.friends.all()
-    print("친구들", friends)
     not_friends = []
     recommend_friends = []
     for x in all_user:
         if x not in friends:
             not_friends.append(x)
 
-    print("친구아닌 애들", not_friends)
     simil_user = {}
     user_keyword = user.like_keyword
     if len(not_friends) < 6:
@@ -332,7 +326,6 @@ def recommend_friend(me):
 
             print("키워드 유사도", simil_user)
             sorted_friend = sorted(simil_user.items(), key=lambda x: -x[1])
-            print("오름차순으로 나열된 친구", sorted_friend)
             if len(sorted_friend) > 4:
                 for i in sorted_friend[:5]:
                     recommend = CustomUser.objects.get(id=i[0])
@@ -347,11 +340,9 @@ def recommend_friend(me):
 
 
 # 친구 관심키워드
-@csrf_exempt
 @login_required
 def friend_like_recommend(request):
     friend_id = request.GET.get("friend_id")
-    print("친구아이디", friend_id)
     friend = CustomUser.objects.get(id=friend_id)
     friend_keyword = friend.like_keyword
     friend_like_keywords = []
@@ -365,8 +356,7 @@ def friend_like_recommend(request):
             for word in similar_word[:3]:
                 friend_like_keywords.append(word[0])
         except:
-            print("친구 키워드", friend_like_keywords)
-    print("친구 키워드", friend_like_keywords)
+            pass
 
     context = {"friend_keywords": friend_like_keywords}
     return HttpResponse(json.dumps(context), content_type="application/json")
