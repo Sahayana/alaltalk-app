@@ -2,36 +2,32 @@ import json
 import random
 from datetime import datetime
 
-
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
-from search.models import Youtube,News,Book,Shopping
-from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.sites.shortcuts import get_current_site
-
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
     accept_friend_request,
+    accounts_delete_friend,
+    accounts_profile_delete,
     check_authentication,
     check_email_duplication,
     create_single_user,
     decline_friend_request,
     get_friend_list,
-    send_friend_request,
-    accounts_profile_delete,
-    accounts_delete_friend,
     send_email_verification,
+    send_friend_request,
     verified_email_activation,
 )
+from search.models import Book, News, Shopping, Youtube
 
 # Create your views here.
 
@@ -50,12 +46,11 @@ def signup(request):
 
         current_site = get_current_site(request)
         current_site_domain = current_site.domain
-        result = send_email_verification(user=user, current_domain=current_site_domain)        
+        result = send_email_verification(user=user, current_domain=current_site_domain)
         if result == 1:
             return JsonResponse({"msg": "sent"}, status=200)
         else:
-            return JsonResponse({"msg": "error"}, status=200)        
-        
+            return JsonResponse({"msg": "error"}, status=200)
 
     elif request.method == "GET":
         signed_user = request.user.is_authenticated
@@ -87,7 +82,7 @@ def login(request):
             auth.login(request, me)
             return JsonResponse({"msg": "ok"})
         else:
-            return JsonResponse({"msg": "error"})  
+            return JsonResponse({"msg": "error"})
 
     else:
         signed_user = request.user.is_authenticated
@@ -119,7 +114,7 @@ def friend_list(request):
 @login_required
 def mypage(request):
     user = get_user_model().objects.get(id=request.user.id)
-    friend_requests = FriendRequest.objects.filter(receiver=user)    
+    friend_requests = FriendRequest.objects.filter(receiver=user)
     context = {
         "user": user,
         "friend_requests": friend_requests,
@@ -143,8 +138,8 @@ def profile_change(request):
         if request.FILES.get("img") != None:
             img = request.FILES.get("img")
             img_extension = img.name.split(".")[-1]
-            username, domain = user.email.split('@')
-            img.name = username + domain.split('.')[0] + domain.split('.')[1] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
+            username, domain = user.email.split("@")
+            img.name = username + domain.split(".")[0] + domain.split(".")[1] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
             user.img = img
         if request.POST.get("password"):
             password = request.POST.get("password")
@@ -166,8 +161,7 @@ def search_friend(request):
         result = get_user_model().objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct()  # 중복 제거를 위한 distinct()
 
         if result.count() == 0:
-            return JsonResponse({"msg":"none"})
-
+            return JsonResponse({"msg": "none"})
 
         # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
         result_json = list(result.values())
@@ -212,11 +206,11 @@ def decline_request(request, request_id):
 def temporary_password(request):
 
     query = request.GET.get("q")
-    try:        
+    try:
         user = get_user_model().objects.get(email=query)
-    except CustomUser.DoesNotExist:    
+    except CustomUser.DoesNotExist:
         return JsonResponse({"msg": "none-user"})
-    
+
     alp_str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     alp_str_lower = alp_str.lower()
     num = "1234567890"
@@ -247,14 +241,14 @@ def auth_check(request):
 def profile_delete(request):
     user_id = request.user.id
     accounts_profile_delete(user_id=user_id)
-    return JsonResponse({"msg":"deleted"})
+    return JsonResponse({"msg": "deleted"})
+
 
 @login_required
 def remove_friend(request, friend_id):
     user_id = request.user.id
     accounts_delete_friend(user_id=user_id, friend_id=friend_id)
-    return JsonResponse({"msg":"deleted"})
-
+    return JsonResponse({"msg": "deleted"})
 
 
 ##################### 추천친구 관련 #####################################
@@ -263,33 +257,32 @@ def remove_friend(request, friend_id):
 def get_user(request):
     user = request.user
     like_sentence = []
-    sentence=''
-    youtube = Youtube.objects.filter(user_id= user.id)
-    news = News.objects.filter(user_id= user.id)
-    book = Book.objects.filter(user_id= user.id)
-    shopping = Shopping.objects.filter(user_id = user.id)
+    sentence = ""
+    youtube = Youtube.objects.filter(user_id=user.id)
+    news = News.objects.filter(user_id=user.id)
+    book = Book.objects.filter(user_id=user.id)
+    shopping = Shopping.objects.filter(user_id=user.id)
 
     if youtube:
         for y in youtube:
-            sentence = sentence + y.title + ' '
+            sentence = sentence + y.title + " "
     if news:
         for n in news:
-            sentence = sentence + n.title + ' '
+            sentence = sentence + n.title + " "
 
     if book:
         for b in book:
-            sentence = sentence + b.title + ' '
+            sentence = sentence + b.title + " "
 
     if shopping:
         for s in shopping:
-            sentence = sentence + s.title + ' '
+            sentence = sentence + s.title + " "
 
     like_sentence.append(sentence)
-    print("찜 기반 제목들",sentence)
-    context = {
-        'like_sentence': like_sentence
-    }
+    print("찜 기반 제목들", sentence)
+    context = {"like_sentence": like_sentence}
     return HttpResponse(json.dumps(context), content_type="application/json")
+
 
 # 키워드 받아서 저장
 @csrf_exempt
@@ -297,47 +290,49 @@ def get_user(request):
 def save_like_keyword(request):
     user = request.user
     print("찜 기반 유저", user.email)
-    like_keyowrd = json.loads(request.body.decode('utf-8'))['like_keyowrd']
-    print("찜 기반 키워드",like_keyowrd )
+    like_keyowrd = json.loads(request.body.decode("utf-8"))["like_keyowrd"]
+    print("찜 기반 키워드", like_keyowrd)
     user.like_keyword = like_keyowrd
     user.save()
-    return JsonResponse({"msg":"add like"})
+    return JsonResponse({"msg": "add like"})
+
 
 import random
+
 from accounts.apps import W2V
 
 
 def recommend_friend(me):
     user = me
     all_user = CustomUser.objects.all().exclude(id=user.id)
-    print('나빼고 전체 유저', all_user)
+    print("나빼고 전체 유저", all_user)
     friends = user.friends.all()
-    print('친구들', friends)
+    print("친구들", friends)
     not_friends = []
     recommend_friends = []
-    for x in all_user :
+    for x in all_user:
         if x not in friends:
             not_friends.append(x)
 
-    print('친구아닌 애들', not_friends)
+    print("친구아닌 애들", not_friends)
     simil_user = {}
     user_keyword = user.like_keyword
     if len(not_friends) < 6:
         recommend_friends = not_friends
-    else :
-        if user_keyword == '':
-            recommend_friends = random.sample(not_friends,5)
+    else:
+        if user_keyword == "":
+            recommend_friends = random.sample(not_friends, 5)
         else:
             for friendx in not_friends:
                 try:
-                    similarity = W2V.model.wv.similarity(user_keyword,friendx.like_keyword)
+                    similarity = W2V.model.wv.similarity(user_keyword, friendx.like_keyword)
                     simil_user[friendx.id] = int(similarity * 100)
                 except:
                     simil_user[friendx.id] = 0
 
-            print('키워드 유사도',simil_user)
-            sorted_friend = sorted(simil_user.items(), key=lambda x:-x[1])
-            print('오름차순으로 나열된 친구', sorted_friend)
+            print("키워드 유사도", simil_user)
+            sorted_friend = sorted(simil_user.items(), key=lambda x: -x[1])
+            print("오름차순으로 나열된 친구", sorted_friend)
             if len(sorted_friend) > 4:
                 for i in sorted_friend[:5]:
                     recommend = CustomUser.objects.get(id=i[0])
@@ -347,21 +342,21 @@ def recommend_friend(me):
                     recommend = CustomUser.objects.get(id=i[0])
                     recommend_friends.append(recommend)
 
-    print('추천친구 목록',recommend_friends)
+    print("추천친구 목록", recommend_friends)
     return recommend_friends
 
 
-#친구 관심키워드
+# 친구 관심키워드
 @csrf_exempt
 @login_required
 def friend_like_recommend(request):
-    friend_id = request.GET.get('friend_id')
-    print('친구아이디',friend_id)
+    friend_id = request.GET.get("friend_id")
+    print("친구아이디", friend_id)
     friend = CustomUser.objects.get(id=friend_id)
     friend_keyword = friend.like_keyword
     friend_like_keywords = []
-    if friend_keyword == '':
-        friend_like_keywords.append('찜 없음')
+    if friend_keyword == "":
+        friend_like_keywords.append("찜 없음")
 
     else:
         friend_like_keywords.append(friend_keyword)
@@ -370,40 +365,30 @@ def friend_like_recommend(request):
             for word in similar_word[:3]:
                 friend_like_keywords.append(word[0])
         except:
-            print('친구 키워드',friend_like_keywords)
-    print('친구 키워드', friend_like_keywords)
+            print("친구 키워드", friend_like_keywords)
+    print("친구 키워드", friend_like_keywords)
 
-    context = {
-        'friend_keywords': friend_like_keywords
-    }
+    context = {"friend_keywords": friend_like_keywords}
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 ##################################################################################################################
 
-
-
-@csrf_exempt
 @login_required
 def like_public_setting(request):
-    value = request.POST['value']
+    value = request.POST["value"]
     print(value)
-    if value == 'ON':
+    if value == "ON":
         change_value = True
-    elif value == 'OFF':
+    elif value == "OFF":
         change_value = False
     else:
-        return JsonResponse({
-            'result': 'value is Wrong'
-        })
+        return JsonResponse({"result": "value is Wrong"})
 
     user = CustomUser.objects.get(pk=request.user.id)
     user.is_like_public = change_value
     user.save()
 
-    result = 'success'
-    data = {
-        'result': result
-    }
+    result = "success"
+    data = {"result": result}
     return JsonResponse(data)
-

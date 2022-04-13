@@ -1,8 +1,9 @@
 import ssl
+import time
 import urllib.request
 from typing import List
 from urllib import parse
-import time
+
 from bs4 import BeautifulSoup
 
 
@@ -31,7 +32,7 @@ def crawling_news(search: str) -> List[List[str]]:
         test_title.append(name[i]["href"])
         test_title.append(content[i].get_text())
         test_title.append(image[i]["src"])
-        test_title.append('False')
+        test_title.append("False")
         answer.append(test_title)
     print("news crawling function time is ", time.time() - start, "seconds")
     return answer
@@ -71,8 +72,7 @@ def crawling_book(search: str) -> List[List[str]]:
         test_title.append(price[i].get_text())
         test_title.append(link[i]["href"])
         test_title.append(image[i]["src"])
-        test_title.append('False')
+        test_title.append("False")
         answer.append(test_title)
     print("book crawling function time is ", time.time() - start, "seconds")
     return answer
-

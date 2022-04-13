@@ -21,26 +21,17 @@ def do_like_shopping_service(user_id: int, title: str, price: str, thumbnail_url
         return "success"
     else:
 
-        return 'AlreadyExist'
+        return "AlreadyExist"
 
 
 def do_like_book_service(user_id: int, title: str, price: str, author: str, company: str, thumbnail: str, link: str, series: str) -> str:
     user = CustomUser.objects.get(pk=user_id)
     book_check = Book.objects.filter(user=user, link=link).exists()
     if not book_check:
-        Book.objects.create(
-            user=user,
-            link=link,
-            title=title,
-            price=price,
-            author=author,
-            company=company,
-            thumbnail=thumbnail,
-            series=series
-        )
-        return 'success'
+        Book.objects.create(user=user, link=link, title=title, price=price, author=author, company=company, thumbnail=thumbnail, series=series)
+        return "success"
     else:
-        return 'AlreadyExist'
+        return "AlreadyExist"
 
 
 def do_like_news_service(user_id: int, title: str, date: str, company: str, content: str, thumbnail_url: str, link_url: str) -> str:
@@ -48,8 +39,6 @@ def do_like_news_service(user_id: int, title: str, date: str, company: str, cont
     news_check = News.objects.filter(user=user, link=link_url).exists()
     if not news_check:
         News.objects.create(user=user, title=title, date=date, company=company, content=content, thumbnail=thumbnail_url, link=link_url)
-        return 'success'
+        return "success"
     else:
-        return 'AlreadyExist'
-
-
+        return "AlreadyExist"

@@ -470,6 +470,9 @@ function like_change_public_setting(status){
         type: 'POST',
         url: '/accounts/mypage/public/setting/',
         dataType: 'json',
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
         data: {
             'value': value
         },

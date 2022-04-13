@@ -51,13 +51,8 @@
                                  style="background-image: url({{ chatroom.participant2.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
-                                {#                                {% for message in all_message %}#}
-                                {#                                    {% if chatroom.id == message.chatroom_id %}#}
-                                {#                                        <div class="partner_last_msg partner_last_msg_{{ message.author_id }}">{{ message.message }}</div>#}
-                                {#                                    {% endif %}#}
-                                {#                                {% endfor %}#}
                                 <div class="count">
-                                    {#                                    카운트 들어갈 자리#}
+                                    {#카운트 들어갈 자리#}
                                 </div>
                             </div>
                         </a>
@@ -68,13 +63,8 @@
                                  style="background-image: url({{ chatroom.participant1.img.url }})"></div>
                             <div class="info_group">
                                 <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
-                                {#                                {% for message in all_message %}#}
-                                {#                                    {% if chatroom.id == message.chatroom_id %}#}
-                                {#                                        <div class="partner_last_msg partner_last_msg_{{ message.author_id }}">{{ message.message }}</div>#}
-                                {#                                    {% endif %}#}
-                                {#                                {% endfor %}#}
                                 <div class="count">
-                                    {#                                    카운트 들어갈 자리#}
+                                    {#카운트 들어갈 자리#}
                                 </div>
                             </div>
                         </a>
@@ -98,10 +88,9 @@
                 <div class="right_icon">
                     <div class="hidden talk-bubble tri-right round right-in" id="guide_bubble">
                         <div class="talktext">
-                            <p>추천 컨텐츠도 <br>이용해보세요!</p>
+                            <p>추천 컨텐츠도<br>이용해보세요!</p>
                         </div>
                     </div>
-                    {#                    <div class="close_btn" onclick="location.href='/chat'"></div>#}
                     <div class="toggle_icon"></div>
                 </div>
                 <div class="toggle_content">
@@ -117,11 +106,10 @@
 
             <div id="chat_box" class="chat_box">
                 <div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>
-                {#                채팅내용 들어가는 곳#}
+                {#채팅내용 들어가는 곳#}
             </div>
             <div class="input_bar">
                 {% csrf_token %}
-                {#                {% if user_id == %}#}
                 <div id="chat_message_submit" class="attach_icon"></div>
                 <textarea id="chat_message_input" type="text" placeholder="입력하세요." name="message"></textarea>
             </div>
@@ -129,13 +117,16 @@
         {% include 'chat/freind_like.html' %}
     </div>
 </div>
-<script defer src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
-<script src="{% static 'js/search/recommend.js' %}?after"></script>
+<script src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
 <script>
+    var CSRF_TOKEN = '{{ csrf_token }}';
     $(document).ready(function () {
-        getRoomid();
-        messageLoader(user_id);
+        // 마지막 메세지 로드
         latestMessageNotConnected();
+        // 채팅리스트의 모든 room_id로 소켓 연결
+        getRoomid();
+        // 채팅방 접속 시 이전 메세지 로드
+        messageLoader(user_id);
 
         // 채팅 스크롤 하단 고정
         $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
@@ -175,6 +166,8 @@
         });
     });
 
+    // 추천컨텐츠 버튼 컨트롤
+
     $('#recommend_btn').on('click', function () {
         $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
@@ -185,22 +178,21 @@
         $('.chat_container').appendTo('.left_wrap');
         $('.friends_like_container').appendTo('.left_wrap');
         $('.right_wrap').empty();
-        $('.right_wrap').load("/api/search/recommend", function (){
+        $('.right_wrap').load("/api/search/recommend", function () {
             let status = document.getElementById('recommend_toggle').innerText
-            if(status === 'ON'){
+            if (status === 'ON') {
                 document.getElementById('youtube_recommend_content').style.display = 'flex'
                 document.getElementById('news_recommend_content').style.display = 'flex'
                 document.getElementById('book_recommend_content').style.display = 'flex'
                 document.getElementById('shopping_recommend_content').style.display = 'flex'
                 document.getElementById('recommend_reload_button').style.display = 'block'
                 reload();
-            }else{
+            } else {
                 document.getElementById('recommend_reload_button').style.display = 'none'
                 search_container_height_change()
             }
         });
 
-        //$("#recommend_btn").attr('onclick', '').unbind('click');
         $(".toggle_content").hide();
         $(".toggle_content").css('cursor', 'pointer');
 
@@ -218,6 +210,8 @@
         $('.close_chat_room').show();
     }
 
+
+    // 친구찜목록 버튼 컨트롤
 
     $('#freind_like_list').on('click', function () {
         $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
@@ -302,29 +296,17 @@
         document.getElementById('friends_like_book').style.display = 'none';
     }
 
-    function show_user_timestamp(num) {
-        $('.timestamp_user_' + num).show();
-    }
 
-    function hide_user_timestamp(num) {
-        $('.timestamp_user_' + num).hide();
-    }
-
-    function show_partner_timestamp(num) {
-        $('.timestamp_partner_' + num).show();
-    }
-
-    function hide_partner_timestamp(num) {
-        $('.timestamp_partner_' + num).hide();
-    }
-
+    // view에서 html로 전달한 값
 
     var room_id = {{ room_id }};
     var user_id = {{ user_id }};
     var participant1 = {{ participant1.id }};
     var participant2 = {{ participant2.id }};
 
-    {#채팅방 삭제하기#}
+
+    // 해당 채팅방 삭제
+
     function deleteChatroom() {
         if (!confirm("삭제하시면 대화내용을 복구할수 없습니다. \n정말로 삭제하시겠습니까?")) {
             return false;
@@ -333,18 +315,17 @@
         }
     }
 
+    // 채팅리스트의 모든 room_id를 리스트로 받아오기
+
     function getRoomid() {
         let all_partner = document.getElementsByClassName('chat_partner')
-        console.log(all_partner)
 
         var partner_list = []
         for (let i = 0; i < all_partner.length; i++) {
             let partner = all_partner[i]['href'].split('/')
             partner = parseInt(partner[4]);
-            console.log(i, partner, typeof (partner))
             partner_list.push(partner)
         }
-        console.log(partner_list)
 
 
         $.ajax({
@@ -354,13 +335,10 @@
             data: JSON.stringify({"partner_list": partner_list}),
             async: false,
             success: function (data) {
-                console.log('룸리스트', data['room_list'])
                 let roomlist = data['room_list']
-                for(let i=0; i<roomlist.length; i++) {
+                for (let i = 0; i < roomlist.length; i++) {
                     let roomid = roomlist[i]
-                    let socketname = window['chatSocket'+roomid]
-                    WebSocketConnetion(socketname ,roomid);
-                    {#console.log('룸아이디', id, socketname)#}
+                    WebSocketConnetion(roomid);
                 }
             },
             error: function (request, status, error) {
@@ -371,7 +349,10 @@
         })
     }
 
-    function WebSocketConnetion(socket ,id) {
+
+    // 채팅 리스트의 모든 웹소켓 열어주기
+
+    function WebSocketConnetion(id) {
         const socket_var = new ReconnectingWebSocket(
             'ws://'
             + window.location.host
@@ -392,17 +373,15 @@
                 for (let i = n - 1; i >= 0; i--) {
                     createMessage(data['messages'][i]);
                 }
-            // 새로운 메세지 컨트롤
+                // 새로운 메세지 컨트롤
             } else if (data['command'] === 'new_message') {
                 let current_num = $('.user_count').length + $('.partner_count').length;
-                console.log('current_num', current_num + 1)
                 // 1부터 카운트 하기 위해 +1 처리
                 createMessage(data['message'], current_num + 1);
-                latestMessageNotConnected();
-                console.log('DB에서 마지막 메세지 ajax 출력!')
                 $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
             }
-            if (data['chat_count'] >8 && data['chat_count'] <15){
+            let current_num = $('.user_count').length + $('.partner_count').length;
+            if (current_num > 8 && current_num < 15) {
                 document.querySelector('.hidden').classList.remove('disappear');
                 document.querySelector('.hidden').classList.add('appear');
             } else {
@@ -417,71 +396,57 @@
 
         if (room_id == id) {
             document.querySelector('#chat_message_input').onkeyup = function (e) {
-            const messageInputDom = document.querySelector('#chat_message_input');
-            let message = messageInputDom.value;
+                const messageInputDom = document.querySelector('#chat_message_input');
+                let message = messageInputDom.value;
 
-            if (e.keyCode === 13) {  // enter, return
-                if (e.shiftKey) {
-                    message.replace(/(\r\n)/g, "<br>");
-
-                } else {
-                    message = message.replace(/(\n|\r\n)/g, "<br>");
-                    let enter_message = message.replace(/<br>/ig, "");
-                    console.log(message)
-                    if (message === '' || message === null || enter_message.trim().length === 0 || message === '<br>') {
-                        console.log('websocket load message')
-                        messageInputDom.value = '';
-                        return true;
-                    }
-                    if (message.includes('alert') === true || message.includes('ALERT') === true) {
-                        console.log('XSS attack defenced!')
-                    }
-                    if (message.includes('script') === true || message.includes('SCRIPT') === true) {
-                        console.log('XSS attack defenced!')
+                if (e.keyCode === 13) {  // enter, return
+                    if (e.shiftKey) {
+                        message.replace(/(\r\n)/g, "<br>");
                     } else {
-                        if (message.includes('href') === true) {
-                            console.log('XSS attack defenced!')
-                            const replace_msg = message.replace('href', '')
-                            socket_var.send(JSON.stringify({
-                                'command': 'new_messages',
-                                'message': replace_msg,
-                                'from': user_id,
-                                'room_id': room_id,
-                            }));
-                        } else {
-                            socket_var.send(JSON.stringify({
-                                'command': 'new_messages',
-                                'message': message,
-                                'from': user_id,
-                                'room_id': room_id,
-                            }));
+                        message = message.replace(/(\n|\r\n)/g, "<br>");
+                        let enter_message = message.replace(/<br>/ig, "");
+                        if (enter_message === '' || enter_message === null || enter_message.trim().length === 0) {
+                            alert('메세지를 입력해주세요.')
+                            return true;
                         }
+                        if (message.includes('alert') === true || message.includes('ALERT') === true) {
+                            alert('XSS attack defenced!')
+                        }
+                        if (message.includes('script') === true || message.includes('SCRIPT') === true) {
+                            alert('XSS attack defenced!')
+                        } else {
+                            if (message.includes('href') === true) {
+                                alert('XSS attack defenced!')
+                                const replace_msg = message.replace('href', '')
+                                socket_var.send(JSON.stringify({
+                                    'command': 'new_messages',
+                                    'message': replace_msg,
+                                    'from': user_id,
+                                    'room_id': room_id,
+                                }));
+                            } else {
+                                socket_var.send(JSON.stringify({
+                                    'command': 'new_messages',
+                                    'message': message,
+                                    'from': user_id,
+                                    'room_id': room_id,
+                                }));
+                            }
+                        }
+                        messageInputDom.value = '';
                     }
-                    messageInputDom.value = '';
-                }
 
+                }
             }
         }
-        }
 
-        {#웹소켓 연결이 끊어졌을 때의 JS#}
         socket_var.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
         };
 
     }
 
-
-    // 새로운 메세지 카운트
-    function countNew() {
-        let message_count = $('.user_count').length;
-        console.log('유저카운트?', message_count)
-
-        let count_html = `<div class="count_new">${message_count}</div>`
-        $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
-    }
-
-    {#새로 작성된 메세지를 html에 보여주는 JS#}
+    // 새로 작성된 메세지를 html에 출력
     function createMessage(data, num) {
         const message = data['message'];
         const author = data['author'];
@@ -496,10 +461,9 @@
             var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
         }
 
-
-        let temp_html = `<div class="partner_last_msg new partner_last_msg_${author}">${message}</div>`
-        $('.chat_partner_' + room_id).children('.info_group').append(temp_html)
-        console.log('consumer에서 메세지 바로 출력')
+        $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').addClass('new')
+        let new_message = message.replace(/<br>/ig, "");
+        $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').text(new_message)
 
 
         if (chatroom_id === room_id) {
@@ -540,8 +504,20 @@
 
     }
 
+    // 새로운 메세지 카운트(미완성)
+    function countNew() {
+        let message_count = $('.user_count').length;
+
+        let count_html = `<div class="count_new">${message_count}</div>`
+        $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
+    }
+
+
+
+
 
 </script>
+<script src="{% static 'js/search/recommend.js' %}?after"></script>
 <script src="{% static 'js/chat/chat_room.js' %}?after"></script>
 <script src="{% static 'js/chat/friend_like.js' %}"></script>
 </body>

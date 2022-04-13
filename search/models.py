@@ -7,8 +7,8 @@ from accounts.models import CustomUser
 class Youtube(models.Model):
     user = models.ForeignKey(CustomUser, related_name="youtube", on_delete=models.CASCADE)
     url = models.URLField(max_length=1000)
-    title = models.CharField(max_length=1000, default='')
-    views = models.CharField(max_length=1000, default='')
+    title = models.CharField(max_length=1000, default="")
+    views = models.CharField(max_length=1000, default="")
 
 
 class News(models.Model):
@@ -17,7 +17,7 @@ class News(models.Model):
     date = models.CharField(max_length=1000)
     company = models.CharField(max_length=1000)
     content = models.TextField()
-    thumbnail = models.URLField(max_length=1000,default='')
+    thumbnail = models.URLField(max_length=1000, default="")
     link = models.URLField(max_length=1000)
 
 
@@ -27,9 +27,9 @@ class Book(models.Model):
     price = models.CharField(max_length=1000)
     author = models.CharField(max_length=1000)
     company = models.CharField(max_length=1000)
-    thumbnail = models.URLField(max_length=1000,default='')
+    thumbnail = models.URLField(max_length=1000, default="")
     link = models.URLField()
-    series = models.CharField(max_length=1000, default='')
+    series = models.CharField(max_length=1000, default="")
 
 
 class Shopping(models.Model):

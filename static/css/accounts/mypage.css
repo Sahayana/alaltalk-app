@@ -209,8 +209,8 @@ body {
     background-color: #7657ce;
     color: #fff;
     font-size: 15px;
-    padding: 0.5% 1.5% 0.5% 1.5%;
-    
+    padding: 0.5% 2%;
+
 }
 
 /* 비밀번호 재입력 폼 */
@@ -345,16 +345,13 @@ body {
     font-weight: bold;
 }
 
-.profile_delete_account  #profile_delete_btn {
+.profile_delete_account #profile_delete_btn {
     color: #7657ce;
     background-color: transparent;
     font-weight: bold;
     border: none;
     cursor: pointer;
 }
-
-
-
 
 
 .profile_follow_container {
@@ -388,25 +385,27 @@ body {
 .profile_follow_list {
     /*margin-top: 32px;*/
 }
+
 .follow_list_section {
     height: 85vh;
     width: 100%;
-    overflow-y:auto;
+    overflow-y: auto;
     overflow-x: hidden;
 }
+
 .follow_list_section::-webkit-scrollbar {
-  width: 10px;
+    width: 10px;
 }
 
 .follow_list_section::-webkit-scrollbar-thumb {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px #a185f2;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px #a185f2;
 }
 
 .follow_list_section::-webkit-scrollbar-track {
-  background-color: #faf9ff;
-  border-radius: 2px;
+    background-color: #faf9ff;
+    border-radius: 2px;
 }
 
 .profile_follow_list li {
@@ -477,7 +476,7 @@ body {
 .profile_like_container {
     height: 91.5vh;
     position: relative;
-    width: 100%;
+    width: 98%;
     padding-top: 25px;
     padding-left: 25px;
     display: none;
@@ -1099,7 +1098,7 @@ body {
 
 /* 나만 보기 관련 기능 */
 
-.profile_privacy_settings{
+.profile_privacy_settings {
     display: flex;
     flex-direction: row;
     width: 133px;
@@ -1114,19 +1113,27 @@ body {
     font-weight: 600;
 }
 
-.profile_privacy_settings_title{
+.profile_privacy_settings_title {
     width: 79px;
     height: 18px;
-
+    margin-top: 4px;
 }
 
-.profile_privacy_settings_button{
-    width: 50px;
-    height: 25px;
+.profile_privacy_settings_button {
+    width: 54px;
+    height: 30px;
     background-color: #7556CD;
     color: white;
     text-align: center;
     line-height: 20px;
     outline: none;
+    text-decoration: none;
     border-radius: 8px;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    overflow: visible;
+    cursor: pointer;
+    font-weight: 700;
+
 }
