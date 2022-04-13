@@ -1,16 +1,13 @@
 // 해당 채팅방에 접속해있지 않아도 최근 메세지를 받을 수 있도록 함
 function latestMessageNotConnected() {
     let all_partner = document.getElementsByClassName('chat_partner')
-    console.log(all_partner)
 
     var partner_list = []
     for (let i = 0; i < all_partner.length; i++) {
         let partner = all_partner[i]['href'].split('/')
         partner = parseInt(partner[4]);
-        console.log(i, partner, typeof (partner))
         partner_list.push(partner)
     }
-    console.log(partner_list)
 
     $.ajax({
         url: "/chat/latestmessagenotconnected/",
@@ -19,7 +16,6 @@ function latestMessageNotConnected() {
         data: JSON.stringify({"partner_list": partner_list}),
         async: false,
         success: function (data) {
-            console.log(data['latest_chat_list'])
             let rows = data['latest_chat_list']
             for (let i = 0; i < rows.length; i++) {
                 let chatter_id = rows[i]['partner']
@@ -42,7 +38,6 @@ function latestMessageNotConnected() {
 //채팅방에 이전메세지 불러오기
 function messageLoader(user_id) {
     var link = document.location.href;
-    console.log(link);
     let room_id = link.split('/');
     room_id = parseInt(room_id[5]);
 
@@ -56,19 +51,18 @@ function messageLoader(user_id) {
         enctype: 'multipart/form-data',
         async: false,
         success: function (data) {
-            console.log(data['last_messages_list'])
             let rows = data['last_messages_list']
             for (let i = 0; i < rows.length; i++) {
                 let author_id = rows[i]['author_id']
                 let message = rows[i]['message']
                 let timestamp = rows[i]['created_at'].split('')
-                console.log(timestamp[11], timestamp[12])
+
                 if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
                     var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                 } else {
                     var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                 }
-                console.log(timestamp)
+
                 if (author_id === user_id) {
                     if (message.includes('http') === true) {
                         let temp_html1 = `<div class="user_chat">
@@ -113,10 +107,8 @@ function messageLoader(user_id) {
 function moreList(user_id) {
     var startNum = $('.user_to_partner').length + $('.partner_to_user').length;
     //마지막 리스트 번호를 알아내기 위해서 length를 구함.
-    console.log("startNum", startNum); //콘솔로그로 startNum에 값이 들어오는지 확인
 
     var link = document.location.href;
-    console.log(link);
     var room_id = link.split('/');
     room_id = parseInt(room_id[5]);
 
@@ -133,19 +125,18 @@ function moreList(user_id) {
         enctype: 'multipart/form-data',
         async: false,
         success: function (data) {
-            console.log(data['chat_list'])
             let rows = data['chat_list']
             for (let i = rows.length - 1; i >= 0; i--) {
                 let author_id = rows[i]['author_id']
                 let message = rows[i]['message']
                 let timestamp = rows[i]['created_at'].split('')
-                console.log(timestamp[11], timestamp[12])
+
                 if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
                     var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                 } else {
                     var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
                 }
-                console.log(timestamp)
+
                 if (author_id === user_id) {
                     if (message.includes('http') === true) {
                         let temp_html1 = `<div class="user_chat">
@@ -194,4 +185,23 @@ function moreList(user_id) {
             console.log(request, status, error)
         }
     })
+}
+
+
+// 각 채팅 onmouse 타임스템프
+
+function show_user_timestamp(num) {
+    $('.timestamp_user_' + num).show();
+}
+
+function hide_user_timestamp(num) {
+    $('.timestamp_user_' + num).hide();
+}
+
+function show_partner_timestamp(num) {
+    $('.timestamp_partner_' + num).show();
+}
+
+function hide_partner_timestamp(num) {
+    $('.timestamp_partner_' + num).hide();
 }

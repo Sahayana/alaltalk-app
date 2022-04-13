@@ -1,7 +1,4 @@
 import json
-
-from django.http import HttpResponse
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
@@ -14,7 +11,6 @@ from search.models import Youtube,News,Book,Shopping
 
 
 # ChatRoom 모델에서 유저가 속해있는 채팅방 리스트 불러오기
-# ChatMessage 모델에서 마지막 메세지 출력
 @login_required
 def show_chat_list(request):
     user = request.user
@@ -28,9 +24,7 @@ def show_chat_list(request):
 @login_required
 def create_chat_room(request, id):
     user = request.user
-    print(user)
     partner = CustomUser.objects.get(id=id)
-    print(partner)
 
     if user == request.user:
         exist_room1 = ChatRoom.objects.filter(participant1=user, participant2=partner)
@@ -59,7 +53,7 @@ def create_chat_room(request, id):
         return render(request, "chat/chat_room.html", {'error': '접근 불가한 채팅방 입니다.'})
 
 
-# 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
+# room_id로 채팅방 삭제
 @csrf_exempt
 @login_required
 def delete_chat_room(request, room_id):
@@ -68,7 +62,7 @@ def delete_chat_room(request, room_id):
     return redirect('/chat')
 
 
-# 웹소켓이 실행되면서 열린 chat/room/room_id html로 데이터 전달
+# 웹소켓이 실행되면서 열린 html로 데이터 전달
 @csrf_exempt
 @login_required
 def post_data_to_chat_room(request, room_id):
@@ -77,8 +71,6 @@ def post_data_to_chat_room(request, room_id):
         chatroom = ChatRoom.objects.get(id=room_id)
         chatroom_list = ChatRoom.objects.filter(Q(participant1=user) | Q(participant2=user)).all().order_by('-created_at')
         all_message = ChatMessage.objects.all()
-
-        # latest_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by("-created_at")[0]
 
         if chatroom.participant1.id == user.id:
             participant = chatroom.participant2
@@ -104,7 +96,6 @@ def post_data_to_chat_room(request, room_id):
                 "participant2": chatroom.participant2,
                 "participant": participant,
                 "all_message": all_message,
-                # "latest_messages": latest_messages,
                 "participant_like_youtube": participant_like_youtube,
                 "participant_like_news": participant_like_news,
                 "participant_like_book": participant_like_book,
@@ -113,16 +104,16 @@ def post_data_to_chat_room(request, room_id):
         )
 
 
+# AI API로 전달할 채팅로그
 @csrf_exempt
 @login_required
 def chat_log_send(request):
     room_id = json.loads(request.body.decode('utf-8'))['room_id']
     chat_log = []
-    sentence=''
-    print(room_id)
+    sentence = ''
     chatroom = ChatRoom.objects.get(id = room_id)
     all_chat = ChatMessage.objects.filter(chatroom=chatroom)
-    print(len(all_chat))
+
     if len(all_chat) > 40:
         all_chat = all_chat[len(all_chat)-40:]
 
@@ -130,20 +121,21 @@ def chat_log_send(request):
         sentence = sentence + chat.message + ' '
 
     chat_log.append(sentence)
-    print('채팅로그 담긴리스트',chat_log)
+
     context = {
         'chat_log' : chat_log
     }
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
+# 채팅방의 이전메세지 더보기(버튼 클릭시 10개씩 로드)
 @csrf_exempt
 @login_required
 def more_list(request):
     room_id = json.loads(request.body.decode('utf-8'))['room_id']
     num = json.loads(request.body.decode('utf-8'))['startNum']
     user_id = json.loads(request.body.decode('utf-8'))['user_id']
-    print(room_id, num, user_id)
+
     all_chat = ChatMessage.objects.filter(chatroom_id=room_id).order_by("created_at")
     if all_chat is not None:
         all_chat = all_chat[num:num+10]
@@ -161,6 +153,7 @@ def more_list(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
+# 채팅방 이전메세지 로더
 @csrf_exempt
 @login_required
 def message_loader(request):
@@ -181,49 +174,11 @@ def message_loader(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
-@csrf_exempt
-@login_required
-def latest_message(request):
-    room_id = json.loads(request.body.decode('utf-8'))['room_id']
-    latest_message = ChatMessage.objects.filter(chatroom_id=room_id).order_by("-created_at")[0]
-    chatroom = ChatRoom.objects.get(id=room_id)
-    if request.user.id == chatroom.participant1_id:
-        partner_id = chatroom.participant2_id
-    else :
-        partner_id = chatroom.participant1_id
-    print(partner_id)
-    context = {
-        'message': latest_message.message,
-        'chatroom_id': latest_message.chatroom_id,
-        'author_id': latest_message.author_id,
-        'partner_id': partner_id,
-    }
-
-    return HttpResponse(json.dumps(context), content_type="application/json")
-
-
-@csrf_exempt
-@login_required
-def last_message_list(request):
-    # chatroom_list = ChatRoom.objects.filter(Q(participant1=request.user) | Q(participant2=request.user)).all()
-    last_messages = ChatMessage.objects.all().order_by('created_at')
-
-    last_message_list = []
-    for message in last_messages:
-        last_message_list.append({'message': message.message, 'author_id': message.author_id, 'chatroom_id': message.chatroom_id})
-
-    context = {
-        'last_message_list': last_message_list
-    }
-
-    return HttpResponse(json.dumps(context), content_type="application/json")
-
-
+# 채팅방 별 최신 메세지 1개 뽑기
 @csrf_exempt
 @login_required
 def latest_message_not_connected(request):
     partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
-
 
     latest_chat_list = []
     for partner in partner_list:
@@ -244,19 +199,18 @@ def latest_message_not_connected(request):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
+# partner_id로 chatroom을 찾아 list 형태로 전달
 @csrf_exempt
 @login_required
 def get_room_id(request):
     partner_list = json.loads(request.body.decode('utf-8'))['partner_list']
-    print(partner_list)
 
     room_list = []
     for partner in partner_list:
         chatter = CustomUser.objects.get(id=partner)
         chatroom = ChatRoom.objects.filter(Q(participant1=request.user, participant2_id=chatter) | Q(participant2=request.user, participant1=chatter))
-        print('getroom', chatroom)
+
         for room in chatroom:
-            print(room, room.id)
             room_list.append(room.id)
 
     context = {
