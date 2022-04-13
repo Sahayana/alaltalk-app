@@ -2,17 +2,15 @@ from datetime import datetime
 from typing import Tuple
 
 from django.contrib import auth
+from django.core.mail import EmailMessage
 from django.db.models import QuerySet
 from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from accounts.models import CustomUser, FriendRequest
-
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
-from django.core.mail import EmailMessage
 from accounts.utils import accounts_verify_token
-from django.utils.encoding import force_bytes, force_str
 
 
 def create_single_user(email: str, nickname: str, password: str, **kwargs: str) -> CustomUser:
@@ -25,15 +23,15 @@ def check_email_duplication(email: str) -> bool:
 
 
 def send_email_verification(user: CustomUser, current_domain: str) -> int:
-    
+
     message = render_to_string(
-        template_name='accounts/verification_email.html',
+        template_name="accounts/verification_email.html",
         context={
-            'user':user,
-            'domain':current_domain,
-            'uid':urlsafe_base64_encode(force_bytes(user.id)).encode().decode(),
-            'token':accounts_verify_token.make_token(user),
-        }
+            "user": user,
+            "domain": current_domain,
+            "uid": urlsafe_base64_encode(force_bytes(user.id)).encode().decode(),
+            "token": accounts_verify_token.make_token(user),
+        },
     )
 
     mail_title = "[alaltalk] 이메일 인증 링크입니다."
@@ -42,7 +40,8 @@ def send_email_verification(user: CustomUser, current_domain: str) -> int:
     result = email_message.send()
     return result
 
-def verified_email_activation(uidb64:str, token:str) -> None:
+
+def verified_email_activation(uidb64: str, token: str) -> None:
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = CustomUser.objects.get(id=uid)
@@ -52,6 +51,7 @@ def verified_email_activation(uidb64:str, token:str) -> None:
     if user != None and accounts_verify_token.check_token(user=user, token=token):
         user.is_active = True
         user.save()
+
 
 # def change_user_profile(user: CustomUser, nickname:str, bio:str, **kwargs: str) -> CustomUser:
 #     user.nickname = nickname
@@ -116,8 +116,6 @@ def accounts_profile_delete(user_id: int) -> None:
 
 def accounts_delete_friend(user_id: int, friend_id: int) -> None:
     user = CustomUser.objects.filter(id=user_id).get()
-    friend = CustomUser.objects.filter(id=friend_id).get()    
+    friend = CustomUser.objects.filter(id=friend_id).get()
     user.friends.remove(friend)
     friend.friends.remove(user)
-    
-    

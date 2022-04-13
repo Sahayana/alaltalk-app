@@ -52,7 +52,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     bio = models.CharField(max_length=150, blank=True)
     img = models.ImageField(default="profile_img/testuser1testusercom-2022-03-28.png", upload_to="profile_img")
     friends = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-    like_keyword = models.CharField(max_length=100, default= '', blank=True)
+    like_keyword = models.CharField(max_length=100, default="", blank=True)
 
     # Boolean field
     is_admin = models.BooleanField(default=False)
@@ -61,7 +61,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_recommend_on = models.BooleanField(default=True)
     is_like_public = models.BooleanField(default=True)
-    
 
     # https://docs.djangoproject.com/en/4.0/topics/auth/customizing/#django.contrib.auth.models.CustomUser
     USERNAME_FIELD = "email"  # 이메일 로그인

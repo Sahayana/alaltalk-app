@@ -15,5 +15,3 @@ class NewsLikeResponse(Schema):
 
 class BookLikeResponse(Schema):
     result: str
-
-

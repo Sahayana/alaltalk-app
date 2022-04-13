@@ -19,10 +19,10 @@ from django.contrib import admin
 from django.urls import include, path
 from ninja import NinjaAPI
 
+from chat.apis.v1.chat_room_router import router as chat_room_router
 from search.apis.v1.like_cancel_router import router as like_cancel_router
 from search.apis.v1.like_router import router as like_router
 from search.apis.v1.search_router import router as search_router
-from chat.apis.v1.chat_room_router import router as chat_room_router
 
 from . import views
 
@@ -30,7 +30,7 @@ api = NinjaAPI()
 api.add_router("/search/", search_router)
 api.add_router("/like/", like_router)
 api.add_router("/like_cancel/", like_cancel_router)
-api.add_router('/chat_room/', chat_room_router)
+api.add_router("/chat_room/", chat_room_router)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

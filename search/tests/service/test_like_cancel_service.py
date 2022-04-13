@@ -1,7 +1,13 @@
 from django.test import TestCase
-from search.service.like_cancel_service import like_cancel_youtube, like_cancel_news, like_cancel_book ,like_cancel_shopping
+
 from accounts.models import CustomUser
-from search.models import Youtube, Shopping, Book, News
+from search.models import Book, News, Shopping, Youtube
+from search.service.like_cancel_service import (
+    like_cancel_book,
+    like_cancel_news,
+    like_cancel_shopping,
+    like_cancel_youtube,
+)
 
 
 class TestLikeCancelService(TestCase):
@@ -20,11 +26,10 @@ class TestLikeCancelService(TestCase):
 
         # When
         like_cancel_youtube(user.id, youtube_url)
-        exist_youtube = Youtube.objects.filter(user=user, url= youtube_url)
+        exist_youtube = Youtube.objects.filter(user=user, url=youtube_url)
 
         # Then
         self.assertFalse(exist_youtube)
-
 
     def test_like_cancel_news(self) -> None:
         # Given
@@ -44,11 +49,10 @@ class TestLikeCancelService(TestCase):
 
         # When
         like_cancel_news(user.id, link_url)
-        exist_news = News.objects.filter(user=user, link= link_url)
+        exist_news = News.objects.filter(user=user, link=link_url)
 
         # Then
         self.assertFalse(exist_news)
-
 
     def test_like_cancel_book(self) -> None:
         # Given
@@ -65,15 +69,14 @@ class TestLikeCancelService(TestCase):
         thumbnail = "test_book_thumbnail"
         link = "test_book_link"
         series = "test_book_series"
-        Book.objects.create(user=user, link=link, title=title, price=price, author=author, company=company, thumbnail=thumbnail, series=series )
+        Book.objects.create(user=user, link=link, title=title, price=price, author=author, company=company, thumbnail=thumbnail, series=series)
 
         # When
         like_cancel_book(user.id, link)
-        exist_book = Book.objects.filter(user=user, link= link)
+        exist_book = Book.objects.filter(user=user, link=link)
 
         # Then
         self.assertFalse(exist_book)
-
 
     def test_like_cancel_shopping(self) -> None:
         # Given
@@ -91,7 +94,7 @@ class TestLikeCancelService(TestCase):
 
         # When
         like_cancel_shopping(user.id, link_url)
-        exist_shopping = Shopping.objects.filter(user=user, link= link_url)
+        exist_shopping = Shopping.objects.filter(user=user, link=link_url)
 
         # Then
         self.assertFalse(exist_shopping)
