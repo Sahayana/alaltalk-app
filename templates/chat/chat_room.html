@@ -419,14 +419,18 @@
             document.querySelector('#chat_message_input').onkeyup = function (e) {
             const messageInputDom = document.querySelector('#chat_message_input');
             let message = messageInputDom.value;
-            message = message.replaceAll(/(\n|\r\n)/g, "<br>");
 
             if (e.keyCode === 13) {  // enter, return
                 if (e.shiftKey) {
-                    message.replaceAll(/(\n|\r\n)/g, "<br>");
+                    message.replace(/(\r\n)/g, "<br>");
+
                 } else {
-                    if (message === '' || message === null || message.trim().length === 0) {
+                    message = message.replace(/(\n|\r\n)/g, "<br>");
+                    let enter_message = message.replace(/<br>/ig, "");
+                    console.log(message)
+                    if (message === '' || message === null || enter_message.trim().length === 0 || message === '<br>') {
                         console.log('websocket load message')
+                        messageInputDom.value = '';
                         return true;
                     }
                     if (message.includes('alert') === true || message.includes('ALERT') === true) {
