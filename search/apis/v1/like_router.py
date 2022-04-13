@@ -10,7 +10,6 @@ from search.service.like_service import do_like_youtube_service, do_like_shoppin
 router = Router(tags=["like"])
 
 
-@csrf_exempt
 @router.post("/youtube", response={201: YoutubeLikeResponse})
 def do_like_youtube(request, youtube_dict: YoutubeLikeRequest = Form(...)) -> Tuple[int, Dict]:
     user_id = request.user.id
@@ -21,7 +20,6 @@ def do_like_youtube(request, youtube_dict: YoutubeLikeRequest = Form(...)) -> Tu
     return 201, {"result": result}
 
 
-@csrf_exempt
 @router.post("/news", response={201: NewsLikeResponse})
 def do_like_news(request, News_request: NewsLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -39,7 +37,6 @@ def do_like_news(request, News_request: NewsLikeRequest = Form(...)) -> Tuple[in
     return 201, {'result': result}
 
 
-@csrf_exempt
 @router.post("/book", response={201: BookLikeResponse})
 def do_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -58,7 +55,6 @@ def do_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[in
     return 201, {'result': result}
 
 
-@csrf_exempt
 @router.post("/shopping", response={201: ShoppingLikeResponse})
 def do_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:

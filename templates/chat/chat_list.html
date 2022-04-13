@@ -95,7 +95,7 @@
 </div>
 <script defer src="{% static 'js/chat/reconnecting-websocket.js' %}"></script>
 <script>
-
+    var CSRF_TOKEN = '{{ csrf_token }}';
     $(document).ready(function () {
         //
         latestMessageNotConnected();
@@ -123,6 +123,8 @@
         ChatIcon.on('click', function () {
             window.location.href = `/chat/`;
         })
+
+
     });
 
     $(".logout").click(function () {

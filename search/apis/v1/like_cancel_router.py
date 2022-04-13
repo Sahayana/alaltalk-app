@@ -12,7 +12,6 @@ from django.http import JsonResponse
 router = Router(tags=["like_cancel"])
 
 
-@csrf_exempt
 @router.post("/youtube", response={201: YoutubeLikeResponse})
 def cancel_like_youtube(request, youtube_request: YoutubeLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -24,7 +23,6 @@ def cancel_like_youtube(request, youtube_request: YoutubeLikeRequest = Form(...)
     return 201, {"result": "success"}
 
 
-@csrf_exempt
 @router.post("/news", response={201: NewsLikeResponse})
 def cancel_like_news(request, news_request: NewsLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -36,7 +34,6 @@ def cancel_like_news(request, news_request: NewsLikeRequest = Form(...)) -> Tupl
     return 201, {'result': 'success'}
 
 
-@csrf_exempt
 @router.post("/book", response={201: BookLikeResponse})
 def cancel_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tuple[int, Dict]:
     try:
@@ -48,7 +45,6 @@ def cancel_like_book(request, book_request: BookLikeRequest = Form(...)) -> Tupl
     return 201, {'result': 'success'}
 
 
-@csrf_exempt
 @router.post("/shopping", response={201: ShoppingLikeResponse})
 def cancel_like_shopping(request, shopping_request: ShoppingLikeRequest = Form(...)):
     try:

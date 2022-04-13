@@ -57,7 +57,11 @@ function get_keyword(chat_log) {
         processData: false,
         contentType: false,
         async: false,
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         enctype: 'multipart/form-data',
+
         success: function (response) {
             console.log(response.keyword)
             keyowrd = response.keyword;
@@ -80,6 +84,9 @@ function recommend_crawling_on(data) {
         data: {"target": data},
         datatype: 'form',
         async: true,
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         success: function (response) {
             console.log(response['all_response'])
 
@@ -426,6 +433,9 @@ function recommend_switch_ajax(value) {
         data: {
             'value': value
         },
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         success: function (response) {
             console.log(response)
         }
@@ -524,6 +534,9 @@ function like_youtube_ajax(data, type) {
             url: '/api/like/youtube',
             data: data,
             async: false,
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+             },
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
@@ -537,6 +550,9 @@ function like_youtube_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/youtube',
             data: data,
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             async: false,
             success: function (response) {
                 let ajax_result = response['result']
@@ -555,6 +571,9 @@ function like_news_ajax(data, type) {
             type: 'POST',
             url: '/api/like/news',
             data: data,
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             async: false,
             success: function (response) {
                 console.log(response['result'])
@@ -567,6 +586,9 @@ function like_news_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/news',
             data: data,
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             async: false,
             success: function (response) {
                 console.log(response['result'])
@@ -582,6 +604,9 @@ function like_book_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like/book',
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             data: data,
             async: false,
             success: function (response) {
@@ -595,6 +620,9 @@ function like_book_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/book',
             data: data,
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             async: false,
             success: function (response) {
                 console.log(response['result'])
@@ -610,6 +638,9 @@ function like_shopping_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like/shopping',
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             data: data,
             async: false,
             success: function (response) {
@@ -622,6 +653,9 @@ function like_shopping_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/shopping',
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             data: data,
             async: false,
             success: function (response) {
@@ -650,6 +684,9 @@ function search_to_youtube(word) {
         type: 'POST',
         url: '/api/search/youtube',
         data: {'search': word},
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
@@ -667,6 +704,9 @@ function search_to_news(word) {
         type: 'POST',
         url: '/api/search/news',
         data: {'search': word},
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
@@ -684,6 +724,9 @@ function search_to_book(word) {
         type: 'POST',
         url: '/api/search/book',
         data: {'search': word},
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
@@ -701,6 +744,9 @@ function search_to_shopping(word) {
         type: 'POST',
         url: '/api/search/shopping',
         data: {'search': word},
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
@@ -857,6 +903,9 @@ function get_like() {
         url: "/accounts/friends/like",
         type: 'POST',
         enctype: 'multipart/form-data',
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         async: false,
         success: function (response) {
             like_sentence = response.like_sentence;
@@ -881,6 +930,9 @@ function get_like_keywords(like_sentence) {
         cache: false,
         processData: false,
         contentType: false,
+        headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+        },
         async: false,
         enctype: 'multipart/form-data',
         success: function (response) {
@@ -905,6 +957,9 @@ function get_recommend_keyword() {
             type: 'POST',
             data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
             enctype: 'multipart/form-data',
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             async: false,
             success: function (response) {
                 console.log('찜 키워드 success!')
@@ -926,6 +981,9 @@ function get_recommend_keyword() {
             data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
             enctype: 'multipart/form-data',
             async: false,
+            headers:{
+            'X-CSRFTOKEN' : CSRF_TOKEN
+            },
             success: function (response) {
                 console.log('찜 키워드 success!')
 
