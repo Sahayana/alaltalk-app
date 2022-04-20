@@ -65,7 +65,7 @@ def refactoring_crawling_news(search: str) -> List[List[str]]:
     print("news crawling function time is ", time.time() - start, "seconds")
     return answer
 
-
+#
 # def crawling_book(search: str) -> List[List[str]]:
 #     start = time.time()
 #     # context = ssl._create_unverified_context()
