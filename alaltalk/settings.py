@@ -20,7 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*qdqs)r29%v^7$+euwdg_p2-g2fs-9w2tl)egk=4i#872*m*%9"
+try:
+    with open(os.path.join(BASE_DIR, 'alaltalk/config/secret.json')) as f:
+        secret = json.loads(f.read())
+    SECRET_KEY = secret["SECRET"]
+except FileNotFoundError:
+    pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,18 +92,6 @@ SESSION_SAVE_EVERY_REQUEST = True
 
 WSGI_APPLICATION = "alaltalk.wsgi.application"
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-
-#  기존 연결된 DATABASE - SQlite
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -149,14 +142,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
-
-
-# local_setting을 위한 설정
-# try:
-#     from alaltalk.local_settings import *
-# except ImportError:
-#     pass
-
 
 # Email 전송을 위한 설정
 
@@ -213,4 +198,12 @@ try:
     }
 
 except FileNotFoundError:
+    pass
+
+
+
+# local_setting을 위한 설정
+try:
+    from alaltalk.local_settings import *
+except ImportError:
     pass

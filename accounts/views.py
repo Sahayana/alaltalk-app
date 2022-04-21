@@ -1,7 +1,7 @@
 import json
 import random
 from datetime import datetime
-
+from django.contrib.auth.hashers import check_password
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (

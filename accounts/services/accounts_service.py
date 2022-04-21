@@ -1,6 +1,5 @@
-from datetime import datetime
 from typing import Tuple
-
+import datetime
 from django.contrib import auth
 from django.core.mail import EmailMessage
 from django.db.models import QuerySet
@@ -8,10 +7,11 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
+from django.contrib.auth.hashers import check_password
+from django.conf import settings
 from accounts.models import CustomUser, FriendRequest
 from accounts.utils import accounts_verify_token
-
+import jwt
 
 def create_single_user(email: str, nickname: str, password: str, **kwargs: str) -> CustomUser:
     user = CustomUser.objects.create_user(email=email, nickname=nickname, password=password, **kwargs)
@@ -119,3 +119,20 @@ def accounts_delete_friend(user_id: int, friend_id: int) -> None:
     friend = CustomUser.objects.filter(id=friend_id).get()
     user.friends.remove(friend)
     friend.friends.remove(user)
+
+def accounts_token_authenticated(user_email:str, user_password:str):
+    is_user = CustomUser.objects.get(email=user_email)
+    if is_user != None:
+        return None
+    elif is_user.is_active != True:       
+        return {"msg":"not activated"}    
+    if check_password(user_password, is_user.password):
+        payload= {
+            'id':is_user.id,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)
+        }
+        
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
+        return token
+   
+        
