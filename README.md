@@ -2,8 +2,7 @@
 
 ![enter image description here](https://user-images.githubusercontent.com/91467403/160727194-c53eea67-e291-4c0a-b468-046f1bf52d89.png)
 
-**임시서버: http://zhqmfkvsqurta.shop/** <br/>
-**SSL 인증서 연결 서버: 추후 기재**
+**접속: https://alaltalk.com**
 
 ## 설명 📢
 
