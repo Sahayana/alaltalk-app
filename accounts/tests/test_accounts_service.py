@@ -17,8 +17,14 @@ from accounts.services.accounts_service import (
     send_email_verification,
     send_friend_request,
     verified_email_activation,
+    accounts_token_authenticated
 )
 from accounts.utils import accounts_verify_token
+import jwt
+from alaltalk.settings import SECRET_KEY
+
+
+
 
 
 class AccountsTest(TestCase):
@@ -218,3 +224,43 @@ class AccountsTest(TestCase):
 
         # Then
         self.assertTrue(current_user.is_active)
+
+
+    def test_service_accounts_token_authenticated_when_user_is_none(self) -> None:
+        
+        # Given
+        unvalid_email = 'unvalid@email.com'
+        password = 'unvailidpass'
+
+        # When
+        token = accounts_token_authenticated(user_email=unvalid_email, user_password=password)
+        
+        # Then
+        self.assertIsNone(token)
+    
+    def test_service_accounts_token_authenticated_when_user_is_not_activated(self) -> None:
+        
+        # Given
+        user = create_single_user(email="testuser1@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")
+
+        # When
+        token = accounts_token_authenticated(user_email=user.email, user_password=user.password)
+        
+        # Then
+        self.assertIsNotNone(token)
+        self.assertEqual("not activated", token['msg'])
+    
+    def test_service_accounts_token_authenticated_when_user_is_activated(self) -> None:
+        
+        # Given
+        user = create_single_user(email="testuser1@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")        
+        user.is_active = True
+        user.save()
+        
+        # When
+        token = accounts_token_authenticated(user_email=user.email, user_password="testuser1")
+        login_user = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+
+        # Then
+        self.assertIsNotNone(token)
+        self.assertEqual(user.email, login_user['email'])

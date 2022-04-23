@@ -1,3 +1,4 @@
+import email
 from typing import Tuple
 import datetime
 from django.contrib import auth
@@ -8,7 +9,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.hashers import check_password
-from django.conf import settings
+from alaltalk.settings import SECRET_KEY
 from accounts.models import CustomUser, FriendRequest
 from accounts.utils import accounts_verify_token
 import jwt
@@ -120,19 +121,21 @@ def accounts_delete_friend(user_id: int, friend_id: int) -> None:
     user.friends.remove(friend)
     friend.friends.remove(user)
 
-def accounts_token_authenticated(user_email:str, user_password:str):
-    is_user = CustomUser.objects.get(email=user_email)
-    if is_user != None:
-        return None
-    elif is_user.is_active != True:       
-        return {"msg":"not activated"}    
-    if check_password(user_password, is_user.password):
-        payload= {
-            'id':is_user.id,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)
-        }
-        
-        token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256').decode('utf-8')
-        return token
+def accounts_token_authenticated(user_email:str, user_password:str):    
    
-        
+    try:
+        user = CustomUser.objects.get(email=user_email)
+        if user.is_active != True:
+            return {"msg":"not activated"}
+        elif user.check_password(user_password):
+            payload= {
+            'email': user.email,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24)
+            }            
+            token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+            token = token.decode('utf-8')
+            return token
+        else:
+            return {"msg":"unvalid password"}
+    except CustomUser.DoesNotExist:
+        return None
