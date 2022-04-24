@@ -159,8 +159,8 @@ class AccountsTest(TestCase):
         me = check_authentication(user_id=user.id, password=password)
 
         # Then
-        self.assertIsNotNone(me)
-        self.assertEqual(me.id, user.id)
+        self.assertTrue(me)
+        
 
     def test_service_profile_delete(self) -> None:
 
@@ -236,7 +236,7 @@ class AccountsTest(TestCase):
         token = accounts_token_authenticated(user_email=unvalid_email, user_password=password)
         
         # Then
-        self.assertIsNone(token)
+        self.assertEqual("NOT_REGISTERD", token)
     
     def test_service_accounts_token_authenticated_when_user_is_not_activated(self) -> None:
         
@@ -248,7 +248,7 @@ class AccountsTest(TestCase):
         
         # Then
         self.assertIsNotNone(token)
-        self.assertEqual("not activated", token['msg'])
+        self.assertEqual("NOT_ACTIVATED", token)
     
     def test_service_accounts_token_authenticated_when_user_is_activated(self) -> None:
         
@@ -264,3 +264,19 @@ class AccountsTest(TestCase):
         # Then
         self.assertIsNotNone(token)
         self.assertEqual(user.email, login_user['email'])
+    
+    def test_service_accounts_token_authenticated_when_password_is_wrong(self) -> None:
+        
+        # Given
+        user = create_single_user(email="testuser1@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")        
+        user.is_active = True
+        user.save()
+        password = "unvalid_pass"
+        
+        # When
+        token = accounts_token_authenticated(user_email=user.email, user_password=password)        
+
+        # Then
+        self.assertIsNotNone(token)
+        self.assertEqual("UNVALID_PASSWORD", token)
+        

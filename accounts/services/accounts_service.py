@@ -107,8 +107,8 @@ def decline_friend_request(request_id: int) -> None:
 
 def check_authentication(user_id: int, password: str) -> CustomUser:
     user = CustomUser.objects.get(id=user_id)
-    me = auth.authenticate(email=user.email, password=password)
-    return me
+    authenticated = user.check_password(password)
+    return authenticated
 
 
 def accounts_profile_delete(user_id: int) -> None:
@@ -126,7 +126,7 @@ def accounts_token_authenticated(user_email:str, user_password:str):
     try:
         user = CustomUser.objects.get(email=user_email)
         if user.is_active != True:
-            return {"msg":"not activated"}
+            return "NOT_ACTIVATED"
         elif user.check_password(user_password):
             payload= {
             'email': user.email,
@@ -136,6 +136,6 @@ def accounts_token_authenticated(user_email:str, user_password:str):
             token = token.decode('utf-8')
             return token
         else:
-            return {"msg":"unvalid password"}
+            return "UNVALID_PASSWORD"
     except CustomUser.DoesNotExist:
-        return None
+        return "NOT_REGISTERD"

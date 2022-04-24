@@ -22,14 +22,21 @@ function login(){
         contentType: false,
         processData: false,          
         data: formData, 
-        success: function (response) {
-            // console.log(response)
-            if (response["msg"] == "error" ){
-                alert("이메일 혹은 비밀번호를 확인해주세요");
+        success: function (response) {          
+            
+            if (response["token"] == "NOT_ACTIVATED"){
+                alert("이메일 인증을 완료해주세요.");
                 return;
+            }else if (response["token"] == "UNVALID_PASSWORD"){
+                alert("잘못된 비밀번호입니다.");
+                return;
+            }else if (response["token"] == "NOT_REGISTERD"){
+                alert("등록되지 않은 회원입니다.");
+                return;                            
             }else{
+                $.cookie("Authorization", response["token"]);
                 window.location.replace('/');
-            };         
+            }         
         }
     });    
 

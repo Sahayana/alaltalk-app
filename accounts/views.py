@@ -14,6 +14,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
+from accounts.utils import LoginConfirm
 from accounts.models import CustomUser, FriendRequest
 from accounts.services.accounts_service import (
     accept_friend_request,
@@ -27,6 +28,7 @@ from accounts.services.accounts_service import (
     send_email_verification,
     send_friend_request,
     verified_email_activation,
+    accounts_token_authenticated,
 )
 from search.models import Book, News, Shopping, Youtube
 
@@ -77,29 +79,49 @@ def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
         password = request.POST.get("password")
-        me = auth.authenticate(email=email, password=password)
-        # print(me, email, password)
-        if me and me.is_active:
-            auth.login(request, me)
-            return JsonResponse({"msg": "ok"})
-        else:
-            return JsonResponse({"msg": "error"})
-
-    else:
-        signed_user = request.user.is_authenticated
-        if signed_user:
+        token = accounts_token_authenticated(user_email=email, user_password=password)
+        return JsonResponse({"token":token})
+    
+    elif request.method == "GET":
+        try:
+            token = request.COOKIES["Authorization"]
+            if request.COOKIES["Authorization"] == '':
+                return render(request, "accounts/login.html")
             return redirect("accounts:mypage")
+        except KeyError:
+            return render(request, "accounts/login.html")
 
-        return render(request, "accounts/login.html")
+                
 
 
-@login_required
+# def login(request):
+#     if request.method == "POST":
+#         email = request.POST.get("email")
+#         password = request.POST.get("password")
+#         me = auth.authenticate(email=email, password=password)
+#         # print(me, email, password)
+#         if me and me.is_active:
+#             auth.login(request, me)
+#             return JsonResponse({"msg": "ok"})
+#         else:
+#             return JsonResponse({"msg": "error"})
+
+#     else:
+#         signed_user = request.user.is_authenticated
+#         if signed_user:
+#             return redirect("accounts:mypage")
+
+#         return render(request, "accounts/login.html")
+
+
+@LoginConfirm
 def logout(request):
-    auth.logout(request)
-    return redirect("/")
+    response = redirect('/')
+    response.set_cookie("Authorization", '')
+    return response
 
 
-@login_required
+@LoginConfirm
 def friend_list(request):
     user = request.user
     friends = get_friend_list(user_id=user.id)
@@ -112,7 +134,7 @@ def friend_list(request):
     return render(request, "accounts/user_list.html", context)
 
 
-@login_required
+@LoginConfirm
 def mypage(request):
     user = get_user_model().objects.get(id=request.user.id)
     friend_requests = FriendRequest.objects.filter(receiver=user)
@@ -127,7 +149,7 @@ def mypage(request):
     return render(request, "accounts/mypage.html", context)
 
 
-@login_required
+@LoginConfirm
 def profile_change(request):
 
     user = request.user
@@ -152,7 +174,7 @@ def profile_change(request):
         return JsonResponse({"msg": "ok"})
 
 
-@login_required
+@LoginConfirm
 def search_friend(request):
     user = request.user
     me = get_user_model().objects.filter(id=user.id)
@@ -181,7 +203,7 @@ def search_friend(request):
         return JsonResponse({"result": result_json})
 
 
-@login_required
+@LoginConfirm
 def send_request(request, receiver_id):
     sender = request.user
     receiver = get_user_model().objects.get(id=receiver_id)
@@ -190,15 +212,14 @@ def send_request(request, receiver_id):
         return JsonResponse({"msg": "sent"}, status=201)
     return JsonResponse({"msg": "already"})
 
-
-@login_required
+@LoginConfirm
 def accept_request(request, request_id):
     user_id = request.user.id
     accept_friend_request(user_id=user_id, request_id=request_id)
     return JsonResponse({"msg": "accepted"})
 
 
-@login_required
+@LoginConfirm
 def decline_request(request, request_id):
     decline_friend_request(request_id=request_id)
     return JsonResponse({"msg": "declined"})
@@ -225,27 +246,26 @@ def temporary_password(request):
     return JsonResponse({"msg": "ok"})
 
 
-@login_required
+@LoginConfirm
 def auth_check(request):
     user_id = request.user.id
     password = request.POST.get("password")
 
-    me = check_authentication(user_id=user_id, password=password)
+    authenticated = check_authentication(user_id=user_id, password=password)
 
-    if me:
+    if authenticated:
         return JsonResponse({"msg": "ok"})
     else:
         return JsonResponse({"msg": "no"})
 
 
-@login_required
+@LoginConfirm
 def profile_delete(request):
     user_id = request.user.id
     accounts_profile_delete(user_id=user_id)
     return JsonResponse({"msg": "deleted"})
 
-
-@login_required
+@LoginConfirm
 def remove_friend(request, friend_id):
     user_id = request.user.id
     accounts_delete_friend(user_id=user_id, friend_id=friend_id)
@@ -254,7 +274,7 @@ def remove_friend(request, friend_id):
 
 ##################### 추천친구 관련 #####################################
 @csrf_exempt
-@login_required
+@LoginConfirm
 def get_user(request):
     user = request.user
     like_sentence = []
@@ -286,7 +306,7 @@ def get_user(request):
 
 
 # 키워드 받아서 저장
-@login_required
+@LoginConfirm
 def save_like_keyword(request):
     user = request.user
     like_keyowrd = json.loads(request.body.decode("utf-8"))["like_keyowrd"]
@@ -341,7 +361,7 @@ def recommend_friend(me):
 
 
 # 친구 관심키워드
-@login_required
+@LoginConfirm
 def friend_like_recommend(request):
     friend_id = request.GET.get("friend_id")
     friend = CustomUser.objects.get(id=friend_id)
@@ -365,7 +385,7 @@ def friend_like_recommend(request):
 
 ##################################################################################################################
 
-@login_required
+@LoginConfirm
 def like_public_setting(request):
     value = request.POST["value"]
     print(value)

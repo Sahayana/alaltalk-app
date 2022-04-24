@@ -9,9 +9,9 @@ from django.contrib.auth.hashers import check_password
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
-
+from http.cookies import SimpleCookie
 from accounts.models import CustomUser, FriendRequest
-from accounts.services.accounts_service import create_single_user, send_friend_request
+from accounts.services.accounts_service import create_single_user, send_friend_request, accounts_token_authenticated
 
 
 class TestAccountsViews(TestCase):
@@ -27,6 +27,8 @@ class TestAccountsViews(TestCase):
         self.user2.is_active = True
         self.user.save()
         self.user2.save()
+        token = accounts_token_authenticated(self.user.email, self.password)
+        self.client.cookies = SimpleCookie({"Authorization": token})
 
     def test_get_sign_up_page(self) -> None:
 
@@ -70,6 +72,9 @@ class TestAccountsViews(TestCase):
 
     def test_get_login_page(self) -> None:
 
+        # Given
+        self.client.cookies = SimpleCookie({"Authorization": ''})
+
         # When
         response = self.client.get(reverse("accounts:login"))
 
@@ -81,14 +86,15 @@ class TestAccountsViews(TestCase):
 
         # Given
         user = self.user
-        data = {"email": user.email, "password": self.password}
+        data = {"email": user.email, "password": self.password}        
 
         # When
         response = self.client.post(reverse("accounts:login"), data=data)
 
         # Then
         self.assertEqual(200, response.status_code)
-        self.assertEqual("ok", response.json()["msg"])
+        self.assertIsNotNone(response.json()["token"])
+        
 
     def test_post_login_page_with_unregistered_user(self) -> None:
 
@@ -102,12 +108,12 @@ class TestAccountsViews(TestCase):
 
         # Then
         self.assertEqual(200, response.status_code)
-        self.assertEqual("error", response.json()["msg"])
+        self.assertEqual("NOT_REGISTERD", response.json()["token"])
 
     def test_redirect_when_logged_in_user_get_login_page(self) -> None:
 
         # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        login_user = self.user        
 
         # When
         response = self.client.get(reverse("accounts:login"))
@@ -118,28 +124,24 @@ class TestAccountsViews(TestCase):
 
     def test_logout_when_not_logged_in(self) -> None:
 
-        # When
-        response = self.client.get(reverse("accounts:logout"))
-
-        # Then
-        self.assertRedirects(response=response, expected_url="/accounts/login/?next=/accounts/logout/")
-
-    def test_logout(self) -> None:
-
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Give
+        self.client.cookies = SimpleCookie({"Authorization": ''})
 
         # When
         response = self.client.get(reverse("accounts:logout"))
 
         # Then
-        self.assertTrue(login_user)
+        self.assertRedirects(response=response, expected_url="/accounts/login/")
+
+    def test_logout(self) -> None:      
+
+        # When
+        response = self.client.get(reverse("accounts:logout"))
+
+        # Then        
         self.assertRedirects(response, "/")
 
-    def test_get_friend_list(self) -> None:
-
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+    def test_get_friend_list(self) -> None:        
 
         # When
         response = self.client.get(reverse("accounts:friend_list"))
@@ -147,17 +149,13 @@ class TestAccountsViews(TestCase):
 
         # Then
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, "accounts/user_list.html")
-        self.assertTrue(login_user)
+        self.assertTemplateUsed(response, "accounts/user_list.html")       
         self.assertEqual(user, response.context["user"])
         self.assertEqual(user.id, response.context["user"].id)
         self.assertEqual(0, len(response.context["friends"]))
         self.assertIsInstance(response.context["user"], CustomUser)
 
-    def test_get_mypage(self) -> None:
-
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+    def test_get_mypage(self) -> None:       
 
         # When
         response = self.client.get(reverse("accounts:mypage"))
@@ -165,14 +163,12 @@ class TestAccountsViews(TestCase):
 
         # Then
         self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, "accounts/mypage.html")
-        self.assertTrue(login_user)
+        self.assertTemplateUsed(response, "accounts/mypage.html")       
         self.assertIsInstance(user, CustomUser)
 
     def test_post_profile_change(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:profile_change"))
         request.user = self.user
         data = {
@@ -194,8 +190,7 @@ class TestAccountsViews(TestCase):
 
     def test_post_profile_image_change(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:profile_change"))
         request.user = self.user
         data = {"nickname": "changed_nickname", "bio": "changed_bio", "img": SimpleUploadedFile(name="test_image.jpg", content=b"", content_type="image/jpeg")}
@@ -218,8 +213,7 @@ class TestAccountsViews(TestCase):
 
     def test_get_search_friend(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:search_friend"))
         request.user = self.user
         query = "test"
@@ -237,8 +231,7 @@ class TestAccountsViews(TestCase):
 
     def test_view_search_friend_returns_none(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:search_friend"))
         request.user = self.user
         invalid_query = "nobody"
@@ -252,8 +245,7 @@ class TestAccountsViews(TestCase):
 
     def test_send_friend_request(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:search_friend"))
         request.user = self.user
         user2 = self.user2
@@ -263,8 +255,7 @@ class TestAccountsViews(TestCase):
 
         friend_requests = FriendRequest.objects.all()
 
-        # Then
-        self.assertTrue(login_user)
+        # Then       
         self.assertEqual(201, response.status_code)
         self.assertEqual("sent", response.json()["msg"])
         self.assertEqual(1, friend_requests.count())
@@ -273,8 +264,7 @@ class TestAccountsViews(TestCase):
 
     def test_send_friend_request_already_sent(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:search_friend"))
         request.user = self.user
         user2 = self.user2
@@ -292,8 +282,7 @@ class TestAccountsViews(TestCase):
 
     def test_accept_friend_request(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given       
         request = self.factory.get(reverse("accounts:search_friend"))
         request.user = self.user
         user2 = self.user2
@@ -313,8 +302,7 @@ class TestAccountsViews(TestCase):
 
     def test_decline_friend_request(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given       
         request = self.factory.get(reverse("accounts:search_friend"))
         request.user = self.user
         user2 = self.user2
@@ -358,8 +346,7 @@ class TestAccountsViews(TestCase):
 
     def test_auth_check(self) -> None:
 
-        # Given
-        login_user = self.client.login(email=self.email, password=self.password)
+        # Given        
         request = self.factory.get(reverse("accounts:mypage"))
         request.user = self.user
         data = {"password": self.password}
