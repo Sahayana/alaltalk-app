@@ -84,9 +84,7 @@ def login(request):
     
     elif request.method == "GET":
         try:
-            token = request.COOKIES["Authorization"]
-            if request.COOKIES["Authorization"] == '':
-                return render(request, "accounts/login.html")
+            token = request.COOKIES["Authorization"]            
             return redirect("accounts:mypage")
         except KeyError:
             return render(request, "accounts/login.html")
@@ -117,7 +115,7 @@ def login(request):
 @LoginConfirm
 def logout(request):
     response = redirect('/')
-    response.set_cookie("Authorization", '')
+    response.delete_cookie("Authorization")
     return response
 
 
