@@ -2,7 +2,7 @@
 
 ![enter image description here](https://user-images.githubusercontent.com/91467403/160727194-c53eea67-e291-4c0a-b468-046f1bf52d89.png)
 
-**접속: https://alaltalk.com**
+**접속: http://alaltalk.com**
 
 ## 설명 📢
 
