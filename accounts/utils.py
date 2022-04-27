@@ -23,10 +23,7 @@ class LoginConfirm:
     def __call__(self, request, *args, **kwargs):
         
         try:
-            token  = request.COOKIES["Authorization"]
-            if token == '':
-                return redirect("accounts:login")
-
+            token  = request.COOKIES["Authorization"]          
             payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
             user = CustomUser.objects.get(email=payload['email'])
             request.user = user
