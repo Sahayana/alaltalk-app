@@ -54,37 +54,12 @@ def verified_email_activation(uidb64: str, token: str) -> None:
         user.save()
 
 
-# def change_user_profile(user: CustomUser, nickname:str, bio:str, **kwargs: str) -> CustomUser:
-#     user.nickname = nickname
-#     user.bio = bio
-#     # img = kwargs.get('img','')
-#     try:
-#         img = kwargs['img']
-#         img_extension = img.name.split(".")[-1]
-#         img.name = user.email.split("@")[0] + "-" + datetime.now().strftime("%Y-%m-%d") + "." + img_extension
-#         user.img = img
-#     except:
-#         pass
-
-#     try:
-#         password = kwargs['password']
-#         user.set_password(password)
-#     except:
-#         pass
-#     user.save()
-#     return user
-
 
 def get_friend_list(user_id: int) -> QuerySet[CustomUser]:
     user = CustomUser.objects.get(id=user_id)
     friends = user.friends.all()
     return friends
 
-
-# def get_mypage(user_id: int) -> Tuple(CustomUser, QuerySet[CustomUser]):
-#     user = CustomUser.objects.get(id=user_id)
-#     friend_requests = FriendRequest.objects.filter(receiver=user)
-#     return user, friend_requests
 
 
 def send_friend_request(sender_id: int, recevier_id: int) -> Tuple[CustomUser, bool]:
