@@ -3,7 +3,7 @@ from typing import Tuple
 import datetime
 from django.contrib import auth
 from django.core.mail import EmailMessage
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
@@ -11,7 +11,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.hashers import check_password
 from alaltalk.settings import SECRET_KEY
 from accounts.models import CustomUser, FriendRequest
-from accounts.utils import accounts_verify_token
+from accounts.utils import accounts_verify_token, FriendType
 import jwt
 
 def create_single_user(email: str, nickname: str, password: str, **kwargs: str) -> CustomUser:
@@ -114,3 +114,21 @@ def accounts_token_authenticated(user_email:str, user_password:str):
             return "UNVALID_PASSWORD"
     except CustomUser.DoesNotExist:
         return "NOT_REGISTERD"
+
+
+def accounts_search_friends(user_id:int, query:str):
+    
+    me = CustomUser.objects.prefetch_related("friends").get(id=user_id)   # total num of query = 2
+    search_users = list(CustomUser.objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct().values()) # total num of query = 3
+
+    if len(search_users) == 0:
+        return {"message":"NONE"}
+    
+    for i, user in enumerate(search_users):        
+        if user in me.friends.all():
+            search_users[i] = (user, FriendType.is_friend.value)
+        elif user == me:
+            search_users[i] = (user, FriendType.is_self.value)
+        else:
+            search_users[i] = (user, FriendType.is_not_friend.value)
+    return search_users

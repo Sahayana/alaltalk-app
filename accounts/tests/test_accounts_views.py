@@ -226,7 +226,7 @@ class TestAccountsViews(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertIsNotNone(response.json()["result"])
         self.assertEqual(1, len(response.json()["result"]))
-        self.assertEqual(1, response.json()["result"][0][1])
+        self.assertEqual(2, response.json()["result"][0][1])
         self.assertEqual(current_user.id, response.json()["result"][0][0]["id"])
 
     def test_view_search_friend_returns_none(self) -> None:
@@ -408,3 +408,5 @@ class TestAccountsViews(TestCase):
         self.assertEqual(0, request.user.friends.count())
         self.assertEqual(0, self.user2.friends.count())
         self.assertEqual("deleted", response.json()["msg"])
+
+    

@@ -20,6 +20,7 @@ from accounts.services.accounts_service import (
     accept_friend_request,
     accounts_delete_friend,
     accounts_profile_delete,
+    accounts_search_friends,
     check_authentication,
     check_email_duplication,
     create_single_user,
@@ -173,32 +174,14 @@ def profile_change(request):
 
 
 @LoginConfirm
-def search_friend(request):
-    user = request.user
-    me = get_user_model().objects.filter(id=user.id)
+def search_friend(request,*args, **kwargs):
+    user = request.user  
 
     if request.method == "GET":
         query = request.GET.get("q")
-        result = get_user_model().objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct()  # 중복 제거를 위한 distinct()
+        search_users = accounts_search_friends(user_id=user.id, query=query)       
 
-        if result.count() == 0:
-            return JsonResponse({"msg": "none"})
-
-        # 검색으로 나온 유저가 현재 친구인 경우 예외처리 (튜플형태로 숫자 입력)
-        result_json = list(result.values())
-        for i, friend in enumerate(result_json):
-            # print(friend["img"])
-            if friend in user.friends.all().values():
-                # print("친구입니다")
-                result_json[i] = (friend, 0)  # 0 인 경우 이미 친구
-            elif friend == me.values()[0]:
-                # print("나입니다.")
-                result_json[i] = (friend, 1)  # 1 인 경우 자기 자신
-            else:
-                # print("모르는사이입니다")
-                result_json[i] = (friend, 2)  # 2 인 경우 친구가 아닌 상태
-
-        return JsonResponse({"result": result_json})
+    return JsonResponse({"result": search_users}, safe=False)
 
 
 @LoginConfirm

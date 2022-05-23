@@ -4,6 +4,7 @@ from alaltalk.settings import SECRET_KEY
 from django.http import JsonResponse
 from accounts.models import CustomUser
 import jwt
+from enum import Enum
 
 from django.shortcuts import redirect
 
@@ -40,3 +41,7 @@ class LoginConfirm:
 
                 
         
+class FriendType(Enum):
+    is_friend = 0
+    is_self = 1
+    is_not_friend = 2

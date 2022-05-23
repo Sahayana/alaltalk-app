@@ -17,7 +17,8 @@ from accounts.services.accounts_service import (
     send_email_verification,
     send_friend_request,
     verified_email_activation,
-    accounts_token_authenticated
+    accounts_token_authenticated,
+    accounts_search_friends
 )
 from accounts.utils import accounts_verify_token
 import jwt
@@ -280,3 +281,54 @@ class AccountsTest(TestCase):
         self.assertIsNotNone(token)
         self.assertEqual("UNVALID_PASSWORD", token)
         
+    
+    def test_friends_search_prefet_related(self) -> None:
+        
+        # Given
+        user = create_single_user(email="testuser@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")        
+        user.is_active = True
+        user.save()
+
+        for i in range(1, 21):
+            testuser = create_single_user(email=f"testuser{i}@test.com", nickname=f"testuser{i}", password="testuser1", bio="test")
+            user.friends.add(testuser)
+            testuser.friends.add(user)
+            testuser.save()
+            user.save()
+        
+        
+        
+        # when: not using prefetch_related()
+        with self.assertNumQueries(22):
+            for user in CustomUser.objects.all():
+                print(user.friends.count())
+
+        # when: using prefetch_releated()
+        with self.assertNumQueries(2):
+            for user in CustomUser.objects.prefetch_related('friends').all():
+                print(user.friends.count())
+    
+    def test_accounts_search_friends(self) -> None:
+        
+        # Given
+        user = create_single_user(email="testuser@gmail.com", nickname="testuser1", password="testuser1", bio="testuser1")        
+        user.is_active = True
+        user.save()
+
+        for i in range(1, 21):
+            testuser = create_single_user(email=f"testuser{i}@test.com", nickname=f"testuser{i}", password="testuser1", bio="test")
+            if i > 15:
+                user.friends.add(testuser)
+                testuser.friends.add(user)
+            testuser.save()
+            user.save()
+
+        # When
+        with self.assertNumQueries(3):
+            search_users = accounts_search_friends(user_id=user.id, query="test")
+
+        # Then
+        self.assertIsNotNone(search_users)
+        self.assertEqual(21, len(search_users))
+        for _user in search_users:
+            self.assertIn(_user[1], [0,1,2])

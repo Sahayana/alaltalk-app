@@ -141,7 +141,7 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
-AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
+# AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
 # Email 전송을 위한 설정
 
@@ -162,8 +162,8 @@ except FileNotFoundError:
 
 
 # # # AWS S3 connet
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 
 with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
@@ -203,7 +203,7 @@ except FileNotFoundError:
 
 
 # local_setting을 위한 설정
-try:
-    from alaltalk.local_settings import *
-except ImportError:
-    pass
+# try:
+#     from alaltalk.local_settings import *
+# except ImportError:
+#     pass

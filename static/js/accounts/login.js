@@ -35,6 +35,7 @@ function login(){
                 return;                            
             }else{
                 $.cookie("Authorization", response["token"]);
+                console.log($.cookie('Authorization'));
                 window.location.replace('/');
             }         
         }
