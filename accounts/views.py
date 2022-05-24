@@ -6,6 +6,7 @@ from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.forms.models import model_to_dict
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
@@ -13,6 +14,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.core import serializers
 
 from accounts.utils import LoginConfirm
 from accounts.models import CustomUser, FriendRequest
@@ -174,14 +176,22 @@ def profile_change(request):
 
 
 @LoginConfirm
-def search_friend(request,*args, **kwargs):
-    user = request.user  
-
+def search_friend(request,*args, **kwargs):    
+    user_id = request.user.id
+    context = []
     if request.method == "GET":
         query = request.GET.get("q")
-        search_users = accounts_search_friends(user_id=user.id, query=query)       
-
-    return JsonResponse({"result": search_users}, safe=False)
+        search_users = accounts_search_friends(user_id=user_id, query=query)
+        for user, i in search_users:
+            data = {
+                "id":user.id,
+                "email":user.email,
+                "nickname":user.nickname,
+                "img":user.img.url,
+                "is_friend":i
+            }
+            context.append(data)
+    return JsonResponse({"result": context}, safe=False)
 
 
 @LoginConfirm

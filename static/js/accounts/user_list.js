@@ -44,31 +44,31 @@ function searchUser(){
 // 검색한 친구 리스트 모달에 출력
 function appendResult(friend){
     let tempHtml =''
-    if (friend[1] === 0){
+    if (friend["is_friend"] === 0){
         tempHtml = `
         <div class="user_box">
             <div class="user_img">
                 <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend[0]['img']}" alt="friend_p_img" srcset="">
             </div>
             <div class="info_group">
-                <div class="user_name">${friend[0]['nickname']}</div>
-                <div class="user_id">${friend[0]['email']}</div>
+                <div class="user_name">${friend['nickname']}</div>
+                <div class="user_id">${friend['email']}</div>
             </div>
             <div class="btn already_friend"> 친구 </div>
         </div>
     `;
 
-    }else if (friend[1] === 2){
+    }else if (friend["is_friend"] === 2){
         tempHtml = `
         <div class="user_box">
             <div class="user_img">
                 <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend[0]['img']}" alt="friend_p_img" srcset="">
             </div>
             <div class="info_group">
-                <div class="user_name">${friend[0]['nickname']}</div>
-                <div class="user_id">${friend[0]['email']}</div>
+                <div class="user_name">${friend['nickname']}</div>
+                <div class="user_id">${friend['email']}</div>
             </div>
-            <div class="btn apply_follow" onclick=sendRequest(${friend[0]['id']})>친구신청</div>
+            <div class="btn apply_follow" onclick=sendRequest(${friend['id']})>친구신청</div>
         </div>
     `;
 
@@ -76,11 +76,11 @@ function appendResult(friend){
         tempHtml = `
         <div class="user_box">
             <div class="user_img">
-                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend[0]['img']}" alt="friend_p_img" srcset="">
+                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/${friend['img']}" alt="friend_p_img" srcset="">
             </div>
             <div class="info_group">
-                <div class="user_name">${friend[0]['nickname']}</div>
-                <div class="user_id">${friend[0]['email']}</div>
+                <div class="user_name">${friend['nickname']}</div>
+                <div class="user_id">${friend['email']}</div>
             </div>
             <div class="btn already_friend"> 나 </div>
         </div>

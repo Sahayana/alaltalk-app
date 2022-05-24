@@ -1,6 +1,7 @@
 import email
 from typing import Tuple
 import datetime
+from attr import field
 from django.contrib import auth
 from django.core.mail import EmailMessage
 from django.db.models import QuerySet, Q
@@ -10,6 +11,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.hashers import check_password
 from alaltalk.settings import SECRET_KEY
+from django.forms.models import model_to_dict
 from accounts.models import CustomUser, FriendRequest
 from accounts.utils import accounts_verify_token, FriendType
 import jwt
@@ -119,7 +121,7 @@ def accounts_token_authenticated(user_email:str, user_password:str):
 def accounts_search_friends(user_id:int, query:str):
     
     me = CustomUser.objects.prefetch_related("friends").get(id=user_id)   # total num of query = 2
-    search_users = list(CustomUser.objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct().values()) # total num of query = 3
+    search_users = list(CustomUser.objects.filter(Q(email__icontains=query) | Q(nickname__icontains=query)).distinct()) # total num of query = 3
 
     if len(search_users) == 0:
         return {"message":"NONE"}
@@ -127,7 +129,7 @@ def accounts_search_friends(user_id:int, query:str):
     for i, user in enumerate(search_users):        
         if user in me.friends.all():
             search_users[i] = (user, FriendType.is_friend.value)
-        elif user == me:
+        elif user.id == me.id:
             search_users[i] = (user, FriendType.is_self.value)
         else:
             search_users[i] = (user, FriendType.is_not_friend.value)

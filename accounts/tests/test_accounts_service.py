@@ -317,7 +317,7 @@ class AccountsTest(TestCase):
 
         for i in range(1, 21):
             testuser = create_single_user(email=f"testuser{i}@test.com", nickname=f"testuser{i}", password="testuser1", bio="test")
-            if i > 15:
+            if i == 15:
                 user.friends.add(testuser)
                 testuser.friends.add(user)
             testuser.save()
@@ -332,3 +332,7 @@ class AccountsTest(TestCase):
         self.assertEqual(21, len(search_users))
         for _user in search_users:
             self.assertIn(_user[1], [0,1,2])
+            if _user[0].nickname == "testuser15":
+                self.assertEqual(0, _user[1])
+        self.assertEqual(user.friends.all().first().id, CustomUser.objects.get(nickname="testuser15").id)
+
