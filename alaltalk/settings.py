@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    with open(os.path.join(BASE_DIR, 'alaltalk/config/secret.json')) as f:
-        secret = json.loads(f.read())
-    SECRET_KEY = secret["SECRET"]
-except FileNotFoundError:
-    pass
+# try:
+#     with open(os.path.join(BASE_DIR, 'alaltalk/config/secret.json')) as f:
+#         secret = json.loads(f.read())
+#     SECRET_KEY = secret["SECRET"]
+# except FileNotFoundError:
+#     pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,16 +35,18 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    "channels",
-    "chat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
-    "search",
+    # app
+    "app.chat",
+    "app.accounts",
+    "app.search",
+    # 3rd party
+    "channels",
     "storages",
     "six",
 ]
@@ -199,7 +201,6 @@ try:
 
 except FileNotFoundError:
     pass
-
 
 
 # local_setting을 위한 설정
