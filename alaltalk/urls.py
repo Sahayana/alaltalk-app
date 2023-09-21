@@ -19,10 +19,10 @@ from django.contrib import admin
 from django.urls import include, path
 from ninja import NinjaAPI
 
-from chat.apis.v1.chat_room_router import router as chat_room_router
-from search.apis.v1.like_cancel_router import router as like_cancel_router
-from search.apis.v1.like_router import router as like_router
-from search.apis.v1.search_router import router as search_router
+from app.chat.apis.v1.chat_room_router import router as chat_room_router
+from app.search.apis.v1.like_cancel_router import router as like_cancel_router
+from app.search.apis.v1.like_router import router as like_router
+from app.search.apis.v1.search_router import router as search_router
 
 from . import views
 
