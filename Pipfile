@@ -90,6 +90,7 @@ pre-commit = "*"
 gensim = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
