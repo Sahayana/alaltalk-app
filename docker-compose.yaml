@@ -1,0 +1,34 @@
+version: "3"
+
+
+services:
+
+  mysql:
+  
+    image: mysql:8.0.25
+    environment:
+      MYSQL_DATABASE_NAME: "alaltalk"
+      MYSQL_ROOT_PASSWORD: "alaltalk"
+    ports:
+      - 33306:3306
+
+  django:
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_SETTINGS_MODULE: alaltalk.settings.dev
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/app/
+    command: 
+      - bash
+      - -c
+      - |
+        /wait-for-it.sh mysql:3306 -t 60
+        python manage.py runserver
+    depends_on:
+      - mysql
+
