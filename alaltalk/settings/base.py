@@ -9,23 +9,14 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import json
+
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-# try:
-#     with open(os.path.join(BASE_DIR, 'alaltalk/config/secret.json')) as f:
-#         secret = json.loads(f.read())
-#     SECRET_KEY = secret["SECRET"]
-# except FileNotFoundError:
-#     pass
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,13 +33,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # app
-    "app.chat",
     "app.accounts",
+    "app.chat",
     "app.search",
     # 3rd party
     "channels",
     "storages",
     "six",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -81,6 +73,7 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = "alaltalk.asgi.application"
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -89,7 +82,9 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
 SESSION_COOKIE_AGE = 6000
+
 SESSION_SAVE_EVERY_REQUEST = True
 
 WSGI_APPLICATION = "alaltalk.wsgi.application"
@@ -143,68 +138,46 @@ MEDIA_URL = "/media/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
-# AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
-# Email 전송을 위한 설정
-
-try:
-    with open(os.path.join(BASE_DIR, "alaltalk/config/email.json")) as f:
-        email = json.loads(f.read())
-
-    EMAIL_BACKEND = email["BACKEND"]
-    EMAIL_HOST = email["HOST"]
-    EMAIL_PORT = int(email["PORT"])
-    EMAIL_HOST_USER = email["HOST_USER"]
-    EMAIL_HOST_PASSWORD = email["HOST_PASSWORD"]
-    EMAIL_USE_TLS = True
-    EMAIL_USE_SSL = False
-
-except FileNotFoundError:
-    pass
+REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+}
 
 
-# # # AWS S3 connet
-# DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-# STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-
-with open(os.path.join(BASE_DIR, "alaltalk/config/aws.json")) as f:
-    secret = json.loads(f.read())
-
-AWS_ACCESS_KEY_ID = secret["AWS"]["ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = secret["AWS"]["SECRET_ACCESS_KEY"]
-AWS_STORAGE_BUCKET_NAME = secret["AWS"]["STORAGE_BUCKET_NAME"]
-AWS_REGION = "ap-northeast-2"
-AWS_DEFAULT_ACL = "public-read"
-AWS_S3_CUSTOM_DOMAIN = "%s.s3.%s.amazonaws.com" % (AWS_STORAGE_BUCKET_NAME, AWS_REGION)
-#
-
-
-# MySQL Configuration
-try:
-    with open(os.path.join(BASE_DIR, "alaltalk/config/sql.json")) as f:
-        sql = json.loads(f.read())
-
-    DATABASES = {
-        "default": {
-            "ENGINE": sql["RDS"]["ENGINE"],
-            "NAME": sql["RDS"]["NAME"],
-            "USER": sql["RDS"]["USER"],
-            "PASSWORD": sql["RDS"]["PASSWORD"],
-            "HOST": sql["RDS"]["HOST"],
-            "PORT": sql["RDS"]["PORT"],
-            "OPTIONS": {
-                "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
-        }
-    }
-
-except FileNotFoundError:
-    pass
-
-
-# local_setting을 위한 설정
-# try:
-#     from alaltalk.local_settings import *
-# except ImportError:
-#     pass
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=20),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": False,
+    "ALGORITHM": "HS256",
+    # "SIGNING_KEY": SECRET_KEY,
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+    "JSON_ENCODER": None,
+    "JWK_URL": None,
+    "LEEWAY": 0,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "TOKEN_TYPE_CLAIM": "token_type",
+    "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
+    "JTI_CLAIM": "jti",
+    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
+    "SLIDING_TOKEN_LIFETIME": timedelta(days=10),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=20),
+    "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
+    "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",
+    "TOKEN_VERIFY_SERIALIZER": "rest_framework_simplejwt.serializers.TokenVerifySerializer",
+    "TOKEN_BLACKLIST_SERIALIZER": "rest_framework_simplejwt.serializers.TokenBlacklistSerializer",
+    "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
+    "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
+}

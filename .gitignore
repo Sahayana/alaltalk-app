@@ -228,6 +228,11 @@ cython_debug/
 # SageMath parsed files
 
 # Environments
+.env
+.env.*
+db.sqlite3
+server_venv
+ngrok
 
 # Spyder project settings
 
