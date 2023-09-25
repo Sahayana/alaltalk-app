@@ -37,10 +37,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     nickname = models.CharField(max_length=30)
     bio = models.CharField(max_length=150, blank=True)
-    img = models.ImageField(
-        default=DEFAULT_IMG,
-        upload_to=IMG_UPLOAD_TO,
-    )
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
 
@@ -60,6 +56,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class UserProfileImage(BaseModel):
+
+    user = models.ForeignKey(
+        CustomUser,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name="user_profile_imgs",
+    )
+    img = models.ImageField(
+        default=DEFAULT_IMG,
+        upload_to=IMG_UPLOAD_TO,
+    )
 
 
 class UserLikeKeyWord(BaseModel):
