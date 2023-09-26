@@ -12,6 +12,9 @@ from apps.account.utils import accounts_verify_token
 
 class UserService:
     def _send_email_verification(self, user: CustomUser) -> None:
+        """
+        새로 생성한 유저에게 사용자 인증 이메일을 전송합니다.
+        """
 
         message = render_to_string(
             template_name=EMAIL_VERIFY_TEMPLATE,
@@ -29,6 +32,18 @@ class UserService:
     def create_single_user(
         self, email: str, nickname: str, bio: str, password: str, img=None
     ) -> CustomUser:
+        """
+        새로운 유저를 생성합니다.
+        img 인자값이 들어오면 UserProfileImage 레코드를 생성하고 유저의 프로필 이미지로 저장합니다.
+
+        param
+        ------
+        email
+        nickname
+        bio
+        password
+        img
+        """
 
         user = CustomUser.objects.create_user(
             email=email, nickname=nickname, bio=bio, password=password
@@ -44,7 +59,14 @@ class UserService:
         return user
 
     def verified_email_activation(self, uidb64: str, token: str) -> None:
+        """
+        인증 메일을 통해 유저의 active 속성을 변경합니다.
 
+        param
+        ------
+        uibd64
+        token
+        """
         try:
             uid = force_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(id=uid)
