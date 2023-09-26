@@ -38,11 +38,7 @@ class UserService:
 
         param
         ------
-        email
-        nickname
-        bio
-        password
-        img
+        email, nickname, bio, password, img(Optional)
         """
 
         user = CustomUser.objects.create_user(

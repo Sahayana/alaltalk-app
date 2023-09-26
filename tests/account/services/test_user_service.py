@@ -34,3 +34,17 @@ def test_유저_생성_서비스() -> None:
     assert user.email == email
     assert user.bio == bio
     assert check_password(password, user.password) is True
+
+
+def test_유저_생성시_img_없으면_null_허용() -> None:
+    email = "alaltalk_test"
+    password = "alaltalk!"
+    nickname = "alaltalk"
+    bio = "alaltalk!"
+
+    user = UserService().create_single_user(
+        email=email, password=password, nickname=nickname, bio=bio
+    )
+
+    assert user is not None
+    assert user.profile_image is None

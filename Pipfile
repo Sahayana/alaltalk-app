@@ -91,9 +91,19 @@ gensim = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 python-dotenv = "*"
+django-extensions = "*"
+factory-boy = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.8"
 python_full_version = "3.8.10"
+
+[scripts]
+shell_prod = "python manage.py shell_plus --settings=alaltalk.settings.prod"
+shell_dev = "python manage.py shell_plus --settings=alaltalk.settings.dev"
+makemigrations_prod = "python manage.py makemigrations --settings=alaltalk.settings.prod"
+makemigrations_dev= "python manage.py makemigrations --settings=alaltalk.settings.dev"
+migrate_prod = "python manage.py migrate --settings=alaltalk.settings.prod"
+migrate_dev= "python manage.py migrate --settings=alaltalk.settings.dev"
