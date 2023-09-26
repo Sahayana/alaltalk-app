@@ -5,9 +5,9 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from alaltalk.enviorment import get_current_domain
-from apps.accounts.constants import EMAIL_VERIFY_TEMPLATE, EMAIL_VERIFY_TITLE
-from apps.accounts.models import CustomUser, UserProfileImage
-from apps.accounts.utils import accounts_verify_token
+from apps.account.constants import EMAIL_VERIFY_TEMPLATE, EMAIL_VERIFY_TITLE
+from apps.account.models import CustomUser, UserProfileImage
+from apps.account.utils import accounts_verify_token
 
 
 class UserService:
@@ -27,17 +27,19 @@ class UserService:
 
     @transaction.atomic()
     def create_single_user(
-        self, email: str, nickname: str, password: str, img: None
+        self, email: str, nickname: str, bio: str, password: str, img=None
     ) -> CustomUser:
 
         user = CustomUser.objects.create_user(
-            email=email, nickname=nickname, password=password
+            email=email, nickname=nickname, bio=bio, password=password
         )
         if img:
-            UserProfileImage.objects.create(user=user, img=img)
+            image = UserProfileImage.objects.create(user=user, img=img)
+            user.profile_image = image
+            user.save()
 
         # TODO: Celery 비동기 처리
-        self._send_email_verification(user=user)
+        # self._send_email_verification(user=user)
 
         return user
 

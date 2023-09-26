@@ -39,6 +39,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     bio = models.CharField(max_length=150, blank=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
+    profile_image = models.ForeignKey(
+        "account.UserProfileImage",
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="user_profile_image",
+    )
 
     # Boolean field
     is_admin = models.BooleanField(default=False)
