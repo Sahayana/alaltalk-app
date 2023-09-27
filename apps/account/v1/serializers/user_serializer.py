@@ -1,13 +1,7 @@
 from rest_framework import serializers
 
+from apps.account.constants import DEFAULT_IMG
 from apps.account.models import CustomUser, UserProfileImage
-from apps.account.v1.serializers.fields import ProfileImageField
-
-
-class UserProfileImageSerialier(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfileImage
-        fields = ("id", "img")
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -15,16 +9,16 @@ class UserCreateSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=True)
     nickname = serializers.CharField(required=True)
     password = serializers.CharField(write_only=True)
-    user_profile_imgs = UserProfileImageSerialier(required=False)
+    profile_image = serializers.ImageField(required=False)
 
     class Meta:
         model = CustomUser
-        fields = ("email", "nickname", "bio", "user_profile_imgs")
+        fields = ("email", "password", "nickname", "bio", "profile_image")
 
 
 class UserReadSerializer(serializers.ModelSerializer):
 
-    profile_image = ProfileImageField()
+    profile_image = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
@@ -40,3 +34,10 @@ class UserReadSerializer(serializers.ModelSerializer):
             "is_recommend_on",
             "is_like_public",
         )
+
+    def get_profile_image(self, obj):
+
+        profile_img = UserProfileImage.objects.filter(user_id=obj.id).first()
+        if not profile_img:
+            return DEFAULT_IMG
+        return profile_img.img

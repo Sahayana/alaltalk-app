@@ -3,6 +3,8 @@
 
 DEFAULT_IMG = "/images/default_img.png"
 
+TEST_IMG_NAME = "alaltalk_test_img.png"
+
 IMG_UPLOAD_TO = "profile_img"
 
 EMAIL_VERIFY_TEMPLATE = "accounts/verification_email.html"
