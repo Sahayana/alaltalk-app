@@ -1,4 +1,5 @@
 import factory
+from django.core.files.base import ContentFile
 
 from apps.account.constants import DEFAULT_IMG
 from apps.account.models import CustomUser, UserProfileImage
@@ -16,14 +17,6 @@ class UserFactory(factory.django.DjangoModelFactory):
     bio = factory.LazyAttribute(lambda o: o.email.split("@")[0])
 
     @factory.post_generation
-    def user_profile_imgs(self, create, extracted, **kwargs):
-        if not create:
-            return None
-        if extracted:
-            self.user_profile_imgs.add(extracted)
-            self.save()
-
-    @factory.post_generation
     def password(self, create, extracted, **kwargs):
         if extracted:
             self.set_password(extracted)
@@ -36,5 +29,10 @@ class UserProfileImageFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = UserProfileImage
 
-    user = factory.SubFactory(factory=UserFactory, user_profile_imgs=None)
-    img = DEFAULT_IMG
+    user = factory.SubFactory(factory=UserFactory)
+    img = factory.LazyAttribute(
+        lambda o: ContentFile(
+            factory.django.ImageField()._make_data({"width": 1024, "height": 768}),
+            "test.jpg",
+        )
+    )

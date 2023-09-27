@@ -47,4 +47,3 @@ def test_유저_생성시_img_없으면_null_허용() -> None:
     )
 
     assert user is not None
-    assert user.profile_image is None

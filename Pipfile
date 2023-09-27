@@ -93,6 +93,7 @@ djangorestframework-simplejwt = "*"
 python-dotenv = "*"
 django-extensions = "*"
 factory-boy = "*"
+pytest-mock = "*"
 
 [dev-packages]
 
