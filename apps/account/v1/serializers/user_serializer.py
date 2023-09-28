@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from apps.account.constants import DEFAULT_IMG
+from apps.account.constants import DEFAULT_IMG, EMAIL_DUPLICATION_MESSAGE
 from apps.account.models import CustomUser, UserProfileImage
+from apps.account.services.user_selector import UserSelector
 
 
 class UserCreateSerializer(serializers.ModelSerializer):

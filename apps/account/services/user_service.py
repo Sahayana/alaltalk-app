@@ -11,6 +11,7 @@ from apps.account.utils import accounts_verify_token
 
 
 class UserService:
+    @classmethod
     def _send_email_verification(self, user: CustomUser) -> None:
         """
         새로 생성한 유저에게 사용자 인증 이메일을 전송합니다.
@@ -28,9 +29,10 @@ class UserService:
         email_message = EmailMessage(EMAIL_VERIFY_TITLE, message, to=[user.email])
         email_message.send()
 
+    @classmethod
     @transaction.atomic()
     def create_single_user(
-        self, email: str, nickname: str, bio: str, password: str, img=None
+        cls, email: str, nickname: str, bio: str, password: str, img=None
     ) -> CustomUser:
         """
         새로운 유저를 생성합니다.
@@ -50,11 +52,12 @@ class UserService:
             user.save()
 
         # TODO: Celery 비동기 처리
-        # self._send_email_verification(user=user)
+        # cls._send_email_verification(user=user)
 
         return user
 
-    def verified_email_activation(self, uidb64: str, token: str) -> None:
+    @classmethod
+    def verified_email_activation(cls, uidb64: str, token: str) -> None:
         """
         인증 메일을 통해 유저의 active 속성을 변경합니다.
 
