@@ -52,12 +52,12 @@ class UserService:
             user.save()
 
         # TODO: Celery 비동기 처리
-        # cls._send_email_verification(user=user)
+        cls._send_email_verification(user=user)
 
         return user
 
     @classmethod
-    def verified_email_activation(cls, uidb64: str, token: str) -> None:
+    def verified_email_activation(cls, uidb64: str, token: str) -> CustomUser:
         """
         인증 메일을 통해 유저의 active 속성을 변경합니다.
 
@@ -77,3 +77,5 @@ class UserService:
         ):
             user.is_active = True
             user.save()
+
+        return user

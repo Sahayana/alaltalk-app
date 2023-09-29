@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, renderers, status
+from rest_framework import generics, permissions, renderers, status, views
 from rest_framework.response import Response
 
 from apps.account.constants import EMAIL_DUPLICATION_MESSAGE
@@ -70,4 +70,23 @@ class SignUpView(generics.ListCreateAPIView):
             return Response(data=data, status=status.HTTP_201_CREATED)
         return Response(
             data=serializer.error_messages, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class UserActivationView(views.APIView):
+    def get(self, request, *args, **kwargs):
+
+        uidb64 = kwargs.get("uidb64", None)
+        token = kwargs.get("token", None)
+
+        if uidb64 and token:
+            user = UserService.verified_email_activation(uidb64=uidb64, token=token)
+            data = {
+                "status": "activated",
+                "user": UserReadSerializer(instance=user).data,
+            }
+
+            return Response(data=data, status=status.HTTP_202_ACCEPTED)
+        return Response(
+            data={"msg": "not activated"}, status=status.HTTP_400_BAD_REQUEST
         )
