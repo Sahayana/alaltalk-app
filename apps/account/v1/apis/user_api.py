@@ -13,9 +13,15 @@ from apps.account.v1.serializers.user_serializer import (
 
 class SignUpView(generics.ListCreateAPIView):
 
-    renderer_classes = [renderers.TemplateHTMLRenderer]
     permission_classes = [permissions.AllowAny]
     serializer_class = UserCreateSerializer
+
+    def get_renderers(self):
+        if self.request.method == "GET":
+            renderer_classes = [renderers.TemplateHTMLRenderer]
+        else:
+            renderer_classes = [renderers.JSONRenderer]
+        return [renderer() for renderer in renderer_classes]
 
     def get_queryset(self):
         return CustomUser.objects.filter(id=self.request.user.id)
@@ -24,6 +30,7 @@ class SignUpView(generics.ListCreateAPIView):
         """
         회원가입 페이지를 렌더링합니다.
         """
+        self.renderer_classes = [renderers.TemplateHTMLRenderer]
         return Response(template_name="account/signup.html", status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -33,7 +40,7 @@ class SignUpView(generics.ListCreateAPIView):
         request_data = {
             "email": request.data.get("email"),
             "nickname": request.data.get("nickname"),
-            "password": request.data.get("password2"),
+            "password": request.data.get("password"),
             "bio": request.data.get("bio"),
             "img": request.data.get("img", None),
         }
@@ -55,7 +62,7 @@ class SignUpView(generics.ListCreateAPIView):
                 nickname=validated_data["nickname"],
                 bio=validated_data["bio"],
                 password=validated_data["password"],
-                img=validated_data["img"],
+                img=validated_data.get("img", None),
             )
 
             data = {"msg": "sent", "user": UserReadSerializer(instance=user).data}

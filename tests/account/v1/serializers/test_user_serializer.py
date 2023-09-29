@@ -3,7 +3,7 @@ from typing import Callable
 import pytest
 from django.core.files.base import File
 
-from apps.account.constants import DEFAULT_IMG, TEST_IMG_NAME
+from apps.account.constants import DEFAULT_IMG, EMAIL_DUPLICATION_MESSAGE, TEST_IMG_NAME
 from apps.account.v1.serializers.user_serializer import (
     UserCreateSerializer,
     UserReadSerializer,

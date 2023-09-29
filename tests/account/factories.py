@@ -21,8 +21,7 @@ class UserFactory(factory.django.DjangoModelFactory):
         if extracted:
             self.set_password(extracted)
         else:
-            self.set_password("alaltalk")
-        self.save()
+            self.set_password("alaltalk!")
 
 
 class UserProfileImageFactory(factory.django.DjangoModelFactory):

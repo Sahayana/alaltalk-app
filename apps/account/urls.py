@@ -1,6 +1,7 @@
-from django.urls import path
+from django.urls import include, path
 
 app_name = "account"
 
-
-urlpatterns = []
+urlpatterns = [
+    path("v1/", include("apps.account.v1.urls", namespace="v1")),
+]

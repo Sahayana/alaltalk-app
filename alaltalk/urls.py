@@ -18,6 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from alaltalk.views import landing_home
+
 # from ninja import NinjaAPI
 
 # from apps.chat.apis.v1.chat_room_router import router as chat_room_router
@@ -35,7 +37,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # path("", views.landing_home, name="landing_page"),
+    path("", landing_home, name="landing_page"),
+    path("account/", include("apps.account.urls"))
     # path("accounts/", include("accounts.urls")),
     # path("chat/", include("chat.urls")),
     # path("api/", api.urls),
