@@ -1,3 +1,5 @@
+from functools import partial
+
 from django.core.mail import EmailMessage
 from django.db import transaction
 from django.template.loader import render_to_string
@@ -52,7 +54,7 @@ class UserService:
             user.save()
 
         # TODO: Celery 비동기 처리
-        cls._send_email_verification(user=user)
+        transaction.on_commit(partial(cls._send_email_verification, user=user))
 
         return user
 

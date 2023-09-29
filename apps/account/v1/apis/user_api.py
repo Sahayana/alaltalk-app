@@ -73,20 +73,21 @@ class SignUpView(generics.ListCreateAPIView):
         )
 
 
-class UserActivationView(views.APIView):
+class UserActivationView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
-
         uidb64 = kwargs.get("uidb64", None)
         token = kwargs.get("token", None)
 
-        if uidb64 and token:
-            user = UserService.verified_email_activation(uidb64=uidb64, token=token)
-            data = {
-                "status": "activated",
-                "user": UserReadSerializer(instance=user).data,
-            }
+        user = UserService.verified_email_activation(uidb64=uidb64, token=token)
 
-            return Response(data=data, status=status.HTTP_202_ACCEPTED)
-        return Response(
-            data={"msg": "not activated"}, status=status.HTTP_400_BAD_REQUEST
-        )
+        if not user:
+            return Response(
+                data={"msg": "not_activated"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        data = {
+            "msg": "activated",
+            "user": UserReadSerializer(instance=user).data,
+        }
+
+        return Response(data=data, status=status.HTTP_202_ACCEPTED)
