@@ -3,7 +3,7 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 
 from apps.account.models import CustomUser, UserProfileImage
-from apps.account.services.tasks import send_email_verification
+from apps.account.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
 
 
@@ -31,7 +31,7 @@ class UserService:
             user.save()
 
         # TODO: Celery 비동기 처리
-        transaction.on_commit(lambda: send_email_verification.delay(user))
+        transaction.on_commit(lambda: send_email_verification.delay(user.id))
 
         return user
 

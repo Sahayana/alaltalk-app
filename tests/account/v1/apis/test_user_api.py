@@ -8,8 +8,9 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from rest_framework import status
 
+from alaltalk.settings.base import CELERY_RESULT_BACKEND
 from apps.account.constants import DEFAULT_IMG, EMAIL_VERIFY_TITLE
-from apps.account.services.user_service import UserService
+from apps.account.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
 from tests.account.factories import UserFactory
 
@@ -49,7 +50,7 @@ def test_유저_생성(
 def test_유저_인증_성공시_status_user_반환(client: Client):
 
     user = UserFactory.create()
-    UserService._send_email_verification(user=user)
+    send_email_verification(user_id=user.id)
     uidb64 = urlsafe_base64_encode(force_bytes(user.id)).encode().decode()
     token = accounts_verify_token.make_token(user)
 
@@ -66,7 +67,7 @@ def test_유저_인증_성공시_status_user_반환(client: Client):
 def test_유저_인증_실패시_인증실패_메시지_반환(client: Client):
 
     user = UserFactory.create()
-    UserService._send_email_verification(user=user)
+    send_email_verification(user_id=user.id)
     uidb64 = "INVALID"
     token = accounts_verify_token.make_token(user)
 
@@ -91,10 +92,7 @@ def test_로그인_성공시_access_token_반환(client: Client):
     email = "test@alaltalk.com"
     password = "alaltalk!"
 
-    user = UserFactory.create(email=email, password=password)
-    user.is_active = True
-    user.save()
-
+    UserFactory.create(email=email, password=password, is_active=True)
     data = {"email": email, "password": password}
 
     res = client.post(

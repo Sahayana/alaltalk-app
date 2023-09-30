@@ -6,6 +6,7 @@ from django.utils.http import urlsafe_base64_encode
 
 from apps.account.constants import EMAIL_VERIFY_TITLE
 from apps.account.services.user_service import UserService
+from apps.account.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
 from tests.account.factories import UserFactory
 
@@ -16,7 +17,7 @@ def test_인증_이메일_발송() -> None:
 
     user = UserFactory.create()
 
-    UserService._send_email_verification(user=user)
+    send_email_verification(user_id=user.id)
 
     assert len(mail.outbox) == 1
     assert mail.outbox[0].subject == EMAIL_VERIFY_TITLE
@@ -41,7 +42,7 @@ def test_유저_생성_서비스() -> None:
 def test_유저_이메일_인증_후_유저_상태_active_변경():
 
     user = UserFactory.create()
-    UserService._send_email_verification(user=user)
+    send_email_verification(user_id=user.id)
 
     uidb64 = urlsafe_base64_encode(force_bytes(user.id)).encode().decode()
     token = accounts_verify_token.make_token(user)

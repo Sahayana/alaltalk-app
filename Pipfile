@@ -95,6 +95,7 @@ django-extensions = "*"
 factory-boy = "*"
 pytest-mock = "*"
 celery = {extras = ["redis"], version = "*"}
+pytest-celery = "*"
 
 [dev-packages]
 

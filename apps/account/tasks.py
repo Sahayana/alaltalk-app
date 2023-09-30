@@ -11,11 +11,11 @@ from apps.account.utils import accounts_verify_token
 
 
 @shared_task
-def send_email_verification(user: CustomUser) -> None:
+def send_email_verification(user_id: int) -> None:
     """
     새로 생성한 유저에게 사용자 인증 이메일을 전송합니다.
     """
-
+    user = CustomUser.objects.get(id=user_id)
     message = render_to_string(
         template_name=EMAIL_VERIFY_TEMPLATE,
         context={
@@ -26,4 +26,4 @@ def send_email_verification(user: CustomUser) -> None:
         },
     )
     email_message = EmailMessage(EMAIL_VERIFY_TITLE, message, to=[user.email])
-    email_message.send()
+    return email_message.send()
