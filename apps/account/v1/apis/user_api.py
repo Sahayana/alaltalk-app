@@ -1,5 +1,7 @@
-from rest_framework import generics, permissions, renderers, status, views
+from rest_framework import generics, permissions, renderers, status
 from rest_framework.response import Response
+from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from apps.account.constants import EMAIL_DUPLICATION_MESSAGE
 from apps.account.models import CustomUser
@@ -30,7 +32,6 @@ class SignUpView(generics.ListCreateAPIView):
         """
         회원가입 페이지를 렌더링합니다.
         """
-        self.renderer_classes = [renderers.TemplateHTMLRenderer]
         return Response(template_name="account/signup.html", status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -91,3 +92,34 @@ class UserActivationView(generics.RetrieveAPIView):
         }
 
         return Response(data=data, status=status.HTTP_202_ACCEPTED)
+
+
+class LoginView(TokenObtainPairView):
+
+    permission_classes = [permissions.AllowAny]
+
+    def get_renderers(self):
+        if self.request.method == "GET":
+            renderer_classes = [renderers.TemplateHTMLRenderer]
+        else:
+            renderer_classes = [renderers.JSONRenderer]
+        return [renderer() for renderer in renderer_classes]
+
+    def get(self, request, *args, **kwargs):
+        """
+        로그인 페이지를 렌더링합니다.
+        """
+        return Response(template_name="account/login.html", status=status.HTTP_200_OK)
+
+    def post(self, request, *args, **kwargs):
+        """
+        이메일, 패스워드로 로그인하여 access token을 반환합니다.
+        """
+        serializer = self.get_serializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except TokenError as e:
+            raise InvalidToken(e.args[0])
+
+        return Response(data=serializer.validated_data, status=status.HTTP_200_OK)

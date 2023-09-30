@@ -1,4 +1,4 @@
-from django.urls import include, path
+from django.urls import path
 
 from apps.account.v1.apis import user_api
 
@@ -11,4 +11,5 @@ urlpatterns = [
         user_api.UserActivationView.as_view(),
         name="user_activation",
     ),
+    path("login", user_api.LoginView.as_view(), name="login"),
 ]
