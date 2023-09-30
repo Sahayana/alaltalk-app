@@ -76,3 +76,30 @@ def test_유저_인증_실패시_인증실패_메시지_반환(client: Client):
 
     assert res.status_code == status.HTTP_400_BAD_REQUEST
     assert res.data["msg"] == "not_activated"
+
+
+def test_로그인_페이지_렌더링(client: Client):
+
+    res = client.get(reverse("account:v1:login"))
+
+    assert res.status_code == status.HTTP_200_OK
+    assert "account/login.html" in [template.name for template in res.templates]
+
+
+def test_로그인_성공시_access_token_반환(client: Client):
+
+    email = "test@alaltalk.com"
+    password = "alaltalk!"
+
+    user = UserFactory.create(email=email, password=password)
+    user.is_active = True
+    user.save()
+
+    data = {"email": email, "password": password}
+
+    res = client.post(
+        reverse("account:v1:login"), data=data, content_type="application/json"
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+    assert res.data is not None
