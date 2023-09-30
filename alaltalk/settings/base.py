@@ -14,8 +14,10 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import pymysql
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -23,9 +25,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+pymysql.install_as_MySQLdb()
+
 # Application definition
 
 INSTALLED_APPS = [
+    # "apps.chat",
+    "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -33,14 +39,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # app
-    "app.accounts",
-    "app.chat",
-    "app.search",
+    "apps.account",
+    # "apps.search",
     # 3rd party
-    "channels",
     "storages",
     "six",
+    "rest_framework",
     "rest_framework_simplejwt",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [
@@ -56,12 +62,23 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "alaltalk.urls"
 
+
+# Cached templates backend
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
-        "APP_DIRS": True,
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        # 'APP_DIRS': True,
         "OPTIONS": {
+            "loaders": [
+                (
+                    "django.template.loaders.cached.Loader",
+                    [
+                        "django.template.loaders.filesystem.Loader",
+                        "django.template.loaders.app_directories.Loader",
+                    ],
+                ),
+            ],
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -71,6 +88,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 ASGI_APPLICATION = "alaltalk.asgi.application"
 
@@ -111,7 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "Asia/Seoul"
 
@@ -137,7 +155,7 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AUTH_USER_MODEL = "accounts.CustomUser"
+AUTH_USER_MODEL = "account.CustomUser"
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
@@ -181,3 +199,7 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainSlidingSerializer",
     "SLIDING_TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSlidingSerializer",
 }
+
+# Celery settings
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"

@@ -14,7 +14,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.sessions import SessionMiddlewareStack
 from django.core.asgi import get_asgi_application
 
-import app.chat.routing
+import apps.chat.routing
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "alaltalk.settings.dev")
 
@@ -23,7 +23,7 @@ application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
         "websocket": SessionMiddlewareStack(
-            URLRouter(app.chat.routing.websocket_urlpatterns)
+            URLRouter(apps.chat.routing.websocket_urlpatterns)
         ),
     }
 )
