@@ -6,6 +6,8 @@ from alaltalk.settings.base import SIMPLE_JWT
 
 get_secret(env="dev")
 
+DEBUG = bool(os.environ["DEBUG"])
+
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 SIMPLE_JWT.update({"SIGNING_KEY": SECRET_KEY})
@@ -29,8 +31,8 @@ EMAIL_HOST = os.environ["EMAIL_HOST"]
 EMAIL_PORT = os.environ["EMAIL_PORT"]
 EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
 EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
-EMAIL_USE_TLS = os.environ["EMAIL_USE_TLS"]
-EMAIL_USE_SSL = os.environ["EMAIL_USE_SSL"]
+EMAIL_USE_TLS = bool(os.environ["EMAIL_USE_TLS"])
+EMAIL_USE_SSL = bool(os.environ["EMAIL_USE_SSL"])
 
 
 # 현재 AWS S3 storage는 서버가 닫은 관계로 사용하지 않습니다.

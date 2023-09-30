@@ -11,7 +11,13 @@ services:
       MYSQL_ROOT_PASSWORD: "alaltalk"
     ports:
       - 33306:3306
+  
+  redis:
 
+    image: redis:7.0.11-alpine
+    ports:
+      - 6379:6379
+  
   django:
 
     build:
@@ -31,4 +37,16 @@ services:
         python manage.py runserver
     depends_on:
       - mysql
+      - redis
 
+  celery:
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A celery worker -l info
+    links:
+      - redis
+    depends_on:
+      - redis
+      - django

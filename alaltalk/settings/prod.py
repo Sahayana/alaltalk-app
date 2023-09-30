@@ -6,6 +6,8 @@ from alaltalk.settings.dev import SIMPLE_JWT
 
 get_secret(env="prod")
 
+DEBUG = bool(os.environ["DEBUG"])
+
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 SIMPLE_JWT.update({"SIGNING_KEY": SECRET_KEY})

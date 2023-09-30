@@ -94,6 +94,7 @@ python-dotenv = "*"
 django-extensions = "*"
 factory-boy = "*"
 pytest-mock = "*"
+celery = {extras = ["redis"], version = "*"}
 
 [dev-packages]
 

@@ -1,36 +1,13 @@
-from functools import partial
-
-from django.core.mail import EmailMessage
 from django.db import transaction
-from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 
-from alaltalk.enviorment import get_current_domain
-from apps.account.constants import EMAIL_VERIFY_TEMPLATE, EMAIL_VERIFY_TITLE
 from apps.account.models import CustomUser, UserProfileImage
+from apps.account.services.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
 
 
 class UserService:
-    @classmethod
-    def _send_email_verification(self, user: CustomUser) -> None:
-        """
-        새로 생성한 유저에게 사용자 인증 이메일을 전송합니다.
-        """
-
-        message = render_to_string(
-            template_name=EMAIL_VERIFY_TEMPLATE,
-            context={
-                "user": user,
-                "domain": get_current_domain(),
-                "uid": urlsafe_base64_encode(force_bytes(user.id)).encode().decode(),
-                "token": accounts_verify_token.make_token(user),
-            },
-        )
-        email_message = EmailMessage(EMAIL_VERIFY_TITLE, message, to=[user.email])
-        email_message.send()
-
     @classmethod
     @transaction.atomic()
     def create_single_user(
@@ -54,7 +31,7 @@ class UserService:
             user.save()
 
         # TODO: Celery 비동기 처리
-        transaction.on_commit(partial(cls._send_email_verification, user=user))
+        transaction.on_commit(lambda: send_email_verification.delay(user))
 
         return user
 
