@@ -96,6 +96,7 @@ factory-boy = "*"
 pytest-mock = "*"
 celery = {extras = ["redis"], version = "*"}
 pytest-celery = "*"
+django-redis = "*"
 
 [dev-packages]
 

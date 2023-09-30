@@ -24,6 +24,16 @@ DATABASES = {
     }
 }
 
+# CACHE backend
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
 
 # Email backend
 EMAIL_BACKEND = os.environ["EMAIL_BACKEND"]
