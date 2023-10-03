@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # app
     "apps.account",
-    "apps.friend"
+    "apps.friend",
     # "apps.search",
     # 3rd party
     "storages",

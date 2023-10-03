@@ -16,7 +16,7 @@ class FriendRequest(BaseModel):
     status = models.PositiveSmallIntegerField(
         choices=constants.FriendRequestStatus.choices, default=0
     )
-    user_request_at = models.DateTimeField(null=True, verbose_name="user_request_at")
+    user_requested_at = models.DateTimeField(null=True, verbose_name="user_request_at")
     targetuser_accept_at = models.DateTimeField(
         null=True, blank=True, verbose_name="targetuser_accept_at"
     )
@@ -24,7 +24,7 @@ class FriendRequest(BaseModel):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["user", "target_user"], name="unique_user_targetuser"
+                fields=["user", "target_user"], name="unique_friend_request"
             )
         ]
 
@@ -37,10 +37,13 @@ class Friend(BaseModel):
     target_user = models.ForeignKey(
         CustomUser, on_delete=models.CASCADE, related_name="friends_targetuser"
     )
+    status = models.PositiveSmallIntegerField(
+        choices=constants.FriendStatus.choices, default=0
+    )
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["user", "target_user"], name="unique_user_targetuser"
+                fields=["user", "target_user"], name="unique_friend"
             )
         ]
