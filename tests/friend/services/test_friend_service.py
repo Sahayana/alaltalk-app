@@ -103,9 +103,4 @@ def test_친구_상태_해제시_friend_레코드_status_변경_및_유저_친�
         user_id=user.id, target_user_id=target_user.id
     )
 
-    user.refresh_from_db()
-    target_user.refresh_from_db()
-
     assert friend.status == constants.FriendStatus.DISCONNECTED
-    assert user.friends.all() is None
-    assert target_user.friends.count() == 0

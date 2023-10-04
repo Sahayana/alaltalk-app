@@ -47,12 +47,5 @@ class Friend(BaseModel):
         choices=constants.FriendStatus.choices, default=constants.FriendStatus.CONNECTED
     )
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user", "target_user"], name="unique_friend"
-            )
-        ]
-
     def __str__(self) -> str:
         return f"Friend connection between {self.user.nickname} and {self.target_user.nickname}"

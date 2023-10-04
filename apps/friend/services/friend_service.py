@@ -71,9 +71,6 @@ class FriendService:
             .get()
         )
         friend.status = constants.FriendStatus.DISCONNECTED
-
-        friend.user.friends.remove(target_user_id)
-        friend.target_user.friends.remove(user_id)
-
         friend.save()
+
         return friend
