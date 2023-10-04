@@ -15,10 +15,10 @@ class FriendService:
             friend_request = FriendRequest.objects.create(
                 user_id=user_id,
                 target_user_id=target_user_id,
-                user_request_at=timezone.now(),
+                user_requested_at=timezone.now(),
             )
         except IntegrityError:
-            raise ValueError("이미 존재하는 요청입니다.")
+            raise IntegrityError("이미 존재하는 요청입니다.")
 
         return friend_request
 
@@ -39,29 +39,41 @@ class FriendService:
                     target_user_id=friend_request.target_user.id,
                 )
 
+                friend_request.user.friends.add(friend.target_user.id)
+                friend_request.target_user.friends.add(friend.user.id)
+
                 friend_request.status = constants.FriendRequestStatus.ACCEPT
                 friend_request.targetuser_accept_at = timezone.now()
                 friend_request.save()
             except IntegrityError:
-                raise ValueError("이미 친구인 상태입니다.")
+                raise IntegrityError("이미 친구인 상태입니다.")
             return friend
 
     @classmethod
-    def decline_friend_request(cls, request_id: int) -> None:
+    def decline_friend_request(cls, target_user_id: int, request_id: int) -> None:
         """
         user의 친구 요청을 거절합니다.
         FriendRequest의 status를 DECLINE으로 변경합니다.
         """
-        FriendRequest.objects.filter(id=request_id).update(
-            status=constants.FriendRequestStatus.DECLINE
-        )
+        FriendRequest.objects.filter(
+            id=request_id, target_user_id=target_user_id
+        ).update(status=constants.FriendRequestStatus.DECLINE)
 
     @classmethod
+    @transaction.atomic
     def disconnect_friend(cls, user_id: int, target_user_id: int) -> Friend:
         """
         친구 상태를 해제합니다.
         """
-        friend = Friend.objects.get(user_id=user_id, target_user_id=target_user_id)
+        friend = (
+            Friend.objects.select_related("user", "target_user")
+            .filter(user_id=user_id, target_user_id=target_user_id)
+            .get()
+        )
         friend.status = constants.FriendStatus.DISCONNECTED
+
+        friend.user.friends.remove(target_user_id)
+        friend.target_user.friends.remove(user_id)
+
         friend.save()
         return friend

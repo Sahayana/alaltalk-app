@@ -44,9 +44,7 @@ class FriendSelector:
         현재 친구 목록을 조회합니다.
         """
         return (
-            Friend.objects.select_related(
-                "target_user", "target_user__user_profile_imgs"
-            )
+            Friend.objects.select_related("target_user")
             .filter(user_id=user_id, status=constants.FriendStatus.CONNECTED)
             .order_by("-target_user__nickname")
         )
