@@ -63,3 +63,12 @@ def test_존재하지않는_유저_이메일_인증_시도_None_반환():
     user = UserService.verified_email_activation(uidb64=uidb64, token=token)
 
     assert user is None
+
+
+def test_유저_관심_키워드_저장():
+
+    user = UserFactory.create()
+    keyword = "python"
+    like_keyworkd = UserService.save_like_keyword(user_id=user.id, keyword=keyword)
+
+    assert like_keyworkd.keyword == keyword

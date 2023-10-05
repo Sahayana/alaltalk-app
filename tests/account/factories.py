@@ -2,7 +2,7 @@ import factory
 from django.core.files.base import ContentFile
 
 from apps.account.constants import DEFAULT_IMG
-from apps.account.models import CustomUser, UserProfileImage
+from apps.account.models import CustomUser, UserLikeKeyWord, UserProfileImage
 from apps.account.utils import random_string_generator
 
 
@@ -35,3 +35,11 @@ class UserProfileImageFactory(factory.django.DjangoModelFactory):
             "test.jpg",
         )
     )
+
+
+class UserLikeKeywordFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = UserLikeKeyWord
+
+    user = factory.SubFactory(factory=UserFactory)
+    keyword = factory.Faker(provider="color")

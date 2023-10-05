@@ -2,7 +2,7 @@ from django.db import transaction
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 
-from apps.account.models import CustomUser, UserProfileImage
+from apps.account.models import CustomUser, UserLikeKeyWord, UserProfileImage
 from apps.account.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
 
@@ -58,3 +58,13 @@ class UserService:
             user.save()
 
         return user
+
+    @classmethod
+    def save_like_keyword(cls, user_id: int, keyword: str):
+        """
+        유저가 관심있는 키워드를 저장합니다.
+        """
+        like_keyword, _ = UserLikeKeyWord.objects.get_or_create(
+            user_id=user_id, keyword=keyword
+        )
+        return like_keyword

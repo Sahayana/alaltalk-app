@@ -82,16 +82,6 @@ class FriendService:
         return friend_connections
 
     @classmethod
-    def save_like_keyword(cls, user_id: int, keyword: str):
-        """
-        좋아요 키워드를 유저 레코드의 필드로 저장합니다.
-        """
-        like_keyword, _ = UserLikeKeyWord.objects.get_or_create(
-            user_id=user_id, keyword=keyword
-        )
-        return like_keyword
-
-    @classmethod
     def recommend_friend(cls, user: CustomUser) -> List[CustomUser]:
         """
         현재 친구가 아닌 유저들을 소개합니다.
@@ -100,8 +90,10 @@ class FriendService:
         recommend_ratio = 5
         recommend_friends = []
         current_friend_ids = [friend.id for friend in user.friends.all()]
-        strangers = CustomUser.objects.exclude(id=user.id).exclude(
-            id__in=current_friend_ids
+        strangers = (
+            CustomUser.objects.exclude(id=user.id)
+            .exclude(id__in=current_friend_ids)
+            .order_by("?")
         )
         strangers_count = strangers.count()
 
