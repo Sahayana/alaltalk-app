@@ -87,39 +87,43 @@ class FriendService:
         현재 친구가 아닌 유저들을 소개합니다.
         무작위 유저 100명을 선발하여, 키워드 유사도가 가장 높은 유저 5명을 추천합니다.
         """
+        maximum_filtered_user = 100
         recommend_ratio = 5
         recommend_friends = []
         current_friend_ids = [friend.id for friend in user.friends.all()]
         strangers = (
-            CustomUser.objects.exclude(id=user.id)
+            CustomUser.objects.prefetch_related("user_like_keywords")
+            .exclude(id=user.id)
             .exclude(id__in=current_friend_ids)
             .order_by("?")
         )
         strangers_count = strangers.count()
 
-        if strangers_count >= 100:
-            strangers = strangers[:100]
+        if strangers_count >= maximum_filtered_user:
+            strangers = strangers[:maximum_filtered_user]
         elif strangers_count < 6:
-            strangers = strangers[: strangers_count - 1]
+            strangers = strangers[:strangers_count]
             recommend_friends = list(strangers)
             return recommend_friends
         else:
-            strangers = strangers[: strangers_count - 1]
+            strangers = strangers[:strangers_count]
 
         user_keyword = UserLikeKeyWord.objects.filter(user_id=user.id).last()
         user_similarity_map = {}
 
-        if not user_keyword or user_keyword == "":
-            recommend_friends = random.sample(strangers, 5)
+        if not user_keyword or user_keyword.keyword == "":
+            recommend_friends = list(strangers[:5])
         else:
             for idx, stranger in enumerate(strangers):
-                try:
-                    simialrity = W2V.load().wv.similarity(
-                        user_keyword, stranger.keyword
-                    )
-                    user_similarity_map[idx] = int(simialrity * 100)
-                except Exception:
-                    user_similarity_map[idx] = 0
+                if stranger.user_like_keywords.exists():
+                    stranger_keyword = stranger.user_like_keywords.order_by("?").last()
+                    try:
+                        simialrity = W2V.load().wv.similarity(
+                            user_keyword.keyword, stranger_keyword.keyword
+                        )
+                        user_similarity_map[idx] = int(simialrity * 100)
+                    except KeyError:
+                        user_similarity_map[idx] = random.randint(0, 100)
 
             candidates = dict(
                 sorted(user_similarity_map.items(), key=lambda x: x[1], reverse=True)[

@@ -42,4 +42,4 @@ class UserLikeKeywordFactory(factory.django.DjangoModelFactory):
         model = UserLikeKeyWord
 
     user = factory.SubFactory(factory=UserFactory)
-    keyword = factory.Faker(provider="color")
+    keyword = factory.Faker(provider="job", locale="ko_KR")
