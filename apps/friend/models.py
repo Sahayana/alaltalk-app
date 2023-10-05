@@ -1,6 +1,6 @@
+from django.conf import settings
 from django.db import models
 
-from apps.account.models import CustomUser
 from apps.base_model import BaseModel
 from apps.friend import constants
 
@@ -8,10 +8,14 @@ from apps.friend import constants
 class FriendRequest(BaseModel):
 
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="friend_request_user"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_friend_requests",
     )
     target_user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="friend_request_targetuser"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="targetuser_friend_requests",
     )
     status = models.PositiveSmallIntegerField(
         choices=constants.FriendRequestStatus.choices,
@@ -38,10 +42,12 @@ class FriendRequest(BaseModel):
 class Friend(BaseModel):
 
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="friends_user"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_friends"
     )
     target_user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, related_name="friends_targetuser"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="targetuser_friends",
     )
     status = models.PositiveSmallIntegerField(
         choices=constants.FriendStatus.choices, default=constants.FriendStatus.CONNECTED

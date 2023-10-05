@@ -8,6 +8,7 @@ from django.db import models
 
 from apps.account.constants import IMG_UPLOAD_TO
 from apps.base_model import BaseModel
+from apps.friend.models import Friend
 
 
 class CustomUserManager(BaseUserManager):
@@ -40,7 +41,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     friends = models.ManyToManyField(
-        "self", through="friend.Friend", through_fields=("user", "target_user")
+        "self",
+        through="friend.Friend",
+        through_fields=("user", "target_user"),
     )
 
     # Boolean field
@@ -80,13 +83,3 @@ class UserLikeKeyWord(BaseModel):
         CustomUser, on_delete=models.CASCADE, related_name="user_like_keywords"
     )
     keyword = models.CharField(max_length=100, default="", blank=True)
-
-
-# TODO: friends app에서 설정 예정
-# class FriendRequest(models.Model):
-#     sender = models.ForeignKey(
-#         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="receiver"
-#     )
-#     receiver = models.ForeignKey(
-#         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="sender"
-#     )
