@@ -42,7 +42,7 @@ def test_친구_요청_승낙시_Friend_레코드_생성():
     target_user = UserFactory.create()
     friend_request = FriendRequestFactory.create(target_user=target_user)
 
-    friend = FriendService.accpet_friend_request(
+    friend = FriendService.accept_friend_request(
         target_user_id=target_user.id, request_id=friend_request.id
     )
 
@@ -57,7 +57,7 @@ def test_친구_요청_승낙시_FriendRequest_status_및_targetuser_accept_at_�
 
     friend_request = FriendRequestFactory.create()
 
-    FriendService.accpet_friend_request(
+    FriendService.accept_friend_request(
         target_user_id=friend_request.target_user.id, request_id=friend_request.id
     )
 
@@ -83,7 +83,7 @@ def test_친구_요청_거절시_status_변경():
     assert friend_request.status == constants.FriendRequestStatus.DECLINE
 
 
-def test_친구_상태_해제시_friend_레코드_status_변경_및_유저_친구_목록에서_삭제():
+def test_친구_상태_해제시_friend_레코드_status_변경():
 
     user = UserFactory.create()
     target_user = UserFactory.create()
@@ -92,15 +92,16 @@ def test_친구_상태_해제시_friend_레코드_status_변경_및_유저_친�
     assert user.friends.count() == 0
     assert target_user.friends.count() == 0
 
-    FriendService.accpet_friend_request(
+    FriendService.accept_friend_request(
         target_user_id=target_user.id, request_id=friend_request.id
     )
 
     assert user.friends.count() == 1
     assert target_user.friends.count() == 1
 
-    friend = FriendService.disconnect_friend(
+    friends_connections = FriendService.disconnect_friend(
         user_id=user.id, target_user_id=target_user.id
     )
 
-    assert friend.status == constants.FriendStatus.DISCONNECTED
+    assert friends_connections[0].status == constants.FriendStatus.DISCONNECTED
+    assert friends_connections[1].status == constants.FriendStatus.DISCONNECTED

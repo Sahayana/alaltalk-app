@@ -1,4 +1,5 @@
 from django.db import IntegrityError, transaction
+from django.db.models import Q
 from django.utils import timezone
 
 from apps.friend import constants
@@ -24,7 +25,7 @@ class FriendService:
 
     @classmethod
     @transaction.atomic
-    def accpet_friend_request(cls, target_user_id: int, request_id: int) -> Friend:
+    def accept_friend_request(cls, target_user_id: int, request_id: int) -> Friend:
         """
         user의 친구 요청을 targetUser가 승낙하고 Friend 레코드를 생성합니다.
         """
@@ -65,12 +66,12 @@ class FriendService:
         """
         친구 상태를 해제합니다.
         """
-        friend = (
-            Friend.objects.select_related("user", "target_user")
-            .filter(user_id=user_id, target_user_id=target_user_id)
-            .get()
+        friend_connections = Friend.objects.select_related(
+            "user", "target_user"
+        ).filter(
+            Q(user_id=user_id, target_user_id=target_user_id)
+            | Q(user_id=target_user_id, target_user_id=user_id)
         )
-        friend.status = constants.FriendStatus.DISCONNECTED
-        friend.save()
+        friend_connections.update(status=constants.FriendStatus.DISCONNECTED)
 
-        return friend
+        return friend_connections
