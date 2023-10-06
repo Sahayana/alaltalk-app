@@ -17,7 +17,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     bio = factory.LazyAttribute(lambda o: o.email.split("@")[0])
 
     @factory.post_generation
-    def password(self, create, extracted, **kwargs):
+    def password(self, created, extracted, **kwargs):
         if extracted:
             self.set_password(extracted)
         else:
@@ -43,3 +43,11 @@ class UserLikeKeywordFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(factory=UserFactory)
     keyword = factory.Faker(provider="job", locale="ko_KR")
+
+    @factory.post_generation
+    def keyword(self, created, extracted, **kwargs):
+        if not created:
+            return
+        if extracted:
+            self.keyword = extracted
+            self.save()

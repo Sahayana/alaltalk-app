@@ -113,7 +113,7 @@ def test_친구_추천_상위_5명_노출_확인(mocker):
     user = UserFactory.create()
     UserLikeKeywordFactory.create(user=user)
 
-    similarity = sorted([num for num in range(size)], reverse=True)
+    similarity = [100, 80, 60, 40, 20]
     users = UserFactory.create_batch(size=size)
     mocking_value = {
         idx: simil for idx, (user, simil) in enumerate(zip(users, similarity))
@@ -126,5 +126,17 @@ def test_친구_추천_상위_5명_노출_확인(mocker):
     recommended = FriendService.recommend_friend(user=user)
 
     assert sorted([user.id for user in recommended]) == sorted(
-        [user.id for user in users][:5]
+        [user.id for user in users]
     )
+
+
+def test_친구_관심_키워드_최신순_최대_3개_노출():
+
+    friend = UserFactory.create()
+    keywords = UserLikeKeywordFactory.create_batch(size=5, user=friend)
+    keywords.reverse()
+
+    recommended = FriendService.friend_like_recommend(friend_id=friend.id)
+
+    assert len(recommended) == 3
+    assert [word for word in recommended] == [obj.keyword for obj in keywords[:3]]

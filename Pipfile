@@ -97,6 +97,7 @@ pytest-mock = "*"
 celery = {extras = ["redis"], version = "*"}
 pytest-celery = "*"
 django-redis = "*"
+numpy = "*"
 
 [dev-packages]
 

@@ -148,29 +148,20 @@ class FriendService:
     @classmethod
     def friend_like_recommend(cls, friend_id: int) -> List[str]:
         """
-        채팅방에서 대화하는 친구의 관심 키워드를 '3개' 노출합니다.
-        친구가 가진 키워드가 없으면 "찜 없음"을 반환하고, 갯수가 모자르면 유사도 모델을 통해 관심 키워드를 반환합니다.
+        채팅방에서 대화하는 친구의 관심 키워드를 최신순으로 '최대 3개' 노출합니다.
+        친구가 가진 키워드가 없으면 "찜 없음"을 반환합니다.
         """
         recommend_ratio = 3
         friend_keywords = UserLikeKeyWord.objects.filter(user_id=friend_id).order_by(
-            "-created_at"
+            "-id"
         )[:recommend_ratio]
-        keywords_count = friend_keywords.count()
+
         recommend_keywords = []
 
-        if keywords_count == recommend_ratio:
-            return [obj.keyword for obj in friend_keywords]
-        elif keywords_count == 0:
-            recommend_keywords.append("찜 없음")
+        if friend_keywords.exists():
+            for obj in friend_keywords:
+                recommend_keywords.append(obj.keyword)
         else:
-            for word in friend_keywords:
-                recommend_keywords.append(word.keyword)
+            recommend_keywords.append("찜 없음")
 
-            try:
-                last_word = recommend_keywords[-1]
-                similar_words = W2V.load().wv.most_similar(last_word)
-                for word in similar_words[: recommend_ratio - len(recommend_keywords)]:
-                    recommend_keywords.append(word)
-            except Exception as e:
-                raise e
         return recommend_keywords
