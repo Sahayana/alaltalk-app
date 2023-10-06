@@ -82,12 +82,33 @@ class FriendService:
         return friend_connections
 
     @classmethod
+    def get_keyword_similarity(
+        cls, user_keyword: str, strangers: List[CustomUser]
+    ) -> dict:
+        """
+        word2vec 모델을 통해 키워드 유사도를 측정합니다.
+        """
+        user_similarity_map = {}
+
+        for idx, stranger in enumerate(strangers):
+            if stranger.user_like_keywords.exists():
+                stranger_keyword = stranger.user_like_keywords.order_by("?").last()
+                try:
+                    similarity = W2V.load().wv.similarity(
+                        user_keyword.keyword, stranger_keyword.keyword
+                    )
+                    user_similarity_map[idx] = int(similarity * 100)
+                except KeyError:
+                    user_similarity_map[idx] = random.randint(0, 100)
+        return user_similarity_map
+
+    @classmethod
     def recommend_friend(cls, user: CustomUser) -> List[CustomUser]:
         """
         현재 친구가 아닌 유저들을 소개합니다.
-        무작위 유저 100명을 선발하여, 키워드 유사도가 가장 높은 유저 5명을 추천합니다.
+        무작위 유저 50명을 선발하여, 키워드 유사도가 가장 높은 유저 5명을 추천합니다.
         """
-        maximum_filtered_user = 100
+        maximum_filtered_user = 50
         recommend_ratio = 5
         recommend_friends = []
         current_friend_ids = [friend.id for friend in user.friends.all()]
@@ -101,30 +122,18 @@ class FriendService:
 
         if strangers_count >= maximum_filtered_user:
             strangers = strangers[:maximum_filtered_user]
-        elif strangers_count < 6:
-            strangers = strangers[:strangers_count]
-            recommend_friends = list(strangers)
-            return recommend_friends
         else:
             strangers = strangers[:strangers_count]
 
         user_keyword = UserLikeKeyWord.objects.filter(user_id=user.id).last()
-        user_similarity_map = {}
 
         if not user_keyword or user_keyword.keyword == "":
-            recommend_friends = list(strangers[:5])
-        else:
-            for idx, stranger in enumerate(strangers):
-                if stranger.user_like_keywords.exists():
-                    stranger_keyword = stranger.user_like_keywords.order_by("?").last()
-                    try:
-                        simialrity = W2V.load().wv.similarity(
-                            user_keyword.keyword, stranger_keyword.keyword
-                        )
-                        user_similarity_map[idx] = int(simialrity * 100)
-                    except KeyError:
-                        user_similarity_map[idx] = random.randint(0, 100)
+            recommend_friends = list(strangers[:recommend_ratio])
 
+        else:
+            user_similarity_map = cls.get_keyword_similarity(
+                user_keyword=user_keyword.keyword, strangers=strangers
+            )
             candidates = dict(
                 sorted(user_similarity_map.items(), key=lambda x: x[1], reverse=True)[
                     :recommend_ratio
@@ -135,23 +144,6 @@ class FriendService:
                 recommend_friends.append(strangers[candidate_idx])
 
         return recommend_friends
-
-    @classmethod
-    def like_public_setting(cls, user_id: int, value: str) -> CustomUser:
-        """
-        유저의 좋아요 컨텐츠 노출을 ON/OFF 합니다.
-        """
-
-        if value == "ON":
-            public_flag = True
-        elif value == "OFF":
-            public_flag = False
-
-        user = CustomUser.objects.get(id=user_id)
-        user.is_like_public = public_flag
-        user.save()
-
-        return user
 
     @classmethod
     def friend_like_recommend(cls, friend_id: int) -> List[str]:

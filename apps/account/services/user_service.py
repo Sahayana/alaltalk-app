@@ -68,3 +68,16 @@ class UserService:
             user_id=user_id, keyword=keyword
         )
         return like_keyword
+
+    @classmethod
+    def like_public_setting(cls, user_id: int, value: str) -> CustomUser:
+        """
+        유저의 좋아요 컨텐츠 노출을 ON/OFF 합니다.
+        """
+        flags = {"ON": True, "OFF": False}
+
+        user = CustomUser.objects.get(id=user_id)
+        user.is_like_public = flags[value]
+        user.save()
+
+        return user

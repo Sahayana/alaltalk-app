@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from apps.friend import constants
 from apps.friend.models import Friend
 from apps.friend.services.friend_service import FriendService
-from tests.account.factories import UserFactory
+from tests.account.factories import UserFactory, UserLikeKeywordFactory
 from tests.friend.factories import FriendFactory, FriendRequestFactory
 
 pytestmark = pytest.mark.django_db
@@ -105,3 +105,26 @@ def test_친구_상태_해제시_friend_레코드_status_변경():
 
     assert friends_connections[0].status == constants.FriendStatus.DISCONNECTED
     assert friends_connections[1].status == constants.FriendStatus.DISCONNECTED
+
+
+def test_친구_추천_상위_5명_노출_확인(mocker):
+
+    size = 5
+    user = UserFactory.create()
+    UserLikeKeywordFactory.create(user=user)
+
+    similarity = sorted([num for num in range(size)], reverse=True)
+    users = UserFactory.create_batch(size=size)
+    mocking_value = {
+        idx: simil for idx, (user, simil) in enumerate(zip(users, similarity))
+    }
+    mocker.patch(
+        "apps.friend.services.friend_service.FriendService.get_keyword_similarity",
+        return_value=mocking_value,
+    )
+
+    recommended = FriendService.recommend_friend(user=user)
+
+    assert sorted([user.id for user in recommended]) == sorted(
+        [user.id for user in users][:5]
+    )

@@ -72,3 +72,13 @@ def test_유저_관심_키워드_저장():
     like_keyworkd = UserService.save_like_keyword(user_id=user.id, keyword=keyword)
 
     assert like_keyworkd.keyword == keyword
+
+
+def test_유저_좋아요_컨텐츠_노출_off_변경시_필드_변경():
+
+    user = UserFactory.create()
+    value = "OFF"
+
+    user = UserService.like_public_setting(user_id=user.id, value=value)
+
+    assert user.is_like_public is False
