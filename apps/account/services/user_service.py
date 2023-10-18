@@ -77,7 +77,10 @@ class UserService:
         flags = {"ON": True, "OFF": False}
 
         user = CustomUser.objects.get(id=user_id)
-        user.is_like_public = flags[value]
-        user.save()
+        try:
+            user.is_like_public = flags[value]
+            user.save()
+        except KeyError:
+            raise KeyError("value 값은 'ON'/'OFF'만 가능합니다.")
 
         return user

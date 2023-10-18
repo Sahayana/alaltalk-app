@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from apps.account.constants import DEFAULT_IMG, EMAIL_DUPLICATION_MESSAGE
-from apps.account.models import CustomUser, UserProfileImage
+from apps.account.models import CustomUser, UserLikeKeyWord, UserProfileImage
 from apps.account.services.user_selector import UserSelector
 
 
@@ -42,3 +42,9 @@ class UserReadSerializer(serializers.ModelSerializer):
         if not profile_img:
             return DEFAULT_IMG
         return profile_img.img
+
+
+class UserLikeKeywordSerilaizer(serializers.ModelSerializer):
+    class Meta:
+        model = UserLikeKeyWord
+        fields = "__all__"
