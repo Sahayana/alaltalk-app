@@ -17,8 +17,8 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """친구 요청을 전송합니다."""
-        user_id = request.data.get("user_id")
-        target_user_id = request.data.get("target_user_id")
+        user_id = request.data.get("user")
+        target_user_id = request.data.get("target_user")
 
         try:
             friend_request = FriendService.send_friend_request(
@@ -31,26 +31,26 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
             data = {"msg": "already"}
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
-    def retrieve(self, request, pk: int):
+    def retrieve(self, request, *args, **kwargs):
         """친구 요청을 승낙합니다."""
-
+        request_id = self.get_object().id
         try:
             friend_request = FriendService.accept_friend_request(
-                target_user_id=request.user.id, request_id=pk
+                target_user_id=request.user.id, request_id=request_id
             )
             serializer = self.get_serializer(friend_request)
             return Response(data=serializer.data, status=status.HTTP_200_OK)
-        except Exception as exception:
+        except IntegrityError as exception:
             raise exception
 
-    def destroy(self, request, pk: int):
+    def destroy(self, request, *args, **kwargs):
         """친구 요청을 거절합니다."""
-
+        request_id = self.get_object().id
         try:
             FriendService.decline_friend_request(
-                target_user_id=request.user.id, request_id=pk
+                target_user_id=request.user.id, request_id=request_id
             )
-            friend_request = FriendRequest.objects.filter(id=pk).get()
+            friend_request = FriendRequest.objects.filter(id=request_id).get()
             serializer = self.get_serializer(friend_request)
             data = {"msg": "declined", "data": serializer.data}
         except Exception as exception:

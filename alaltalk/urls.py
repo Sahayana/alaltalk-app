@@ -38,7 +38,8 @@ from alaltalk.views import landing_home
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", landing_home, name="landing_page"),
-    path("account/", include("apps.account.urls"))
+    path("account/", include("apps.account.urls")),
+    path("friend/", include("apps.friend.urls"))
     # path("accounts/", include("accounts.urls")),
     # path("chat/", include("chat.urls")),
     # path("api/", api.urls),

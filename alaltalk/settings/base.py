@@ -31,7 +31,7 @@ pymysql.install_as_MySQLdb()
 
 INSTALLED_APPS = [
     # "apps.chat",
-    "channels",
+    # "channels",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
