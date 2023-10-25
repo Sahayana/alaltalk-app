@@ -54,4 +54,12 @@ class Friend(BaseModel):
     )
 
     def __str__(self) -> str:
+
         return f"Friend connection between {self.user.nickname} and {self.target_user.nickname}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "target_user"], name="unique_friend"
+            )
+        ]
