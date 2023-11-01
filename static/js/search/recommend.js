@@ -895,7 +895,7 @@ function reload() {
 ////////////////////////////////////////////////////////추천친구 관련///////////////////////////////////////////////////////
 
 var like_sentence = []
-var like_keyowrd = []
+var like_keyword = []
 
 // 찜 제목 받아 오기
 function get_like() {
@@ -937,7 +937,7 @@ function get_like_keywords(like_sentence) {
         enctype: 'multipart/form-data',
         success: function (response) {
             console.log(response.keyword)
-            like_keyowrd = response.keyword;
+            like_keyword = response.keyword;
             // 3. 키워드 내용을 기반으로 크롤링
         },
         error: function (request, status, error) {
@@ -951,11 +951,11 @@ function get_recommend_keyword() {
     get_like()
     console.log(like_sentence)
     if (like_sentence[0] == '') {
-        like_keyowrd = ['']
+        like_keyword = ['']
         $.ajax({
             url: "/account/friends/keyword",
             type: 'POST',
-            data: JSON.stringify({ "like_keyowrd": like_keyowrd[0] }),
+            data: JSON.stringify({ "like_keyowrd": like_keyword[0] }),
             enctype: 'multipart/form-data',
             headers: {
                 'X-CSRFTOKEN': CSRF_TOKEN
@@ -974,11 +974,11 @@ function get_recommend_keyword() {
         });
     } else {
         get_like_keywords(like_sentence)
-        console.log(like_keyowrd)
+        console.log(like_keyword)
         $.ajax({
             url: "/accounts/friend/keyword",
             type: 'POST',
-            data: JSON.stringify({ "like_keyowrd": like_keyowrd[0] }),
+            data: JSON.stringify({ "like_keyword": like_keyword[0] }),
             enctype: 'multipart/form-data',
             async: false,
             headers: {

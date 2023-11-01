@@ -136,7 +136,7 @@ def test_친구_관심_키워드_최신순_최대_3개_노출():
     keywords = UserLikeKeywordFactory.create_batch(size=5, user=friend)
     keywords.reverse()
 
-    recommended = FriendService.friend_like_recommend(friend_id=friend.id)
+    recommended = FriendService.friend_like_recommend(target_user_id=friend.id)
 
     assert len(recommended) == 3
     assert [word for word in recommended] == [obj.keyword for obj in keywords[:3]]

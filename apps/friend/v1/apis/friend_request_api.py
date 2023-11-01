@@ -13,7 +13,6 @@ class FriendRequestViewSet(viewsets.ModelViewSet):
     queryset = FriendRequest.objects.select_related("user", "target_user").all()
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FriendRequestSerializer
-    pagination_class = CommonPagination
 
     def create(self, request, *args, **kwargs):
         """친구 요청을 전송합니다."""

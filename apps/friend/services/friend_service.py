@@ -146,15 +146,15 @@ class FriendService:
         return recommend_friends
 
     @classmethod
-    def friend_like_recommend(cls, friend_id: int) -> List[str]:
+    def friend_like_recommend(cls, target_user_id: int) -> List[str]:
         """
         채팅방에서 대화하는 친구의 관심 키워드를 최신순으로 '최대 3개' 노출합니다.
         친구가 가진 키워드가 없으면 "찜 없음"을 반환합니다.
         """
         recommend_ratio = 3
-        friend_keywords = UserLikeKeyWord.objects.filter(user_id=friend_id).order_by(
-            "-id"
-        )[:recommend_ratio]
+        friend_keywords = UserLikeKeyWord.objects.filter(
+            user_id=target_user_id
+        ).order_by("-id")[:recommend_ratio]
 
         recommend_keywords = []
 
