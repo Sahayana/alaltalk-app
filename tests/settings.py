@@ -14,11 +14,11 @@ SIMPLE_JWT.update({"SIGNING_KEY": SECRET_KEY})
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ["MYSQL_DB_NAME"],
-        "USER": os.environ["MYSQL_DB_USERNAME"],
-        "PASSWORD": os.environ["MYSQL_DB_PASSWORD"],
-        "PORT": os.environ["MYSQL_DB_PORT"],
-        "HOST": os.environ["MYSQL_DB_HOST"],
+        "NAME": "alaltalk",
+        "USER": "root",
+        "PASSWORD": "alaltalk",
+        "PORT": 33306,
+        "HOST": "localhost",
     }
 }
 
