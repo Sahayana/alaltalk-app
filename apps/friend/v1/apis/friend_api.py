@@ -29,7 +29,6 @@ class FriendViewSet(viewsets.ModelViewSet):
         friend = FriendService.disconnect_friend(
             user_id=user.id, target_user_id=target_user.id
         )
-        friend.refresh_from_db()
 
         data = {"msg": "deleted", "data": self.get_serializer(friend).data}
 
