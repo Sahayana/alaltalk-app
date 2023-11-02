@@ -2,7 +2,7 @@ from django.db import transaction
 from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 
-from apps.account.models import CustomUser, UserProfileImage
+from apps.account.models import CustomUser, UserLikeKeyWord, UserProfileImage
 from apps.account.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
 
@@ -56,5 +56,31 @@ class UserService:
         ):
             user.is_active = True
             user.save()
+
+        return user
+
+    @classmethod
+    def save_like_keyword(cls, user_id: int, keyword: str):
+        """
+        유저가 관심있는 키워드를 저장합니다.
+        """
+        like_keyword, _ = UserLikeKeyWord.objects.get_or_create(
+            user_id=user_id, keyword=keyword
+        )
+        return like_keyword
+
+    @classmethod
+    def like_public_setting(cls, user_id: int, value: str) -> CustomUser:
+        """
+        유저의 좋아요 컨텐츠 노출을 ON/OFF 합니다.
+        """
+        flags = {"ON": True, "OFF": False}
+
+        user = CustomUser.objects.get(id=user_id)
+        try:
+            user.is_like_public = flags[value]
+            user.save()
+        except KeyError:
+            raise KeyError("value 값은 'ON'/'OFF'만 가능합니다.")
 
         return user

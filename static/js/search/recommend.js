@@ -25,7 +25,7 @@ function get_chat_log() {
     $.ajax({
         url: "/chat/chatlog/",
         type: 'POST',
-        data: JSON.stringify({"room_id": room_id}),
+        data: JSON.stringify({ "room_id": room_id }),
         enctype: 'multipart/form-data',
         async: false,
         success: function (response) {
@@ -57,8 +57,8 @@ function get_keyword(chat_log) {
         processData: false,
         contentType: false,
         async: false,
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         enctype: 'multipart/form-data',
 
@@ -81,11 +81,11 @@ function recommend_crawling_on(data) {
     $.ajax({
         type: 'POST',
         url: '/api/search/crawling',
-        data: {"target": data},
+        data: { "target": data },
         datatype: 'form',
         async: true,
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         success: function (response) {
             console.log(response['all_response'])
@@ -433,8 +433,8 @@ function recommend_switch_ajax(value) {
         data: {
             'value': value
         },
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         success: function (response) {
             console.log(response)
@@ -534,9 +534,9 @@ function like_youtube_ajax(data, type) {
             url: '/api/like/youtube',
             data: data,
             async: false,
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
-             },
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
+            },
             success: function (response) {
                 let ajax_result = response['result']
                 result += ajax_result
@@ -550,8 +550,8 @@ function like_youtube_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/youtube',
             data: data,
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             async: false,
             success: function (response) {
@@ -571,8 +571,8 @@ function like_news_ajax(data, type) {
             type: 'POST',
             url: '/api/like/news',
             data: data,
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             async: false,
             success: function (response) {
@@ -586,8 +586,8 @@ function like_news_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/news',
             data: data,
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             async: false,
             success: function (response) {
@@ -604,8 +604,8 @@ function like_book_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like/book',
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             data: data,
             async: false,
@@ -620,8 +620,8 @@ function like_book_ajax(data, type) {
             type: 'POST',
             url: '/api/like_cancel/book',
             data: data,
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             async: false,
             success: function (response) {
@@ -638,8 +638,8 @@ function like_shopping_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like/shopping',
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             data: data,
             async: false,
@@ -653,8 +653,8 @@ function like_shopping_ajax(data, type) {
         $.ajax({
             type: 'POST',
             url: '/api/like_cancel/shopping',
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             data: data,
             async: false,
@@ -683,14 +683,14 @@ function search_to_youtube(word) {
     $.ajax({
         type: 'POST',
         url: '/api/search/youtube',
-        data: {'search': word},
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        data: { 'search': word },
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
-            if(response['result'].length === 0){
+            if (response['result'].length === 0) {
                 document.getElementById('youtube_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
             }
             youtube_content_add(response['result'], 'search')
@@ -703,14 +703,14 @@ function search_to_news(word) {
     $.ajax({
         type: 'POST',
         url: '/api/search/news',
-        data: {'search': word},
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        data: { 'search': word },
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
-            if(response['result'].length === 0){
+            if (response['result'].length === 0) {
                 document.getElementById('news_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
             }
             news_content_add(response['result'], 'search')
@@ -723,14 +723,14 @@ function search_to_book(word) {
     $.ajax({
         type: 'POST',
         url: '/api/search/book',
-        data: {'search': word},
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        data: { 'search': word },
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
-            if(response['result'].length === 0){
+            if (response['result'].length === 0) {
                 document.getElementById('book_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
             }
             book_content_add(response['result'], 'search')
@@ -743,14 +743,14 @@ function search_to_shopping(word) {
     $.ajax({
         type: 'POST',
         url: '/api/search/shopping',
-        data: {'search': word},
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        data: { 'search': word },
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         success: function (response) {
             console.log(response['result'])
             clear_search_spinner()
-            if(response['result'].length === 0){
+            if (response['result'].length === 0) {
                 document.getElementById('shopping_search_content').innerHTML = `<div class="recommend_search_no_result">검색결과가 없습니다!</div>`
             }
             shopping_content_add(response['result'], 'search')
@@ -830,18 +830,18 @@ function clear_content(category) {
     let spinner_html = `<div class="recommend_spinner spinner_search" style="display: flex;">
                             <div class="recommend_spinner_lorder"></div>
                         </div>`
-    if(category==='youtube'){
+    if (category === 'youtube') {
         $('#youtube_search_content').empty();
         $('#youtube_search_content').append(spinner_html);
-    } else if(category === 'news'){
+    } else if (category === 'news') {
         $('#news_search_content').empty();
         $('#news_search_content').append(spinner_html);
     }
-    else if(category === 'book'){
+    else if (category === 'book') {
         $('#book_search_content').empty();
         $('#book_search_content').append(spinner_html);
     }
-    else if(category === 'shopping'){
+    else if (category === 'shopping') {
         $('#shopping_search_content').empty();
         $('#shopping_search_content').append(spinner_html);
     }
@@ -875,7 +875,7 @@ function current_tab() {
     return now_tab
 }
 
-function reload(){
+function reload() {
     let spinner = `<div class="recommend_spinner spinner_search" style="display: flex;">
                             <div class="recommend_spinner_lorder"></div>
                         </div>`
@@ -895,7 +895,7 @@ function reload(){
 ////////////////////////////////////////////////////////추천친구 관련///////////////////////////////////////////////////////
 
 var like_sentence = []
-var like_keyowrd = []
+var like_keyword = []
 
 // 찜 제목 받아 오기
 function get_like() {
@@ -903,8 +903,8 @@ function get_like() {
         url: "/accounts/friends/like",
         type: 'POST',
         enctype: 'multipart/form-data',
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         async: false,
         success: function (response) {
@@ -930,14 +930,14 @@ function get_like_keywords(like_sentence) {
         cache: false,
         processData: false,
         contentType: false,
-        headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+        headers: {
+            'X-CSRFTOKEN': CSRF_TOKEN
         },
         async: false,
         enctype: 'multipart/form-data',
         success: function (response) {
             console.log(response.keyword)
-            like_keyowrd = response.keyword;
+            like_keyword = response.keyword;
             // 3. 키워드 내용을 기반으로 크롤링
         },
         error: function (request, status, error) {
@@ -951,14 +951,14 @@ function get_recommend_keyword() {
     get_like()
     console.log(like_sentence)
     if (like_sentence[0] == '') {
-        like_keyowrd = ['']
+        like_keyword = ['']
         $.ajax({
-            url: "/accounts/friend/keyword",
+            url: "/account/friends/keyword",
             type: 'POST',
-            data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
+            data: JSON.stringify({ "like_keyowrd": like_keyword[0] }),
             enctype: 'multipart/form-data',
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             async: false,
             success: function (response) {
@@ -974,15 +974,15 @@ function get_recommend_keyword() {
         });
     } else {
         get_like_keywords(like_sentence)
-        console.log(like_keyowrd)
+        console.log(like_keyword)
         $.ajax({
             url: "/accounts/friend/keyword",
             type: 'POST',
-            data: JSON.stringify({"like_keyowrd": like_keyowrd[0]}),
+            data: JSON.stringify({ "like_keyword": like_keyword[0] }),
             enctype: 'multipart/form-data',
             async: false,
-            headers:{
-            'X-CSRFTOKEN' : CSRF_TOKEN
+            headers: {
+                'X-CSRFTOKEN': CSRF_TOKEN
             },
             success: function (response) {
                 console.log('찜 키워드 success!')
@@ -1000,7 +1000,7 @@ function get_recommend_keyword() {
 
 }
 
-function search_container_height_change(){
+function search_container_height_change() {
 
     document.getElementById('youtube_search_content').style.height = 'calc(96vh - 350px)'
     document.getElementById('news_search_content').parentElement.style.height = 'calc(96vh - 350px)'

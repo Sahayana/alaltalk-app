@@ -2,7 +2,7 @@ import factory
 from django.core.files.base import ContentFile
 
 from apps.account.constants import DEFAULT_IMG
-from apps.account.models import CustomUser, UserProfileImage
+from apps.account.models import CustomUser, UserLikeKeyWord, UserProfileImage
 from apps.account.utils import random_string_generator
 
 
@@ -17,7 +17,7 @@ class UserFactory(factory.django.DjangoModelFactory):
     bio = factory.LazyAttribute(lambda o: o.email.split("@")[0])
 
     @factory.post_generation
-    def password(self, create, extracted, **kwargs):
+    def password(self, created, extracted, **kwargs):
         if extracted:
             self.set_password(extracted)
         else:
@@ -35,3 +35,19 @@ class UserProfileImageFactory(factory.django.DjangoModelFactory):
             "test.jpg",
         )
     )
+
+
+class UserLikeKeywordFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = UserLikeKeyWord
+
+    user = factory.SubFactory(factory=UserFactory)
+    keyword = factory.Faker(provider="job", locale="ko_KR")
+
+    @factory.post_generation
+    def keyword(self, created, extracted, **kwargs):
+        if not created:
+            return
+        if extracted:
+            self.keyword = extracted
+            self.save()

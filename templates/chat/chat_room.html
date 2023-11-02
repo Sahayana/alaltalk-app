@@ -1,16 +1,17 @@
 <!doctype html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:url" content="https://alaltalk.com">
     <meta property="og:title" content="알알톡">
     <meta property="og:image"
-          content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
-    <meta property="og:description" content="알고리즘으로 알아보는 대화"/>
+        content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화" />
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
@@ -23,502 +24,505 @@
     <link rel="stylesheet" href="{% static 'css/chat/friend_like.css' %}?after">
     <link rel="stylesheet" href="{% static 'css/chat/chat_room.css' %}?after">
     <!--google font-->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
 
 </head>
+
 <body>
-<div class="outline">
-    <div class="nav">
-        <div class="logo">
-            <div class="logo_img"></div>
-        </div>
-        <div class="icon_group">
-            <div class="icon user_icon"></div>
-            <div class="icon chat_icon"></div>
-            <div class="icon mypage_icon"></div>
-        </div>
-    </div>
-    <div class="left_wrap">
-        <div class="chat_list_container">
-            <p class="title">채팅</p>
-            <div class="chat_list">
-                {% for chatroom in chatroom_list %}
-                    {% if chatroom.participant1.id == user.id %}
-                        <a onclick="getRoomid();" href="/chat/{{ chatroom.participant2.id }}/"
-                           class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
-                            <div class="partner_img"
-                                 style="background-image: url({{ chatroom.participant2.img.url }})"></div>
-                            <div class="info_group">
-                                <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
-                                <div class="count">
-                                    {#카운트 들어갈 자리#}
-                                </div>
-                            </div>
-                        </a>
-                    {% else %}
-                        <a onclick="getRoomid();" href="/chat/{{ chatroom.participant1.id }}/"
-                           class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
-                            <div class="partner_img"
-                                 style="background-image: url({{ chatroom.participant1.img.url }})"></div>
-                            <div class="info_group">
-                                <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
-                                <div class="count">
-                                    {#카운트 들어갈 자리#}
-                                </div>
-                            </div>
-                        </a>
-                    {% endif %}
-                {% endfor %}
+    <div class="outline">
+        <div class="nav">
+            <div class="logo">
+                <div class="logo_img"></div>
+            </div>
+            <div class="icon_group">
+                <div class="icon user_icon"></div>
+                <div class="icon chat_icon"></div>
+                <div class="icon mypage_icon"></div>
             </div>
         </div>
-
-
-    </div>
-    <div class="right_wrap">
-        <div class="chat_container">
-            <div class="top_bar">
-                <div class="partner_info">
-                    <div class="partner_img" style="background-image: url({{ participant.img.url }})"></div>
-                    <div class="info_group">
-                        <div class="partner_name">{{ participant.nickname }}</div>
-                        <div class="partner_id">{{ participant.email }}</div>
-                    </div>
+        <div class="left_wrap">
+            <div class="chat_list_container">
+                <p class="title">채팅</p>
+                <div class="chat_list">
+                    {% for chatroom in chatroom_list %}
+                    {% if chatroom.participant1.id == user.id %}
+                    <a onclick="getRoomid();" href="/chat/{{ chatroom.participant2.id }}/"
+                        class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant2.id }}">
+                        <div class="partner_img" style="background-image: url({{ chatroom.participant2.img.url }})">
+                        </div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ chatroom.participant2.nickname }}</div>
+                            <div class="count">
+                                {#카운트 들어갈 자리#}
+                            </div>
+                        </div>
+                    </a>
+                    {% else %}
+                    <a onclick="getRoomid();" href="/chat/{{ chatroom.participant1.id }}/"
+                        class="chat_partner chat_partner_{{ chatroom.id }} chat_partner_{{ chatroom.participant1.id }}">
+                        <div class="partner_img" style="background-image: url({{ chatroom.participant1.img.url }})">
+                        </div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ chatroom.participant1.nickname }}</div>
+                            <div class="count">
+                                {#카운트 들어갈 자리#}
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="right_icon">
-                    <div class="hidden talk-bubble tri-right round right-in" id="guide_bubble">
-                        <div class="talktext">
-                            <p>추천 컨텐츠도<br>이용해보세요!</p>
+            </div>
+
+
+        </div>
+        <div class="right_wrap">
+            <div class="chat_container">
+                <div class="top_bar">
+                    <div class="partner_info">
+                        <div class="partner_img" style="background-image: url({{ participant.img.url }})"></div>
+                        <div class="info_group">
+                            <div class="partner_name">{{ participant.nickname }}</div>
+                            <div class="partner_id">{{ participant.email }}</div>
                         </div>
                     </div>
-                    <div class="toggle_icon"></div>
+                    <div class="right_icon">
+                        <div class="hidden talk-bubble tri-right round right-in" id="guide_bubble">
+                            <div class="talktext">
+                                <p>추천 컨텐츠도<br>이용해보세요!</p>
+                            </div>
+                        </div>
+                        <div class="toggle_icon"></div>
+                    </div>
+                    <div class="toggle_content">
+                        <p id="recommend_btn">추천컨텐츠</p>
+                        <div class="line"></div>
+                        <p id="freind_like_list">친구 찜 목록 보기</p>
+                        <div class="line"></div>
+                        <p id="close_chat_room" onclick="location.href='/chat/'">닫기</p>
+                        <div class="line"></div>
+                        <p id="delete_chat_room" onclick="deleteChatroom()">채팅방 나가기</p>
+                    </div>
                 </div>
-                <div class="toggle_content">
-                    <p id="recommend_btn">추천컨텐츠</p>
-                    <div class="line"></div>
-                    <p id="freind_like_list">친구 찜 목록 보기</p>
-                    <div class="line"></div>
-                    <p id="close_chat_room" onclick="location.href='/chat/'">닫기</p>
-                    <div class="line"></div>
-                    <p id="delete_chat_room" onclick="deleteChatroom()">채팅방 나가기</p>
-                </div>
-            </div>
 
-            <div id="chat_box" class="chat_box">
-                <div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>
-                {#채팅내용 들어가는 곳#}
+                <div id="chat_box" class="chat_box">
+                    <div class="more" style="cursor: pointer;" onclick=moreList(user_id)>이전대화 불러오기</div>
+                    {#채팅내용 들어가는 곳#}
+                </div>
+                <div class="input_bar">
+                    {% csrf_token %}
+                    <div id="chat_message_submit" class="attach_icon"></div>
+                    <textarea id="chat_message_input" type="text" placeholder="입력하세요." name="message"></textarea>
+                </div>
             </div>
-            <div class="input_bar">
-                {% csrf_token %}
-                <div id="chat_message_submit" class="attach_icon"></div>
-                <textarea id="chat_message_input" type="text" placeholder="입력하세요." name="message"></textarea>
-            </div>
+            {% include 'chat/freind_like.html' %}
         </div>
-        {% include 'chat/freind_like.html' %}
     </div>
-</div>
-<script src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
-<script>
-    var CSRF_TOKEN = '{{ csrf_token }}';
-    $(document).ready(function () {
-        // 마지막 메세지 로드
-        latestMessageNotConnected();
-        // 채팅리스트의 모든 room_id로 소켓 연결
-        getRoomid();
-        // 채팅방 접속 시 이전 메세지 로드
-        messageLoader(user_id);
+    <script src="{% static 'js/chat/reconnecting-websocket.js' %}?after"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        $(document).ready(function () {
+            // 마지막 메세지 로드
+            latestMessageNotConnected();
+            // 채팅리스트의 모든 room_id로 소켓 연결
+            getRoomid();
+            // 채팅방 접속 시 이전 메세지 로드
+            messageLoader(user_id);
 
-        // 채팅 스크롤 하단 고정
-        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+            // 채팅 스크롤 하단 고정
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
-        // 친구 리스트 이동
-        let friendListIcon = $(".user_icon");
-        friendListIcon.on('click', function () {
-            window.location.href = `/accounts/friends/`;
+            // 친구 리스트 이동
+            let friendListIcon = $(".user_icon");
+            friendListIcon.on('click', function () {
+                window.location.href = `/account/friends/`;
+            });
+
+            // 마이페이지 이동
+            let myPageIcon = $(".mypage_icon");
+            myPageIcon.on('click', function () {
+                window.location.href = `/account/mypage/`;
+            });
+
+            // 채팅 이동
+            let ChatIcon = $(".chat_icon");
+            ChatIcon.on('click', function () {
+                window.location.href = `/chat/`;
+            });
+
+
+            // 추천시스템 토글
+            var btn_check = 0;
+            let ToggleIcon = $(".toggle_icon");
+            let ToggleContent = $(".toggle_content");
+            ToggleIcon.on('click', function () {
+                if (btn_check === 0) {
+                    btn_check = 1;
+                    ToggleContent.show();
+                } else {
+                    btn_check = 0;
+                    ToggleContent.hide();
+                }
+
+            });
         });
 
-        // 마이페이지 이동
-        let myPageIcon = $(".mypage_icon");
-        myPageIcon.on('click', function () {
-            window.location.href = `/accounts/mypage/`;
+        // 추천컨텐츠 버튼 컨트롤
+
+        $('#recommend_btn').on('click', function () {
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
+            $('.friends_like_container').hide();
+            $('.chat_list_container').hide();
+            $('.close_btn').hide();
+            $('.close_chat_room').hide();
+            $('.chat_container').appendTo('.left_wrap');
+            $('.friends_like_container').appendTo('.left_wrap');
+            $('.right_wrap').empty();
+            $('.right_wrap').load("/api/search/recommend", function () {
+                let status = document.getElementById('recommend_toggle').innerText
+                if (status === 'ON') {
+                    document.getElementById('youtube_recommend_content').style.display = 'flex'
+                    document.getElementById('news_recommend_content').style.display = 'flex'
+                    document.getElementById('book_recommend_content').style.display = 'flex'
+                    document.getElementById('shopping_recommend_content').style.display = 'flex'
+                    document.getElementById('recommend_reload_button').style.display = 'block'
+                    reload();
+                } else {
+                    document.getElementById('recommend_reload_button').style.display = 'none'
+                    search_container_height_change()
+                }
+            });
+
+            $(".toggle_content").hide();
+            $(".toggle_content").css('cursor', 'pointer');
+
+
         });
 
-        // 채팅 이동
-        let ChatIcon = $(".chat_icon");
-        ChatIcon.on('click', function () {
-            window.location.href = `/chat/`;
-        });
+        function close_recommend() {
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
-
-        // 추천시스템 토글
-        var btn_check = 0;
-        let ToggleIcon = $(".toggle_icon");
-        let ToggleContent = $(".toggle_content");
-        ToggleIcon.on('click', function () {
-            if (btn_check === 0) {
-                btn_check = 1;
-                ToggleContent.show();
-            } else {
-                btn_check = 0;
-                ToggleContent.hide();
-            }
-
-        });
-    });
-
-    // 추천컨텐츠 버튼 컨트롤
-
-    $('#recommend_btn').on('click', function () {
-        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
-
-        $('.friends_like_container').hide();
-        $('.chat_list_container').hide();
-        $('.close_btn').hide();
-        $('.close_chat_room').hide();
-        $('.chat_container').appendTo('.left_wrap');
-        $('.friends_like_container').appendTo('.left_wrap');
-        $('.right_wrap').empty();
-        $('.right_wrap').load("/api/search/recommend", function () {
-            let status = document.getElementById('recommend_toggle').innerText
-            if (status === 'ON') {
-                document.getElementById('youtube_recommend_content').style.display = 'flex'
-                document.getElementById('news_recommend_content').style.display = 'flex'
-                document.getElementById('book_recommend_content').style.display = 'flex'
-                document.getElementById('shopping_recommend_content').style.display = 'flex'
-                document.getElementById('recommend_reload_button').style.display = 'block'
-                reload();
-            } else {
-                document.getElementById('recommend_reload_button').style.display = 'none'
-                search_container_height_change()
-            }
-        });
-
-        $(".toggle_content").hide();
-        $(".toggle_content").css('cursor', 'pointer');
-
-
-    });
-
-    function close_recommend() {
-        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
-
-        $('.right_wrap').empty();
-        $('.chat_container').appendTo('.right_wrap');
-        $('.friends_like_container').appendTo('.right_wrap');
-        $(".chat_list_container").show();
-        $('.close_btn').show();
-        $('.close_chat_room').show();
-    }
-
-
-    // 친구찜목록 버튼 컨트롤
-
-    $('#freind_like_list').on('click', function () {
-        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
-
-        $('.chat_container').appendTo('.left_wrap');
-        $('.friends_like_container').appendTo('.left_wrap');
-        $('.right_wrap').empty();
-        $('.chat_list_container').hide();
-        $('.close_btn').hide();
-        $('.close_chat_room').hide();
-
-        {#$('.right_wrap').empty();#}
-        $('.friends_like_container').appendTo('.right_wrap');
-        $('.friends_like_container').show();
-
-        //$("#freind_like_list").attr('onclick', '').unbind('click');
-        $(".toggle_content").hide();
-        $(".toggle_content").css('cursor', 'pointer');
-
-    });
-
-    $('#friend_like_close').on('click', function () {
-        $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
-
-        $('.friends_like_container').appendTo('.left_wrap');
-        $('.friends_like_container').hide();
-        $('.right_wrap').empty();
-        $('.chat_container').appendTo('.right_wrap');
-        $(".chat_list_container").show();
-        $('.close_btn').show();
-        $('.close_chat_room').show()
-    });
-
-    //친구 찜목록 카테고리
-
-    //youtube카테고리 클릭
-    function youtube_like() {
-        document.getElementById('youtube').style.color = '#7657CE';
-        document.getElementById('news').style.color = '#d2d2d2';
-        document.getElementById('book').style.color = '#d2d2d2';
-        document.getElementById('shopping').style.color = '#d2d2d2';
-
-        document.getElementById('friends_like_youtube').style.display = 'block';
-        document.getElementById('friends_like_news').style.display = 'none';
-        document.getElementById('friends_like_book').style.display = 'none';
-        document.getElementById('friends_like_shopping').style.display = 'none';
-    }
-
-    function news_like() {
-        document.getElementById('news').style.color = '#7657CE';
-        document.getElementById('youtube').style.color = '#d2d2d2';
-        document.getElementById('book').style.color = '#d2d2d2';
-        document.getElementById('shopping').style.color = '#d2d2d2';
-
-        document.getElementById('friends_like_news').style.display = 'block';
-        document.getElementById('friends_like_youtube').style.display = 'none';
-        document.getElementById('friends_like_book').style.display = 'none';
-        document.getElementById('friends_like_shopping').style.display = 'none';
-    }
-
-    function book_like() {
-        document.getElementById('book').style.color = '#7657CE';
-        document.getElementById('youtube').style.color = '#d2d2d2';
-        document.getElementById('news').style.color = '#d2d2d2';
-        document.getElementById('shopping').style.color = '#d2d2d2';
-
-        document.getElementById('friends_like_book').style.display = 'block';
-        document.getElementById('friends_like_youtube').style.display = 'none';
-        document.getElementById('friends_like_news').style.display = 'none';
-        document.getElementById('friends_like_shopping').style.display = 'none';
-    }
-
-    function shopping_like() {
-        document.getElementById('shopping').style.color = '#7657CE';
-        document.getElementById('youtube').style.color = '#d2d2d2';
-        document.getElementById('news').style.color = '#d2d2d2';
-        document.getElementById('book').style.color = '#d2d2d2';
-
-        document.getElementById('friends_like_shopping').style.display = 'block';
-        document.getElementById('friends_like_youtube').style.display = 'none';
-        document.getElementById('friends_like_news').style.display = 'none';
-        document.getElementById('friends_like_book').style.display = 'none';
-    }
-
-
-    // view에서 html로 전달한 값
-
-    var room_id = {{ room_id }};
-    var user_id = {{ user_id }};
-    var participant1 = {{ participant1.id }};
-    var participant2 = {{ participant2.id }};
-
-
-    // 해당 채팅방 삭제
-
-    function deleteChatroom() {
-        if (!confirm("삭제하시면 대화내용을 복구할수 없습니다. \n정말로 삭제하시겠습니까?")) {
-            return false;
-        } else {
-            location.href = '/chat/delete/{{ room_id }}'
-        }
-    }
-
-    // 채팅리스트의 모든 room_id를 리스트로 받아오기
-
-    function getRoomid() {
-        let all_partner = document.getElementsByClassName('chat_partner')
-
-        var partner_list = []
-        for (let i = 0; i < all_partner.length; i++) {
-            let partner = all_partner[i]['href'].split('/')
-            partner = parseInt(partner[4]);
-            partner_list.push(partner)
+            $('.right_wrap').empty();
+            $('.chat_container').appendTo('.right_wrap');
+            $('.friends_like_container').appendTo('.right_wrap');
+            $(".chat_list_container").show();
+            $('.close_btn').show();
+            $('.close_chat_room').show();
         }
 
 
-        $.ajax({
-            url: "/chat/getroomid/",
-            type: "post",
-            traditional: true,
-            data: JSON.stringify({"partner_list": partner_list}),
-            async: false,
-            success: function (data) {
-                let roomlist = data['room_list']
-                for (let i = 0; i < roomlist.length; i++) {
-                    let roomid = roomlist[i]
-                    WebSocketConnetion(roomid);
-                }
-            },
-            error: function (request, status, error) {
-                alert('error')
+        // 친구찜목록 버튼 컨트롤
 
-                console.log(request, status, error)
-            }
-        })
-    }
+        $('#freind_like_list').on('click', function () {
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
 
+            $('.chat_container').appendTo('.left_wrap');
+            $('.friends_like_container').appendTo('.left_wrap');
+            $('.right_wrap').empty();
+            $('.chat_list_container').hide();
+            $('.close_btn').hide();
+            $('.close_chat_room').hide();
 
-    // 채팅 리스트의 모든 웹소켓 열어주기
+            { #$('.right_wrap').empty();# }
+            $('.friends_like_container').appendTo('.right_wrap');
+            $('.friends_like_container').show();
 
-    function WebSocketConnetion(id) {
-        const socket_var = new ReconnectingWebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat/room/'
-            + id
-            + '/'
-        );
+            //$("#freind_like_list").attr('onclick', '').unbind('click');
+            $(".toggle_content").hide();
+            $(".toggle_content").css('cursor', 'pointer');
 
-        socket_var.onopen = function (e) {
-            console.log('Chat socket open');
+        });
+
+        $('#friend_like_close').on('click', function () {
+            $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+
+            $('.friends_like_container').appendTo('.left_wrap');
+            $('.friends_like_container').hide();
+            $('.right_wrap').empty();
+            $('.chat_container').appendTo('.right_wrap');
+            $(".chat_list_container").show();
+            $('.close_btn').show();
+            $('.close_chat_room').show()
+        });
+
+        //친구 찜목록 카테고리
+
+        //youtube카테고리 클릭
+        function youtube_like() {
+            document.getElementById('youtube').style.color = '#7657CE';
+            document.getElementById('news').style.color = '#d2d2d2';
+            document.getElementById('book').style.color = '#d2d2d2';
+            document.getElementById('shopping').style.color = '#d2d2d2';
+
+            document.getElementById('friends_like_youtube').style.display = 'block';
+            document.getElementById('friends_like_news').style.display = 'none';
+            document.getElementById('friends_like_book').style.display = 'none';
+            document.getElementById('friends_like_shopping').style.display = 'none';
         }
 
-        socket_var.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            // 이전메세지 로드(웹소켓 내부에서 반복적으로 로드되는 문제로 사용하지 않음)
-            if (data['command'] === 'messages') {
-                const n = data['messages'].length
-                for (let i = n - 1; i >= 0; i--) {
-                    createMessage(data['messages'][i]);
-                }
-                // 새로운 메세지 컨트롤
-            } else if (data['command'] === 'new_message') {
-                let current_num = $('.user_count').length + $('.partner_count').length;
-                // 1부터 카운트 하기 위해 +1 처리
-                createMessage(data['message'], current_num + 1);
-                $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
-            }
-            let current_num = $('.user_count').length + $('.partner_count').length;
-            if (current_num > 8 && current_num < 15) {
-                document.querySelector('.hidden').classList.remove('disappear');
-                document.querySelector('.hidden').classList.add('appear');
+        function news_like() {
+            document.getElementById('news').style.color = '#7657CE';
+            document.getElementById('youtube').style.color = '#d2d2d2';
+            document.getElementById('book').style.color = '#d2d2d2';
+            document.getElementById('shopping').style.color = '#d2d2d2';
+
+            document.getElementById('friends_like_news').style.display = 'block';
+            document.getElementById('friends_like_youtube').style.display = 'none';
+            document.getElementById('friends_like_book').style.display = 'none';
+            document.getElementById('friends_like_shopping').style.display = 'none';
+        }
+
+        function book_like() {
+            document.getElementById('book').style.color = '#7657CE';
+            document.getElementById('youtube').style.color = '#d2d2d2';
+            document.getElementById('news').style.color = '#d2d2d2';
+            document.getElementById('shopping').style.color = '#d2d2d2';
+
+            document.getElementById('friends_like_book').style.display = 'block';
+            document.getElementById('friends_like_youtube').style.display = 'none';
+            document.getElementById('friends_like_news').style.display = 'none';
+            document.getElementById('friends_like_shopping').style.display = 'none';
+        }
+
+        function shopping_like() {
+            document.getElementById('shopping').style.color = '#7657CE';
+            document.getElementById('youtube').style.color = '#d2d2d2';
+            document.getElementById('news').style.color = '#d2d2d2';
+            document.getElementById('book').style.color = '#d2d2d2';
+
+            document.getElementById('friends_like_shopping').style.display = 'block';
+            document.getElementById('friends_like_youtube').style.display = 'none';
+            document.getElementById('friends_like_news').style.display = 'none';
+            document.getElementById('friends_like_book').style.display = 'none';
+        }
+
+
+        // view에서 html로 전달한 값
+
+        var room_id = {{ room_id }};
+        var user_id = {{ user_id }};
+        var participant1 = {{ participant1.id }};
+        var participant2 = {{ participant2.id }};
+
+
+        // 해당 채팅방 삭제
+
+        function deleteChatroom() {
+            if (!confirm("삭제하시면 대화내용을 복구할수 없습니다. \n정말로 삭제하시겠습니까?")) {
+                return false;
             } else {
-                if (document.querySelector('.hidden').classList.contains('appear')) {
-                    document.querySelector('.hidden').classList.add('disappear');
-                    setTimeout(function () {
-                        document.querySelector('.hidden').classList.remove('appear')
-                    }, 1001);
-                }
+                location.href = '/chat/delete/{{ room_id }}'
             }
-        };
+        }
 
-        if (room_id == id) {
-            document.querySelector('#chat_message_input').onkeyup = function (e) {
-                const messageInputDom = document.querySelector('#chat_message_input');
-                let message = messageInputDom.value;
+        // 채팅리스트의 모든 room_id를 리스트로 받아오기
 
-                if (e.keyCode === 13) {  // enter, return
-                    if (e.shiftKey) {
-                        message.replace(/(\r\n)/g, "<br>");
-                    } else {
-                        message = message.replace(/(\n|\r\n)/g, "<br>");
-                        let enter_message = message.replace(/<br>/ig, "");
-                        if (enter_message === '' || enter_message === null || enter_message.trim().length === 0) {
-                            alert('메세지를 입력해주세요.')
-                            return true;
-                        }
-                        if (message.includes('alert') === true || message.includes('ALERT') === true) {
-                            alert('XSS attack defenced!')
-                        }
-                        if (message.includes('script') === true || message.includes('SCRIPT') === true) {
-                            alert('XSS attack defenced!')
-                        } else {
-                            if (message.includes('href') === true) {
-                                alert('XSS attack defenced!')
-                                const replace_msg = message.replace('href', '')
-                                socket_var.send(JSON.stringify({
-                                    'command': 'new_messages',
-                                    'message': replace_msg,
-                                    'from': user_id,
-                                    'room_id': room_id,
-                                }));
-                            } else {
-                                socket_var.send(JSON.stringify({
-                                    'command': 'new_messages',
-                                    'message': message,
-                                    'from': user_id,
-                                    'room_id': room_id,
-                                }));
-                            }
-                        }
-                        messageInputDom.value = '';
+        function getRoomid() {
+            let all_partner = document.getElementsByClassName('chat_partner')
+
+            var partner_list = []
+            for (let i = 0; i < all_partner.length; i++) {
+                let partner = all_partner[i]['href'].split('/')
+                partner = parseInt(partner[4]);
+                partner_list.push(partner)
+            }
+
+
+            $.ajax({
+                url: "/chat/getroomid/",
+                type: "post",
+                traditional: true,
+                data: JSON.stringify({ "partner_list": partner_list }),
+                async: false,
+                success: function (data) {
+                    let roomlist = data['room_list']
+                    for (let i = 0; i < roomlist.length; i++) {
+                        let roomid = roomlist[i]
+                        WebSocketConnetion(roomid);
                     }
+                },
+                error: function (request, status, error) {
+                    alert('error')
 
+                    console.log(request, status, error)
+                }
+            })
+        }
+
+
+        // 채팅 리스트의 모든 웹소켓 열어주기
+
+        function WebSocketConnetion(id) {
+            const socket_var = new ReconnectingWebSocket(
+                'ws://'
+                + window.location.host
+                + '/ws/chat/room/'
+                + id
+                + '/'
+            );
+
+            socket_var.onopen = function (e) {
+                console.log('Chat socket open');
+            }
+
+            socket_var.onmessage = function (e) {
+                const data = JSON.parse(e.data);
+                // 이전메세지 로드(웹소켓 내부에서 반복적으로 로드되는 문제로 사용하지 않음)
+                if (data['command'] === 'messages') {
+                    const n = data['messages'].length
+                    for (let i = n - 1; i >= 0; i--) {
+                        createMessage(data['messages'][i]);
+                    }
+                    // 새로운 메세지 컨트롤
+                } else if (data['command'] === 'new_message') {
+                    let current_num = $('.user_count').length + $('.partner_count').length;
+                    // 1부터 카운트 하기 위해 +1 처리
+                    createMessage(data['message'], current_num + 1);
+                    $('#chat_box').scrollTop($('#chat_box')[0].scrollHeight);
+                }
+                let current_num = $('.user_count').length + $('.partner_count').length;
+                if (current_num > 8 && current_num < 15) {
+                    document.querySelector('.hidden').classList.remove('disappear');
+                    document.querySelector('.hidden').classList.add('appear');
+                } else {
+                    if (document.querySelector('.hidden').classList.contains('appear')) {
+                        document.querySelector('.hidden').classList.add('disappear');
+                        setTimeout(function () {
+                            document.querySelector('.hidden').classList.remove('appear')
+                        }, 1001);
+                    }
+                }
+            };
+
+            if (room_id == id) {
+                document.querySelector('#chat_message_input').onkeyup = function (e) {
+                    const messageInputDom = document.querySelector('#chat_message_input');
+                    let message = messageInputDom.value;
+
+                    if (e.keyCode === 13) {  // enter, return
+                        if (e.shiftKey) {
+                            message.replace(/(\r\n)/g, "<br>");
+                        } else {
+                            message = message.replace(/(\n|\r\n)/g, "<br>");
+                            let enter_message = message.replace(/<br>/ig, "");
+                            if (enter_message === '' || enter_message === null || enter_message.trim().length === 0) {
+                                alert('메세지를 입력해주세요.')
+                                return true;
+                            }
+                            if (message.includes('alert') === true || message.includes('ALERT') === true) {
+                                alert('XSS attack defenced!')
+                            }
+                            if (message.includes('script') === true || message.includes('SCRIPT') === true) {
+                                alert('XSS attack defenced!')
+                            } else {
+                                if (message.includes('href') === true) {
+                                    alert('XSS attack defenced!')
+                                    const replace_msg = message.replace('href', '')
+                                    socket_var.send(JSON.stringify({
+                                        'command': 'new_messages',
+                                        'message': replace_msg,
+                                        'from': user_id,
+                                        'room_id': room_id,
+                                    }));
+                                } else {
+                                    socket_var.send(JSON.stringify({
+                                        'command': 'new_messages',
+                                        'message': message,
+                                        'from': user_id,
+                                        'room_id': room_id,
+                                    }));
+                                }
+                            }
+                            messageInputDom.value = '';
+                        }
+
+                    }
                 }
             }
+
+            socket_var.onclose = function (e) {
+                console.error('Chat socket closed unexpectedly');
+            };
+
         }
 
-        socket_var.onclose = function (e) {
-            console.error('Chat socket closed unexpectedly');
-        };
+        // 새로 작성된 메세지를 html에 출력
+        function createMessage(data, num) {
+            const message = data['message'];
+            const author = data['author'];
+            const created_at = data['created_at'];
+            const chatroom_id = data['chatroom_id'];
 
-    }
+            {#12시 기준으로 오전 오후 구분# }
+            const timestamp = created_at.split('')
+            if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
+                var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+            } else {
+                var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
+            }
 
-    // 새로 작성된 메세지를 html에 출력
-    function createMessage(data, num) {
-        const message = data['message'];
-        const author = data['author'];
-        const created_at = data['created_at'];
-        const chatroom_id = data['chatroom_id'];
-
-        {#12시 기준으로 오전 오후 구분#}
-        const timestamp = created_at.split('')
-        if ((timestamp[11] === 1 && timestamp[12] >= 2) || timestamp[11] === 2) {
-            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오후 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
-        } else {
-            var am_or_pm = timestamp[2] + timestamp[3] + '년' + timestamp[5] + timestamp[6] + '월' + timestamp[8] + timestamp[9] + '일,' + ' 오전 ' + timestamp[11] + timestamp[12] + ':' + timestamp[14] + timestamp[15]
-        }
-
-        $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').addClass('new')
-        let new_message = message.replace(/<br>/ig, "");
-        $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').text(new_message)
+            $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').addClass('new')
+            let new_message = message.replace(/<br>/ig, "");
+            $('.chat_partner_' + room_id).children('.info_group').children('.partner_last_msg').text(new_message)
 
 
-        if (chatroom_id === room_id) {
-            if (author === user_id) {
-                if (message.includes('http') === true) {
-                    let temp_html1 = `<div class="user_chat user_count">
+            if (chatroom_id === room_id) {
+                if (author === user_id) {
+                    if (message.includes('http') === true) {
+                        let temp_html1 = `<div class="user_chat user_count">
                                           <div onmouseover="show_user_timestamp(${-num})" onmouseout="hide_user_timestamp(${-num})"onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='user_to_partner'>${message}</div>
                                           <div class="timestamp_user timestamp_user_${-num}">${am_or_pm}</div>
                                       </div>`
-                    $('#chat_box').append(temp_html1)
-                    $('#chat_message_input').val('');
-                } else {
-                    let temp_html1 = `<div class="user_chat user_count">
+                        $('#chat_box').append(temp_html1)
+                        $('#chat_message_input').val('');
+                    } else {
+                        let temp_html1 = `<div class="user_chat user_count">
                                           <div onmouseover="show_user_timestamp(${-num})" onmouseout="hide_user_timestamp(${-num})" class='user_to_partner'>${message}</div>
                                           <div class="timestamp_user timestamp_user_${-num}">${am_or_pm}</div>
                                       </div>`
-                    $('#chat_box').append(temp_html1)
-                    $('#chat_message_input').val('');
-                }
-            } else {
-                if (message.includes('http') === true) {
-                    let temp_html2 = `<div class="partner_chat partner_count">
+                        $('#chat_box').append(temp_html1)
+                        $('#chat_message_input').val('');
+                    }
+                } else {
+                    if (message.includes('http') === true) {
+                        let temp_html2 = `<div class="partner_chat partner_count">
                                           <div onmouseover="show_partner_timestamp(${-num})" onmouseout="hide_partner_timestamp(${-num})" onclick="window.open('${message}')" style="cursor: pointer; text-decoration-line: underline" class='partner_to_user'>${message}</div>
                                           <div class="timestamp_partner timestamp_partner_${-num}">${am_or_pm}</div>
                                       </div>`
-                    $('#chat_box').append(temp_html2)
-                } else {
-                    let temp_html2 = `<div class="partner_chat partner_count">
+                        $('#chat_box').append(temp_html2)
+                    } else {
+                        let temp_html2 = `<div class="partner_chat partner_count">
                                           <div onmouseover="show_partner_timestamp(${-num})" onmouseout="hide_partner_timestamp(${-num})" class='partner_to_user'>${message}</div>
                                           <div class="timestamp_partner timestamp_partner_${-num}">${am_or_pm}</div>
                                       </div>`
-                    $('#chat_box').append(temp_html2)
+                        $('#chat_box').append(temp_html2)
+                    }
                 }
+            } else {
+                console.log('해당하는 메세지가 없습니다');
             }
-        } else {
-            console.log('해당하는 메세지가 없습니다');
+
         }
 
-    }
+        // 새로운 메세지 카운트(미완성)
+        function countNew() {
+            let message_count = $('.user_count').length;
 
-    // 새로운 메세지 카운트(미완성)
-    function countNew() {
-        let message_count = $('.user_count').length;
-
-        let count_html = `<div class="count_new">${message_count}</div>`
-        $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
-    }
+            let count_html = `<div class="count_new">${message_count}</div>`
+            $('.chat_partner_' + room_id).children('.info_group').children('.count').append(count_html)
+        }
 
 
 
 
 
-</script>
-<script src="{% static 'js/search/recommend.js' %}?after"></script>
-<script src="{% static 'js/chat/chat_room.js' %}?after"></script>
-<script src="{% static 'js/chat/friend_like.js' %}"></script>
+    </script>
+    <script src="{% static 'js/search/recommend.js' %}?after"></script>
+    <script src="{% static 'js/chat/chat_room.js' %}?after"></script>
+    <script src="{% static 'js/chat/friend_like.js' %}"></script>
 </body>
+
 </html>

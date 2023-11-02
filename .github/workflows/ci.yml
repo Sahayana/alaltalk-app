@@ -1,0 +1,59 @@
+name: alaltalk CI
+on:
+  pull_request:
+    branches:
+      - "**"
+      
+jobs:
+
+  checks:
+
+    runs-on: ubuntu-20.04
+    environment: CI
+    env:
+      PIPENV_VENV_IN_PROJECT: enable
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      EMAIL_BACKEND: ${{ secrets.EMAIL_BACKEND }}
+      EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+      EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+      EMAIL_USE_TLS: ${{ secrets.EMAIL_USE_TLS }}
+      EMAIL_USE_SSL: ${{ secrets.EMAIL_USE_SSL }}
+
+    services:
+      mysql:
+          image: mysql:8.0
+          env:
+            MYSQL_DATABASE: alaltalk
+            MYSQL_ROOT_PASSWORD: alaltalk
+          ports:
+            - 33306:3306
+          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      
+    steps:
+        - name: Checkout source code
+          uses: actions/checkout@v2
+
+        - name: Setup Python
+          uses: actions/setup-python@v2
+          with:
+            python-version: "3.8.10"
+
+        - name: Install pipenv
+          run: |
+            python -m pip install --upgrade pipenv wheel
+            
+        - name: Install dependencies
+          run: |
+            pipenv install
+            
+        - name: Run tests
+          id: run_test
+          run: |
+            pipenv run pytest

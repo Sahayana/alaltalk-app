@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, renderers, status
+from rest_framework import generics, permissions, renderers, status, views
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -9,6 +9,7 @@ from apps.account.services.user_selector import UserSelector
 from apps.account.services.user_service import UserService
 from apps.account.v1.serializers.user_serializer import (
     UserCreateSerializer,
+    UserLikeKeywordSerilaizer,
     UserReadSerializer,
 )
 
@@ -123,3 +124,53 @@ class LoginView(TokenObtainPairView):
             raise InvalidToken(e.args[0])
 
         return Response(data=serializer.validated_data, status=status.HTTP_200_OK)
+
+
+# TODO: MyPage 작업에 추가
+class LikePublicSettingView(views.APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        """
+        유저의 좋아요 컨텐츠 노출을 설정합니다.
+
+        param
+        -----
+        user_id
+        value = "ON" | "OFF"
+        """
+        user_id = request.user.id
+        value = request.data.get("value", "ON")
+
+        user = UserService.like_public_setting(user_id=user_id, value=value)
+
+        data = {"result": "success", "user": UserReadSerializer(instance=user).data}
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
+# TODO:친구 관련 API 개발에 추가
+class UserLikeKeywordSaveView(views.APIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        """
+        유저의 관심 키워드를 저장합니다.
+
+        param
+        -----
+        user_id
+        keyword
+        """
+        user_id = request.user.id
+        keywword = request.data.get("keyword", "")
+
+        liked_keyword = UserService.save_like_keyword(user_id=user_id, keyword=keywword)
+
+        data = {
+            "result": "success",
+            "keyword": UserLikeKeywordSerilaizer(instance=liked_keyword).data,
+        }
+        return Response(data=data, status=status.HTTP_200_OK)
