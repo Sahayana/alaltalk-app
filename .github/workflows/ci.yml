@@ -12,6 +12,14 @@ jobs:
     environment: CI
     env:
       PIPENV_VENV_IN_PROJECT: enable
+      SECRET_KEY: ${{ env.SECRET_KEY }}
+      EMAIL_BACKEND: ${{ env.EMAIL_BACKEND }}
+      EMAIL_HOST: ${{ env.EMAIL_HOST }}
+      EMAIL_PORT: ${{ env.EMAIL_PORT }}
+      EMAIL_HOST_USER: ${{ env.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ env.EMAIL_HOST_PASSWORD }}
+      EMAIL_USE_TLS: ${{ env.EMAIL_USE_TLS }}
+      EMAIL_USE_SSL: ${{ env.EMAIL_USE_SSL }}
 
     services:
       mysql:
