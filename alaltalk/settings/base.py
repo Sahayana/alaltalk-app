@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # app
     "apps.account",
     "apps.friend",
-    # "apps.search",
+    "apps.search",
     # 3rd party
     "storages",
     "six",
