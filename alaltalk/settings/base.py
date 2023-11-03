@@ -30,8 +30,10 @@ pymysql.install_as_MySQLdb()
 # Application definition
 
 INSTALLED_APPS = [
-    # "apps.chat",
-    # "channels",
+    # chat
+    "apps.chat",
+    "channels",
+    # django
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     # app
     "apps.account",
     "apps.friend",
-    # "apps.search",
+    "apps.search",
     # 3rd party
     "storages",
     "six",
