@@ -1,15 +1,16 @@
 from typing import Dict, List, Tuple
 
-from accounts.models import CustomUser
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from search.models import Book, News, Shopping, Youtube
-from search.service.search_service import (
+from search.services.search_service import (
     refactoring_crawling_book,
     refactoring_crawling_news,
 )
+
+from apps.account.models import CustomUser
 
 from ...functions import shopping_crawling, youtube_crawling
 from .schemas import CrawlingRequest, CrawlingResponse, SearchRequest, SearchResponse

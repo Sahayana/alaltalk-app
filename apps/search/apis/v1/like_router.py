@@ -1,6 +1,5 @@
 from typing import Dict, Tuple
 
-from accounts.models import CustomUser
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from ninja.errors import HttpError
@@ -14,12 +13,14 @@ from search.apis.v1.schemas import (
     YoutubeLikeRequest,
     YoutubeLikeResponse,
 )
-from search.service.like_service import (
+from search.services.like_service import (
     do_like_book_service,
     do_like_news_service,
     do_like_shopping_service,
     do_like_youtube_service,
 )
+
+from apps.account.models import CustomUser
 
 router = Router(tags=["like"])
 

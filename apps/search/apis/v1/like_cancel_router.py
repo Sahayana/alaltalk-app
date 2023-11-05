@@ -1,6 +1,5 @@
 from typing import Dict, Tuple
 
-from accounts.models import CustomUser
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
@@ -16,12 +15,14 @@ from search.apis.v1.schemas import (
     YoutubeLikeResponse,
 )
 from search.models import Book, News, Shopping, Youtube
-from search.service.like_cancel_service import (
+from search.services.like_cancel_service import (
     like_cancel_book,
     like_cancel_news,
     like_cancel_shopping,
     like_cancel_youtube,
 )
+
+from apps.account.models import CustomUser
 
 router = Router(tags=["like_cancel"])
 
