@@ -58,30 +58,10 @@ class FriendViewSet(viewsets.ModelViewSet):
 
         return Response(data=data, status=status.HTTP_200_OK)
 
-    # @action(detail=False, methods=["post"])
-    # def get_user_like(self, request, *args, **kwargs):
-    #     user = request.user
-    #     like_sentence = []
-    #     sentence = ""
-    #     youtube = Youtube.objects.filter(user_id=user.id)
-    #     news = News.objects.filter(user_id=user.id)
-    #     book = Book.objects.filter(user_id=user.id)
-    #     shopping = Shopping.objects.filter(user_id=user.id)
+    @action(detail=False, methods=["post"])
+    def get_user_like(self, request, *args, **kwargs):
+        user = request.user
+        like_sentence = FriendService.get_user_like_data(user_id=user.id)
+        data = {"like_sentence": like_sentence}
 
-    #     if youtube:
-    #         for y in youtube:
-    #             sentence = sentence + y.title + " "
-    #     if news:
-    #         for n in news:
-    #             sentence = sentence + n.title + " "
-
-    #     if book:
-    #         for b in book:
-    #             sentence = sentence + b.title + " "
-
-    #     if shopping:
-    #         for s in shopping:
-    #             sentence = sentence + s.title + " "
-
-    #     like_sentence.append(sentence)
-    #     data = {"like_sentence": like_sentence}
+        return Response(data=data, status=status.HTTP_200_OK)

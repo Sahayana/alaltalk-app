@@ -168,11 +168,10 @@ class FriendService:
         return recommend_keywords
 
     @classmethod
-    def get_user_like_data(cls, user_id: int):
+    def get_user_like_data(cls, user_id: int) -> str:
 
-        like_sentence = []
         sentence = ""
-        limit = slice(stop=10, step=1)
+        limit = slice(0, 10, 1)
         youtube = Youtube.objects.filter(user_id=user_id)
         news = News.objects.filter(user_id=user_id)
         book = Book.objects.filter(user_id=user_id)
@@ -193,6 +192,4 @@ class FriendService:
             for s in shopping[limit]:
                 sentence = sentence + s.title + " "
 
-        like_sentence.append(sentence)
-
-        return like_sentence
+        return sentence
