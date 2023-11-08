@@ -12,6 +12,12 @@ from apps.friend.v1.apis.friend_api import FriendViewSet
 from tests.account.factories import UserFactory, UserLikeKeywordFactory
 from tests.friend.factories import FriendFactory
 from tests.helpers import authorization_header
+from tests.search.factories import (
+    BookFactory,
+    NewsFactory,
+    ShoppingFactory,
+    YoutubeFactory,
+)
 
 pytestmark = pytest.mark.django_db
 
@@ -77,3 +83,25 @@ def test_관심_키워드_최대_3개_노출(client: Client):
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data["keywords"] == list(reversed(sample_keywords))[:3]
+
+
+def test_유저_좋아요_데이터_like_sentence_반환(client: Client):
+
+    user = UserFactory.create(is_active=True)
+    youtube = YoutubeFactory.create(user=user)
+    news = NewsFactory.create(user=user)
+    book = BookFactory.create(user=user)
+    shopping = ShoppingFactory.create(user=user)
+
+    res = client.post(
+        reverse("friend:v1:friends-get-user-like"),
+        content_type="application/json",
+        **authorization_header(user),
+    )
+
+    sentence = (
+        youtube.title + " " + news.title + " " + book.title + " " + shopping.title + " "
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+    assert res.data["like_sentence"] == sentence
