@@ -44,7 +44,7 @@ class SignUpView(generics.ListCreateAPIView):
             "nickname": request.data.get("nickname"),
             "password": request.data.get("password"),
             "bio": request.data.get("bio"),
-            "img": request.data.get("img", None),
+            "profile_image": request.data.get("img", None),
         }
 
         is_present = UserSelector.check_email_duplication(email=request_data["email"])
@@ -64,7 +64,7 @@ class SignUpView(generics.ListCreateAPIView):
                 nickname=validated_data["nickname"],
                 bio=validated_data["bio"],
                 password=validated_data["password"],
-                img=validated_data.get("img", None),
+                img=validated_data.get("profile_image", None),
             )
 
             data = {"msg": "sent", "user": UserReadSerializer(instance=user).data}

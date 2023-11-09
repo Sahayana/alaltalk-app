@@ -17,6 +17,18 @@ class UserCreateSerializer(serializers.ModelSerializer):
         fields = ("email", "password", "nickname", "bio", "profile_image")
 
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+
+    nickname = serializers.CharField(required=False)
+    password = serializers.CharField(required=False, write_only=True)
+    profile_image = serializers.ImageField(required=False)
+    bio = serializers.CharField(required=False)
+
+    class Meta:
+        model = CustomUser
+        fields = ("nickname", "password", "profile_image", "bio")
+
+
 class UserReadSerializer(serializers.ModelSerializer):
 
     profile_image = serializers.SerializerMethodField()
@@ -34,6 +46,7 @@ class UserReadSerializer(serializers.ModelSerializer):
             "is_active",
             "is_recommend_on",
             "is_like_public",
+            "is_deleted",
         )
 
     def get_profile_image(self, obj):
