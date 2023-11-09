@@ -12,4 +12,9 @@ urlpatterns = [
         name="user_activation",
     ),
     path("login", user_api.LoginView.as_view(), name="login"),
+    path(
+        "login/temp",
+        user_api.TemporaryPasswordView.as_view(),
+        name="temporary_password",
+    ),
 ]

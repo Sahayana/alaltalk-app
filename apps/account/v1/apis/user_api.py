@@ -150,6 +150,23 @@ class LikePublicSettingView(views.APIView):
         return Response(data=data, status=status.HTTP_200_OK)
 
 
+class TemporaryPasswordView(views.APIView):
+
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+
+        email = request.query_params.get("q")
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({"msg": "none-user"}, status=status.HTTP_400_BAD_REQUEST0)
+
+        after_user = UserService.change_temporary_password(user_id=user.id)
+        data = {"msg": "ok", "data": UserReadSerializer(after_user).data}
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
 # TODO:친구 관련 API 개발에 추가
 class UserLikeKeywordSaveView(views.APIView):
 
