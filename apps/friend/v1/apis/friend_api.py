@@ -1,12 +1,13 @@
 import json
 
-from rest_framework import permissions, status, viewsets
+from rest_framework import permissions, renderers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.account.services.user_service import UserService
 from apps.account.v1.serializers.user_serializer import UserLikeKeywordSerilaizer
 from apps.friend.models import Friend
+from apps.friend.services.friend_selector import FriendSelector
 from apps.friend.services.friend_service import FriendService
 from apps.friend.v1.serializers.friend_serializer import FriendSerializer
 from apps.pagination import CommonPagination
@@ -17,6 +18,24 @@ class FriendViewSet(viewsets.ModelViewSet):
     queryset = Friend.objects.select_related("user", "target_user").all()
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FriendSerializer
+
+    def get_renderers(self):
+        if self.action == "list":
+            renderer_classes = [renderers.TemplateHTMLRenderer]
+        else:
+            renderer_classes = [renderers.JSONRenderer]
+        return [renderer() for renderer in renderer_classes]
+
+    def list(self, request, *args, **kwargs):
+        """현재 친구 목록과 추천 친구를 렌더링합니다."""
+        user = request.user
+        context = {
+            "user": user,
+            "friends": FriendSelector.get_friends_list(user_id=user.id),
+            "recommend_friend": FriendService.recommend_friend(user=user),
+        }
+
+        return Response(context, template_name="accounts/user_list.html")
 
     def destroy(self, request, *args, **kwargs):
         """
