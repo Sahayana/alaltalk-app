@@ -1,9 +1,11 @@
 import json
 
+from django.core.cache import cache
 from rest_framework import permissions, renderers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from alaltalk import cache_key
 from apps.account.services.user_service import UserService
 from apps.account.v1.serializers.user_serializer import (
     UserLikeKeywordSerilaizer,
@@ -31,10 +33,15 @@ class FriendViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         """현재 친구 목록과 추천 친구를 렌더링합니다."""
         user = request.user
+        recommend_friend = cache.get_or_set(
+            cache_key.RECOMMEND_FRIEND.format(user_id=user.id),
+            FriendService.recommend_friend(user_id=user.id),
+            timeout=86400,
+        )
         context = {
             "user": user,
             "friends": FriendSelector.get_friends_list(user_id=user.id),
-            "recommend_friend": FriendService.recommend_friend(user=user),
+            "recommend_friend": recommend_friend,
         }
 
         return Response(
@@ -97,7 +104,11 @@ class FriendViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["post"])
     def get_user_like(self, request, *args, **kwargs):
         user = request.user
-        like_sentence = FriendService.get_user_like_data(user_id=user.id)
+        like_sentence = cache.get_or_set(
+            cache_key.USER_LIKE_DATA.format(user_id=user.id),
+            FriendService.get_user_like_data(user_id=user.id),
+            timeout=86400,
+        )
         data = {"like_sentence": like_sentence}
 
         return Response(data=data, status=status.HTTP_200_OK)
