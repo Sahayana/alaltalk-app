@@ -53,6 +53,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_recommend_on = models.BooleanField(default=True)
     is_like_public = models.BooleanField(default=True)
+    is_deleted = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["nickname"]
