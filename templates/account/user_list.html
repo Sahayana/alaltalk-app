@@ -1,101 +1,107 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:url" content="https://alaltalk.com">
     <meta property="og:title" content="알알톡">
-    <meta property="og:image" content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:image"
+        content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
     <meta property="og:description" content="알고리즘으로 알아보는 대화" />
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
     <title>알알톡</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <!-- reset css cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
-      
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>    
-    <link rel="stylesheet" href="{% static 'css/accounts/user_list.css' %}"> 
-    
-        
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/account/user_list.css' %}">
+
+
 </head>
+
 <body>
- 
-<div class="outline">
-    <div class="nav">
-        <div class="logo">
-            <div class="logo_img"></div>
-        </div>
-        <div class="icon_group">
-            <div class="icon user_icon"></div>
-            <div class="icon chat_icon"></div>
-            <div class="icon mypage_icon"></div>
-        </div>
-    </div>
-    <div class="left_wrap">
-        <p class="title">유저 리스트</p>
-        <form class="search_bar" onsubmit="return searchUser();" data-uri = "{% url 'accounts:search_friend' %}">            
-            <div class="search_icon"></div>
-            <input id="search_input" type="text" placeholder="유저를 검색하여 대화를 시작해보세요.">
-            <button type="button" id="search-modal-btn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friend-search-modal" hidden></button>
-        </form>
-        <div class="user_list">
-            {% if friends %}
-            {% for friend in friends %}
-            <div class="user_box">
-                <div class="user_img">
-                    <img src="{{friend.img.url}}" alt="friend_p_img" srcset="">
-                </div>
-                <div class="info_group">
-                    <div class="user_name">{{friend.nickname}}</div>
-                    <div class="user_id">{{friend.email}}</div>
-                </div>
-                <div class="btn apply_follow" onclick="friend_chat({{friend.id}})">대화하기</div>
-                <div class="unfollow" id="{{friend.id}}">친구차단</div>                
+
+    <div class="outline">
+        <div class="nav">
+            <div class="logo">
+                <div class="logo_img"></div>
             </div>
-            {% endfor %}
-            {% endif %}                   
+            <div class="icon_group">
+                <div class="icon user_icon"></div>
+                <div class="icon chat_icon"></div>
+                <div class="icon mypage_icon"></div>
+            </div>
         </div>
-        <div class="search_result">
-
-        </div>
-    </div>
-
-    <div class="right_wrap">
-        <div class="chat_start_msg">
-            <div class="chat_start_img"></div>
-            <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
-        </div>
-        <div class="recommend_friends_container">
-            <P class="recommend_freind_title">추천친구</P>
-            {% if recommend_friend %}
-                {% for friends in recommend_friend %}
-                    <div class="user_box">
-                        <div class="user_img">
-                            <img src="{{ friends.img.url }}"
-                                 alt="friend_p_img" srcset="">
-                        </div>
-                        <div class="info_group">
-                            <div class="user_name">{{ friends.nickname }}</div>
-                            <div class="user_id">{{ friends.email }}</div>
-                        </div>
-                        <div class="btn apply_follow" onclick=sendRequest({{ friends.id }})>친구신청</div>
+        <div class="left_wrap">
+            <p class="title">유저 리스트</p>
+            <form class="search_bar" onsubmit="return searchUser();" data-uri="{% url 'friend:v1:friends-search' %}">
+                <div class="search_icon"></div>
+                <input id="search_input" type="text" placeholder="유저를 검색하여 대화를 시작해보세요.">
+                <button type="button" id="search-modal-btn" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#friend-search-modal" hidden></button>
+            </form>
+            <div class="user_list">
+                {% if friends %}
+                {% for friend in friends %}
+                <div class="user_box">
+                    <div class="user_img">
+                        <img src="{{friend.img.url}}" alt="friend_p_img" srcset="">
                     </div>
+                    <div class="info_group">
+                        <div class="user_name">{{friend.nickname}}</div>
+                        <div class="user_id">{{friend.email}}</div>
+                    </div>
+                    <div class="btn apply_follow" onclick="friend_chat({{friend.id}})">대화하기</div>
+                    <div class="unfollow" id="{{friend.id}}">친구차단</div>
+                </div>
                 {% endfor %}
-            {% endif %}
+                {% endif %}
+            </div>
+            <div class="search_result">
+
+            </div>
+        </div>
+
+        <div class="right_wrap">
+            <div class="chat_start_msg">
+                <div class="chat_start_img"></div>
+                <p>상대방이 친구신청을 수락하면 대화를 시작할 수 있어요.</p>
+            </div>
+            <div class="recommend_friends_container">
+                <P class="recommend_freind_title">추천친구</P>
+                {% if recommend_friend %}
+                {% for friends in recommend_friend %}
+                <div class="user_box">
+                    <div class="user_img">
+                        <img src="{{ friends.img.url }}" alt="friend_p_img" srcset="">
+                    </div>
+                    <div class="info_group">
+                        <div class="user_name">{{ friends.nickname }}</div>
+                        <div class="user_id">{{ friends.email }}</div>
+                    </div>
+                    <div class="btn apply_follow" onclick=sendRequest({{ friends.id }})>친구신청</div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
 
 
-<script src="{% static 'js/accounts/user_list.js' %}"></script>  
+    <script src="{% static 'js/account/user_list.js' %}"></script>
 
 </body>
 

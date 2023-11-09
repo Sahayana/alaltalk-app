@@ -105,3 +105,71 @@ def test_유저_좋아요_데이터_like_sentence_반환(client: Client):
 
     assert res.status_code == status.HTTP_200_OK
     assert res.data["like_sentence"] == sentence
+
+
+def test_현재_친구_목록_렌더링_및_템플릿_확인(client: Client):
+
+    user = UserFactory.create(is_active=True)
+
+    res = client.get(reverse("friend:v1:friends-list"), **authorization_header(user))
+
+    assert res.status_code == status.HTTP_200_OK
+    assert "account/user_list.html" in [template.name for template in res.templates]
+
+
+def test_친구_목록_조회시_현재_친구유저_추천친구에_불포함(client: Client):
+
+    user = UserFactory.create(is_active=True)
+    target_users = UserFactory.create_batch(size=5, is_active=True)
+
+    friends = []
+    for target_user in target_users:
+        friends.append(FriendFactory.create(user=user, target_user=target_user))
+
+    res = client.get(reverse("friend:v1:friends-list"), **authorization_header(user))
+
+    assert res.status_code == status.HTTP_200_OK
+    assert sorted([friend.id for friend in res.data["friends"]]) == sorted(
+        [friend.id for friend in friends]
+    )
+    assert len(res.data["recommend_friend"]) == 0
+
+
+def test_친구_목록_조회시_현재친구_및_추천친구_최대_5명_반환(client: Client):
+
+    user = UserFactory.create(is_active=True)
+    target_users = UserFactory.create_batch(size=10, is_active=True)
+
+    friends = []
+    for target_user in target_users[:5]:
+        friends.append(FriendFactory.create(user=user, target_user=target_user))
+
+    res = client.get(reverse("friend:v1:friends-list"), **authorization_header(user))
+
+    assert res.status_code == status.HTTP_200_OK
+    assert len(res.data["recommend_friend"]) == 5
+    assert sorted([friend.id for friend in res.data["friends"]]) == sorted(
+        [friend.id for friend in friends]
+    )
+
+
+def test_유저_검색시_이메일_혹은_닉네임_동시_검색_확인(client: Client):
+
+    email = "searchtest@alaltalk.com"
+    nickname = "searchtest"
+
+    query = "search"
+
+    user = UserFactory.create(is_active=True)
+    email_target_user = UserFactory.create(email=email, is_active=True)
+    nickname_target_user = UserFactory.create(nickname=nickname, is_active=True)
+
+    res = client.get(
+        reverse("friend:v1:friends-search") + f"?q={query}",
+        **authorization_header(user),
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+    assert len(list(res.data["result"])) == 2
+    assert res.data["result"][0]["email"] == email_target_user.email
+    assert res.data["result"][1]["email"] == nickname_target_user.email
