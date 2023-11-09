@@ -5,12 +5,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.account.services.user_service import UserService
-from apps.account.v1.serializers.user_serializer import UserLikeKeywordSerilaizer
+from apps.account.v1.serializers.user_serializer import (
+    UserLikeKeywordSerilaizer,
+    UserReadSerializer,
+)
 from apps.friend.models import Friend
 from apps.friend.services.friend_selector import FriendSelector
 from apps.friend.services.friend_service import FriendService
 from apps.friend.v1.serializers.friend_serializer import FriendSerializer
-from apps.pagination import CommonPagination
 
 
 class FriendViewSet(viewsets.ModelViewSet):
@@ -35,7 +37,9 @@ class FriendViewSet(viewsets.ModelViewSet):
             "recommend_friend": FriendService.recommend_friend(user=user),
         }
 
-        return Response(context, template_name="accounts/user_list.html")
+        return Response(
+            context, template_name="account/user_list.html", status=status.HTTP_200_OK
+        )
 
     def destroy(self, request, *args, **kwargs):
         """
@@ -50,6 +54,19 @@ class FriendViewSet(viewsets.ModelViewSet):
         )
 
         data = {"msg": "deleted", "data": self.get_serializer(friend).data}
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["get"])
+    def search(self, request, *args, **kwargs):
+        """유저 혹은 친구를 검색합니다."""
+        user = request.user
+        query = request.query_params.get("q")
+
+        friends = FriendSelector.search_friend(user_id=user.id, query=query)
+        serializer = UserReadSerializer(friends, many=True)
+
+        data = {"result": serializer.data}
 
         return Response(data=data, status=status.HTTP_200_OK)
 
