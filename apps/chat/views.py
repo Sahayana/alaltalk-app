@@ -1,15 +1,15 @@
 import json
 
-from chat.models import ChatMessage, ChatRoom
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-from search.models import Book, News, Shopping, Youtube
 
 from apps.account.models import CustomUser
+from apps.chat.models import ChatMessage, ChatRoom
+from apps.search.models import Book, News, Shopping, Youtube
 
 
 # ChatRoom 모델에서 유저가 속해있는 채팅방 리스트 불러오기

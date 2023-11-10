@@ -36,7 +36,7 @@ urlpatterns = [
     path("", landing_home, name="landing_page"),
     path("account/", include("apps.account.urls")),
     path("friend/", include("apps.friend.urls")),
-    path("chat/", include("chat.urls")),
+    path("chat/", include("apps.chat.urls")),
     path("api/", api.urls),
 ]
 

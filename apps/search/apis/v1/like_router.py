@@ -3,7 +3,9 @@ from typing import Dict, Tuple
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from ninja.errors import HttpError
-from search.apis.v1.schemas import (
+
+from apps.account.models import CustomUser
+from apps.search.apis.v1.schemas import (
     BookLikeRequest,
     BookLikeResponse,
     NewsLikeRequest,
@@ -13,8 +15,6 @@ from search.apis.v1.schemas import (
     YoutubeLikeRequest,
     YoutubeLikeResponse,
 )
-
-from apps.account.models import CustomUser
 from apps.search.services.like_service import (
     do_like_book_service,
     do_like_news_service,
