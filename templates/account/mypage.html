@@ -1,335 +1,344 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:url" content="https://alaltalk.com">
     <meta property="og:title" content="알알톡">
     <meta property="og:image"
-          content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
-    <meta property="og:description" content="알고리즘으로 알아보는 대화"/>
+        content="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_og_img_purple.jpg">
+    <meta property="og:description" content="알고리즘으로 알아보는 대화" />
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link rel="shortcut icon" href="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/alaltalk_favicon.ico">
     <title>알알톡</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
     <!-- reset css cdn -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
     <!-- jQuery cdn -->
     <script src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/accounts/mypage.css' %}?after">
 
 </head>
+
 <body>
-<div class="outline">
-    <div class="nav">
-        <div class="logo">
-            <div class="logo_img"></div>
-        </div>
-        <div class="icon_group">
-            <div class="icon user_icon"></div>
-            <div class="icon chat_icon"></div>
-            <div class="icon mypage_icon"></div>
-        </div>
-    </div>
-    <div class="left_wrap">
-        <div class="user_profile">
-            <div class="profile_upper">
-                <div class="profile_image">
-                    <img class="profile-img" src="{{ user.img.url }}" alt="profile-img" srcset="">
-                </div>
-                <div class="profile_user_name">{{ user.nickname }}</div>
-                <div class="profile_user_id">{{ user.email }}</div>
-                <div class="profile_user_bio">{{ user.bio }}</div>
+    <div class="outline">
+        <div class="nav">
+            <div class="logo">
+                <div class="logo_img"></div>
             </div>
-            <div class="profile_buttons">
-                <button class="profile_change" id="profile_change" onclick="profile_change_check()">프로필 변경</button>
-                <button class="profile_follow" id="profile_follow" onclick="profile_follow()">
-                    팔로우 관리
-                    {% if friend_requests.count > 0 %}<span class="friend_request_badge">{{friend_requests.count}}</span>{% endif %}
-                </button>                
-                <button class="profile_like" id="profile_like" onclick="profile_like()">찜 목록</button>
+            <div class="icon_group">
+                <div class="icon user_icon"></div>
+                <div class="icon chat_icon"></div>
+                <div class="icon mypage_icon"></div>
             </div>
-            <div class="profile_logout">
-                <a href="{% url 'accounts:logout' %}">
-                    <button>로그아웃</button>
-                </a>
+        </div>
+        <div class="left_wrap">
+            <div class="user_profile">
+                <div class="profile_upper">
+                    <div class="profile_image">
+                        <img class="profile-img" src="{{ user.img.url }}" alt="profile-img" srcset="">
+                    </div>
+                    <div class="profile_user_name">{{ user.nickname }}</div>
+                    <div class="profile_user_id">{{ user.email }}</div>
+                    <div class="profile_user_bio">{{ user.bio }}</div>
+                </div>
+                <div class="profile_buttons">
+                    <button class="profile_change" id="profile_change" onclick="profile_change_check()">프로필 변경</button>
+                    <button class="profile_follow" id="profile_follow" onclick="profile_follow()">
+                        팔로우 관리
+                        {% if friend_requests.count > 0 %}<span
+                            class="friend_request_badge">{{friend_requests.count}}</span>{% endif %}
+                    </button>
+                    <button class="profile_like" id="profile_like" onclick="profile_like()">찜 목록</button>
+                </div>
+                <div class="profile_logout">
+                    <a href="{% url 'account:v1:logout' %}">
+                        <button>로그아웃</button>
+                    </a>
+                </div>
+
             </div>
-
-        </div>
-    </div>
-
-    <div class="right_wrap">
-        <div class="profile_right_default" id="profile_right_default">
-            <div class="profile_default_image"></div>
-            <p>Please select a chat to start messaging.</p>
         </div>
 
-        <div class="profile_auth_container" id="profile_auth_container">
-            <form class="profile_auth_form" onsubmit="return false;">
-                {% csrf_token %}
-                <p id="password-again-helper">비밀번호를 입력해주세요</p>
-                <input type="password" id="password-again-input">
-                <button type="button" id="password-again-btn" onclick=authCheck()>확인</button>
-            </form>
-        </div>
-
-        <div class="profile_change_container" id="profile_change_container">
-            <div class="profile_change_title">프로필 변경</div>
-            <form class="profile_change_part">
-                {% csrf_token %}
-                <div class="profile_image_change">
-                    <input type="file" id="profile-img" hidden>
-                    <img id="profile-img-modified" src={{ user.img.url }} alt="profile-img" srcset="">
-                </div>
-                <div class="profile_change_field">
-                    <label for="profile-nickname">닉네임</label>
-                    <input type="text" id="profile-nickname" value="{{ user.nickname }}">
-                    <small id="name_error">Error Message</small>
-                </div>
-                <div class="profile_change_field">
-                    <label for="profile-password-change">비밀번호</label>
-                    <input class="pas" id="profile-password-change" type="password" name="password1">
-                    <small id="pwd_error">Error Message</small>
-                </div>
-                <div class="profile_change_field">
-                    <label for="profile-password-check">비밀번호 확인</label>
-                    <input class="pas" id="profile-password-check" type="password" name="password2">
-                    <small id="pwd_check_error">Error Message</small>
-                </div>
-                <div class="profile_change_field">
-                    <label for="profile-bio">한줄소개</label>
-                    <input type="text" id="profile-bio" value="{{ user.bio }}">
-                </div>
-                <button type="button" class="profile_change_button" id="profile_change_button" onclick=profileChange()>
-                    적용하기
-                </button>
-            </form>
-
-            <div class="profile_delete_account">
-                <button id="profile_delete_btn">회원 탈퇴</button>
+        <div class="right_wrap">
+            <div class="profile_right_default" id="profile_right_default">
+                <div class="profile_default_image"></div>
+                <p>Please select a chat to start messaging.</p>
             </div>
 
-        </div>
-        <div class="profile_follow_container" id="profile_follow_container">
-            <div class="profile_follow_title">팔로우 관리</div>
-            <div class="follow_list_section">
-                {% if friend_requests %}
+            <div class="profile_auth_container" id="profile_auth_container">
+                <form class="profile_auth_form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <p id="password-again-helper">비밀번호를 입력해주세요</p>
+                    <input type="password" id="password-again-input">
+                    <button type="button" id="password-again-btn" onclick=authCheck()>확인</button>
+                </form>
+            </div>
+
+            <div class="profile_change_container" id="profile_change_container">
+                <div class="profile_change_title">프로필 변경</div>
+                <form class="profile_change_part">
+                    {% csrf_token %}
+                    <div class="profile_image_change">
+                        <input type="file" id="profile-img" hidden>
+                        <img id="profile-img-modified" src={{ user.img.url }} alt="profile-img" srcset="">
+                    </div>
+                    <div class="profile_change_field">
+                        <label for="profile-nickname">닉네임</label>
+                        <input type="text" id="profile-nickname" value="{{ user.nickname }}">
+                        <small id="name_error">Error Message</small>
+                    </div>
+                    <div class="profile_change_field">
+                        <label for="profile-password-change">비밀번호</label>
+                        <input class="pas" id="profile-password-change" type="password" name="password1">
+                        <small id="pwd_error">Error Message</small>
+                    </div>
+                    <div class="profile_change_field">
+                        <label for="profile-password-check">비밀번호 확인</label>
+                        <input class="pas" id="profile-password-check" type="password" name="password2">
+                        <small id="pwd_check_error">Error Message</small>
+                    </div>
+                    <div class="profile_change_field">
+                        <label for="profile-bio">한줄소개</label>
+                        <input type="text" id="profile-bio" value="{{ user.bio }}">
+                    </div>
+                    <button type="button" class="profile_change_button" id="profile_change_button"
+                        onclick=profileChange()>
+                        적용하기
+                    </button>
+                </form>
+
+                <div class="profile_delete_account">
+                    <button id="profile_delete_btn">회원 탈퇴</button>
+                </div>
+
+            </div>
+            <div class="profile_follow_container" id="profile_follow_container">
+                <div class="profile_follow_title">팔로우 관리</div>
+                <div class="follow_list_section">
+                    {% if friend_requests %}
                     {% for request in friend_requests %}
-                        {% with sender=request.sender %}
+                    {% with sender=request.sender %}
 
-                            <div class="profile_follow_list">
-                                <li>
-                                    <div class="profile_chat_avatar">
-                                        <img src="{{ sender.img.url }}" alt="friend_p_img" srcset="">
-                                    </div>
-                                    <div class="profile_follow_list_body">
-                                        <div class="profile_follow_list_info">
-                                            <div class="profile_follow_user">{{ sender.nickname }}</div>
-                                            <div class="profile_follow_user_bio">{{ sender.bio }}</div>
-                                        </div>
-
-                                        <div class="profile_follow_add" id="{{ request.id }}"
-                                             onclick=acceptRequest(this.id)><p>친구추가</p></div>
-                                        <div class="profile_follow_decline" id="{{ request.id }}"
-                                             onclick=declineRequest(this.id)><p>친구거절</p></div>
-
-                                    </div>
-                                </li>
+                    <div class="profile_follow_list">
+                        <li>
+                            <div class="profile_chat_avatar">
+                                <img src="{{ sender.img.url }}" alt="friend_p_img" srcset="">
                             </div>
-                        {% endwith %}
+                            <div class="profile_follow_list_body">
+                                <div class="profile_follow_list_info">
+                                    <div class="profile_follow_user">{{ sender.nickname }}</div>
+                                    <div class="profile_follow_user_bio">{{ sender.bio }}</div>
+                                </div>
+
+                                <div class="profile_follow_add" id="{{ request.id }}" onclick=acceptRequest(this.id)>
+                                    <p>친구추가</p>
+                                </div>
+                                <div class="profile_follow_decline" id="{{ request.id }}"
+                                    onclick=declineRequest(this.id)>
+                                    <p>친구거절</p>
+                                </div>
+
+                            </div>
+                        </li>
+                    </div>
+                    {% endwith %}
                     {% endfor %}
-                {% endif %}
-            </div>
-        </div>
-        <div class="profile_like_container" id="profile_like_container">
-            <div class="profile_like_title">찜 목록</div>
-            <div class="profile_privacy_settings">
-                <div class="profile_privacy_settings_title">
-                    <p>공개 설정</p>
+                    {% endif %}
                 </div>
-                <button class="profile_privacy_settings_button" id="profile_privacy_setting_button" onclick="like_change_public_setting(this.id)">
-                    {% if user.is_like_public %}
+            </div>
+            <div class="profile_like_container" id="profile_like_container">
+                <div class="profile_like_title">찜 목록</div>
+                <div class="profile_privacy_settings">
+                    <div class="profile_privacy_settings_title">
+                        <p>공개 설정</p>
+                    </div>
+                    <button class="profile_privacy_settings_button" id="profile_privacy_setting_button"
+                        onclick="like_change_public_setting(this.id)">
+                        {% if user.is_like_public %}
                         ON
-                    {% else %}
+                        {% else %}
                         OFF
-                    {% endif %}
-                </button>
-            </div>
-            <div class="profile_like_category">
-                <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
-                <span id="news" onclick="news_like()">NEWS</span>
-                <span id="book" onclick="book_like()">BOOK</span>
-                <span id="shopping" onclick="shopping_like()">SHOPPING</span>
-            </div>
+                        {% endif %}
+                    </button>
+                </div>
+                <div class="profile_like_category">
+                    <span id="youtube" onclick="youtube_like()">YOUTUBE</span>
+                    <span id="news" onclick="news_like()">NEWS</span>
+                    <span id="book" onclick="book_like()">BOOK</span>
+                    <span id="shopping" onclick="shopping_like()">SHOPPING</span>
+                </div>
 
-            <!-- 유튜브 찜 목록 -->
-            <div class="profile_like_youtube" id="profile_like_youtube">
-                <div class="profile_like_youtube_grid">
-                    {% if youtubes %}
+                <!-- 유튜브 찜 목록 -->
+                <div class="profile_like_youtube" id="profile_like_youtube">
+                    <div class="profile_like_youtube_grid">
+                        {% if youtubes %}
                         {% for youtube in youtubes %}
-                            <div class="profile_like_youtube_content_box" id="youtube_s_{{ youtube.id }}">
-                                <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen>
-                                </iframe>
-                                <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
-                                <div class="video_count">{{ youtube.views }}</div>
-                                <div class="my_page_like_parents">
-                                    <div class="profile_like_heart profile_youtube_like_heart"
-                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
-                                         onclick="click_like(event)">
-                                    </div>
+                        <div class="profile_like_youtube_content_box" id="youtube_s_{{ youtube.id }}">
+                            <iframe class="video_img" src="{{ youtube.url }}" title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                            <div class="video_title" style="font-size: 13px">{{ youtube.title }}</div>
+                            <div class="video_count">{{ youtube.views }}</div>
+                            <div class="my_page_like_parents">
+                                <div class="profile_like_heart profile_youtube_like_heart"
+                                    style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                    onclick="click_like(event)">
                                 </div>
                             </div>
+                        </div>
                         {% endfor %}
-                    {% endif %}
+                        {% endif %}
 
+                    </div>
                 </div>
-            </div>
-            <!-- 유튜브 찜 목록 끝 -->
+                <!-- 유튜브 찜 목록 끝 -->
 
 
-            <!-- 뉴스 찜 목록 -->
-            <div class="profile_like_news" id="profile_like_news">
-                {% if news %}
+                <!-- 뉴스 찜 목록 -->
+                <div class="profile_like_news" id="profile_like_news">
+                    {% if news %}
                     {% for article in news %}
-                        <div class="profile_like_news_content" id="news_s_{{ article.id }}">
-                            <div class="profile_like_news_content_image">
-                                <a href="{{ article.link }}" target="_blank">
-                                    <img src="{{ article.thumbnail }}">
-                                </a>
-                            </div>
-                            <div class="profile_like_news_content_desc">
-                                <div class="profile_like_news_content_desc_title">
-                                    <p>{{ article.title }}</p>
-                                </div>
-                                <div class="profile_like_news_content_desc_detail">
-                                    <p>{{ article.content }}</p>
-                                </div>
-                                <div class="profile_like_news_content_desc_footer">
-                                    <div class="profile_like_news_content_desc_footer_newspaper">
-                                        <p>{{ article.company }}</p>
-                                    </div>
-                                    <div class="profile_like_news_content_desc_footer_time">
-                                        <p>{{ article.date }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="profile_like_news_content_more">
-                                <div class="profile_like_news_toggle" onclick="content_do_share('{{ article.link }}')">
-                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
-                                </div>
-                                <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
-                                     onclick="click_like(event)">
-
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
-            </div>
-            <!-- 뉴스 찜 목록 끝 -->
-
-
-            <!-- 책 찜 목록 -->
-            <div class="profile_like_book" id="profile_like_book">
-                {% if books %}
-                    {% for book in books %}
-                        <div class="profile_like_book_content_box" id="book_s_{{ book.id }}">
-                            <div class="recommend_toggle" style="width: 200px">
-                                <div class="profile_like_news_toggle" onclick="content_do_share({{ book.link }})">
-                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
-                                </div>
-                                <div class="recommend_like_heart"
-                                     style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
-                                     onclick="click_like(event)">
-                                </div>
-                            </div>
-                            <a href="{{ book.link }}" target="_blank">
-                                <div class="book_img" style="background-image: url('{{ book.thumbnail }}')"></div>
+                    <div class="profile_like_news_content" id="news_s_{{ article.id }}">
+                        <div class="profile_like_news_content_image">
+                            <a href="{{ article.link }}" target="_blank">
+                                <img src="{{ article.thumbnail }}">
                             </a>
-                            <div class="profile_like_book_desc" style="display: flex">
-                                <div class="profile_like_book_desc_title">
-                                    <p class="category">제목</p>
-                                    <p>{{ book.title }}</p>
+                        </div>
+                        <div class="profile_like_news_content_desc">
+                            <div class="profile_like_news_content_desc_title">
+                                <p>{{ article.title }}</p>
+                            </div>
+                            <div class="profile_like_news_content_desc_detail">
+                                <p>{{ article.content }}</p>
+                            </div>
+                            <div class="profile_like_news_content_desc_footer">
+                                <div class="profile_like_news_content_desc_footer_newspaper">
+                                    <p>{{ article.company }}</p>
                                 </div>
-                                <div class="profile_like_book_desc_series">
-                                    <p class="category">시리즈</p>
-                                    <p>{{ book.series }}</p>
-                                </div>
-                                <div class="profile_like_book_desc_company">
-                                    <p class="category">출판사</p>
-                                    <p>{{ book.company }}</p>
-                                </div>
-                                <div class="profile_like_book_desc_author">
-                                    <p class="category">작가</p>
-                                    <p>{{ book.author }}}</p>
-                                </div>
-                                <div class="profile_like_book_desc_price">
-                                    <p class="category">가격</p>
-                                    <p>{{ book.price }}원</p>
+                                <div class="profile_like_news_content_desc_footer_time">
+                                    <p>{{ article.date }}</p>
                                 </div>
                             </div>
                         </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <!-- 책 찜 목록 끝 -->
-
-
-            <!-- 쇼핑 찜 목록 -->
-            <div class="profile_like_shopping" id="profile_like_shopping">
-                <div class="profile_like_shopping_grid">
-                    {% if shoppings %}
-                        {% for shopping in shoppings %}
-                            <div class="profile_like_shopping_content" id="{{ shopping.id }}">
-                                <div class="recommend_toggle">
-                                    <div class="profile_like_news_toggle"
-                                         onclick="content_do_share({{ shopping.link }})">
-                                        <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
-                                    </div>
-                                    <div class="recommend_like_heart"
-                                         style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
-                                         onclick="click_like(event)">
-                                    </div>
-                                </div>
-                                <a href="{{ shopping.link }}" target="_blank">
-                                    <div class="profile_like_shopping_content_img">
-                                        <img src="{{ shopping.thumbnail }}">
-                                    </div>
-                                </a>
-                                <div class="profile_like_shopping_content_desc">
-                                    <div class="profile_like_shopping_content_desc_bar"></div>
-                                    <div class="profile_like_shopping_content_desc_title">
-                                        <p>{{ shopping.title }}</p>
-                                    </div>
-                                    <div class="profile_like_shopping_content_desc_price">
-                                        <p>{{ shopping.price }}</p>
-                                    </div>
-                                </div>
+                        <div class="profile_like_news_content_more">
+                            <div class="profile_like_news_toggle" onclick="content_do_share('{{ article.link }}')">
+                                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
                             </div>
-                        {% endfor %}
+                            <div class="recommend_like_heart"
+                                style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                onclick="click_like(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                </div>
+                <!-- 뉴스 찜 목록 끝 -->
+
+
+                <!-- 책 찜 목록 -->
+                <div class="profile_like_book" id="profile_like_book">
+                    {% if books %}
+                    {% for book in books %}
+                    <div class="profile_like_book_content_box" id="book_s_{{ book.id }}">
+                        <div class="recommend_toggle" style="width: 200px">
+                            <div class="profile_like_news_toggle" onclick="content_do_share({{ book.link }})">
+                                <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                            </div>
+                            <div class="recommend_like_heart"
+                                style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                onclick="click_like(event)">
+                            </div>
+                        </div>
+                        <a href="{{ book.link }}" target="_blank">
+                            <div class="book_img" style="background-image: url('{{ book.thumbnail }}')"></div>
+                        </a>
+                        <div class="profile_like_book_desc" style="display: flex">
+                            <div class="profile_like_book_desc_title">
+                                <p class="category">제목</p>
+                                <p>{{ book.title }}</p>
+                            </div>
+                            <div class="profile_like_book_desc_series">
+                                <p class="category">시리즈</p>
+                                <p>{{ book.series }}</p>
+                            </div>
+                            <div class="profile_like_book_desc_company">
+                                <p class="category">출판사</p>
+                                <p>{{ book.company }}</p>
+                            </div>
+                            <div class="profile_like_book_desc_author">
+                                <p class="category">작가</p>
+                                <p>{{ book.author }}}</p>
+                            </div>
+                            <div class="profile_like_book_desc_price">
+                                <p class="category">가격</p>
+                                <p>{{ book.price }}원</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
                     {% endif %}
                 </div>
+                <!-- 책 찜 목록 끝 -->
+
+
+                <!-- 쇼핑 찜 목록 -->
+                <div class="profile_like_shopping" id="profile_like_shopping">
+                    <div class="profile_like_shopping_grid">
+                        {% if shoppings %}
+                        {% for shopping in shoppings %}
+                        <div class="profile_like_shopping_content" id="{{ shopping.id }}">
+                            <div class="recommend_toggle">
+                                <div class="profile_like_news_toggle" onclick="content_do_share({{ shopping.link }})">
+                                    <img src="https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/share.png">
+                                </div>
+                                <div class="recommend_like_heart"
+                                    style="background-image: url('https://alaltalk.s3.ap-northeast-2.amazonaws.com/images/heart.png')"
+                                    onclick="click_like(event)">
+                                </div>
+                            </div>
+                            <a href="{{ shopping.link }}" target="_blank">
+                                <div class="profile_like_shopping_content_img">
+                                    <img src="{{ shopping.thumbnail }}">
+                                </div>
+                            </a>
+                            <div class="profile_like_shopping_content_desc">
+                                <div class="profile_like_shopping_content_desc_bar"></div>
+                                <div class="profile_like_shopping_content_desc_title">
+                                    <p>{{ shopping.title }}</p>
+                                </div>
+                                <div class="profile_like_shopping_content_desc_price">
+                                    <p>{{ shopping.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- 쇼핑 찜 목록 끝-->
             </div>
-            <!-- 쇼핑 찜 목록 끝-->
         </div>
     </div>
-</div>
-<script>
-    var CSRF_TOKEN = '{{ csrf_token }}';
-</script>
-<script defer src="{% static 'js/accounts/mypage.js' %}"></script>
-<script defer src="{% static 'js/search/recommend.js' %}"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+    <script defer src="{% static 'js/accounts/mypage.js' %}"></script>
+    <script defer src="{% static 'js/search/recommend.js' %}"></script>
 </body>
+
 </html>

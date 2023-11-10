@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from ninja import Router
-from search.models import Book, News, Shopping, Youtube
+
+from apps.search.models import Book, News, Shopping, Youtube
 
 router = Router(tags=["chat_room"])
 

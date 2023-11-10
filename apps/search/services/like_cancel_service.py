@@ -1,5 +1,6 @@
-from accounts.models import CustomUser
 from search.models import Book, News, Shopping, Youtube
+
+from apps.account.models import CustomUser
 
 
 def like_cancel_youtube(user_id: int, youtube_url: str) -> None:

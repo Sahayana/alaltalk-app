@@ -2,18 +2,21 @@ from typing import Dict, List, Tuple
 
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
-from search.models import Book, News, Shopping, Youtube
-from search.services.search_service import (
+
+from apps.account.models import CustomUser
+from apps.search.apis.v1.schemas import (
+    CrawlingRequest,
+    CrawlingResponse,
+    SearchRequest,
+    SearchResponse,
+)
+from apps.search.functions import shopping_crawling, youtube_crawling
+from apps.search.models import Book, News, Shopping, Youtube
+from apps.search.services.search_service import (
     refactoring_crawling_book,
     refactoring_crawling_news,
 )
-
-from apps.account.models import CustomUser
-
-from ...functions import shopping_crawling, youtube_crawling
-from .schemas import CrawlingRequest, CrawlingResponse, SearchRequest, SearchResponse
 
 router = Router(tags=["search"])
 

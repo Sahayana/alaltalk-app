@@ -4,7 +4,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from ninja import Form, Router
 from ninja.errors import HttpError
-from search.apis.v1.schemas import (
+
+from apps.account.models import CustomUser
+from apps.search.apis.v1.schemas import (
     BookLikeRequest,
     BookLikeResponse,
     NewsLikeRequest,
@@ -14,15 +16,13 @@ from search.apis.v1.schemas import (
     YoutubeLikeRequest,
     YoutubeLikeResponse,
 )
-from search.models import Book, News, Shopping, Youtube
-from search.services.like_cancel_service import (
+from apps.search.models import Book, News, Shopping, Youtube
+from apps.search.services.like_cancel_service import (
     like_cancel_book,
     like_cancel_news,
     like_cancel_shopping,
     like_cancel_youtube,
 )
-
-from apps.account.models import CustomUser
 
 router = Router(tags=["like_cancel"])
 
