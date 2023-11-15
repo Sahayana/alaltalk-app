@@ -7,6 +7,7 @@ from apps.account.constants import DEFAULT_IMG, EMAIL_DUPLICATION_MESSAGE, TEST_
 from apps.account.v1.serializers.user_serializer import (
     UserCreateSerializer,
     UserReadSerializer,
+    UserUpdateSerializer,
 )
 from tests.account.factories import UserFactory, UserProfileImageFactory
 
@@ -69,4 +70,18 @@ def test_유저_조회_시리얼라이저_이미지_있을시_이미지_반환()
     serializer = UserReadSerializer(instance=user)
     data = serializer.data
 
-    assert data["profile_image"] == profile_image.img
+    assert data["profile_image"] == profile_image.img.url
+
+
+def test_유저_업데이트_시리얼라이저_프로필_이미지_업로드_validated_data_반환():
+
+    user = UserFactory.create(is_active=True)
+    profile_image = UserProfileImageFactory.create()
+    data = {"profile_image": profile_image.img}
+
+    serializer = UserUpdateSerializer(instance=user, data=data, partial=True)
+
+    assert serializer.is_valid() is True
+
+    validated_data = serializer.validated_data
+    assert validated_data["profile_image"].url == profile_image.img.url

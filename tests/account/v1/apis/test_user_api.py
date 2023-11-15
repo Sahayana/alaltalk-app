@@ -10,9 +10,10 @@ from rest_framework import status
 
 from alaltalk.settings.base import CELERY_RESULT_BACKEND
 from apps.account.constants import DEFAULT_IMG, EMAIL_VERIFY_TITLE
+from apps.account.models import UserProfileImage
 from apps.account.tasks import send_email_verification
 from apps.account.utils import accounts_verify_token
-from tests.account.factories import UserFactory
+from tests.account.factories import UserFactory, UserProfileImageFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -26,7 +27,7 @@ def test_유저_생성페이지_렌더링(client: Client):
 
 
 @pytest.mark.django_db(transaction=True)
-def test_유저_생성(
+def test_유저_생성시_transaction_callback_및_메일전송_확인(
     client: Client, create_user_data: Callable, django_capture_on_commit_callbacks
 ):
 
@@ -36,7 +37,7 @@ def test_유저_생성(
 
     with django_capture_on_commit_callbacks(execute=True):
         res = client.post(
-            reverse("account:v1:signup"), data=data, content_type="application/json"
+            reverse("account:v1:signup"), data=data, media_type="multipart/form-data"
         )
 
         assert res.status_code == status.HTTP_201_CREATED
@@ -45,6 +46,35 @@ def test_유저_생성(
         assert res.data["user"]["profile_image"] == DEFAULT_IMG
         assert len(mail.outbox) == 1
         assert mail.outbox[0].subject == EMAIL_VERIFY_TITLE
+
+
+def test_유저_생성시_프로필_이미지_업로드_레코드_생성_및_시리얼라이저_데이터_반환(client: Client):
+
+    user = UserFactory.create(email="test_email234@alaltalk.com")
+
+    user_image = UserProfileImageFactory.create()
+
+    data = {
+        "email": user.email,
+        "password": user.password,
+        "nickname": user.nickname,
+        "bio": user.bio,
+    }
+
+    data.update({"img": user_image.img})
+
+    res = client.post(
+        reverse("account:v1:signup"), data=data, media_type="multipart/form-data"
+    )
+
+    assert res.data is None
+    assert res.status_code == status.HTTP_201_CREATED
+    assert res.data["user"]["email"] == user.email
+    assert UserProfileImage.objects.filter(user=user).exists() is True
+    assert (
+        res.data["user"]["profile_image"]
+        == UserProfileImage.objects.get(user_id=user.id).img
+    )
 
 
 def test_유저_인증_성공시_status_user_반환(client: Client):

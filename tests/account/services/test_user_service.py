@@ -82,3 +82,26 @@ def test_유저_좋아요_컨텐츠_노출_off_변경시_필드_변경():
     user = UserService.like_public_setting(user_id=user.id, value=value)
 
     assert user.is_like_public is False
+
+
+def test_유저_탙퇴시_is_deleted_필드값_변경():
+
+    user = UserFactory.create(is_active=True)
+    deleted_user = UserService.delete_user_account(user_id=user.id)
+
+    assert deleted_user.is_deleted is True
+
+
+def test_유저_임시비밀번호_발송_비밀번호_체크_확인(mocker):
+
+    user = UserFactory.create(is_active=True)
+    temp_str = "temporary"
+
+    mocker.patch(
+        "apps.account.services.user_service.random_string_generator",
+        return_value=temp_str,
+    )
+
+    after_user = UserService.change_temporary_password(user_id=user.id)
+
+    assert after_user.check_password(temp_str) is True

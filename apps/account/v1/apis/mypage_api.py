@@ -7,11 +7,11 @@ from alaltalk import cache_key
 from apps.account.models import CustomUser, UserProfileImage
 from apps.account.services.user_service import UserService
 from apps.account.v1.serializers.user_serializer import (
+    UserProfileImageSerializer,
     UserReadSerializer,
     UserUpdateSerializer,
 )
 from apps.friend.services.friend_selector import FriendSelector
-from apps.friend.services.friend_service import FriendService
 
 
 class MyPageViewSet(viewsets.ModelViewSet):
@@ -36,7 +36,7 @@ class MyPageViewSet(viewsets.ModelViewSet):
 
         if self.action == "list":
             serializer_class = UserReadSerializer
-        elif self.action in ["update", "partial_update"]:
+        elif self.action == "create":
             serializer_class = UserUpdateSerializer
         return serializer_class
 
@@ -47,22 +47,22 @@ class MyPageViewSet(viewsets.ModelViewSet):
         friend_requests = FriendSelector.get_recieved_requests(user_id=user.id)
         youtubes = cache.get_or_set(
             cache_key.USER_YOUTUBE.format(user_id=user.id),
-            self.get_queryset().youtube.all(),
+            self.get_queryset().get().youtube.all(),
             timeout=86400,
         )
         news = cache.get_or_set(
             cache_key.USER_NEWS.format(user_id=user.id),
-            self.get_queryset().news.all(),
+            self.get_queryset().get().news.all(),
             timeout=86400,
         )
         books = cache.get_or_set(
             cache_key.USER_BOOK.format(user_id=user.id),
-            self.get_queryset().book.all(),
+            self.get_queryset().get().book.all(),
             timeout=86400,
         )
         shoppings = cache.get_or_set(
             cache_key.USER_SHOPPING.format(user_id=user.id),
-            self.get_queryset().shopping.all(),
+            self.get_queryset().get().shopping.all(),
             timeout=86400,
         )
 
@@ -79,38 +79,17 @@ class MyPageViewSet(viewsets.ModelViewSet):
             context, status=status.HTTP_200_OK, template_name="account/mypage.html"
         )
 
-    def update(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         """회원 정보를 업데이트 합니다."""
 
         user = request.user
+        serializer = self.get_serializer(instance=user, data=request.data, partial=True)
 
-        request_data = {
-            "nickname": request.data.get("nickname"),
-            "password": request.data.get("password"),
-            "bio": request.data.get("bio"),
-            "profile_image": request.data.get("img"),
-        }
+        if serializer.is_valid():
+            serializer.save()
 
-        serializer = self.get_serializer(data=request_data)
+            data = {"msg": "ok", "data": UserReadSerializer(instance=user).data}
 
-        if serializer.is_valid(raise_exception=True):
-            validated_data = serializer.validated_data
-
-            user.email = validated_data["email"]
-            user.nickname = validated_data["nickname"]
-            user.bio = validated_data["bio"]
-
-            if validated_data.get("profile_image"):
-                img = validated_data["profile_image"]
-                UserProfileImage.objects.create(user_id=user.id, img=img)
-
-            if validated_data.get("password"):
-                password = validated_data["password"]
-                user.set_password(password)
-
-            user.save()
-
-            data = {"msg": "ok", "user": UserReadSerializer(instance=user).data}
             return Response(data=data, status=status.HTTP_200_OK)
         return Response(
             data=serializer.error_messages, status=status.HTTP_400_BAD_REQUEST

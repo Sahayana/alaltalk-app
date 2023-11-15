@@ -35,7 +35,7 @@ class FriendViewSet(viewsets.ModelViewSet):
         user = request.user
         recommend_friend = cache.get_or_set(
             cache_key.RECOMMEND_FRIEND.format(user_id=user.id),
-            FriendService.recommend_friend(user_id=user.id),
+            FriendService.recommend_friend(user=user),
             timeout=86400,
         )
         context = {

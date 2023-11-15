@@ -2,6 +2,7 @@ from io import BytesIO
 
 import pytest
 from django.core.files import File
+from django.core.files.uploadedfile import SimpleUploadedFile
 from PIL import Image
 
 from apps.account.constants import TEST_IMG_NAME
@@ -39,3 +40,13 @@ def get_test_image():
     file.seek(0)
 
     return File(file=file, name=name)
+
+
+@pytest.fixture()
+def simple_upload_image():
+    image_data = BytesIO()
+    image = Image.new("RGB", (100, 100), "white")
+    image.save(image_data, format="png")
+    image_data.seek(0)
+
+    return SimpleUploadedFile("test.png", image_data.read(), content_type="image/png")

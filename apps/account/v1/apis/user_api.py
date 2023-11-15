@@ -39,13 +39,11 @@ class SignUpView(generics.ListCreateAPIView):
         """ "
         회원가입을 통해 유저를 생성합니다.
         """
-        request_data = {
-            "email": request.data.get("email"),
-            "nickname": request.data.get("nickname"),
-            "password": request.data.get("password"),
-            "bio": request.data.get("bio"),
-            "profile_image": request.data.get("img", None),
-        }
+
+        request_data = request.data.copy()
+
+        if request.data.get("img"):
+            request_data.update({"profile_image": request.data["img"]})
 
         is_present = UserSelector.check_email_duplication(email=request_data["email"])
 
