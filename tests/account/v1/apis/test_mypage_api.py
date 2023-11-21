@@ -105,7 +105,7 @@ def test_유저_회원정보_이미지_제외한_정보_업데이트(client: Cli
         reverse("account:v1:mypage-list"),
         **authorization_header(user),
         data=data,
-        media_type="multipart/form-data"
+        media_type="multipart/form-data",
     )
 
     res_data = res.data["data"]
@@ -128,7 +128,7 @@ def test_유저_회원정보_프로필_이미지_업데이트_확인(client: Cli
         reverse("account:v1:mypage-list"),
         **authorization_header(user),
         data=data,
-        media_type="multipart/form-data"
+        media_type="multipart/form-data",
     )
 
     res_data = res.data["data"]
@@ -139,3 +139,58 @@ def test_유저_회원정보_프로필_이미지_업데이트_확인(client: Cli
     assert res_data["nickname"] == user.nickname
     assert res_data["email"] == user.email
     assert res_data["bio"] == "test"
+    assert (
+        res_data["profile_image"]
+        == UserProfileImage.objects.filter(user_id=user.id).first().img.url
+    )
+
+
+def test_회원_탈퇴시_is_deleted_필드값_변경(client: Client):
+
+    user = UserFactory.create(is_active=True)
+
+    res = client.delete(
+        reverse("account:v1:mypage-list") + f"{user.id}/", **authorization_header(user)
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+    assert res.data["msg"] == "deleted"
+
+    res_data = res.data["data"]
+
+    assert res_data["is_deleted"] is True
+
+
+def test_비밀번호_재확인_auth_check_맞으면_ok_메시지_반환(client: Client):
+
+    password = "pasword1234@"
+    user = UserFactory.create(password=password, is_active=True)
+
+    data = {"password": password}
+
+    res = client.post(
+        reverse("account:v1:mypage-auth-check"),
+        data=data,
+        content_type="application/json",
+        **authorization_header(user),
+    )
+
+    assert res.status_code == status.HTTP_200_OK
+    assert res.data["msg"] == "ok"
+
+
+def test_비밀번호_재확인_auth_check_틀리면_no_메시지_반환(client: Client):
+
+    user = UserFactory.create(is_active=True)
+
+    data = {"password": "unvalid1234@"}
+
+    res = client.post(
+        reverse("account:v1:mypage-auth-check"),
+        data=data,
+        content_type="application/json",
+        **authorization_header(user),
+    )
+
+    assert res.status_code == status.HTTP_400_BAD_REQUEST
+    assert res.data["msg"] == "no"

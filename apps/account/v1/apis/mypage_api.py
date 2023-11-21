@@ -97,7 +97,8 @@ class MyPageViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         """회원 탈퇴"""
-        user = UserService.delete_user_account(user_id=request.user.id)
+
+        user = UserService.delete_user_account(user_id=self.get_object().id)
         data = {"msg": "deleted", "data": UserReadSerializer(user).data}
         return Response(data=data, status=status.HTTP_200_OK)
 
