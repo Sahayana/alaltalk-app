@@ -1,6 +1,5 @@
-from accounts.models import CustomUser
-
-from ..models import Book, News, Shopping, Youtube
+from apps.account.models import CustomUser
+from apps.search.models import Book, News, Shopping, Youtube
 
 
 def do_like_youtube_service(

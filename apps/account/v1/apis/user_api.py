@@ -39,13 +39,12 @@ class SignUpView(generics.ListCreateAPIView):
         """ "
         회원가입을 통해 유저를 생성합니다.
         """
-        request_data = {
-            "email": request.data.get("email"),
-            "nickname": request.data.get("nickname"),
-            "password": request.data.get("password"),
-            "bio": request.data.get("bio"),
-            "img": request.data.get("img", None),
-        }
+
+        request_data = request.data.copy()
+
+        if request.data.get("img"):
+            profile_image = request.data["img"]
+            request_data.update({"profile_image": profile_image})
 
         is_present = UserSelector.check_email_duplication(email=request_data["email"])
 
@@ -64,7 +63,7 @@ class SignUpView(generics.ListCreateAPIView):
                 nickname=validated_data["nickname"],
                 bio=validated_data["bio"],
                 password=validated_data["password"],
-                img=validated_data.get("img", None),
+                img=validated_data.get("profile_image"),
             )
 
             data = {"msg": "sent", "user": UserReadSerializer(instance=user).data}
@@ -147,6 +146,23 @@ class LikePublicSettingView(views.APIView):
 
         data = {"result": "success", "user": UserReadSerializer(instance=user).data}
 
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
+class TemporaryPasswordView(views.APIView):
+
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
+
+        email = request.query_params.get("q")
+        try:
+            user = CustomUser.objects.get(email=email)
+        except CustomUser.DoesNotExist:
+            return Response({"msg": "none-user"}, status=status.HTTP_400_BAD_REQUEST0)
+
+        after_user = UserService.change_temporary_password(user_id=user.id)
+        data = {"msg": "ok", "data": UserReadSerializer(after_user).data}
         return Response(data=data, status=status.HTTP_200_OK)
 
 

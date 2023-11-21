@@ -9,6 +9,7 @@ from apps.account.models import CustomUser, UserLikeKeyWord
 from apps.friend import constants
 from apps.friend.helpers import W2V
 from apps.friend.models import Friend, FriendRequest
+from apps.search.models import Book, News, Shopping, Youtube
 
 
 class FriendService:
@@ -165,3 +166,30 @@ class FriendService:
             recommend_keywords.append("찜 없음")
 
         return recommend_keywords
+
+    @classmethod
+    def get_user_like_data(cls, user_id: int) -> str:
+
+        sentence = ""
+        limit = slice(0, 10, 1)
+        youtube = Youtube.objects.filter(user_id=user_id)
+        news = News.objects.filter(user_id=user_id)
+        book = Book.objects.filter(user_id=user_id)
+        shopping = Shopping.objects.filter(user_id=user_id)
+
+        if youtube.exists():
+            for y in youtube[limit]:
+                sentence = sentence + y.title + " "
+        if news.exists():
+            for n in news[limit]:
+                sentence = sentence + n.title + " "
+
+        if book.exists():
+            for b in book[limit]:
+                sentence = sentence + b.title + " "
+
+        if shopping.exists():
+            for s in shopping[limit]:
+                sentence = sentence + s.title + " "
+
+        return sentence

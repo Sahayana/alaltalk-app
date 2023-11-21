@@ -6,6 +6,12 @@ from apps.friend.models import Friend
 from apps.friend.services.friend_service import FriendService
 from tests.account.factories import UserFactory, UserLikeKeywordFactory
 from tests.friend.factories import FriendFactory, FriendRequestFactory
+from tests.search.factories import (
+    BookFactory,
+    NewsFactory,
+    ShoppingFactory,
+    YoutubeFactory,
+)
 
 pytestmark = pytest.mark.django_db
 
@@ -140,3 +146,26 @@ def test_친구_관심_키워드_최신순_최대_3개_노출():
 
     assert len(recommended) == 3
     assert [word for word in recommended] == [obj.keyword for obj in keywords[:3]]
+
+
+def test_유저_like_데이터_불러오기():
+
+    user = UserFactory.create()
+    youtube = YoutubeFactory.create(user=user)
+    news = NewsFactory.create(user=user)
+    book = BookFactory.create(user=user)
+    shopping = ShoppingFactory.create(user=user)
+
+    sentence = FriendService.get_user_like_data(user_id=user.id)
+
+    assert (
+        sentence
+        == youtube.title
+        + " "
+        + news.title
+        + " "
+        + book.title
+        + " "
+        + shopping.title
+        + " "
+    )

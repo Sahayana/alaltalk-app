@@ -1,19 +1,18 @@
 import json
 
-from accounts.models import CustomUser
-from accounts.utils import LoginConfirm
-from chat.models import ChatMessage, ChatRoom
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.safestring import mark_safe
 from django.views.decorators.csrf import csrf_exempt
-from search.models import Book, News, Shopping, Youtube
+
+from apps.account.models import CustomUser
+from apps.chat.models import ChatMessage, ChatRoom
+from apps.search.models import Book, News, Shopping, Youtube
 
 
 # ChatRoom 모델에서 유저가 속해있는 채팅방 리스트 불러오기
-@LoginConfirm
 def show_chat_list(request):
     user = request.user
     chatroom_list = (
@@ -35,7 +34,6 @@ def show_chat_list(request):
 
 # 채팅하기 버튼 클릭 시 채팅방 생성
 # 채팅방에 참여하는 유저가 동일할 경우 새로 생성하지 않고 기존의 채팅을 불러옴
-@LoginConfirm
 def create_chat_room(request, id):
     user = request.user
     partner = CustomUser.objects.get(id=id)
@@ -73,7 +71,6 @@ def create_chat_room(request, id):
 
 # room_id로 채팅방 삭제
 @csrf_exempt
-@LoginConfirm
 def delete_chat_room(request, room_id):
     target_room = ChatRoom.objects.get(id=room_id)
     target_room.delete()
@@ -82,7 +79,6 @@ def delete_chat_room(request, room_id):
 
 # 웹소켓이 실행되면서 열린 html로 데이터 전달
 @csrf_exempt
-@LoginConfirm
 def post_data_to_chat_room(request, room_id):
     if request.method == "GET":
         user = request.user
@@ -136,7 +132,6 @@ def post_data_to_chat_room(request, room_id):
 
 # AI API로 전달할 채팅로그
 @csrf_exempt
-@LoginConfirm
 def chat_log_send(request):
     room_id = json.loads(request.body.decode("utf-8"))["room_id"]
     chat_log = []
@@ -158,7 +153,6 @@ def chat_log_send(request):
 
 # 채팅방의 이전메세지 더보기(버튼 클릭시 10개씩 로드)
 @csrf_exempt
-@LoginConfirm
 def more_list(request):
     room_id = json.loads(request.body.decode("utf-8"))["room_id"]
     num = json.loads(request.body.decode("utf-8"))["startNum"]
@@ -187,7 +181,6 @@ def more_list(request):
 
 # 채팅방 이전메세지 로더
 @csrf_exempt
-@LoginConfirm
 def message_loader(request):
     room_id = json.loads(request.body.decode("utf-8"))["room_id"]
     last_messages = ChatMessage.objects.filter(chatroom_id=room_id).order_by(
@@ -214,7 +207,6 @@ def message_loader(request):
 
 # 채팅방 별 최신 메세지 1개 뽑기
 @csrf_exempt
-@LoginConfirm
 def latest_message_not_connected(request):
     partner_list = json.loads(request.body.decode("utf-8"))["partner_list"]
 
@@ -250,7 +242,6 @@ def latest_message_not_connected(request):
 
 # partner_id로 chatroom을 찾아 list 형태로 전달
 @csrf_exempt
-@LoginConfirm
 def get_room_id(request):
     partner_list = json.loads(request.body.decode("utf-8"))["partner_list"]
 

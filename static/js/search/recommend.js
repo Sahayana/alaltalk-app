@@ -949,13 +949,12 @@ function get_like_keywords(like_sentence) {
 
 function get_recommend_keyword() {
     get_like()
-    console.log(like_sentence)
-    if (like_sentence[0] == '') {
-        like_keyword = ['']
+    if (like_sentence == "") {
+        like_keyword = ""
         $.ajax({
             url: "/account/friends/keyword",
             type: 'POST',
-            data: JSON.stringify({ "like_keyowrd": like_keyword[0] }),
+            data: JSON.stringify({ "like_keyowrd": like_keyword }),
             enctype: 'multipart/form-data',
             headers: {
                 'X-CSRFTOKEN': CSRF_TOKEN

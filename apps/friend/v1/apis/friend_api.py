@@ -1,15 +1,20 @@
 import json
 
-from rest_framework import permissions, status, viewsets
+from django.core.cache import cache
+from rest_framework import permissions, renderers, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from alaltalk import cache_key
 from apps.account.services.user_service import UserService
-from apps.account.v1.serializers.user_serializer import UserLikeKeywordSerilaizer
+from apps.account.v1.serializers.user_serializer import (
+    UserLikeKeywordSerilaizer,
+    UserReadSerializer,
+)
 from apps.friend.models import Friend
+from apps.friend.services.friend_selector import FriendSelector
 from apps.friend.services.friend_service import FriendService
 from apps.friend.v1.serializers.friend_serializer import FriendSerializer
-from apps.pagination import CommonPagination
 
 
 class FriendViewSet(viewsets.ModelViewSet):
@@ -17,6 +22,31 @@ class FriendViewSet(viewsets.ModelViewSet):
     queryset = Friend.objects.select_related("user", "target_user").all()
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = FriendSerializer
+
+    def get_renderers(self):
+        if self.action == "list":
+            renderer_classes = [renderers.TemplateHTMLRenderer]
+        else:
+            renderer_classes = [renderers.JSONRenderer]
+        return [renderer() for renderer in renderer_classes]
+
+    def list(self, request, *args, **kwargs):
+        """현재 친구 목록과 추천 친구를 렌더링합니다."""
+        user = request.user
+        recommend_friend = cache.get_or_set(
+            cache_key.RECOMMEND_FRIEND.format(user_id=user.id),
+            FriendService.recommend_friend(user=user),
+            timeout=86400,
+        )
+        context = {
+            "user": user,
+            "friends": FriendSelector.get_friends_list(user_id=user.id),
+            "recommend_friend": recommend_friend,
+        }
+
+        return Response(
+            context, template_name="account/user_list.html", status=status.HTTP_200_OK
+        )
 
     def destroy(self, request, *args, **kwargs):
         """
@@ -31,6 +61,19 @@ class FriendViewSet(viewsets.ModelViewSet):
         )
 
         data = {"msg": "deleted", "data": self.get_serializer(friend).data}
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=["get"])
+    def search(self, request, *args, **kwargs):
+        """유저 혹은 친구를 검색합니다."""
+        user = request.user
+        query = request.query_params.get("q")
+
+        friends = FriendSelector.search_friend(user_id=user.id, query=query)
+        serializer = UserReadSerializer(friends, many=True)
+
+        data = {"result": serializer.data}
 
         return Response(data=data, status=status.HTTP_200_OK)
 
@@ -58,30 +101,14 @@ class FriendViewSet(viewsets.ModelViewSet):
 
         return Response(data=data, status=status.HTTP_200_OK)
 
-    # @action(detail=False, methods=["post"])
-    # def get_user_like(self, request, *args, **kwargs):
-    #     user = request.user
-    #     like_sentence = []
-    #     sentence = ""
-    #     youtube = Youtube.objects.filter(user_id=user.id)
-    #     news = News.objects.filter(user_id=user.id)
-    #     book = Book.objects.filter(user_id=user.id)
-    #     shopping = Shopping.objects.filter(user_id=user.id)
+    @action(detail=False, methods=["post"])
+    def get_user_like(self, request, *args, **kwargs):
+        user = request.user
+        like_sentence = cache.get_or_set(
+            cache_key.USER_LIKE_DATA.format(user_id=user.id),
+            FriendService.get_user_like_data(user_id=user.id),
+            timeout=86400,
+        )
+        data = {"like_sentence": like_sentence}
 
-    #     if youtube:
-    #         for y in youtube:
-    #             sentence = sentence + y.title + " "
-    #     if news:
-    #         for n in news:
-    #             sentence = sentence + n.title + " "
-
-    #     if book:
-    #         for b in book:
-    #             sentence = sentence + b.title + " "
-
-    #     if shopping:
-    #         for s in shopping:
-    #             sentence = sentence + s.title + " "
-
-    #     like_sentence.append(sentence)
-    #     data = {"like_sentence": like_sentence}
+        return Response(data=data, status=status.HTTP_200_OK)

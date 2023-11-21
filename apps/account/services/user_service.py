@@ -3,8 +3,8 @@ from django.utils.encoding import force_str
 from django.utils.http import urlsafe_base64_decode
 
 from apps.account.models import CustomUser, UserLikeKeyWord, UserProfileImage
-from apps.account.tasks import send_email_verification
-from apps.account.utils import accounts_verify_token
+from apps.account.tasks import send_email_verification, send_temporary_password
+from apps.account.utils import accounts_verify_token, random_string_generator
 
 
 class UserService:
@@ -26,9 +26,7 @@ class UserService:
             email=email, nickname=nickname, bio=bio, password=password
         )
         if img:
-            image = UserProfileImage.objects.create(user=user, img=img)
-            user.profile_image = image
-            user.save()
+            UserProfileImage.objects.create(user=user, img=img)
 
         # TODO: Celery 비동기 처리
         transaction.on_commit(lambda: send_email_verification.delay(user.id))
@@ -82,5 +80,29 @@ class UserService:
             user.save()
         except KeyError:
             raise KeyError("value 값은 'ON'/'OFF'만 가능합니다.")
+
+        return user
+
+    @classmethod
+    def delete_user_account(cls, user_id: int):
+
+        user = CustomUser.objects.get(id=user_id)
+        user.is_deleted = True
+        user.save()
+        return user
+
+    @classmethod
+    @transaction.atomic()
+    def change_temporary_password(cls, user_id: int):
+
+        user = CustomUser.objects.get(id=user_id)
+        temp_password = random_string_generator(length=10)
+
+        user.set_password(temp_password)
+        user.save()
+
+        transaction.on_commit(
+            lambda: send_temporary_password.delay(user.id, temp_password)
+        )
 
         return user
