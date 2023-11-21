@@ -48,32 +48,29 @@ def test_유저_생성시_transaction_callback_및_메일전송_확인(
         assert mail.outbox[0].subject == EMAIL_VERIFY_TITLE
 
 
-def test_유저_생성시_프로필_이미지_업로드_레코드_생성_및_시리얼라이저_데이터_반환(client: Client):
+def test_유저_생성시_프로필_이미지_업로드_레코드_생성_및_시리얼라이저_데이터_반환(
+    client: Client, create_user_data: Callable, get_test_image
+):
 
-    user = UserFactory.create(email="test_email234@alaltalk.com")
+    user = UserFactory.build()
 
-    user_image = UserProfileImageFactory.create()
-
-    data = {
-        "email": user.email,
-        "password": user.password,
-        "nickname": user.nickname,
-        "bio": user.bio,
-    }
-
-    data.update({"img": user_image.img})
+    data = create_user_data(user)
+    data.update({"img": get_test_image})
 
     res = client.post(
         reverse("account:v1:signup"), data=data, media_type="multipart/form-data"
     )
 
-    assert res.data is None
     assert res.status_code == status.HTTP_201_CREATED
     assert res.data["user"]["email"] == user.email
-    assert UserProfileImage.objects.filter(user=user).exists() is True
+    assert (
+        UserProfileImage.objects.filter(user_id=res.data["user"]["id"]).exists() is True
+    )
     assert (
         res.data["user"]["profile_image"]
-        == UserProfileImage.objects.get(user_id=user.id).img
+        == UserProfileImage.objects.filter(user_id=res.data["user"]["id"])
+        .first()
+        .img.url
     )
 
 

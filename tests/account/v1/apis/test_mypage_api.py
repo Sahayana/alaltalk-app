@@ -93,32 +93,31 @@ def test_유저_마이페이지_유튜브_뉴스_책_쇼핑_데이터_반환(cli
     )
 
 
-# def test_유저_회원정보_이미지_제외한_정보_업데이트(client: Client):
+def test_유저_회원정보_이미지_제외한_정보_업데이트(client: Client):
 
-#     user = UserFactory.create(is_active=True)
+    user = UserFactory.create(is_active=True)
 
-#     nickname = "updated"
+    nickname = "updated"
 
-#     data = {
-#         "nickname": nickname
-#     }
+    data = {"nickname": nickname}
 
-#     res = client.patch(f"/account/v1/mypage/{user.id}/",
-#         **authorization_header(user),
-#         data=data,
-#         content_type="application/json")
+    res = client.post(
+        reverse("account:v1:mypage-list"),
+        **authorization_header(user),
+        data=data,
+        media_type="multipart/form-data"
+    )
+
+    res_data = res.data["data"]
+
+    assert res.status_code == status.HTTP_200_OK
+    assert res.data["msg"] == "ok"
+    assert res_data["nickname"] == nickname
+    assert res_data["email"] == user.email
+    assert res_data["bio"] == user.bio
 
 
-#     res_data = res.data['data']
-
-#     assert res.status_code == status.HTTP_200_OK
-#     assert res.data['msg'] == 'ok'
-#     assert res_data['nickname'] == nickname
-#     assert res_data['email'] == user.email
-#     assert res_data['bio'] == user.bio
-
-
-def test_유저_회원정보_프로필_이미지_업데이트_확인(client: Client, get_test_image):
+def test_유저_회원정보_프로필_이미지_업데이트_확인(client: Client):
 
     user = UserFactory.create(is_active=True)
     user_img = UserProfileImageFactory.create()
