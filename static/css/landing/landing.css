@@ -62,7 +62,7 @@ body::-webkit-scrollbar-track {
     position: relative;
     width: 100%;
     height: 100vh;
-    background-image: url("static/images/landing/algorithm_bg.jpg");
+    background-image: url("/static/images/landing/algorithm_bg.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -321,7 +321,7 @@ body::-webkit-scrollbar-track {
     right: 1.4vh;
     width: min(3vw, 100px);
     height: min(3vw, 100px);
-    background-image: url("static/images/landing/landing_next_slide_button.png");
+    background-image: url("/static/images/landing/landing_next_slide_button.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -529,7 +529,7 @@ body::-webkit-scrollbar-track {
     top: 42%;
     right: 32px;
     z-index: 4;
-    background-image: url("static/images/landing/landing_next_slide_button_2.png");
+    background-image: url("/static/images/landing/landing_next_slide_button_2.png");
 }
 
 
