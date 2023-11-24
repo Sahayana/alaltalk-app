@@ -36,7 +36,7 @@ function signUp() {
 
     let formData = new FormData();
     formData.append("nickname", nickName);
-    formData.append("password2", password);
+    formData.append("password", password);
     formData.append("email", email);
     formData.append("img", profileImg);
     formData.append("bio", bio);
@@ -49,7 +49,7 @@ function signUp() {
 
     $.ajax({
         type: 'POST',
-        url: '/accounts/signup/',
+        url: 'http://127.0.0.1:8000/account/v1/signup',
         cache: false,
         contentType: false,
         processData: false,
@@ -69,7 +69,11 @@ function signUp() {
                 return;
             }
 
+        },
+        error: function (response, status, error) {
+            console.log(error)
         }
+
     })
 }
 
@@ -82,7 +86,7 @@ function checkDuplicated() {
 
     $.ajax({
         type: "GET",
-        url: `/accounts/signup/check/`,
+        url: `/account/v1/signup/check`,
         data: { email: email },
         success: function (response) {
             // 서버에서 받은 response에서 duplicated 값이 true이면 중복확인 텍스트를 노출합니다.

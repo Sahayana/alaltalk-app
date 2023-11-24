@@ -28,7 +28,6 @@ class UserService:
         if img:
             UserProfileImage.objects.create(user=user, img=img)
 
-        # TODO: Celery 비동기 처리
         transaction.on_commit(lambda: send_email_verification.delay(user.id))
 
         return user
